@@ -78,12 +78,13 @@ def stuck_avoid():
     flag = False
     while 1:
         # 1,2,3,4
-        for i in 4:
-            bool_stuck = stuck.stuck_avoid_move(i+1)
+        for i in range(1, 5, 1):
+            stuck.stuck_avoid_move(i)
+            bool_stuck = stuck.stuck_jug()
             motor.motor_stop()
-            if stuck.stuck_duj() == False:
-                if i == 2:
-
+            if bool_stuck == False:
+                if i == 3:
+                    # 後進でスタックした場合は、それをよける関数
                 flag = True
                 break
         if flag:
@@ -91,7 +92,11 @@ def stuck_avoid():
         # 4,3,2,1
         for i in 4:
             stuck.stuck_avoid_move(4-i)
-            if stuck.stuck_duj() == False:
+            bool_stuck = stuck.stuck_jug()
+            motor.motor_stop()
+            if bool_stuck == False:
+                if i == 3:
+                    # 後進でスタックした場合は、それをよける関数
                 flag = True
                 break
         if flag:
