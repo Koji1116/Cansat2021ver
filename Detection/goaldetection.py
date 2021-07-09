@@ -65,20 +65,20 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
                 max_area = area
                 max_area_contour = j
 
-        # no goal
+            # no goal
 
-        elif max_area <= 5:
-            return [-1, 0, -1, imgname]
+            elif max_area <= 5:
+                return [-1, 0, -1, imgname]
 
-        # goal
-        elif max_area >= G_thd:
-            return [0, max_area, 0, imgname]
-        else:
-            # rectangle
-            cnt = contours[max_area_contour]
-            x, y, w, h = cv2.boundingRect(cnt)
-            GAP = x+w/2-160
-            return [1, max_area, GAP, imgname]
+            # goal
+            elif max_area >= G_thd:
+                return [0, max_area, 0, imgname]
+            else:
+                # rectangle
+                cnt = contours[max_area_contour]
+                x, y, w, h = cv2.boundingRect(cnt)
+                GAP = x+w/2-160
+                return [1, max_area, GAP, imgname]
     except:
         i = i + 1
         return[i, -1, -1, imgname]
