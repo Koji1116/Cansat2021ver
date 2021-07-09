@@ -253,16 +253,13 @@ if __name__ == "__main__":
 		# ------------------- Panorama Shooting Phase ------------------- #
 		Xbee.str_trans('Panorama')
 		Other.saveLog(phaseLog, '7', 'Panorama Shooting phase', time.time() - t_start)
-		t_PanoramaShooting_start = time.time()
-		print('Panorama Shooting Phase Started {0}'.format(time.time() - t_start))
-		magdata = Calibration.magdata_matrix()
-		magx_off, magy_off = Calibration.calculate_offset(magdata)
-
-		panoramaShootingtest.shooting(magx_off, magy_off, panoramapath)
-
-		Other.panorama(srcdir=panoramapath)
-
-
+		if phaseChk <= 7:
+			t_PanoramaShooting_start = time.time()
+			print('Panorama Shooting Phase Started {0}'.format(time.time() - t_start))
+			magdata = Calibration.magdata_matrix()
+			magx_off, magy_off = Calibration.calculate_offset(magdata)
+			panoramaShootingtest.shooting(magx_off, magy_off, panoramapath)
+			Other.panorama(srcdir=panoramapath)
 
 
 		Xbee.str_trans("Progam Finished")
