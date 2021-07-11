@@ -97,6 +97,19 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
 
 
 def goal_duj():
+    '''
+    ゴール判定関数
+    True;ゴール
+    False:まだゴールじゃない
+    '''
+    if GoalDetection()[0] == 0:
+        motor.motor(0.5, 0.5, 0.2)
+        if stuck.stuck():
+            return True
+        else:
+            return False
+    else:
+        return False
 
 
 if __name__ == "__main__":

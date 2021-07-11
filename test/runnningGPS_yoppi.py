@@ -1,3 +1,16 @@
+import numpy as np
+import gps_navigate
+import Xbee
+import BMC050
+import GPS
+import stuck
+import motor
+import Stuck
+import Calibration
+import pigpio
+import time
+import traceback
+from threading import Thread
 import sys
 # このパス後で調整必要　by oosim
 # ある程度調整したよ　07/11 takayama
@@ -6,21 +19,6 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver//Calibration')
-sys.path.append('/home/pi/Desktop/Cansat2021ver/IntegratedProgram/Stuck')  #調整必要07/11takayama
-
-from threading import Thread
-import traceback
-import time
-import pigpio
-import Calibration
-import Stuck
-import motor
-import stuck
-import GPS
-import BMC050
-import Xbee
-import gps_navigate
-import numpy as np
 
 
 # --- original module ---#
