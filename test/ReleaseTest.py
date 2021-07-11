@@ -1,6 +1,6 @@
 import sys  
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Environmental')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/GPS')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 
 
 import time
