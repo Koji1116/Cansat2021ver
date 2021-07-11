@@ -1,9 +1,12 @@
 import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 import cv2
 import numpy as np
-import math
 import Camera
+import Xbee
+import motor
 
 def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     """
@@ -63,9 +66,13 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
 if __name__ == "__main__":
     try:
         path = '/home/pi/Desktop/Cansat2021ver/photostorage'
-        while True:
-            goalflug, goalarea, goalGAP, photoname = GoalDetection(path)
-            print(f,'goalflug:{goalflug} goalarea:{goalarea} goalGAP:{goalGAP} photoname:{photoname}')
+        goalflug, goalarea, goalGAP, _ = GoalDetection(path)
+        print(f,'goalflug:{goalflug} goalarea:{goalarea} goalGAP:{goalGAP}')
+        Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
+        if goalFlug == 0:
+            motor.motor(1,1)
+
+
     except KeyboardInterrupt:
         print('stop')
     except:
