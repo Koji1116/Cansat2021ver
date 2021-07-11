@@ -19,8 +19,6 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     try:
     	imgname = Capture.Capture(imgpath)
     	img = cv2.imread(imgname)
-    	hig, wid, col = img.shape
-    	i = 100
 
 		#make mask
     	img_HSV = cv2.cvtColor(cv2.GaussianBlur(img,(15,15),0),cv2.COLOR_BGR2HSV_FULL)
