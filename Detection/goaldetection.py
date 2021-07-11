@@ -34,8 +34,20 @@ def curvingSwitch(GAP, add):
         return 0
 
 
-# 引数 imgpath：画像のpath ,H_min: 色相の最小値,H_max: 色相の最大値,S_thd: 彩度の閾値,G_thd: ゴール面積の閾値
-def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
+def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
+    '''
+    引数
+    imgpath：画像のpath 
+    H_min: 色相の最小値
+    H_max: 色相の最大値
+    S_thd: 彩度の閾値
+    G_thd: ゴール面積の閾値
+
+    戻り値：[goalglug, GAP, imgname]  
+    goalFlug    0: goal,   -1: not detect,   1: nogoal 
+    GAP: 画像の中心とゴールの中心の差（ピクセル） 
+    imgname: 処理した画像の名前
+    '''
     global i
     try:
         imgname = Capture.Capture(imgpath)
@@ -82,7 +94,9 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
     except:
         i = i + 1
         return[i, -1, -1, imgname]
-    # 戻り値：[max_area, GAP, imgname]  - goalFlug 0: goal, -1: not detect, 1: nogoal - GAP: 画像の中心とゴールの中心の差（ピクセル）- max_area: ゴールの面積- imgname: 処理した画像の名前
+
+
+def goal_duj():
 
 
 if __name__ == "__main__":
