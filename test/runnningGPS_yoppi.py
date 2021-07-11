@@ -1,3 +1,13 @@
+import sys
+# このパス後で調整必要　by oosim
+# ある程度調整したよ　07/11 takayama
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver//Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/IntegratedProgram/Stuck')  #調整必要07/11takayama
+
 from threading import Thread
 import traceback
 import time
@@ -11,14 +21,7 @@ import BMC050
 import Xbee
 import gps_navigate
 import numpy as np
-import sys
-# このパス後で調整必要　by oosim
-sys.path.append('/home/pi/git/kimuralab/SensorModule/Communication')
-sys.path.append('/home/pi/git/kimuralab/SensorModule/Camera')
-sys.path.append('/home/pi/git/kimuralab/SensorModule/GPS')
-sys.path.append('/home/pi/git/kimuralab/SensorModule/Motor')
-sys.path.append('/home/pi/git/kimuralab//Calibration')
-sys.path.append('/home/pi/git/kimuralab/IntegratedProgram/Stuck')
+
 
 # --- original module ---#
 
