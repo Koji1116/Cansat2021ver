@@ -83,44 +83,26 @@ def stuck_avoid():
     Xbee.str_trans('スタック回避開始')
     flag = False
     while 1:
-        # 0~6
-        for i in range(7):
+        # 1,2,3,4
+        for i in range(1, 5, 1):
             stuck.stuck_avoid_move(i)
-            bool_stuck = stuck.stuck_jud()
+            bool_stuck = stuck.stuck_jug()
             motor.motor_stop()
             if bool_stuck == False:
-                if i == 1 or i == 4 or i == 5:
-                    Xbee.str_trans('スタック避ける')
-                    motor.motor_move(-0.8, -0.8, 2)
-                    motor.stop()
-                    sleep(1)
-                    motor.motor_move(0.2, 0.8, 1)
-                    motor.stop()
-                    sleep(1)
-                    motor.motor_move(0.8, 0.8, 5)
-                    motor.stop()
-                    sleep(1)
+                if i == 3:
+                    # 後進でスタックした場合は、それをよける関数
                 flag = True
                 break
         if flag:
             break
-        # 3,2,1,0
-        for i in range(7):
-            stuck.stuck_avoid_move(7-i)
-            bool_stuck = stuck.stuck_jud()
+        # 4,3,2,1
+        for i in 4:
+            stuck.stuck_avoid_move(4-i)
+            bool_stuck = stuck.stuck_jug()
             motor.motor_stop()
             if bool_stuck == False:
-                if i == 1 or i == 4 or i == 5:
-                    Xbee.str_trans('スタック脱出中')
-                    motor.motor_move(-0.8, -0.8, 2)
-                    motor.stop()
-                    sleep(1)
-                    motor.motor_move(0.2, 0.8, 1)
-                    motor.stop()
-                    sleep(1)
-                    motor.motor_move(0.8, 0.8, 5)
-                    motor.stop()
-                    sleep(1)
+                if i == 3:
+                    # 後進でスタックした場合は、それをよける関数
                 flag = True
                 break
         if flag:
