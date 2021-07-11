@@ -50,6 +50,7 @@ def panorama_shooting(magx_off, magy_off, path):
             latestθ += 360
         deltaθ = preθ - latestθ
         sumθ += deltaθ
+        
         if latestθ >= 360:
             latestθ -= 360
         preθ = latestθ
