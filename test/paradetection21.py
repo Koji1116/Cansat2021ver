@@ -27,7 +27,7 @@ def ParaDetection(imgpath, width , height , H_min, H_max, S_thd):
 		#--- read from image file ---#
 		img = cv2.imread(imgname)
 		#make mask
-		#RGBでは色合いの判定が難しい→HSV色空間というデータ構造を使う
+		#RGBでは色合いの判定が難しい→HSV色空間というデータ構造を使う。
         #https://qiita.com/odaman68000/items/ae28cf7bdaf4fa13a65b
 		img_HSV = cv2.cvtColor(cv2.GaussianBlur(img,(15,15),0),cv2.COLOR_BGR2HSV_FULL)
 		#ガウシアンフィルタ→ホワイトノイズに適する。注目が外の距離に応じて重みを変えることが出来る。
