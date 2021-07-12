@@ -7,9 +7,9 @@ import pigpio
 import serial
 import time
 import sys
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Environmental')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Illuminance')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/GPS')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 
 
 Plandcount = 0

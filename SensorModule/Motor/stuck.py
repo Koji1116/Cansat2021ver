@@ -11,14 +11,19 @@ sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
 
 
-def stuck_jud(thd=10):  # しきい値thd調整必要
+def stuck_jud(thd=11):  # しきい値thd調整必要
     BMC050.bmc050_setup()
-    accdata = BMC050.acc_data()
-    acc_x = accdata[0]
-    acc_y = accdata[1]
-    acc_z = accdata[2]
-    acc = (acc_x**2 + acc_y**2 + acc_z**2)**0.5
-    if acc < thd:
+    acc_max = 0
+    for i in range(20):
+        accdata = BMC050.acc_data()
+        acc_x = accdata[0]
+        acc_y = accdata[1]
+        acc_z = accdata[2]
+        acc = (acc_x**2 + acc_y**2 + acc_z**2)**0.5
+        if acc_max < acc:
+            acc_max = acc
+
+    if acc_max < thd:
         print('スタックした')
         Xbee.str_trans('スタックした')
         return True
@@ -77,8 +82,9 @@ def stuck_avoid_move(x):
         motor.motor_move(0.8, -0.8, 0.2)
         sleep(0.2)
 
-
 # ここ途中
+
+
 def stuck_avoid():
     Xbee.str_trans('スタック回避開始')
     flag = False
