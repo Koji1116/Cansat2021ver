@@ -8,6 +8,10 @@ import Camera
 import Xbee
 import motor
 
+are_short = 0
+area_middle = 0
+area_long = 0
+
 def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     """
     画像誘導用の関数
@@ -64,13 +68,27 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     	return[i, -1, -1, imgname]
 
 if __name__ == "__main__":
-    try:
+	try:
         path = '/home/pi/Desktop/Cansat2021ver/photostorage'
-        goalflug, goalarea, goalGAP, _ = GoalDetection(path)
-        print(f,'goalflug:{goalflug} goalarea:{goalarea} goalGAP:{goalGAP}')
-        Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
-        if goalFlug == 0:
-            motor.motor(1,1)
+		goalflug = 1
+		while goalflug != 0:
+        	goalflug, goalarea, goalGAP, _ = GoalDetection(path)
+			print(f'goalflug:{goalflug} goalarea:{goalarea} goalGAP:{goalGAP}')
+			Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
+			if goalGAP <= -30.0:
+				print('Turn left')
+				Xbee.str_trans('Turn left')
+				motor.motor(-1, 1, 0.5)
+			# --- if the pixcel error is 30 or more, rotate right --- #
+			elif 30 <= goalGAP:
+				print('Turn right')
+				Xbee.str_trans('Turn right')
+				motor.motor(1, -1, 0.5)
+			# --- if the pixcel error is greater than -30 and less than 30, go straight --- #
+			else:
+				print('Go straight')
+				
+				time.sleep(1.0)
 
 
     except KeyboardInterrupt:
