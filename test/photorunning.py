@@ -66,7 +66,6 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     		GAP = x+w/2-160
     		return [1, max_area, GAP, imgname]
     except:
-    	i = i + 1
     	return[i, -1, -1, imgname]
 
 if __name__ == "__main__":
