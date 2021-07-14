@@ -8,7 +8,9 @@ import Camera
 import Xbee
 import motor
 
-are_short = 0
+
+#写真内の赤色面積で進時間を決める用　調整必要
+area_short = 0
 area_middle = 0
 area_long = 0
 
@@ -87,11 +89,16 @@ if __name__ == "__main__":
 			# --- if the pixcel error is greater than -30 and less than 30, go straight --- #
 			else:
 				print('Go straight')
-				
+				if goalarea <= area_short:
+					motor.motor(1, 1, 10)
+				elif goalarea <= area_middle:
+					motor.motor(1, 1, 5):
+				elif goalarea <= area_long:
+					motor.motor(1, 1, 2):
 				time.sleep(1.0)
 
 
     except KeyboardInterrupt:
         print('stop')
     except:
-        print('error')
+		print('error')
