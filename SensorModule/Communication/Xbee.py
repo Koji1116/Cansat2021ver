@@ -59,8 +59,8 @@ def str_trans(string):
 
 
 str_trans('hello')
-img1 = "/home/pi/Desktop/transfer-test/003.jpg"
-# img_string = convert_string(img1)
-img_string = ImageToByte(img1)
+# img1 = "/home/pi/Desktop/transfer-test/003.jpg"
+# # img_string = convert_string(img1)
+# img_string = ImageToByte(img1)
 
-img_trans(img_string)
+# img_trans(img_string)
