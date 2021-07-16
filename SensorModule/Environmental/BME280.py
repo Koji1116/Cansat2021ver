@@ -7,7 +7,7 @@ import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 
 bus_number = 1
-i2c_address = 0x39  # 16進数77番でi2c通信
+i2c_address = 0x76 # 16進数77番でi2c通信
 
 bus = SMBus(bus_number)
 
