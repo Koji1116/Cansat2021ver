@@ -32,8 +32,8 @@ import GPS
 import Melting
 import Motor
 import TSL2561
-import ParaDetection
-import ParaAvoidance
+import paradetection21
+import paraAvoidance21_2
 import Other
 import panoramaShootingtest #名称変更の可能性あり
 import Calibration
@@ -239,7 +239,40 @@ if __name__ == "__main__":
 			Other.saveLog(phaseLog, '7', 'Parachute Avoidance Phase Started', time.time() - t_start)
 			t_ParaAvoidance_start = time.time()
 			print('Parachute Avoidance Phase Started {0}'.format(time.time() - t_start))
+			print("START: Judge covered by Parachute")
+	
+	        t2 = time.time()
+	        t1 = t2
+	#--- Paracute judge ---#
+	#--- timeout is 60s ---#
+	        while t2 - t1 < 60:
+		        Luxflug = ParaDetection.ParaJudge(5000)
+		        print(Luxflug)
+		        if Luxflug[0] == 1:
+			        break
+		        t1 =time.time()
+		        time.sleep(1)
+		        print("rover is covered with parachute!")
 
+	        print("START: Parachute avoidance")
+
+	        try:
+		#--- first parachute detection ---#
+		        a,b = land_point_save()
+		        length = Parachute_area_judge(a,b)
+		        while length < 3:
+		            flug, area, photoname = ParaDetection.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
+		            Parachute_Avoidance(flug)
+
+	        except KeyboardInterrupt:
+		        print("Emergency!")
+		
+
+	        except:
+		        print(traceback.format_exc())
+	        print('finish')
+
+            
 			# print("ParaAvoidance Phase Started")
 			# Other.saveLog(paraAvoidanceLog, time.time() - t_start, GPS.readGPS(), "ParaAvoidance Start")
 			# print("START: Judge covered by Parachute")
