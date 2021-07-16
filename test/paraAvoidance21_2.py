@@ -36,7 +36,6 @@ def land_point_save():
 	except KeyboardInterrupt:
 		GPS.closeGPS()
 		print("\r\nKeyboard Intruppted, Serial Closed")
-
 	except:
 		GPS.closeGPS()
 		print (traceback.format_exc())
