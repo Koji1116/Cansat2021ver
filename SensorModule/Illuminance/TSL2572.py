@@ -1,9 +1,11 @@
-import datetime
-import Other
-import smbus
 import time
 import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
+import smbus
+import Other
+import datetime
+
+
 i2c = smbus.SMBus(1)
 
 # TSL2572 Register Set
