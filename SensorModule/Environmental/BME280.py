@@ -185,10 +185,10 @@ if __name__ == '__main__':
     try:
         while 1:
             temp, pres, hum, alt = bme280_read()
-            #print(str(pres) + "\t" + str(alt) + "\t" + str(temp) + "\t" + str(hum))
+            # print(str(pres) + "\t" + str(alt) + "\t" + str(temp) + "\t" + str(hum))
             print(
                 f'Press:{str(pres)}	Alt:{str(alt)}	Temp:{str(temp)}	Hum:{str(hum)}')
-            Other.saveLog('BME280test', datetime.datetime.now(),
+            # Other.saveLog('BME280test', datetime.datetime.now(),
                           startTime - time.time(), pres, alt, temp, hum)
             # with open("preslog.txt","w")as f:
             #	f.write(str(pres)+ "\t" + str(alt) + "\t"+str(temp) + "\t" + str(hum) + "\n")
@@ -196,4 +196,5 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print("\r\n")
     except Exception as e:
-        print(e.message())
+        # print(e.message())
+		print('fuck')
