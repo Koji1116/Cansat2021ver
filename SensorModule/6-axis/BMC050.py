@@ -3,7 +3,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 from smbus import SMBus
 import time
 import Other
-import datatime
+import datetime
 
 ACC_ADDRESS = 0x19
 ACC_REGISTER_ADDRESS = 0x02
@@ -142,5 +142,5 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print()
     except Exception as e:
-        print()
-        print(e.message)
+        print('fuck')
+        #print(e.message)
