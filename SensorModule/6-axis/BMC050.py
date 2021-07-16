@@ -5,7 +5,7 @@ import time
 import Other
 import datatime
 
-ACC_ADDRESS = 0x19
+ACC_ADDRESS = 0x18
 ACC_REGISTER_ADDRESS = 0x02
 MAG_ADDRESS = 0x13
 MAG_REGISTER_ADDRESS = 0x42
