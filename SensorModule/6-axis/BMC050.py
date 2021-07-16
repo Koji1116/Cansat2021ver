@@ -5,7 +5,7 @@ import time
 import Other
 import datetime
 
-ACC_ADDRESS = 0x18
+ACC_ADDRESS = 0x19
 ACC_REGISTER_ADDRESS = 0x02
 MAG_ADDRESS = 0x13
 MAG_REGISTER_ADDRESS = 0x42
@@ -142,5 +142,5 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print()
     except Exception as e:
-        print()
-        print(e.message)
+        print('fuck')
+        #print(e.message)
