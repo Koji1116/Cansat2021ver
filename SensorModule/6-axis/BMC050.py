@@ -5,9 +5,9 @@ import time
 import Other
 import datetime
 
-ACC_ADDRESS = 0x19
+ACC_ADDRESS = 0x13
 ACC_REGISTER_ADDRESS = 0x02
-MAG_ADDRESS = 0x13
+MAG_ADDRESS = 0x19
 MAG_REGISTER_ADDRESS = 0x42
 
 i2c = SMBus(1)
