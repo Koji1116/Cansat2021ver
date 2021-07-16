@@ -72,7 +72,7 @@ if __name__ == '__main__':
     if (initTSL2572()!=0) :
         print("Failed. Check connection!!")
         sys.exit()
-    time = time.time()
+    startTime = time.time()
     while 1:
         adc = getTSL2572adc()
 
@@ -84,11 +84,11 @@ if __name__ == '__main__':
         lux2 = ((adc[0] * 0.63) - (adc[1] * 1.00)) / cpl
         if ((lux1 <= 0) and (lux2 <= 0)) :
             print("0 Lx")
-            Other.saveLog('LuxTest', datetime.datetime.now(), time.time(), 0)
+            Other.saveLog('LuxTest', datetime.datetime.now(), startTime - time.time(), 0)
         elif (lux1 > lux2) :
             print("{:.1f} Lx".format(lux1))
-            Other.saveLog('LuxTest', datetime.datetime.now(), time.time(), lux1)
+            Other.saveLog('LuxTest', datetime.datetime.now(), startTime - time.time(), lux1)
         elif (lux1 < lux2) :
             print("{:.1f} Lx".format(lux2))
-            Other.saveLog('LuxTest', datetime.datetime.now(), time.time(), lux2)
+            Other.saveLog('LuxTest', datetime.datetime.now(), startTime - time.time(), lux2)
         time.sleep(0.2)

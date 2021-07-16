@@ -1,6 +1,8 @@
-import math
 import sys
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
+import math
 import time
+import datetime
 import difflib
 import pigpio
 import numpy as np
@@ -251,6 +253,7 @@ def vincentyInverse(lat1, lon1, lat2, lon2, ellipsoid=None):
 if __name__ == '__main__':
     try:
         openGPS()
+        starttime = time.time()
         while True:
             utc, lat, lon, sHeight, gHeight = readGPS()
             if utc == -1.0:
@@ -263,6 +266,7 @@ if __name__ == '__main__':
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
+                Other.saveLog('GPStest',datetime.datetime.now(), starttime-time.time(), utc, lat, lon, sHeight, gHeight)
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()
