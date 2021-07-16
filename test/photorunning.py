@@ -2,11 +2,16 @@ import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 import cv2
 import numpy as np
+import time
 import Camera
 import Xbee
 import motor
+import Other
+import datetime
+
 
 
 #写真内の赤色面積で進時間を決める用　調整必要
@@ -72,10 +77,14 @@ if __name__ == "__main__":
 	try:
         path = '/home/pi/Desktop/Cansat2021ver/photostorage'
 		goalflug = 1
+		startTime = time.time()
+		dateTime = datetime.datetime.now()
+		path = f'ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
 		while goalflug != 0:
         	goalflug, goalarea, goalGAP, _ = GoalDetection(path)
 			print(f'goalflug:{goalflug} goalarea:{goalarea} goalGAP:{goalGAP}')
 			Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
+			Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
 			if goalGAP <= -30.0:
 				print('Turn left')
 				Xbee.str_trans('Turn left')
@@ -91,9 +100,9 @@ if __name__ == "__main__":
 				if goalarea <= area_short:
 					motor.motor(1, 1, 10)
 				elif goalarea <= area_middle:
-					motor.motor(1, 1, 5):
+					motor.motor(1, 1, 5)
 				elif goalarea <= area_long:
-					motor.motor(1, 1, 2):
+					motor.motor(1, 1, 2)
 				time.sleep(1.0)
 
 
