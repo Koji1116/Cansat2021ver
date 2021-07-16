@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 #coding:utf-8
-
+import sys
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 from smbus import SMBus
 import time
+import datetime
 
 bus_number  = 1
 i2c_address = 0x77	#16進数77番でi2c通信
@@ -162,10 +164,13 @@ def bme280_read():
 if __name__ == '__main__':
 	bme280_setup()
 	bme280_calib_param()
+	startTime = time.time()
 	try:
 		while 1:
 			temp,pres,hum,alt = bme280_read()
-			print(str(pres) + "\t" + str(alt) + "\t" + str(temp) + "\t" + str(hum))
+			#print(str(pres) + "\t" + str(alt) + "\t" + str(temp) + "\t" + str(hum))
+			print(f'Press:{str(pres)}	Alt:{str(alt)}	Temp:{str(temp)}	Hum:{str(hum)}')
+			Other.saveLog('BME280test',datetime.datetime.now(), startTime - time.time(), pres, alt, temp, hum)
 			#with open("preslog.txt","w")as f:
 			#	f.write(str(pres)+ "\t" + str(alt) + "\t"+str(temp) + "\t" + str(hum) + "\n")
 			time.sleep(0.8)

@@ -1,7 +1,7 @@
 from gpiozero import Motor
 from time import sleep
 import sys
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 
 Rpin1 = 17
 Rpin2 = 18
