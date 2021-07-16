@@ -16,5 +16,6 @@ def Melting(t_melt = 4):
 if __name__ == "__main__":
 	try:
 		Melting()
+		print('finish')
 	except:
 		pi.write(meltPin, 0)
