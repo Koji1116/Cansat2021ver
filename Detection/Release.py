@@ -1,14 +1,14 @@
 import sys  
 sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/BME280')
 sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/GPS')
-sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/TSL2561')
+sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/Illuminance')
 
 import time
 import serial
 import pigpio
 import BME280
 import GPS
-import TSL2561
+import TSL2572
 import traceback
 
 
@@ -28,7 +28,7 @@ pressreleasejudge = 0
 # 	global luxcount
 # 	luxreleasejudge = 0
 # 	try:
-# 		luxdata = TSL2561.readLux()
+# 		luxdata = TSL2572.readLux()
 # 		#print(luxdata)
 # 		#print(luxcount)
 # 		if luxdata[0] > anylux or luxdata[1] > anylux:
@@ -103,7 +103,7 @@ def pressdetect(anypress):
 
 if __name__=="__main__":
 
-	# TSL2561.tsl2561_setup()
+	# TSL2572.tsl2572_setup()
 	# while 1:
 	# 	luxdetect(200)
 	# 	time.sleep(1)
