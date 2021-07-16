@@ -3,7 +3,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 from smbus import SMBus
 import time
 import Other
-import datatime
+import datetime
 
 ACC_ADDRESS = 0x18
 ACC_REGISTER_ADDRESS = 0x02
