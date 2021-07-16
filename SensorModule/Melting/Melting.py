@@ -5,7 +5,7 @@ pi = pigpio.pi()
 
 meltPin = 4
 
-def Melting(t_melt = 20):
+def Melting(t_melt = 60):
 	pi.write(meltPin, 0)
 	time.sleep(1)
 	pi.write(meltPin, 1)
