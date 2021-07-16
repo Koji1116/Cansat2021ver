@@ -19,6 +19,10 @@ import ParaDetection
 import pwm_control
 import TSL2561
 import Other
+import goaldetection
+import motor
+import GPS
+import GPS_Navigate
 
 def land_point_save():
 	try:
@@ -57,7 +61,7 @@ def Parachute_area_judge(longitude_land,latitude_land):
 	except:
 		GPS.closeGPS()
 		print (traceback.format_exc())
-	direction = gps_navigate.vincenty_inverse(longitude_land,latitude_land,longitude_new,latitude_new)
+	direction = GPS_Navigate.vincenty_inverse(longitude_land,latitude_land,longitude_new,latitude_new)
 	distance = direction["distance"]        
 	return distance
 
@@ -67,43 +71,26 @@ def Parachute_Avoidance(flug):
 	if flug == 1:
 		#--- Avoid parachute by back control ---#
 		try:
-			#--- run back ---#
-			run = pwm_control.Run()
-			run.back()
-			time.sleep(0.5)
+			goalflug, goalarea, goalGAP, photoname = goaldetection.GoalDetection("/home/pi/photo/photo", 200, 20, 80, 7000)
+			if (goalGAP >= -160) and (goalGAP <= -80):
+				motor.motor(0.5,-0.5,0.8)
+				motor.motor(0.7,0.7,2)
 
+			if (goalGAP >= -80) and (goalGAP <= 0):
+				motor.motor(0.8,-0.8,0.8)
+				motor.motor(0.7,0.7,2)
+
+			if (goalGAP >= 0) and (goalGAP <= 80):
+				motor.motor(-0.5,0.5,0.8)
+				motor.motor(0.7,0.7,2)
+
+			if (goalGAP >= 80) and (goalGAP <= 160):
+				motor.motor(-0.8,0.8,0.8)
+				motor.motor(0.7,0.7,2)
+		
 		except KeyboardInterrupt:
-			run = pwm_control.Run()
-			run.stop()
-			time.sleep(1)
-
-		finally:
-			run = pwm_control.Run()
-			run.stop()
-			time.sleep(1)
-			print("back")
-
-		#--- Avoid parachute by rotate control ---#
-		while flug == 1:
-			try:
-				#--- rotate ---#
-				run = pwm_control.Run()
-				run.turn_right_l()
-				time.sleep(1)
-
-			except KeyboardInterrupt:
-				run = pwm_control.Run()
-				run.stop()
-				time.sleep(1)
-
-			finally:
-				run = pwm_control.Run()
-				run.stop()
-				time.sleep(1)
-			#--- Parachute detect repeatedly and avoid it ---#
-			flug, area, photoname = ParaDetection.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
-			print("flug = "+str(flug))
-
+			print("stop")
+			
 	#--- There is not Parachute arround rover ---#
 	if flug == 0:
 		try:
@@ -143,16 +130,16 @@ if __name__ == '__main__':
 
 	try:
 		#--- first parachute detection ---#
-		flug, area, photoname = ParaDetection.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
-		Parachute_Avoidance(flug)
+		a,b = land_point_save()
+		length = Parachute_area_judge(a,b)
+		while length < 3:
+		    flug, area, photoname = ParaDetection.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
+		    Parachute_Avoidance(flug)
 
 	except KeyboardInterrupt:
 		print("Emergency!")
-		run = pwm_control.Run()
-		run.stop()
+		
 
 	except:
-		run = pwm_control.Run()
-		run.stop()
 		print(traceback.format_exc())
 	print('finish')
