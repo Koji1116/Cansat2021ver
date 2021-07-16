@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 # coding:utf-8
+import sys
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
+import Other
 import datetime
 import time
 from smbus import SMBus
-import sys
-sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
+
 
 bus_number = 1
 i2c_address = 0x76 # 16進数77番でi2c通信
@@ -188,8 +190,7 @@ if __name__ == '__main__':
             # print(str(pres) + "\t" + str(alt) + "\t" + str(temp) + "\t" + str(hum))
             print(
                 f'Press:{str(pres)}	Alt:{str(alt)}	Temp:{str(temp)}	Hum:{str(hum)}')
-            # Other.saveLog('BME280test', datetime.datetime.now(),
-            # $startTime - time.time(), pres, alt, temp, hum)
+            Other.saveLog('BME280test', datetime.datetime.now(), startTime - time.time(), pres, alt, temp, hum)
             # with open("preslog.txt","w")as f:
             #	f.write(str(pres)+ "\t" + str(alt) + "\t"+str(temp) + "\t" + str(hum) + "\n")
             time.sleep(0.8)
