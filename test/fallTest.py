@@ -108,7 +108,7 @@ def setup():
 	# with open(phaseLog, 'a') as f:
 	# 	pass
 
-	phaseChk = int(Other.phaseCheck(phaseLog))
+	phaseChk = Other.phaseCheck(phaseLog)
 	print(phaseChk)
 
 def close():
@@ -123,7 +123,7 @@ if __name__ == "__main__":
 		t_start = time.time()
 		# ------------------- Setup Phase --------------------- #
 		print("Program Start  {0}".format(time.time()))
-		Xbee.str_trans(f'Program Start {time.time()}')
+		Xbee.str_trans(f'Program Start {time.time() - t_start}')
 		Xbee.str_trans(f'Program Start {datetime.datetime.now()}')
 		setup()
 		print(phaseChk)
@@ -131,7 +131,9 @@ if __name__ == "__main__":
 
 		# ------------------- Waiting Phase --------------------- #
 		Other.saveLog(phaseLog, "2", "Waiting Phase Started", time.time() - t_start)
-		if phaseChk <= 2:
+		phaseChk = Other.phaseCheck(phaseLog)
+		Xbee.str_trans(f'Phase:{phaseChk}')
+		if phaseChk == 2:
 			t_wait_start = time.time()
 			while time.time() - t_wait_start <= t_setup:
 				Other.saveLog(waitingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), TSL2572.readLux(), BMC050.bmc050_read())
@@ -143,6 +145,8 @@ if __name__ == "__main__":
 
 		# ------------------- Release Phase ------------------- #
 		Other.saveLog(phaseLog, "3", "Release Phase Started", time.time() - t_start)
+		phaseChk = Other.phaseCheck(phaseLog)
+		Xbee.str_trans(f'Phase:{phaseChk}')
 		if phaseChk <= 3:
 			t_release_start = time.time()
 			print(f"Releasing Judgement Program Start  {time.time() - t_start}")
@@ -170,6 +174,8 @@ if __name__ == "__main__":
 		# ------------------- Landing Phase ------------------- #
 		Xbee.str_trans('Landing Phase')
 		Other.saveLog(phaseLog, "4", "Landing Phase Started", time.time() - t_start)
+		phaseChk = Other.phaseCheck(phaseLog)
+		Xbee.str_trans(f'Phase:{phaseChk}')
 		if phaseChk <= 4:
 			print(f'Landing Judgement Program Start  {time.time() - t_start}')
 			t_land_start = time.time()
@@ -203,6 +209,8 @@ if __name__ == "__main__":
 		# ------------------- Melting Phase ------------------- #
 		Xbee.str_trans("Melt Phase")
 		Other.saveLog(phaseLog,"5", "Melting Phase Started", time.time() - t_start)
+		phaseChk = Other.phaseCheck(phaseLog)
+		Xbee.str_trans(f'Phase:{phaseChk}')
 		if phaseChk <= 5:
 			print("Melting Phase Started")
 			Xbee.str_trans('Melting Phase Started')
@@ -215,6 +223,8 @@ if __name__ == "__main__":
 		# ------------------- ParaAvoidance Phase ------------------- #
 		Xbee.str_trans("ParaAvo Started")
 		Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start)
+		phaseChk = Other.phaseCheck(phaseLog)
+		Xbee.str_trans(f'Phase:{phaseChk}')
 		if phaseChk <= 6:
 			# Other.saveLog(phaseLog, '7', 'Parachute Avoidance Phase Started', time.time() - t_start)
 			t_ParaAvoidance_start = time.time()
@@ -239,7 +249,7 @@ if __name__ == "__main__":
 					time.sleep(1)
 			print(f'Prachute avoidance Started{time.time()-t_start}')
 			Xbee.str_trans(f'Prachute avoidance Started{time.time()-t_start}')
-		#--- first parachute detection ---#
+			#--- first parachute detection ---#
 			lon_land, lat_land = paraAvoidance21_2.land_point_save()
 			dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_land, lat_land)
 			while dis_from_land <= 3:
@@ -251,6 +261,8 @@ if __name__ == "__main__":
 		# ------------------- Panorama Shooting Phase ------------------- #
 		Xbee.str_trans('Panorama')
 		Other.saveLog(phaseLog, '7', 'Panorama Shooting phase', time.time() - t_start)
+		phaseChk = Other.phaseCheck(phaseLog)
+		Xbee.str_trans(f'Phase:{phaseChk}')
 		if phaseChk <= 7:
 			t_PanoramaShooting_start = time.time()
 			print(f'Panorama Shooting Phase Started {time.time() - t_start}')
