@@ -18,7 +18,7 @@ import time
 import datetime
 
 path_log = '/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance/test/log/TSL'
-filecount = len(glob.glob1(log_path, '*' + '.txt'))
+filecount = len(glob.glob1(path_log, '*' + '.txt'))
 
 class TSL2572:
     AGAIN_0_16 = 0
