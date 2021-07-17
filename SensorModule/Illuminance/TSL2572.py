@@ -89,7 +89,8 @@ if __name__ == '__main__':
         lux1 = ((adc[0] * 1.00) - (adc[1] * 1.87)) / cpl
         lux2 = ((adc[0] * 0.63) - (adc[1] * 1.00)) / cpl
         if ((lux1 <= 0) and (lux2 <= 0)):
-            print("0 Lx")
+            print(f'{lux1} Lx')
+            print(f'{lux2} Lx')
             Other.saveLog('LuxTest', datetime.datetime.now(),
                           time.time() - startTime, 0)
         elif (lux1 > lux2):

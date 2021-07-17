@@ -25,7 +25,7 @@ def bmc050_setup():
         time.sleep(0.1)
     except:
         time.sleep(0.1)
-        print("BMX055 Setup Error")
+        print("BMC050 Setup Error")
         i2c.write_byte_data(ACC_ADDRESS, 0x0F, 0x03)
         time.sleep(0.1)
         i2c.write_byte_data(ACC_ADDRESS, 0x10, 0x0F)

@@ -3,14 +3,14 @@ from PIL import Image
 import serial
 
 
-port = serial.Serial(
-    port="/dev/ttyAMA0",
-    baudrate=57600,
-    parity=serial.PARITY_NONE,
-    stopbits=serial.STOPBITS_ONE,
-    bytesize=serial.EIGHTBITS,
-    timeout=20
-)
+#port = serial.Serial(
+#    port="/dev/ttyAMA0",
+#    baudrate=57600,
+#    parity=serial.PARITY_NONE,
+#    stopbits=serial.STOPBITS_ONE,
+#    bytesize=serial.EIGHTBITS,
+#    timeout=5
+#)
 
 # 画像をバイト変換
 
@@ -32,7 +32,7 @@ def img_trans(string):
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
         bytesize=serial.EIGHTBITS,
-        timeout=20
+        timeout=10
     )
     port.write(string)
     port.close()
@@ -47,7 +47,7 @@ def str_trans(string):
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
         bytesize=serial.EIGHTBITS,
-        timeout=20
+        timeout=5
     )
     string = string + '\n'
     moji = string.encode()
@@ -57,10 +57,10 @@ def str_trans(string):
     ser.flush()
     ser.close()
 
-
+str_trans('!')
 str_trans('hello')
 # img1 = "/home/pi/Desktop/transfer-test/003.jpg"
-# # img_string = convert_string(img1)
+# img_string = convert_string(img1)
 # img_string = ImageToByte(img1)
 
 # img_trans(img_string)

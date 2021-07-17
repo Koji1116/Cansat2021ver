@@ -7,8 +7,8 @@ import difflib
 import pigpio
 import numpy as np
 import traceback
-
-RX = 18
+import Other
+RX = 20
 pi = pigpio.pi()
 
 ELLIPSOID_GRS80 = 1  # GRS80
