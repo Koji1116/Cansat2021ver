@@ -37,7 +37,7 @@ def phaseCheck(path):
 		return 0
 	phase = lastLine[0]
 	linecache.clearcache()
-	return phase
+	return int(phase)
 
 def positionCheck(path):
 	num_lines = sum(1 for line in open(path))
