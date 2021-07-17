@@ -66,7 +66,7 @@ def Parachute_area_judge(longitude_land,latitude_land):
 
 
 def Parachute_Avoidance(flug):
-	#--- There is Parachute arround rover ---#
+	#--- There is Parachute around rover ---#
 	if flug == 1:
 		#--- Avoid parachute by back control ---#
 		try:

@@ -6,7 +6,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 import cv2
 import numpy as np
 import time
-import Camera
+import Capture
 import Xbee
 import motor
 import Other

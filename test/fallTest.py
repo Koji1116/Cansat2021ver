@@ -263,14 +263,12 @@ if __name__ == "__main__":
 				while dis_from_land < 3:
 					flug, _, _ = paradetection21.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
 					paraAvoidance21_2.Parachute_Avoidance(flug)
-
-
+					_, lon_new, lat_new, _, _ = GPS.readGPS()
+					dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_new, lat_new)
 			except KeyboardInterrupt:
 				print("Emergency!")
-		
-
 			except Exception as e:
-					print(e)
+				print(e)
 		        print(traceback.format_exc())
 	        print('finish')
 
