@@ -48,8 +48,8 @@ bmx055data = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 t_setup = 60	#variable to set waiting time after setup
 t = 1			#Unknown Variable
-x = 300			#time for release(loopx)
-y = 180			#time for land(loopy)
+t_out_release = 300			#time for release(loopx)
+t_out_land = 180			#time for land(loopy)
 
 t_start = 0.0	#time when program started
 
@@ -123,8 +123,8 @@ if __name__ == "__main__":
 		t_start = time.time()
 		# ------------------- Setup Phase --------------------- #
 		print("Program Start  {0}".format(time.time()))
-		Xbee.str_trans('Program Start {0}'.format(time.time()))
-		Xbee.str_trans('Program Start {0}'.format(datetime.datetime.now()))
+		Xbee.str_trans(f'Program Start {time.time()}')
+		Xbee.str_trans(f'Program Start {datetime.datetime.now()}')
 		setup()
 		print(phaseChk)
 		Xbee.str_trans(phaseChk)
@@ -144,25 +144,19 @@ if __name__ == "__main__":
 		# ------------------- Release Phase ------------------- #
 		Other.saveLog(phaseLog, "3", "Release Phase Started", time.time() - t_start)
 		if phaseChk <= 3:
-			tx1 = time.time()
-			tx2 = tx1
-			print("Releasing Judgement Program Start  {0}".format(time.time() - t_start))
-			#loopx
-			bme280Data = BME280.bme280_read()
-			while tx2 - tx1 <= x:
+			t_release_start = time.time()
+			print(f"Releasing Judgement Program Start  {time.time() - t_start}")
+			# bme280Data = BME280.bme280_read()
+			while time.time() - t_release_start <= t_out_release:
+				Xbee.str_trans('loop_release')
 				_, gpsreleasejudge = Release.gpsdetect(releasealt)
 				_, pressreleasejudge = Release.pressdetect(releasepress)
-
 				if gpsreleasejudge == 1 or pressreleasejudge == 1:
 					break
 				else:
-					print("Release not yet")
+					print("RELEASE NOT YET")
 				Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
 				time.sleep(0.5)
-
-				# Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
-				# time.sleep(0.5)
-				tx2 = time.time()
 
 			else:
 				print("RELEASE TIMEOUT")
@@ -174,17 +168,14 @@ if __name__ == "__main__":
 			Xbee.str_trans("RELEASE")
 
 		# ------------------- Landing Phase ------------------- #
+		Xbee.str_trans('Landing Phase')
 		Other.saveLog(phaseLog, "4", "Landing Phase Started", time.time() - t_start)
 		if phaseChk <= 4:
-			print("Landing Judgement Program Start  {0}".format(time.time() - t_start))
-			ty1 = time.time()
-			ty2 = ty1
+			print(f'Landing Judgement Program Start  {time.time() - t_start}')
+			t_land_start = time.time()
 			#loopy
-			gpsData = GPS.readGPS()
-			bme280Data = BME280.bme280_read()
-			while ty2 - ty1 <= y:
-				Xbee.str_trans("loopY")
-
+			while time.time() - t_land_start <= t_out_land:
+				Xbee.str_trans("loop_land")
 				# Initialize conditions
 				presslandjudge = 0
 				gpslandjudge = 0
@@ -201,41 +192,34 @@ if __name__ == "__main__":
 					break
 				else:
 					print("LAND NOT YET")
-
-				gpsData = GPS.readGPS()
-				bme280Data = BME280.bme280_read()
-				bmc050data = BMC050.bmc050_read()
-
 				Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
 				time.sleep(1)
-				Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
-				time.sleep(1)
-				Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
-				time.sleep(1)
-				ty2 = time.time()
 			else:
 				print("LAND TIMEOUT")
 			print("THE ROVER HAS LANDED")
-			pi.write(22,1)
+			# pi.write(22,1)
 			Xbee.str_trans("LAND")
 
 		# ------------------- Melting Phase ------------------- #
-		Xbee.str_trans("Melt")
+		Xbee.str_trans("Melt Phase")
 		Other.saveLog(phaseLog,"5", "Melting Phase Started", time.time() - t_start)
-		if(phaseChk <= 5):
+		if phaseChk <= 5:
 			print("Melting Phase Started")
+			Xbee.str_trans('Melting Phase Started')
 			Other.saveLog(meltingLog, time.time() - t_start, GPS.readGPS(), "Melting Start")
 			Melting.Melting()
+			print('Melting Finished')
+			Xbee.str_trans('Melting Finished')
 			Other.saveLog(meltingLog, time.time() - t_start, GPS.readGPS(), "Melting Finished")
 
 		# ------------------- ParaAvoidance Phase ------------------- #
-		Xbee.str_trans("ParaAvo")
+		Xbee.str_trans("ParaAvo Started")
 		Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start)
 		if phaseChk <= 6:
-			Xbee.str_trans('P7S')
-			Other.saveLog(phaseLog, '7', 'Parachute Avoidance Phase Started', time.time() - t_start)
+			# Other.saveLog(phaseLog, '7', 'Parachute Avoidance Phase Started', time.time() - t_start)
 			t_ParaAvoidance_start = time.time()
 			print('Parachute Avoidance Phase Started {0}'.format(time.time() - t_start))
+			print(f'Parachute Avoicance Phase Started{time.time()-t_start}')
 			print("START: Judge covered by Parachute")
 
 			#--- Paracute judge ---#
@@ -244,6 +228,7 @@ if __name__ == "__main__":
 			while time.time() - t_parajudge < 60:
 				Luxflug, Lux = paradetection21.ParaJudge(LuxThd)
 				print(Luxflug)
+				Xbee.str_trans(f'Luxflug:{Luxflug}')
 				if Luxflug == 1:
 					print(f'rover is not covered with parachute. Lux:{Lux}')
 					Xbee.str_trans(f'rover is not covered with parachute. Lux:{Lux}')
@@ -252,27 +237,16 @@ if __name__ == "__main__":
 					print(f'rover is covered with parachute! Lux:{Lux}')
 					Xbee.str_trans(f'rover is covered with parachute! Lux:{Lux}')
 					time.sleep(1)
-			print("START: Parachute avoidance")
+			print(f'Prachute avoidance Started{time.time()-t_start}')
+			Xbee.str_trans(f'Prachute avoidance Started{time.time()-t_start}')
 		#--- first parachute detection ---#
 			lon_land, lat_land = paraAvoidance21_2.land_point_save()
 			dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_land, lat_land)
-			while dis_from_land < 3:
+			while dis_from_land <= 3:
 				flug, _, _ = paradetection21.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
 				paraAvoidance21_2.Parachute_Avoidance(flug)
 				_, lon_new, lat_new, _, _ = GPS.readGPS()
 				dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_new, lat_new)
-
-
-            
-			# print("ParaAvoidance Phase Started")
-			# Other.saveLog(paraAvoidanceLog, time.time() - t_start, GPS.readGPS(), "ParaAvoidance Start")
-			# print("START: Judge covered by Parachute")
-			# ParaAvoidance.ParaJudge()
-			# print("START: Parachute avoidance")
-			# paraExsist = ParaAvoidance.ParaAvoidance()
-			# Other.saveLog(paraAvoidanceLog, time.time() - t_start, GPS.readGPS(), paraExsist)
-			# Other.saveLog(paraAvoidanceLog, time.time() - t_start, GPS.readGPS(), "ParaAvoidance Finished")
-
 
 		# ------------------- Panorama Shooting Phase ------------------- #
 		Xbee.str_trans('Panorama')
