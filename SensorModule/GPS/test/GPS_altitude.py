@@ -12,7 +12,12 @@ import glob
 RX = 20
 pi = pigpio.pi()
 
+
+#-------for test --------# takayama
 log_altitude_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/altitude_test'
+filecount = len(glob.glob1(log_altitude_path, '*'+'.txt'))
+
+
 
 ELLIPSOID_GRS80 = 1  # GRS80
 ELLIPSOID_WGS84 = 2  # WGS84
@@ -269,11 +274,11 @@ if __name__ == '__main__':
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
-                filecount = len(glob.glob1(log_altitude_path, '*'+'.txt'))
                 Other.saveLog(log_altitude_path + str(filecount),datetime.datetime.now(), starttime-time.time(), sHeight, gHeight)
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()
+        print(filecount)
         print("\r\nKeyboard Intruppted, Serial Closed")
     except:
         closeGPS()
