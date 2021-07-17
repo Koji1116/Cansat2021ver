@@ -4,6 +4,8 @@
 TSL2572 Control Module via I2C
  2018/11/15
 """
+#https://www.switch-science.com/catalog/5321/
+#より取得
 
 import smbus
 import time
