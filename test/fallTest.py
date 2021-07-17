@@ -25,13 +25,12 @@ import GPS
 import BMC050
 import BME280
 import Capture
-import TSL2561
 import Release
 import Land
 import GPS
 import Melting
 import Motor
-import TSL2561
+import TSL2572
 import paradetection21
 import paraAvoidance21_2
 import Other
@@ -91,7 +90,7 @@ releaseLog = "/home/pi/log/releaseLog.txt"
 landingLog = "/home/pi/log/landingLog.txt"
 meltingLog = "/home/pi/log/meltingLog.txt"
 paraAvoidanceLog = "/home/pi/log/paraAvoidanceLog.txt"
-panoramapath = '/home/pi/Desktop/Cansat2021ver/photosotorage/panorama'
+panoramapath = '/home/pi/photosotorage/panorama'
 
 def setup():
 	global phaseChk
@@ -104,6 +103,7 @@ def setup():
 	BME280.bme280_calib_param()
 	BMC050.bmc050_setup()
 	GPS.openGPS()
+	TSL2572.initTSL2572
 
 	# with open(phaseLog, 'a') as f:
 	# 	pass
@@ -134,7 +134,7 @@ if __name__ == "__main__":
 		if phaseChk <= 2:
 			t_wait_start = time.time()
 			while time.time() - t_wait_start <= t_setup:
-				Other.saveLog(waitingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), TSL2561.readLux(), BMC050.bmc050_read())
+				Other.saveLog(waitingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), TSL2572.readLux(), BMC050.bmc050_read())
 				print("Waiting")
 				Xbee.str_trans("Sleep")
 				time.sleep(1)
@@ -229,48 +229,39 @@ if __name__ == "__main__":
 			Other.saveLog(meltingLog, time.time() - t_start, GPS.readGPS(), "Melting Finished")
 
 		# ------------------- ParaAvoidance Phase ------------------- #
-		"""
-		パラシュート回避行動を追加したい。
-		"""
 		Xbee.str_trans("ParaAvo")
 		Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start)
-		if(phaseChk <= 6):
+		if phaseChk <= 6:
 			Xbee.str_trans('P7S')
 			Other.saveLog(phaseLog, '7', 'Parachute Avoidance Phase Started', time.time() - t_start)
 			t_ParaAvoidance_start = time.time()
 			print('Parachute Avoidance Phase Started {0}'.format(time.time() - t_start))
 			print("START: Judge covered by Parachute")
-	
-	        t2 = time.time()
-	        t1 = t2
-	#--- Paracute judge ---#
-	#--- timeout is 60s ---#
-	        while t2 - t1 < 60:
-		        Luxflug = ParaDetection.ParaJudge(5000)
-		        print(Luxflug)
-		        if Luxflug[0] == 1:
-			        break
-		        t1 =time.time()
-		        time.sleep(1)
-		        print("rover is covered with parachute!")
 
-	        print("START: Parachute avoidance")
-
-	        try:
+			#--- Paracute judge ---#
+			#--- timeout is 60s ---#
+			t_parajudge = time.time()
+			while time.time() - t_parajudge < 60:
+				Luxflug, Lux = paradetection21.ParaJudge(LuxThd)
+				print(Luxflug)
+				if Luxflug == 1:
+					print(f'rover is not covered with parachute. Lux:{Lux}')
+					Xbee.str_trans(f'rover is not covered with parachute. Lux:{Lux}')
+					break
+				else:
+					print(f'rover is covered with parachute! Lux:{Lux}')
+					Xbee.str_trans(f'rover is covered with parachute! Lux:{Lux}')
+					time.sleep(1)
+			print("START: Parachute avoidance")
 		#--- first parachute detection ---#
-		        a,b = land_point_save()
-		        length = Parachute_area_judge(a,b)
-		        while length < 3:
-		            flug, area, photoname = ParaDetection.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
-		            Parachute_Avoidance(flug)
+			lon_land, lat_land = paraAvoidance21_2.land_point_save()
+			dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_land, lat_land)
+			while dis_from_land < 3:
+				flug, _, _ = paradetection21.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
+				paraAvoidance21_2.Parachute_Avoidance(flug)
+				_, lon_new, lat_new, _, _ = GPS.readGPS()
+				dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_new, lat_new)
 
-	        except KeyboardInterrupt:
-		        print("Emergency!")
-		
-
-	        except:
-		        print(traceback.format_exc())
-	        print('finish')
 
             
 			# print("ParaAvoidance Phase Started")
@@ -288,7 +279,7 @@ if __name__ == "__main__":
 		Other.saveLog(phaseLog, '7', 'Panorama Shooting phase', time.time() - t_start)
 		if phaseChk <= 7:
 			t_PanoramaShooting_start = time.time()
-			print('Panorama Shooting Phase Started {0}'.format(time.time() - t_start))
+			print(f'Panorama Shooting Phase Started {time.time() - t_start}')
 			magdata = Calibration.magdata_matrix()
 			magx_off, magy_off = Calibration.calculate_offset(magdata)
 			panoramaShootingtest.shooting(magx_off, magy_off, panoramapath)

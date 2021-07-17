@@ -1,14 +1,19 @@
 import sys
 sys.path.append('')
-sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/Camera')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Illuminance')
 import time
 import cv2
 import numpy as np
 import Capture
-import Environmental
+import TSL2572
 
 def ParaJudge(LuxThd):
-	lux = TSL2561.readLux()
+	'''
+	パラシュート被っているかを照度センサを用いて判定する関数
+	引数は照度の閾値
+	'''
+	lux = TSL2572.readLux()
 	#print("lux1: "+str(lux[0]))
 
 	#--- rover is covered with parachute ---#
@@ -67,10 +72,10 @@ def ParaDetection(imgpath, width , height , H_min, H_max, S_thd):
 
 if __name__ == "__main__":
 	
-	TSL2561.tsl2561_setup()
+	TSL2572.tsl2572_setup()
 	#--- lux data test ---#
 	try:
-		while 1:#これだと無限ループでパラシュート検知のパートに行かない？
+		while 1:
 			ParaJudge(100)
 			time.sleep(1)
 
@@ -83,9 +88,12 @@ if __name__ == "__main__":
 			flug = -1
 			while flug == -1:
 				f, a, n = ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
-			print("flug", f)
-			print("area", a)
-			print("name", n)
+				print(f'flug:{f}	area:{a}	name:{n}')
+			print('ParaDetected')
+			print(f'flug:{f}	area:{a}	name:{n}')
+			# print("flug", f)
+			# print("area", a)
+			# print("name", n)
 	except KeyboardInterrupt:
 		print('Stop')
 	except:

@@ -1,15 +1,15 @@
 import sys
-sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/TSL2561')
+sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/TSL2572')
 sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/Camera')
 import time
 import cv2
 import numpy as np
 import Capture
-import TSL2561
+import TSL2572
 
 
 def ParaJudge(LuxThd):
-	lux=TSL2561.readLux()
+	lux=TSL2572.readLux()
 	#print("lux1: "+str(lux[0]))
 
 	if lux[0] < LuxThd:

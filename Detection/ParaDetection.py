@@ -8,7 +8,7 @@ import Capture
 import Environmental
 
 def ParaJudge(LuxThd):
-	lux = TSL2561.readLux()
+	lux = TSL2572.readLux()
 	#print("lux1: "+str(lux[0]))
 
 	#--- rover is covered with parachute ---#
@@ -58,7 +58,7 @@ def ParaDetection(imgpath, width , height , H_min, H_max, S_thd):
 
 if __name__ == "__main__":
 	
-	TSL2561.tsl2561_setup()
+	TSL2572.tsl2572_setup()
 	#--- lux data test ---#
 	try:
 		while 1:

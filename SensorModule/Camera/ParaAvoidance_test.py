@@ -1,7 +1,7 @@
 import sys
 sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/Camera')
 sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/Motor')
-sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/TSL2561')
+sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/Illuminance')
 import time
 import difflib
 import pigpio

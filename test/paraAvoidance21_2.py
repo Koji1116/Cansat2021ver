@@ -36,7 +36,6 @@ def land_point_save():
 	except KeyboardInterrupt:
 		GPS.closeGPS()
 		print("\r\nKeyboard Intruppted, Serial Closed")
-
 	except:
 		GPS.closeGPS()
 		print (traceback.format_exc())
@@ -67,7 +66,7 @@ def Parachute_area_judge(longitude_land,latitude_land):
 
 
 def Parachute_Avoidance(flug):
-	#--- There is Parachute arround rover ---#
+	#--- There is Parachute around rover ---#
 	if flug == 1:
 		#--- Avoid parachute by back control ---#
 		try:
@@ -95,19 +94,22 @@ def Parachute_Avoidance(flug):
 	if flug == 0:
 		try:
 			#--- rotate ---#
-			run = pwm_control.Run()
-			run.straight_h()
-			time.sleep(0.5)
+			# run = pwm_control.Run()
+			# run.straight_h()
+			# time.sleep(0.5)
+			motor.motor(1, 1, 0.5)
 
 		except KeyboardInterrupt:
-			run = pwm_control.Run()
-			run.stop()
-			time.sleep(1)
+			# run = pwm_control.Run()
+			# run.stop()		モータ関数変わってるからなくていい？takayama
+			# time.sleep(1)
+			pass
 
 		finally:
-			run = pwm_control.Run()
-			run.stop()
-			time.sleep(1)
+			# run = pwm_control.Run()
+			# run.stop()		モータ関数変わってるからなくていい？takayama
+			# time.sleep(1)
+			pass
 		#--- finish ---#
 
 if __name__ == '__main__':
