@@ -8,8 +8,12 @@ import pigpio
 import numpy as np
 import traceback
 import Other
+import glob
+
 RX = 20
 pi = pigpio.pi()
+
+log_dynamic_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/dynamic_test'
 
 ELLIPSOID_GRS80 = 1  # GRS80
 ELLIPSOID_WGS84 = 2  # WGS84
@@ -266,7 +270,8 @@ if __name__ == '__main__':
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
-                Other.saveLog('GPS_dynamic_test',datetime.datetime.now(), starttime-time.time(), lat, lon)
+                filecount = len(glob.glob1(log_dynamic_path, '*' + '.txt'))
+                Other.saveLog(log_dynamic_path + str(filecount), datetime.datetime.now(), starttime-time.time(), lat, lon)
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()

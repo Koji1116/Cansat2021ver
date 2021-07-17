@@ -12,7 +12,7 @@ import glob
 RX = 20
 pi = pigpio.pi()
 
-log_static_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/static_test'
+log_altitude_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/altitude_test'
 
 ELLIPSOID_GRS80 = 1  # GRS80
 ELLIPSOID_WGS84 = 2  # WGS84
@@ -256,7 +256,7 @@ def vincentyInverse(lat1, lon1, lat2, lon2, ellipsoid=None):
 if __name__ == '__main__':
     try:
         openGPS()
-        t_start = time.time()
+        starttime = time.time()
         while True:
             utc, lat, lon, sHeight, gHeight = readGPS()
             if utc == -1.0:
@@ -269,8 +269,8 @@ if __name__ == '__main__':
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
-                filecount = len(glob.glob1(log_static_path, '*' + '.txt'))
-                Other.saveLog(log_static_path + str(filecount), datetime.datetime.now(), time.time() - t_start, lat, lon)
+                filecount = len(glob.glob1(log_altitude_path, '*'+'.txt'))
+                Other.saveLog(log_altitude_path + str(filecount),datetime.datetime.now(), starttime-time.time(), sHeight, gHeight)
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()
