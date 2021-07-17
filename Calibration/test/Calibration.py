@@ -82,13 +82,9 @@ def calculate_offset(magdata):
 	magz_min = magz_array[np.argmin(magz_array)]          
 	
 	#--- calucurate offset ---#
-	global magx_off , magy_off , magz_off
 	magx_off = (magx_max + magx_min)/2
 	magy_off = (magy_max + magy_min)/2
 	magz_off = (magz_max + magz_min)/2
-	#print("magx_off = "+str(magx_off))
-	#print("magy_off = "+str(magy_off))
-	#print("magz_off = "+str(magz_off))
 	return magx_array , magy_array , magz_array , magx_off , magy_off , magz_off
 
 def plot_data_2D(magx_array,magy_array):
@@ -191,35 +187,17 @@ if __name__ == "__main__":
 		#--- calibration ---#
 		while True:
 			#--- calculate offset ---#
-			magdata_matrix_hand()
-			calculate_offset(magdata)
+			magdata = magdata_matrix_hand()
+			magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = calculate_offset(magdata)
 			time.sleep(0.1)
 			#--- plot data ---#
 			plot_data_2D(magx_array,magy_array)
-			#plot_data_3D(magx_array,magy_array,magz_array)
 			
 			#--- calculate θ ---#
-			get_data()
+			magx, magy = get_data()
 			calculate_angle_2D(magx,magy,magx_off,magy_off)
-			#calculate_angle_3D(accx,accy,accz,magx,magy,magz,magx_off,magy_off,magz_off)
 
-			#--- rotate contorol ---#
-			judge = rotate_control(θ,lon2,lat2,t_start)
-			if judge == False:
-				try:
-					run = pwm_control.Run()
-					run.straight_h()
-					time.sleep(1)
-				finally:
-					run = pwm_control.Run()
-					run.stop()
-					time.sleep(1)					
-			else:
-				run = pwm_control.Run()
-				run.straight_h()
-				time.sleep(1)
-				break
-	
+
 	except KeyboardInterrupt:
 		print("ERROR")
 	
