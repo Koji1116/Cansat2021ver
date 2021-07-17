@@ -193,7 +193,7 @@ if __name__ == '__main__':
             # print(str(pres) + "\t" + str(alt) + "\t" + str(temp) + "\t" + str(hum))
             print(
                 f'Press:{str(pres)}	Alt:{str(alt)}	Temp:{str(temp)}	Hum:{str(hum)}')
-            Other.saveLog(path_log, datetime.datetime.now(), time.time() - startTime, pres, alt, temp, hum)
+            Other.saveLog(path_log + str(filecount), datetime.datetime.now(), time.time() - startTime, pres, alt, temp, hum)
             # with open("preslog.txt","w")as f:
             #	f.write(str(pres)+ "\t" + str(alt) + "\t"+str(temp) + "\t" + str(hum) + "\n")
             time.sleep(0.8)
