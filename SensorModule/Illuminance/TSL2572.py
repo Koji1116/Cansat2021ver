@@ -204,7 +204,7 @@ def main():
         tsl2572.meas_single()
         # tsl2572.print_meas()
         lux = tsl2572.lux
-        print(f'lux:{lux}')
+        print('lux:{0}'.format(lux))
     else:
         print('ID Read Failed')
 
