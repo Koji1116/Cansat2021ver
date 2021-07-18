@@ -197,7 +197,7 @@ class TSL2572:
     
     def lux(self):
           lux = self.lux
-          return int(lux)
+          return str(lux)
         
 
 def main():
