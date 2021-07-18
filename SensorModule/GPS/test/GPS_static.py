@@ -259,22 +259,22 @@ if __name__ == '__main__':
     try:
         openGPS()
         t_start = time.time()
-        filecount = len(glob.glob1(log_static_path, '*' + '.txt'))
+        filecount = len(glob.glob1(log_static_path + '*'))
         while True:
             utc, lat, lon, sHeight, gHeight = readGPS()
             if utc == -1.0:
                 if lat == -1.0:
                     print("Reading GPS Error")
-                    Other.saveLog(log_static_path + str(filecount),datetime.datetime.now(), time.time() - t_start, 0, 0)
+                    Other.saveLog(log_static_path + str(filecount) + ".txt",datetime.datetime.now(), time.time() - t_start, 0, 0)
                     # pass
                 else:
                     # pass
                     print("Status V")
-                    Other.saveLog(log_static_path + str(filecount),datetime.datetime.now(), time.time() - t_start, 0, 0)
+                    Other.saveLog(log_static_path + str(filecount) + ".txt",datetime.datetime.now(), time.time() - t_start, 0, 0)
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
-                Other.saveLog(log_static_path + str(filecount), datetime.datetime.now(), time.time() - t_start, lat, lon)
+                Other.saveLog(log_static_path + str(filecount) + ".txt", datetime.datetime.now(), time.time() - t_start, lat, lon)
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()
