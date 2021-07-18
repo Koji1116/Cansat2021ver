@@ -218,7 +218,7 @@ if __name__ == '__main__':
     try:
         while 1:
             lux = tsl2572.lux
-            print(f'lux:{lux}')
+            print('lux:{0}'.format(lux))
             Other.saveLog(path_log + str(filecount), datetime.datetime.now(), time.time() - t_start, lux)
     except KeyboardInterrupt:
         print(filecount)
