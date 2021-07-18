@@ -13,7 +13,7 @@ import Other
 import time
 import datetime
 
-path_log = '/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance/test/log/TSL'
+path_log = '/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance/test/TSL'
 filecount = len(glob.glob1(path_log, '*' + '.txt'))
 
 
