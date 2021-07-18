@@ -15,7 +15,7 @@ import time
 import traceback
 from threading import Thread
 #--- original module ---#
-import BMC050
+# import BMC050
 import mag
 import Xbee
 # import pwm_control
@@ -130,20 +130,7 @@ def calculate_offset(magdata):
 	magz_off = (magz_max + magz_min)/2
 	return magx_array , magy_array , magz_array , magx_off , magy_off , magz_off
 
-def plot_data_2D(magx_array,magy_array):
-	plt.scatter(magx_array,magy_array,label ="Calibration")
-	plt.legend()
-	plt.show()
 
-def plot_data_3D(magx_array,magy_array,magz_array):
-	fig = plt.figure()
-	ax = Axes3D(fig)
-	#--- label name ---#
-	ax.set_xlabel("X")
-	ax.set_ylabel("Y")
-	ax.set_zlabel("Z")
-	ax.plot(magx_array , magy_array , magz_array , marker="o" , linestyle='None')
-	plt.show()
 
 def calculate_angle_2D(magx,magy,magx_off,magy_off):
 	#--- recognize rover's direction ---#
@@ -224,7 +211,7 @@ def timer(t):
 if __name__ == "__main__":
 	try:
 		#--- setup ---#
-		BMC050.bmc050_setup()
+		mag.bmc050_setup()
 		t_start = time.time()
 		#--- calibration ---#
 		magdata_Old = magdata_matrix_hand()
