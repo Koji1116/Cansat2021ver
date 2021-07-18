@@ -196,7 +196,8 @@ class TSL2572:
         print( ' Lux : {:.1f}lux'.format(self.lux))
     
     def lux(self):
-          return self.lux
+          lux = self.lux
+          return int(lux)
         
 
 def main():
