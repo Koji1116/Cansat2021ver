@@ -188,9 +188,8 @@ if __name__ == '__main__':
         while 1:
             temp, pres, hum, alt = bme280_read()
             # print(str(pres) + "\t" + str(alt) + "\t" + str(temp) + "\t" + str(hum))
-            print(
-                f'Press:{str(pres)}	Alt:{str(alt)}	Temp:{str(temp)}	Hum:{str(hum)}')
-            Other.saveLog('BME280test', datetime.datetime.now(), time.time() - startTime, pres, alt, temp, hum)
+            print(f'Press:{str(pres)}	Alt:{str(alt)}	Temp:{str(temp)}	Hum:{str(hum)}')
+            Other.saveLog('BME280test2', datetime.datetime.now(), time.time() - startTime, pres, alt, temp, hum)
             # with open("preslog.txt","w")as f:
             #	f.write(str(pres)+ "\t" + str(alt) + "\t"+str(temp) + "\t" + str(hum) + "\n")
             time.sleep(0.8)
