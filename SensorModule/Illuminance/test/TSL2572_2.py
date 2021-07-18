@@ -198,8 +198,10 @@ def main():
         #tsl2572.print_reg()
         lux = tsl2572.lux
         print(lux)
+        return lux
     else:
         print('ID Read Failed')
+    
 
 if __name__ == '__main__':
     while 1:
