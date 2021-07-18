@@ -232,7 +232,7 @@ if __name__ == "__main__":
 		magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
 		time.sleep(0.1)
 		#----Take magnetic data considering offset----#
-		magdata_new = magdata_matrix_hand_off()
+		magdata_new = magdata_matrix_hand_offset()
 		magx_array_new = magdata_new[:,0]
 		magy_array_new = magdata_new[:,1]
 		magz_array_new = magdata_new[:,2]
