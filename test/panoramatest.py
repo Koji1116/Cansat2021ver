@@ -4,7 +4,7 @@ import glob
 import time
 
 srcdir = '/home/pi/Desktop/Cansat2021ver/photosotorage'
-dstdir = '/home/pi/Desktop/Cansat2021ver/panorama'
+dstdir = '/home/pi/Desktop/Cansat2021ver'
 
 
 def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
