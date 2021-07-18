@@ -259,6 +259,7 @@ if __name__ == '__main__':
     try:
         openGPS()
         t_start = time.time()
+        filecount = len(glob.glob1(log_static_path, '*' + '.txt'))
         while True:
             utc, lat, lon, sHeight, gHeight = readGPS()
             if utc == -1.0:
