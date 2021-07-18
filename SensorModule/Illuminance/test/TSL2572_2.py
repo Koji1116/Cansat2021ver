@@ -4,9 +4,18 @@
 TSL2572 Control Module via I2C
  2018/11/15
 """
-
+import sys
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 import smbus
 import time
+import glob
+import Other
+import time
+import datetime
+
+path_log = '/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance/test/log/TSL'
+filecount = len(glob.glob1(path_log, '*' + '.txt'))
+
 
 class TSL2572:
     AGAIN_0_16 = 0
@@ -204,9 +213,11 @@ def main():
     
 
 if __name__ == '__main__':
+    t_start = time.time()
     while 1:
         lux = main()
         print(f'lux:{lux}')
+        Other.saveLog(path_log + str(filecount), datetime.datetime.now(), time.time() - t_start, lux)
 
 
 
