@@ -197,7 +197,7 @@ class TSL2572:
     # Print lux
     def print_meas(self):
         print( ' Lux : {:.1f}lux'.format(self.lux))
-        print(f'Lux:')
+
 
     def lux(self):
         return self.lux
