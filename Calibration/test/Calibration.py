@@ -51,7 +51,7 @@ def get_data():
 	magz = magData[2]
 	return magx, magy, magz
 
-def get_data_offset(magx_off, magy_offset):
+def get_data_offset(magx_off, magy_off, magz_off):
 	"""
 	MBC050からオフセットを考慮して磁気データをえる
 	"""
