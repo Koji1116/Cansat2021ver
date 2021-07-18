@@ -20,7 +20,7 @@ def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
     dstext:できたものの拡張子
     """
     srcfilecount = len(glob.glob1(srcdir + '/', '*'+srcext))
-    resultcount = len(glob.glob1(dstdir, srcdir, '*'+dstext))
+    resultcount = len(glob.glob1(dstdir, srcdir + '*'+dstext))
     photos = []
 
     for i in range(1, srcfilecount + 1):
