@@ -4,8 +4,12 @@
 TSL2572 Control Module via I2C
  2018/11/15
 """
-#https://www.switch-science.com/catalog/5321/
-#より取得
+
+
+"""
+TSL2572 Control Module via I2C
+ 2018/11/15
+"""
 
 import smbus
 import time
@@ -188,27 +192,24 @@ class TSL2572:
     # Print lux
     def print_meas(self):
         print( ' Lux : {:.1f}lux'.format(self.lux))
-        print(f'Lux:')
-
+    
     def lux(self):
-        return self.lux
+          lux = self.lux
+          return str(lux)
         
 
 def main():
     tsl2572 = TSL2572(0x39)
     if tsl2572.id_read():
         tsl2572.meas_single()
-        # tsl2572.print_reg()
-        tsl2572.print_meas()
+        # tsl2572.print_meas()
+        lux = tsl2572.lux
+        print('lux:{0}'.format(lux))
     else:
         print('ID Read Failed')
 
 if __name__ == '__main__':
-    tsl2572 = TSL2572(0x39)
-    lux = tsl2572.lux()
-    while 1:
-        print(lux)
-    
+    main()
 
 
 

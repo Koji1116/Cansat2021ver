@@ -8,7 +8,7 @@ import time
 from smbus import SMBus
 import glob
 
-path_log = '/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental/log/BME'
+path_log = '/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental/test/BME'
 filecount = len(glob.glob1(path_log, '*' + '.txt'))
 
 bus_number = 1
@@ -191,8 +191,7 @@ if __name__ == '__main__':
         while 1:
             temp, pres, hum, alt = bme280_read()
             # print(str(pres) + "\t" + str(alt) + "\t" + str(temp) + "\t" + str(hum))
-            print(
-                f'Press:{str(pres)}	Alt:{str(alt)}	Temp:{str(temp)}	Hum:{str(hum)}')
+            print(f'Press:{str(pres)}	Alt:{str(alt)}	Temp:{str(temp)}	Hum:{str(hum)}')
             Other.saveLog(path_log + str(filecount), datetime.datetime.now(), time.time() - startTime, pres, alt, temp, hum)
             # with open("preslog.txt","w")as f:
             #	f.write(str(pres)+ "\t" + str(alt) + "\t"+str(temp) + "\t" + str(hum) + "\n")

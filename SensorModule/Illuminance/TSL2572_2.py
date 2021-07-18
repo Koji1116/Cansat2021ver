@@ -5,19 +5,8 @@ TSL2572 Control Module via I2C
  2018/11/15
 """
 
-
-
-import sys
-sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 import smbus
 import time
-import glob
-import Other
-import time
-import datetime
-
-path_log = '/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance/test/log/TSL'
-filecount = len(glob.glob1(path_log, '*' + '.txt'))
 
 class TSL2572:
     AGAIN_0_16 = 0
@@ -197,33 +186,20 @@ class TSL2572:
     # Print lux
     def print_meas(self):
         print( ' Lux : {:.1f}lux'.format(self.lux))
-
-
-    def lux(self):
-        return self.lux
         
 
 def main():
     tsl2572 = TSL2572(0x39)
     if tsl2572.id_read():
         tsl2572.meas_single()
-        # tsl2572.print_reg()
+        #tsl2572.print_reg()
         tsl2572.print_meas()
     else:
         print('ID Read Failed')
 
 if __name__ == '__main__':
-    tsl2572 = TSL2572(0x39)
-    t_start = time.time()
-    try:
-        while 1:
-            lux = tsl2572.lux
-            print('lux:{0}'.format(lux))
-            Other.saveLog(path_log + str(filecount), datetime.datetime.now(), time.time() - t_start, lux)
-    except KeyboardInterrupt:
-        print(filecount)
-    except Exception as e:
-        print(e.message)
+    while 1:
+        main()
 
 
 

@@ -6,8 +6,8 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 
 #--- must be installed module ---#
-import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import Axes3D
+# import matplotlib.pyplot as plt
+# from mpl_toolkits.mplot3d import Axes3D
 import numpy as np
 #--- default module ---#
 import math
@@ -15,7 +15,7 @@ import time
 import traceback
 from threading import Thread
 #--- original module ---#
-import BMC050
+# import BMC050
 import mag
 import Xbee
 # import pwm_control
@@ -51,7 +51,7 @@ def get_data():
 	magz = magData[2]
 	return magx, magy, magz
 
-def get_data_offset(magx_off, magy_offset):
+def get_data_offset(magx_off, magy_off, magz_off):
 	"""
 	MBC050からオフセットを考慮して磁気データをえる
 	"""
@@ -89,18 +89,18 @@ def magdata_matrix_hand():
 		print(e.message())
 	return magdata
 
-def magdata_matrix_hand_offset():
+def magdata_matrix_hand_offset(magx_off, magy_off, magz_off):
 	"""
 	オフセットを考慮したデータセットを取得するための関数
 	"""
 	try:
-		magx, magy, magz = get_data_offset()
+		magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
 		magdata = np.array([[magx, magy, magz]])
 		for i in range(60):
 			print('少し回転')
 			time.sleep(1)
 			print(f'{i+1}回目')
-			magx, magy, magz = get_data()
+			magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
 			#--- multi dimention matrix ---#
 			magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
 	except KeyboardInterrupt:
@@ -130,20 +130,7 @@ def calculate_offset(magdata):
 	magz_off = (magz_max + magz_min)/2
 	return magx_array , magy_array , magz_array , magx_off , magy_off , magz_off
 
-def plot_data_2D(magx_array,magy_array):
-	plt.scatter(magx_array,magy_array,label ="Calibration")
-	plt.legend()
-	plt.show()
 
-def plot_data_3D(magx_array,magy_array,magz_array):
-	fig = plt.figure()
-	ax = Axes3D(fig)
-	#--- label name ---#
-	ax.set_xlabel("X")
-	ax.set_ylabel("Y")
-	ax.set_zlabel("Z")
-	ax.plot(magx_array , magy_array , magz_array , marker="o" , linestyle='None')
-	plt.show()
 
 def calculate_angle_2D(magx,magy,magx_off,magy_off):
 	#--- recognize rover's direction ---#
@@ -224,7 +211,7 @@ def timer(t):
 if __name__ == "__main__":
 	try:
 		#--- setup ---#
-		BMC050.bmc050_setup()
+		mag.bmc050_setup()
 		t_start = time.time()
 		#--- calibration ---#
 		magdata_Old = magdata_matrix_hand()
@@ -232,14 +219,12 @@ if __name__ == "__main__":
 		magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
 		time.sleep(0.1)
 		#----Take magnetic data considering offset----#
-		magdata_new = magdata_matrix_hand_off()
+		magdata_new = magdata_matrix_hand_offset(magx_off, magy_off, magz_off)
 		magx_array_new = magdata_new[:,0]
 		magy_array_new = magdata_new[:,1]
 		magz_array_new = magdata_new[:,2]
-		Other.saveLog(path + str(filecount), magx_array_Old, magy_array_Old, magx_array_new, magy_array_new)
-		#--- calculate θ ---#
-		magx, magy = get_data()
-		calculate_angle_2D(magx,magy,magx_off,magy_off)
+		Other.saveLog(path_log + str(filecount), magx_array_Old, magy_array_Old, magx_array_new, magy_array_new)
+
 
 
 	except KeyboardInterrupt:
@@ -247,5 +232,4 @@ if __name__ == "__main__":
 	
 	finally:
 		print("End")
-		run = pwm_control.Run()
-		run.stop()
+	
