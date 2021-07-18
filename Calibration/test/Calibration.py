@@ -21,7 +21,13 @@ import Xbee
 # import pwm_control
 import GPS
 import GPS_Navigate
+
+#import for log
 import Other
+import glob
+
+path_log = '/home/pi/Desktop/Cansat2021ver/Calibration/test/Caltest'
+filecount = len(glob.glob1(path_log, '*'+ '.txt'))
 
 GPS_data = [0.0,0.0,0.0,0.0,0.0]
 RX = 18
@@ -45,6 +51,24 @@ def get_data():
 	magz = magData[2]
 	return magx, magy, magz
 
+def get_data_offset(magx_off, magy_offset):
+	"""
+	MBC050からオフセットを考慮して磁気データをえる
+	"""
+	try:
+		magData = mag.mag_dataRead()
+	except KeyboardInterrupt:
+		print()
+	except Exception as e:
+		print()
+		print(e)
+	#--- get magnet sensor data ---#
+	magx = magData[0] - magx_off
+	magy = magData[1] - magy_off
+	magz = magData[2] - magz_off
+	return magx, magy, magz
+	
+
 def magdata_matrix_hand():
 	"""
 	キャリブレーション用の磁気値を手持ちで得るための関数
@@ -65,6 +89,25 @@ def magdata_matrix_hand():
 		print(e.message())
 	return magdata
 
+def magdata_matrix_hand_offset():
+	"""
+	オフセットを考慮したデータセットを取得するための関数
+	"""
+	try:
+		magx, magy, magz = get_data_offset()
+		magdata = np.array([[magx, magy, magz]])
+		for i in range(60):
+			print('少し回転')
+			time.sleep(1)
+			print(f'{i+1}回目')
+			magx, magy, magz = get_data()
+			#--- multi dimention matrix ---#
+			magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
+	except KeyboardInterrupt:
+		print('Interrupt')
+	except Exception as e:
+		print(e.message())
+	return magdata
 
 def calculate_offset(magdata):
 	#--- manage each element sepalately ---#
@@ -182,28 +225,27 @@ if __name__ == "__main__":
 	try:
 		#--- setup ---#
 		BMC050.bmc050_setup()
-		GPS.openGPS()
 		t_start = time.time()
 		#--- calibration ---#
-		while True:
-			#--- calculate offset ---#
-			magdata = magdata_matrix_hand()
-			magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = calculate_offset(magdata)
-			time.sleep(0.1)
-			#--- plot data ---#
-			plot_data_2D(magx_array,magy_array)
-			
-			#--- calculate θ ---#
-			magx, magy = get_data()
-			calculate_angle_2D(magx,magy,magx_off,magy_off)
+		magdata_Old = magdata_matrix_hand()
+		#--- calculate offset ---#
+		magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
+		time.sleep(0.1)
+		#----Take magnetic data considering offset----#
+		magdata_new = magdata_matrix_hand_off()
+		magx_array_new = magdata_new[:,0]
+		magy_array_new = magdata_new[:,1]
+		magz_array_new = magdata_new[:,2]
+		Other.saveLog(path + str(filecount), magx_array_Old, magy_array_Old, magx_array_new, magy_array_new)
+		#--- calculate θ ---#
+		magx, magy = get_data()
+		calculate_angle_2D(magx,magy,magx_off,magy_off)
 
 
 	except KeyboardInterrupt:
-		print("ERROR")
+		print("Interrupted")
 	
 	finally:
 		print("End")
 		run = pwm_control.Run()
 		run.stop()
-
-#---8/16 17:00 に成功したときのキャリブレーションプログラム---#

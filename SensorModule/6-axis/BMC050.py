@@ -132,11 +132,11 @@ if __name__ == '__main__':
     try:
         bmc050_setup()
         time.sleep(0.2)
-        startTime = time.time()
+        t_start = time.time()
         while 1:
             bmcData = bmc050_read()
             print(bmcData)
-            Other.saveLog('BMC050test', datetime.datetime.now(), startTime - time.time(), bmcData[0], bmcData[1], bmcData[2], bmcData[3], bmcData[4], bmcData[5])
+            Other.saveLog('BMC050test', datetime.datetime.now(), t_start - time.time(), bmcData[0], bmcData[1], bmcData[2], bmcData[3], bmcData[4], bmcData[5])
             time.sleep(1)
 
     except KeyboardInterrupt:
