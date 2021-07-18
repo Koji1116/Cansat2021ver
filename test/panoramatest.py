@@ -3,8 +3,8 @@ import os
 import glob
 import time
 
-srcdir = '/home/pi/Desktop/Cansat2021ver/photosotorage/panorama'
-dstdir = '/home/pi/Desktop/Cansat2021ver/photosotorage/panorama'
+srcdir = '/home/pi/Desktop/Cansat2021ver/photosotorage'
+dstdir = '/home/pi/Desktop/Cansat2021ver/panorama'
 
 
 def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
@@ -20,15 +20,15 @@ def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
     dstext:できたものの拡張子
     """
     srcfilecount = len(glob.glob1(srcdir + '/', '*'+srcext))
-    resultcount = len(glob.glob1('result/', srcdir, '*'+dstext))
+    resultcount = len(glob.glob1(dstdir, srcdir, '*'+dstext))
     photos = []
 
-    for i in range(0, srcfilecount - 1):
+    for i in range(1, srcfilecount + 1):
         photos.append(cv2.imread(srcdir +'/' + srcprefix + str(i) + srcext))
 
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
-    cv2.imwrite(dstdir + srcdir + '-' + str(resultcount) + srcext, result)
+    cv2.imwrite(dstdir + '/' + srcdir + '-' + str(resultcount) + srcext, result)
 
     if status == 0:
         print("success")
