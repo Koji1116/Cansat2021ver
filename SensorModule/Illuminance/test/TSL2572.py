@@ -223,7 +223,7 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         print(filecount)
     except Exception as e:
-        print(e.message())
+        print(e.message)
 
 
 
