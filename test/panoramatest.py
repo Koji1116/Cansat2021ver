@@ -3,7 +3,7 @@ import os
 import glob
 import time
 
-srcdir = '/home/pi/Desktop/Cansat2021ver/photosotorage'
+srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage'
 dstdir = '/home/pi/Desktop/Cansat2021ver'
 
 
