@@ -4,8 +4,7 @@
 TSL2572 Control Module via I2C
  2018/11/15
 """
-#https://www.switch-science.com/catalog/5321/
-#より取得
+
 
 
 import sys
@@ -218,7 +217,7 @@ if __name__ == '__main__':
     t_start = time.time()
     try:
         while 1:
-            lux = tsl2572.lux()
+            lux = tsl2572.lux
             print(f'lux:{lux}')
             Other.saveLog(path_log + str(filecount), datetime.datetime.now(), time.time() - t_start, lux)
     except KeyboardInterrupt:
