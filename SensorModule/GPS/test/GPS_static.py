@@ -13,7 +13,7 @@ RX = 20
 pi = pigpio.pi()
 
 #-------for test --------# takayama
-log_static_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/static_test'
+log_static_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/static_test-'
 filecount = len(glob.glob1(log_static_path, '*' + '.txt'))
 
 ELLIPSOID_GRS80 = 1  # GRS80
