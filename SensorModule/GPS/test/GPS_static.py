@@ -264,10 +264,12 @@ if __name__ == '__main__':
             if utc == -1.0:
                 if lat == -1.0:
                     print("Reading GPS Error")
+                    Other.saveLog(log_static_path + str(filecount),datetime.datetie.now(), time.time() - t_start, 0, 0)
                     # pass
                 else:
                     # pass
                     print("Status V")
+                    Other.saveLog(log_static_path + str(filecount),datetime.datetie.now(), time.time() - t_start, 0, 0)
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
