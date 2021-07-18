@@ -21,6 +21,9 @@ def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
     """
     srcfilecount = len(glob.glob1(srcdir + '/', '*'+srcext))
     resultcount = len(glob.glob1(dstdir, srcdir + '*'+dstext))
+    print(srcfilecount)
+    print(resultcount)
+
     photos = []
 
     for i in range(1, srcfilecount + 1):
