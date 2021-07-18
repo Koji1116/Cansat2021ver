@@ -73,7 +73,7 @@ Landjudgment = [presslandjudge, gpslandjudge, acclandjudge]
 
 #variable used for ParaDetection
 LuxThd = 100
-imgpath = "/home/pi/photo/photo"
+imgpath = "/home/pi/photostorage/photo"
 width = 320
 height = 240
 H_min = 200
@@ -90,7 +90,7 @@ releaseLog = "/home/pi/log/releaseLog.txt"
 landingLog = "/home/pi/log/landingLog.txt"
 meltingLog = "/home/pi/log/meltingLog.txt"
 paraAvoidanceLog = "/home/pi/log/paraAvoidanceLog.txt"
-panoramapath = '/home/pi/photosotorage/panorama'
+panoramapath = '/home/pi/photostorage/panorama'
 
 def setup():
 	global phaseChk
@@ -270,8 +270,6 @@ if __name__ == "__main__":
 			magx_off, magy_off = Calibration.calculate_offset(magdata)
 			panoramaShootingtest.shooting(magx_off, magy_off, panoramapath)
 			Other.panorama(srcdir=panoramapath)
-
-
 		Xbee.str_trans("Progam Finished")
 		close()
 	except KeyboardInterrupt:
