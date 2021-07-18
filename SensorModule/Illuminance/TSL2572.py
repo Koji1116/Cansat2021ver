@@ -194,13 +194,18 @@ class TSL2572:
     # Print lux
     def print_meas(self):
         print( ' Lux : {:.1f}lux'.format(self.lux))
+    
+    def lux(self):
+          return self.lux
         
 
 def main():
     tsl2572 = TSL2572(0x39)
     if tsl2572.id_read():
         tsl2572.meas_single()
-        tsl2572.print_meas()
+        # tsl2572.print_meas()
+        lux = tsl2572.lux()
+        print(f'lux:{lux}')
     else:
         print('ID Read Failed')
 
