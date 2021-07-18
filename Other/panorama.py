@@ -3,7 +3,7 @@ import os
 import glob
 import time
 
-path = '/home/pi/Desktop/photosotorage/panorama'
+path = '/home/pi/Desktop/photostorage/panorama'
 
 def panorama(srcdir,prefix='',srcext='.jpg',dstext='.jpg'):
     """
