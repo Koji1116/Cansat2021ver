@@ -237,9 +237,7 @@ if __name__ == "__main__":
 		magy_array_new = magdata_new[:,1]
 		magz_array_new = magdata_new[:,2]
 		Other.saveLog(path_log + str(filecount), magx_array_Old, magy_array_Old, magx_array_new, magy_array_new)
-		#--- calculate θ ---#
-		magx, magy = get_data()
-		calculate_angle_2D(magx,magy,magx_off,magy_off)
+
 
 
 	except KeyboardInterrupt:
@@ -247,5 +245,4 @@ if __name__ == "__main__":
 	
 	finally:
 		print("End")
-		run = pwm_control.Run()
-		run.stop()
+	
