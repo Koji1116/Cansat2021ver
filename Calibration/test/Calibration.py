@@ -89,18 +89,18 @@ def magdata_matrix_hand():
 		print(e.message())
 	return magdata
 
-def magdata_matrix_hand_offset():
+def magdata_matrix_hand_offset(magx_off, magy_off, magz_off):
 	"""
 	オフセットを考慮したデータセットを取得するための関数
 	"""
 	try:
-		magx, magy, magz = get_data_offset()
+		magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
 		magdata = np.array([[magx, magy, magz]])
 		for i in range(60):
 			print('少し回転')
 			time.sleep(1)
 			print(f'{i+1}回目')
-			magx, magy, magz = get_data()
+			magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
 			#--- multi dimention matrix ---#
 			magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
 	except KeyboardInterrupt:
@@ -219,7 +219,7 @@ if __name__ == "__main__":
 		magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
 		time.sleep(0.1)
 		#----Take magnetic data considering offset----#
-		magdata_new = magdata_matrix_hand_offset()
+		magdata_new = magdata_matrix_hand_offset(magx_off, magy_off, magz_off)
 		magx_array_new = magdata_new[:,0]
 		magy_array_new = magdata_new[:,1]
 		magz_array_new = magdata_new[:,2]
