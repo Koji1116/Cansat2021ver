@@ -274,7 +274,7 @@ if __name__ == '__main__':
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
-                Other.saveLog(log_static_path + 'GPS_static_test' + str(filecount) + ".txt", datetime.datetime.now(), time.time() - t_start, lat, lon)
+                Other.saveLog(log_static_path + '/GPS_static_test-' + str(filecount) + ".txt", datetime.datetime.now(), time.time() - t_start, lat, lon)
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()
