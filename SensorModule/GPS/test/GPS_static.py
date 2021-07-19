@@ -278,8 +278,7 @@ if __name__ == '__main__':
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()
-        print(filecount)
-        print("\r\nKeyboard Intruppted, Serial Closed")
+        print("\r\nKeyboard Intruppted, Serial Closed", filecount)
     except:
         closeGPS()
         print(traceback.format_exc())
