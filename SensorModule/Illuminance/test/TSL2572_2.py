@@ -218,7 +218,7 @@ if __name__ == '__main__':
         lux = main()
         print(f'lux:{lux}')
         Other.saveLog(path_log + str(filecount), datetime.datetime.now(), time.time() - t_start, lux)
-
+        time.sleep(1)
 
 
 
