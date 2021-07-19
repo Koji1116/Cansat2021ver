@@ -1,3 +1,11 @@
+import sys
+# このパス後で調整必要　by oosim
+# ある程度調整したよ　07/11 takayama
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver//Calibration')
 import numpy as np
 import gps_navigate
 import Xbee
@@ -11,14 +19,6 @@ import pigpio
 import time
 import traceback
 from threading import Thread
-import sys
-# このパス後で調整必要　by oosim
-# ある程度調整したよ　07/11 takayama
-sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
-sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
-sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
-sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
-sys.path.append('/home/pi/Desktop/Cansat2021ver//Calibration')
 
 
 # --- original module ---#
