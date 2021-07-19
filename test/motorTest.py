@@ -18,7 +18,7 @@ def motor_move(strength_r, strength_l, time):
     Lpin1 = 9
     Lpin2 = 10
     # 前進
-    if strength_r >= 0 & strength_l >= 0:
+    if strength_r >= 0 and strength_l >= 0:
         motor_r = Motor(Rpin1, Rpin2)
         motor_l = Motor(Lpin1, Lpin2)
        
