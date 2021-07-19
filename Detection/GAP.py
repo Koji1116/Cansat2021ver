@@ -74,6 +74,10 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
         if max_area < area:
             max_area = area
             max_area_contour = j
+            cnt = contours[j]
+            x, y, w, h = cv2.boundingRect(cnt)
+            print(cv2.boundingRect(cnt))
+            GAP = x+w/2-691
 
         # no goal
 
