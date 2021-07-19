@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import cv2 
 import numpy as np
+from PIL import Image, ImageDraw
 
 # 赤色の検出
 def detect_red_color(img):
@@ -57,6 +58,7 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     img = cv2.imread(imgpath)
     imgname = imgpath
     hig, wid, col = img.shape
+    print(img.shape)
     i = 100
 
     mask, _ = detect_red_color(img)
