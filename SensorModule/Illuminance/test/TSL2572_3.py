@@ -4,11 +4,12 @@
 TSL2572 Control Module via I2C
  2018/11/15
 """
-
+import sys
 import smbus
 import time
 import glob
 import Other
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 import time
 import datetime
 
