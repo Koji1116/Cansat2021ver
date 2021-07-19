@@ -77,20 +77,21 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
                 max_area = area
                 max_area_contour = j
 
-            # no goal
+        # no goal
+        if max_area_contour == -1:
+            return [-1, 0, -1, imgname]
+        elif max_area <= 5:
+            return [-1, 0, -1, imgname]
 
-            elif max_area <= 5:
-                return [-1, 0, -1, imgname]
-
-            # goal
-            elif max_area >= G_thd:
-                return [0, max_area, 0, imgname]
-            else:
-                # rectangle
-                cnt = contours[max_area_contour]
-                x, y, w, h = cv2.boundingRect(cnt)
-                GAP = x+w/2-160
-                return [1, max_area, GAP, imgname]
+        # goal
+        elif max_area >= G_thd:
+            return [0, max_area, 0, imgname]
+        else:
+            # rectangle
+            cnt = contours[max_area_contour]
+            x, y, w, h = cv2.boundingRect(cnt)
+            GAP = x+w/2-160
+            return [1, max_area, GAP, imgname]
     except:
         i = i + 1
         return[i, -1, -1, imgname]
@@ -102,7 +103,7 @@ def goal_duj():
     True;ゴール
     False:まだゴールじゃない
     '''
-    goal_duj=GoalDetection()
+    goal_duj = GoalDetection()
     if goal_duj[0] == 0:
         motor.motor(0.5, 0.5, 0.2)
         if stuck.stuck():
