@@ -43,7 +43,7 @@ class TSL2572:
 
     # Read ID and return True if success
     def id_read(self):
-        data = self.read_address(0x12, 1)
+        data = self.read_address(0x39, 1)
         if data[0] == 0x34: # Return true if TSL25721 (3.3V). Change to 0x3D if TSL25723 (1.8V).
             return True
         return False
