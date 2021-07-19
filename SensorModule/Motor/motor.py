@@ -75,4 +75,8 @@ def motor(strength_l, strength_r, time, x=1):
     motor_move(strength_l, strength_r, time)
     motor_stop(x)
 
-motor(0.8,0.8,3)
+#motor(0.8,0.8,3)
+motor_r = Motor(5, 6)
+motor_l = Motor(9, 10)
+motor_r.stop()
+motor_l.stop()
