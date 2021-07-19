@@ -9,7 +9,7 @@ from smbus import SMBus
 
 
 bus_number = 1
-i2c_address = 0x76 # 16進数77番でi2c通信
+i2c_address = 0x77 # 16進数77番でi2c通信
 
 bus = SMBus(bus_number)
 
