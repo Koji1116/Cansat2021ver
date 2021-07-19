@@ -102,7 +102,8 @@ def goal_duj():
     True;ゴール
     False:まだゴールじゃない
     '''
-    if GoalDetection()[0] == 0:
+    goal_duj=GoalDetection()
+    if goal_duj[0] == 0:
         motor.motor(0.5, 0.5, 0.2)
         if stuck.stuck():
             return True
