@@ -173,7 +173,7 @@ def panorama_fast(srcdir, dstdir, dstdir2, dstdir3, srcprefix='',srcext='.jpg',d
 
 
 if __name__ == '__main__':
-    srdir = '/home/pi/Desktop/Cansat2021ver/test/nisho-ground12_640×480'
+    srcdir = '/home/pi/Desktop/Cansat2021ver/test/nisho-ground12_640×480'
     dstdir = '/home/pi/Desktop/Cansat2021ver/test/result'
     dstdir2 = '/home/pi/Desktop/Cansat2021ver/test/result2'
     dstdir3 = '/home/pi/Desktop/Cansat2021ver/test/result3'
@@ -210,5 +210,5 @@ if __name__ == '__main__':
 
     #--------ver4--------#
     t_start = time.time()
-    panorama_fast(srcdir, dstdir='result', dstdir2='result2', dstdir3='result3')
+    panorama_fast(srcdir, dstdir, dstdir2, dstdir3)
     print(time.time() - t_start)
