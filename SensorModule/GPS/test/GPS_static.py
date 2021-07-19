@@ -9,7 +9,7 @@ import numpy as np
 import traceback
 import Other
 import glob
-RX = 20
+RX = 18
 pi = pigpio.pi()
 
 #-------for test --------# takayama
