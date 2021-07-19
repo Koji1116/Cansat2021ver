@@ -13,7 +13,7 @@ RX = 20
 pi = pigpio.pi()
 
 #-------for test --------# takayama
-log_static_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/static_test-'
+log_static_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/'
 filecount = len(glob.glob1(log_static_path, '*' + '.txt'))
 
 ELLIPSOID_GRS80 = 1  # GRS80
@@ -274,7 +274,7 @@ if __name__ == '__main__':
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
-                Other.saveLog(log_static_path + str(filecount) + ".txt", datetime.datetime.now(), time.time() - t_start, lat, lon)
+                Other.saveLog(log_static_path + 'static_test-' + str(filecount) + ".txt", datetime.datetime.now(), time.time() - t_start, lat, lon)
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()
