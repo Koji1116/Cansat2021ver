@@ -1,13 +1,14 @@
+import sys
+sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/6-axis')
+sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
 from gpiozero import Motor
 from time import sleep
 import time
 import BMC050
 import stuck
 import Xbee
-import sys
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/6-axis')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
+
 
 # ピン番号は仮
 Rpin1 = 5
@@ -73,3 +74,5 @@ def motor_move(strength_l, strength_r, time):
 def motor(strength_l, strength_r, time, x=1):
     motor_move(strength_l, strength_r, time)
     motor_stop(x)
+
+motor(0.8,0.8,3)
