@@ -92,6 +92,7 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
         centers = get_center(contours[max_area_contour])
         print(centers)
         GAP = (centers[0]-wid/2)/(wid/2)
+        print((centers[1]-hig/2)/(hig/2))
         return [0, max_area, GAP, imgname]
     else:
         # rectangle
