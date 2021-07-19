@@ -13,8 +13,8 @@ RX = 20
 pi = pigpio.pi()
 
 #-------for test --------# takayama
-log_static_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/'
-filecount = len(glob.glob1(log_static_path, 'GPS_static_test' + '*'))
+log_static_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/static_test-'
+filecount = len(glob.glob1(log_static_path, '*' + '.txt'))
 
 ELLIPSOID_GRS80 = 1  # GRS80
 ELLIPSOID_WGS84 = 2  # WGS84
@@ -265,16 +265,16 @@ if __name__ == '__main__':
             if utc == -1.0:
                 if lat == -1.0:
                     print("Reading GPS Error")
-                    # Other.saveLog(log_static_path + str(filecount) + ".txt",datetime.datetime.now(), time.time() - t_start, 0, 0)
+                    Other.saveLog(log_static_path + str(filecount) + ".txt",datetime.datetime.now(), time.time() - t_start, 0, 0)
                     # pass
                 else:
                     # pass
                     print("Status V")
-                    # Other.saveLog(log_static_path + str(filecount) + ".txt",datetime.datetime.now(), time.time() - t_start, 0, 0)
+                    Other.saveLog(log_static_path + str(filecount) + ".txt",datetime.datetime.now(), time.time() - t_start, 0, 0)
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
-                Other.saveLog(log_static_path + 'GPS_static_test-' + str(filecount) + ".txt", datetime.datetime.now(), time.time() - t_start, lat, lon)
+                Other.saveLog(log_static_path + str(filecount) + ".txt", datetime.datetime.now(), time.time() - t_start, lat, lon)
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()
