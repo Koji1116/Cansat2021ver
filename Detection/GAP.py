@@ -1,6 +1,7 @@
 # -*- coding:utf-8 -*-
 import cv2 
 import numpy as np
+from PIL import Image, ImageDraw
 
 # 赤色の検出
 def detect_red_color(img):
@@ -26,7 +27,17 @@ def detect_red_color(img):
     return mask, masked_img
 
 
+def get_center(contour):
+    """
+    輪郭の中心を取得する。
+    """
+    # 輪郭のモーメントを計算する。
+    M = cv2.moments(contour)
+    # モーメントから重心を計算する。
+    cx = M["m10"] / M["m00"]
+    cy = M["m01"] / M["m00"]
 
+    return cx, cy
 
 def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     '''
@@ -47,6 +58,7 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     img = cv2.imread(imgpath)
     imgname = imgpath
     hig, wid, col = img.shape
+    print(img.shape)
     i = 100
 
     mask, _ = detect_red_color(img)
@@ -63,66 +75,34 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     max_area = 0
     max_area_contour = -1
 
-    print(len(contours))
-    area =cv2.contourArea(contours[6])
-    print(area)
-    GAP=0
-    for j in range(len(contours)):
-        print('kaisi ')
-        print(j)
-        area = cv2.contourArea(contours[j])
-        if max_area < area:
-            max_area = area
-            max_area_contour = j
-            cnt = contours[j]
-            x, y, w, h = cv2.boundingRect(cnt)
-            print(cv2.boundingRect(cnt))
-            GAP = x+w/2-691
+    for j in range(0, len(contours)):
+            area = cv2.contourArea(contours[j])
+            if max_area < area:
+                max_area = area
+                max_area_contour = j
+    
+    # no goal
+    if max_area_contour == -1:
+        return [-1, 0, -1, imgname]
+    elif max_area <= 5:
+        return [-1, 0, -1, imgname]
 
-        # no goal
-
-        elif max_area <= 5:
-            continue
-
-        # goal
-        elif max_area >= G_thd:
-            cnt = contours[6]
-            x, y, w, h = cv2.boundingRect(cnt)
-            print(cv2.boundingRect(cnt))
-            GAP = x+w/2-691
-            continue
-        else:
-            # rectangle
-            cnt = contours[max_area_contour]
-            x, y, w, h = cv2.boundingRect(cnt)
-            print(cv2.boundingRect(cnt))
-            GAP = x+w/2-160
-            continue
-
-    return [1, max_area, GAP, imgname]
+    # goal
+    elif max_area >= G_thd:
+        centers = get_center(contours[max_area_contour])
+        print(centers)
+        GAP = (centers[0]-wid/2)/(wid/2)
+        print((centers[1]-hig/2)/(hig/2))
+        return [0, max_area, GAP, imgname]
+    else:
+        # rectangle
+        centers = get_center(max_area_contour)
+        GAP = centers[0]-wid/2
+        return [1, max_area, GAP, imgname]
+    
 
 
 anan = GoalDetection('img/red2.png')
 print(anan)
 
-
-
-# 小さい輪郭は誤検出として削除する
-#contours = list(filter(lambda x: cv2.contourArea(x) > 10, contours))
-
-
-def get_center(contour):
-    """輪郭の中心を取得する。
-    """
-    # 輪郭のモーメントを計算する。
-    M = cv2.moments(contour)
-    # モーメントから重心を計算する。
-    cx = M["m10"] / M["m00"]
-    cy = M["m01"] / M["m00"]
-
-    return cx, cy
-
-# 輪郭の中心を取り出す。
-#centers = [get_center(x) for x in contours]
-#print("centers=="+str(centers))
 
