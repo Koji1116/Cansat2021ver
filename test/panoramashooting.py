@@ -11,7 +11,7 @@ import panoramatest
 
 path_photo ='/home/pi/Desktop/Cansat2021ver/test/photostorage/'
 srcdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
-dstdir = '/home/pi/Desktop/Cansat2021ver/test/panorama'
+dstdir = '/home/pi/Desktop/Cansat2021ver/test/result2'
 
 
 def panorama_shooting(srcdir, dstdir, width=320, height=240):
