@@ -15,10 +15,13 @@ def bmc050_setup():
     # Initialize ACC
     try:
         i2c.write_byte_data(ACC_ADDRESS, 0x0F, 0x03)
+        print('1')
         time.sleep(0.1)
         i2c.write_byte_data(ACC_ADDRESS, 0x10, 0x0F)
+        print('2')
         time.sleep(0.1)
         i2c.write_byte_data(ACC_ADDRESS, 0x11, 0x00)
+        print('3')
         time.sleep(0.1)
     except:
         time.sleep(0.1)
