@@ -14,7 +14,7 @@ srcdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
 dstdir = '/home/pi/Desktop/Cansat2021ver/test/panorama'
 
 
-def panorama_shooting(srcdir, dstdir):
+def panorama_shooting(srcdir, dstdir, width=320, height=240):
     """
     パノラマ撮影用の関数
     """
@@ -24,7 +24,7 @@ def panorama_shooting(srcdir, dstdir):
         for j in range(3):
             print(3-j)
             time.sleep(1)
-        Capture.Capture(path_photo)
+        Capture.Capture(path_photo, width, height)
     
     if input('パノラマ合成しますか？y/n') == 'y':
         t_start = time.time()
@@ -36,4 +36,4 @@ def panorama_shooting(srcdir, dstdir):
 
 
 if __name__ == '__main__':
-    panorama_shooting(srcdir, dstdir)
+    panorama_shooting(srcdir, dstdir, 640, 480)
