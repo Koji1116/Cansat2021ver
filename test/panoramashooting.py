@@ -24,7 +24,7 @@ def panorama_shooting(srcdir, dstdir):
             time.sleep(1)
         Capture.Capture(srcdir)
     
-    if input('パノラマ合成しますか？y/n') == y:
+    if input('パノラマ合成しますか？y/n') == 'y':
         panoramatest.panorama(srcdir=srcdir, dstdir=dstdir)
     
     else:
