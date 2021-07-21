@@ -14,6 +14,7 @@ def bmc050_setup():
     # --- BMC050Setup --- #
     # Initialize ACC
     try:
+        print('0')
         i2c.write_byte_data(ACC_ADDRESS, 0x0F, 0x03)
         print('1')
         time.sleep(0.1)
