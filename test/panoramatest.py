@@ -3,8 +3,8 @@ import os
 import glob
 import time
 
-srcdir = '/home/pi/Desktop/Cansat2021ver/test/nisho-ground12_320'
-dstdir = '/home/pi/Desktop/Cansat2021ver/test/result'
+srcdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
+dstdir = '/home/pi/Desktop/Cansat2021ver/test/panorama'
 
 
 def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
@@ -27,7 +27,7 @@ def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
     photos = []
 
     for i in range(0, srcfilecount):
-        photos.append(cv2.imread(srcdir +'/' + srcprefix + str(i) + srcext))
+        photos.append(cv2.imread(srcdir +'/' + '000' + str(i) + srcext))
 
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
