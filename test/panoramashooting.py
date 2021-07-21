@@ -9,8 +9,8 @@ import Capture
 import time
 import panoramatest
 
-path_photo = ''
-srcdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage/'
+path_photo ='/home/pi/Desktop/Cansat2021ver/test/photostorage/'
+srcdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
 dstdir = '/home/pi/Desktop/Cansat2021ver/test/panorama'
 
 
@@ -24,7 +24,7 @@ def panorama_shooting(srcdir, dstdir):
         for j in range(3):
             print(3-j)
             time.sleep(1)
-        Capture.Capture(srcdir)
+        Capture.Capture(path_photo)
     
     if input('パノラマ合成しますか？y/n') == 'y':
         t_start = time.time()
