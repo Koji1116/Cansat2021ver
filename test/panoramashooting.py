@@ -9,7 +9,8 @@ import Capture
 import time
 import panoramatest
 
-srcdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
+path_photo = ''
+srcdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage/'
 dstdir = '/home/pi/Desktop/Cansat2021ver/test/panorama'
 
 
