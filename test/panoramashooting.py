@@ -32,4 +32,4 @@ def panorama_shooting(srcdir, dstdir):
 
 
 if __name__ == '__main__':
-    panorama_shooting()
+    panorama_shooting(srcdir, dstdir)
