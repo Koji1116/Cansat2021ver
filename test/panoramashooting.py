@@ -36,4 +36,8 @@ def panorama_shooting(srcdir, dstdir, width=320, height=240):
 
 
 if __name__ == '__main__':
-    panorama_shooting(srcdir, dstdir, 640, 480)
+    try:
+        panorama_shooting(srcdir, dstdir, 640, 480)
+        print('写真撮影お疲れ様でした。')
+    except KeyboardInterrupt:
+        print('写真撮影お疲れ様でした。')
