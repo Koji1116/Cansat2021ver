@@ -32,7 +32,7 @@ def Capture(path, width = 320, height = 240):
 
 if __name__ == "__main__":
 	try:
-		photoName = Capture("photo/photo", 360, 240)
+		photoName = Capture("photo/photo", 320, 240)
 	except KeyboardInterrupt:
 		print('stop')
 	except:
