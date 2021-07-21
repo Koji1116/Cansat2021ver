@@ -7,6 +7,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 import panorama
 import Capture
 import time
+import panoramatest
 
 srcdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
 dstdir = '/home/pi/Desktop/Cansat2021ver/test/panorama'
@@ -25,7 +26,9 @@ def panorama_shooting(srcdir, dstdir):
         Capture.Capture(srcdir)
     
     if input('パノラマ合成しますか？y/n') == 'y':
+        t_start = time.time()
         panoramatest.panorama(srcdir=srcdir, dstdir=dstdir)
+        print(time.time()-t_start)
     
     else:
         print('写真撮影お疲れさまでした。')
