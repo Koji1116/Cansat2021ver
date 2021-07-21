@@ -8,6 +8,7 @@ import pigpio
 import numpy as np
 import traceback
 import Other
+
 RX = 20
 pi = pigpio.pi()
 

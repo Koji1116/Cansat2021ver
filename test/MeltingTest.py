@@ -3,7 +3,7 @@ import pigpio
 
 pi = pigpio.pi()
 
-meltPin = 24
+meltPin = 4
 
 def Melting(t_melt = 3):
 	pi.write(meltPin, 0)
@@ -18,3 +18,4 @@ if __name__ == "__main__":
 		Melting()
 	except:
 		pi.write(meltPin, 0)
+

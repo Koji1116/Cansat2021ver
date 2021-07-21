@@ -14,7 +14,7 @@ pi = pigpio.pi()
 
 
 #-------for test --------# takayama
-log_altitude_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/log/altitude_test'
+log_altitude_path = '/home/pi/Desktop/Cansat2021ver/SensorModule/GPS/test/altitude_test'
 filecount = len(glob.glob1(log_altitude_path, '*'+'.txt'))
 
 
