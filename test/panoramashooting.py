@@ -22,7 +22,7 @@ def panorama_shooting():
         for j in range(3):
             print(3-j)
             time.sleep(1)
-        Captrue.Capture(path)
+        Capture.Capture(path)
     
     if input('パノラマ合成しますか？y/n') == y:
         panoramatest.panorama(srcdir=srcdir, dstdir=dstdir)
