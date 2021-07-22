@@ -254,7 +254,7 @@ def vincentyInverse(lat1, lon1, lat2, lon2, ellipsoid=None):
 if __name__ == '__main__':
     try:
         openGPS()
-        starttime = time.time()
+        t_start = time.time()
         while True:
             utc, lat, lon, sHeight, gHeight = readGPS()
             if utc == -1.0:
@@ -267,7 +267,7 @@ if __name__ == '__main__':
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
-                Other.saveLog('GPStest',datetime.datetime.now(), starttime-time.time(), utc, lat, lon, sHeight, gHeight)
+                Other.saveLog('GPStest', datetime.datetime.now(), time.time() - t_start, utc, lat, lon, sHeight, gHeight)
             time.sleep(0.5)
     except KeyboardInterrupt:
         closeGPS()
