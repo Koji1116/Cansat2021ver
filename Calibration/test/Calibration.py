@@ -97,7 +97,7 @@ def motor_move(strength_l, strength_r, time):
         motor_r = Motor(Rpin1, Rpin2)
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.backward(abs(strength_r))
-        motor_l.forkward(abs(strength_l))
+        motor_l.forward(abs(strength_l))
         sleep(time)
 
 
