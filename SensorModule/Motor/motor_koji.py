@@ -76,8 +76,8 @@ def motor(strength_l, strength_r, t_moving, x=1):
     """
     motor_move(strength_l, strength_r, t_moving)
     t_stop = time.time()
-    while time.time() - t_stop <= 0.5:
-        coefficient_power = 1 - (time.time() - t_stop) * 2
+    while time.time() - t_stop <= 1:
+        coefficient_power = 1 - (time.time() - t_stop)
         motor_move(strength_l*coefficient_power, strength_r*coefficient_power, 0.1)
     motor_stop(x)
 
@@ -85,11 +85,11 @@ if __name__ == '__main__':
     while 1:
         command = input('操作\t')
         if command == 'a':
-            motor(0.5, 0.8, 2)
+            motor(0.4, 0.8, 2)
         elif command == 'w':
             motor(0.8, 0.8, 2)
         elif command == 'd':
-            motor(0.5, 0.8, 2)
+            motor(0.8, 0.4, 2)
         elif command == 's':
             motor(-0.5, -0.5, 2)
         elif command == 'manual':
@@ -97,6 +97,6 @@ if __name__ == '__main__':
             r = input('右の出力は？')
             t = input('移動時間は？')
             time.sleep(0.8)
-            motor()
+            motor(l, r, t)
         else:
             print('もう一度入力してください')
