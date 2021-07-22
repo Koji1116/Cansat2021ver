@@ -238,7 +238,7 @@ if __name__ == "__main__":
 		mag.bmc050_setup()
 		t_start = time.time()
 		#--- calibration ---#
-		magdata_Old = magdata_matrix(r, l, t)
+		magdata_Old = magdata_matrix(l, r, t)
 		#--- calculate offset ---#
 		magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
 		time.sleep(0.1)
