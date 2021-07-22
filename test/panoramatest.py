@@ -26,8 +26,8 @@ def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
 
     photos = []
 
-    for i in range(0, srcfilecount):
-        photos.append(cv2.imread(srcdir +'/' + '000' + str(i) + srcext))
+    for i in range(1, srcfilecount+1):
+        photos.append(cv2.imread(srcdir +'/' + srcprefix + str(i) + srcext))
 
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
@@ -42,7 +42,7 @@ def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
 if __name__ == "__main__":
     try:
         startTime = time.time()  # プログラムの開始時刻
-        panorama(srcdir, dstdir)
+        panorama(srcdir, dstdir, 'comp_')
         endTime = time.time() #プログラムの終了時間
         runTime = endTime - startTime
         print(runTime)
