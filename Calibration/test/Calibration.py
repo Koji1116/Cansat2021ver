@@ -231,9 +231,9 @@ def timer(t):
 
 if __name__ == "__main__":
 	try:
-		r = input("右の出力は？")
-		l = input("左の出力は？")
-		t = input("一回の回転時間は？")
+		r = float(input("右の出力は？"))
+		l = float(input("左の出力は？"))
+		t = float(input("一回の回転時間は？"))
 		#--- setup ---#
 		mag.bmc050_setup()
 		t_start = time.time()
