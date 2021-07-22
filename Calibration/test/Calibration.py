@@ -61,7 +61,7 @@ def motor_stop(x=1):
     time.sleep(x)
 
 
-def motor_move(strength_l, strength_r, time):
+def motor_move(strength_l, strength_r, t_wait):
     '''
     引数は左のmotorの強さ、右のmotorの強さ、走る時間。
     strength_l、strength_rは-1~1で表す。負の値だったら後ろ走行。
@@ -77,28 +77,28 @@ def motor_move(strength_l, strength_r, time):
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.forward(strength_r)
         motor_l.forward(strength_l)
-        sleep(time)
+        time.sleep(t_wait)
     # 後進
     elif strength_r < 0 and strength_l < 0:
         motor_r = Motor(Rpin1, Rpin2)
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.backward(abs(strength_r))
         motor_l.backward(abs(strength_l))
-        sleep(time)
+        time.sleep(t_wait)
     # 右回転
     elif strength_r >= 0 and strength_l < 0:
         motor_r = Motor(Rpin1, Rpin2)
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.forward(abs(strength_r))
         motor_l.backward(abs(strength_l))
-        sleep(time)
+        time.sleep(t_wait)
     # 左回転
     elif strength_r < 0 and strength_l >= 0:
         motor_r = Motor(Rpin1, Rpin2)
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.backward(abs(strength_r))
         motor_l.forward(abs(strength_l))
-        sleep(time)
+        time.sleep(t_wait)
 
 
 def motor(strength_l, strength_r, time, x=1):
