@@ -4,10 +4,10 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 
 import cv2
 import numpy as np
+import time
 
 import Capture
 
-from PIL import Image, ImageDraw
 
 
 # 赤色の検出
@@ -110,6 +110,7 @@ if __name__ == '__main__':
             photoName = Capture('photostorage/information', 320, 240)
             goalflug, goalarea, gap, _ = GoalDetection(photoName, G_thd)
             print(f'goalflug:{goalflug} goalarea{goalarea} gap{gap}')
+            time.sleep(1)
     except KeyboardInterrupt:
         print('Interrupted')
     except Exception as e:
