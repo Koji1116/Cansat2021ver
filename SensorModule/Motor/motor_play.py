@@ -75,7 +75,7 @@ if __name__ == '__main__':
     while 1:
         a =input('入力しろ')
         if a =='a':
-            motor(0.5,0.8,2)
+            motor(0.5,0.8,2.0)
         elif a =='w':
             motor(0.8,0.8,2)
         elif a =='d':
