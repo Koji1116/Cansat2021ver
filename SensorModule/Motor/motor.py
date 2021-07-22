@@ -5,9 +5,7 @@ sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
 from gpiozero import Motor
 from time import sleep
 import time
-import BMC050
-import stuck
-import Xbee
+
 
 
 # ピン番号は仮
