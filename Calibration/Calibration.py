@@ -33,7 +33,7 @@ from gpiozero import Motor
 
 
 path_log = '/home/pi/Desktop/Cansat2021ver/log/Calibration.txt'
-filecount = len(glob.glob1(path_log, '*' + '.txt'))
+# filecount = len(glob.glob1(path_log, '*' + '.txt'))
 
 GPS_data = [0.0, 0.0, 0.0, 0.0, 0.0]
 RX = 18
@@ -310,9 +310,10 @@ def timer(t):
 
 if __name__ == "__main__":
     try:
-        r = float(input("右の出力は？"))
-        l = float(input("左の出力は？"))
-        t = float(input("一回の回転時間は？"))
+        r = float(input('右の出力は？'))
+        l = float(input('左の出力は？'))
+        t = float(input('一回の回転時間は？'))
+        n = int(input('磁気データの取得回数は？'))
         # number = int(input("取得するデータ数は？"))
         # --- setup ---#
         mag.bmc050_setup()
