@@ -278,7 +278,7 @@ if __name__ == "__main__":
 		#--- calibration ---#
 		while True:
 			#--- calculate offset ---#
-			magdata_matrix()        
+			magdata_matrix()
 			calculate_offset(magdata)
 			time.sleep(0.1)
 			#--- plot data ---#

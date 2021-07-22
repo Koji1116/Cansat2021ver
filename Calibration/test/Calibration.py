@@ -4,6 +4,8 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 # sys.path.append('/home/pi/Desktop/Cansat2021ver/Detection/Run_phase')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+
 
 #--- must be installed module ---#
 # import matplotlib.pyplot as plt
@@ -25,6 +27,8 @@ import GPS_Navigate
 #import for log
 import Other
 import glob
+
+import motor
 
 path_log = '/home/pi/Desktop/Cansat2021ver/Calibration/test/Caltest'
 filecount = len(glob.glob1(path_log, '*'+ '.txt'))
@@ -68,6 +72,25 @@ def get_data_offset(magx_off, magy_off, magz_off):
 	magz = magData[2] - magz_off
 	return magx, magy, magz
 	
+def magdata_matrix(l, r, t, t_sleeptime=0.2):
+	"""
+	キャリブレーション用の磁気値を得るための関数
+	forループ内(run)を変える必要がある2021/07/04
+	"""
+	try:
+		magx, magy, magz = get_data()
+		magdata = np.array([[magx, magy, magz]])
+		for i in range(60):
+			motor.motor(l, r, t)
+			magx, magy, magz = get_data()
+			#--- multi dimention matrix ---#
+			magdata = np.append(magdata , np.array([[magx,magy,magz]]) , axis = 0)
+			time.sleep(t_sleeptime)
+	except KeyboardInterrupt:
+		print('Interrupt')
+	except Exception as e:
+		print(e.message())
+	return magdata
 
 def magdata_matrix_hand():
 	"""
@@ -89,7 +112,7 @@ def magdata_matrix_hand():
 		print(e.message())
 	return magdata
 
-def magdata_matrix_hand_offset(magx_off, magy_off, magz_off):
+def magdata_matrix_offset(l, r, t, magx_off, magy_off, magz_off):
 	"""
 	オフセットを考慮したデータセットを取得するための関数
 	"""
@@ -97,9 +120,7 @@ def magdata_matrix_hand_offset(magx_off, magy_off, magz_off):
 		magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
 		magdata = np.array([[magx, magy, magz]])
 		for i in range(60):
-			print('少し回転')
-			time.sleep(1)
-			print(f'{i+1}回目')
+			motor.motor(l, r, t)
 			magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
 			#--- multi dimention matrix ---#
 			magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
@@ -210,16 +231,19 @@ def timer(t):
 
 if __name__ == "__main__":
 	try:
+		r = input("右の出力は？")
+		l = input("左の出力は？")
+		t = input("一回の回転時間は？")
 		#--- setup ---#
 		mag.bmc050_setup()
 		t_start = time.time()
 		#--- calibration ---#
-		magdata_Old = magdata_matrix_hand()
+		magdata_Old = magdata_matrix(r, l, t)
 		#--- calculate offset ---#
 		magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
 		time.sleep(0.1)
 		#----Take magnetic data considering offset----#
-		magdata_new = magdata_matrix_hand_offset(magx_off, magy_off, magz_off)
+		magdata_new = magdata_matrix_offset(magx_off, magy_off, magz_off)
 		magx_array_new = magdata_new[:,0]
 		magy_array_new = magdata_new[:,1]
 		magz_array_new = magdata_new[:,2]
