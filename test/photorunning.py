@@ -56,14 +56,14 @@ def motor_move(strength_r, strength_l, t_wait):
 
 		motor_r.forkward(abs(strength_r))
 		motor_l.backward(abs(strength_l))
-		sleep(t_wait)
+		time.sleep(t_wait)
 	# 左回転
 	elif strength_r < 0 and strength_l >= 0:
 		motor_r = Motor(Rpin1, Rpin2)
 		motor_l = Motor(Lpin1, Lpin2)
 		motor_r.backward(abs(strength_r))
 		motor_l.forkward(abs(strength_l))
-		sleep(t_wait)
+		time.sleep(t_wait)
 
 
 def motor_stop(x=1):
@@ -76,7 +76,7 @@ def motor_stop(x=1):
 	motor_l = Motor(Lpin1, Lpin2)
 	motor_r.stop()
 	motor_l.stop()
-	sleep(x)
+	time.sleep(x)
 
 # 赤色の検出
 def detect_red_color(img):
@@ -205,13 +205,6 @@ if __name__ == "__main__":
 						motor.motor(1, 1, 5)
 					elif goalarea <= area_long:
 						motor.motor(1, 1, 2)
-
-
-
-
-
-
-
 
 			time.sleep(1.0)
 

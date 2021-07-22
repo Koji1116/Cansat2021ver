@@ -4,6 +4,8 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Emvironmental')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
+import time
 import panorama
 import Capture
 import BMC050
@@ -11,7 +13,9 @@ import Xbee
 import motor
 
 
-def panorama_shooting(magx_off, magy_off, path):
+import Calibration
+
+def panorama_shooting(l, r, t, magx_off, magy_off, path):
     """
     パノラマ撮影用の関数
     引数は磁気のオフセット
@@ -22,11 +26,12 @@ def panorama_shooting(magx_off, magy_off, path):
     preθ = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
     sumθ = 0
     deltaθ = 0
-    Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
+    # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
+    print(f'whileスタート　preθ:{preθ}')
 
     while sumθ <= 360:
-        Captrue.Capture(path)
-        motor.move(-1, 1, 1) #調整するところ？
+        Capture.Capture(path)
+        motor.move(l, r, t)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
         magy = magdata[1]
@@ -34,8 +39,9 @@ def panorama_shooting(magx_off, magy_off, path):
         
         #------Stuck------#
         if latestθ - preθ <= 10:
-            Xbee.str_trans('Stuck')
-            motor.move(1, 1, 5)
+            # Xbee.str_trans('Stuck')
+            print('Stuck')
+            motor.move(1, 1, 3)
             #----Initialize-----#
             magdata = BMC050.mag_dataRead()
             magx = magdata[0]
@@ -43,7 +49,8 @@ def panorama_shooting(magx_off, magy_off, path):
             preθ = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
             sumθ = 0
             deltaθ = 0
-            Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
+            # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
+            print(f'whileスタート　preθ:{preθ}')
             continue
         
         if preθ >= 300 and latestθ <= 100:
@@ -54,4 +61,17 @@ def panorama_shooting(magx_off, magy_off, path):
         if latestθ >= 360:
             latestθ -= 360
         preθ = latestθ
-        Xbee.str_trans('sumθ:', sumθ, ' preθ:', preθ, ' deltaθ:', deltaθ)
+        # Xbee.str_trans('sumθ:', sumθ, ' preθ:', preθ, ' deltaθ:', deltaθ)
+        print(f'sumθ:{sumθ} preθ:{preθ} deltaθ:{deltaθ}')
+
+
+if __name__ == '__main__':
+    path = 'photostorage/panoramaShootingtest'
+    l = float(input('左モータの出力を入力してください\t'))
+    r = float(input('右モータの出力を入力してください\t'))
+    t = float(input('一回転の回転時間を入力してください\t'))
+    t_start = time.time()
+    magdata = Calibration.magdata_matrix(l, r, t)
+    magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata)
+    panorama_shooting(l, r, t, magx_off, magy_off, path)
+    print(time.time() - t_start)
