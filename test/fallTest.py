@@ -278,5 +278,5 @@ if __name__ == "__main__":
 	except Exception as e:
 		Xbee.str_trans("error")
 		close()
-		Other.saveLog("/home/pi/log/errorLog.txt", time.time() - t_start, "Error")
+		Other.saveLog("/home/pi/log/errorLog.txt", t_start - time.time(), "Error")
 		print(e.message)

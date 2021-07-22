@@ -15,6 +15,7 @@ import numpy as np
 import math
 import time
 import traceback
+import datetime
 from threading import Thread
 # --- original module ---#
 # import BMC050
@@ -29,7 +30,9 @@ import Other
 import glob
 from gpiozero import Motor
 
-path_log = '/home/pi/Desktop/Cansat2021ver/Calibration/test/Caltest'
+
+
+path_log = '/home/pi/Desktop/Cansat2021ver/log/Calibration.txt'
 filecount = len(glob.glob1(path_log, '*' + '.txt'))
 
 GPS_data = [0.0, 0.0, 0.0, 0.0, 0.0]
@@ -201,6 +204,9 @@ def magdata_matrix_offset(l, r, t, magx_off, magy_off, magz_off):
 
 
 def calculate_offset(magdata):
+    """
+    オフセットを計算する関数
+    """
     # --- manage each element sepalately ---#
     magx_array = magdata[:, 0]
     magy_array = magdata[:, 1]
@@ -321,8 +327,8 @@ if __name__ == "__main__":
         magx_array_new = magdata_new[:, 0]
         magy_array_new = magdata_new[:, 1]
         magz_array_new = magdata_new[:, 2]
-        Other.saveLog(path_log + str(filecount), magx_array_Old, magy_array_Old, magx_array_new, magy_array_new)
-
+        for i in range(len(magx_array_new)):
+            Other.saveLog(path_log, magx_array_Old[i], magy_array_Old[i], magx_array_new[i], magy_array_new[i])
         print("success")
 
 

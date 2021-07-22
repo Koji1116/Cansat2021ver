@@ -20,6 +20,7 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
     パノラマ撮影用の関数
     引数は磁気のオフセット
     """
+    # photobox = []
     magdata = BMC050.mag_dataRead()
     magx = magdata[0]
     magy = magdata[1]
@@ -31,6 +32,8 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
 
     while sumθ <= 360:
         Capture.Capture(path)
+        # filename = Capture.Capture(path)
+        # photobox.append(filename)
         motor.move(l, r, t)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
@@ -73,5 +76,25 @@ if __name__ == '__main__':
     t_start = time.time()
     magdata = Calibration.magdata_matrix(l, r, t)
     magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata)
-    panorama_shooting(l, r, t, magx_off, magy_off, path)
-    print(time.time() - t_start)
+    print(f'キャリブレーション終了:{time.time()-t_start}')
+    while 1:
+        l = float(input('左モータの出力を入力してください\t'))
+        r = float(input('右モータの出力を入力してください\t'))
+        t = float(input('一回転の回転時間を入力してください\t'))
+        t_start = time.time()
+        panorama_shooting(l, r, t, magx_off, magy_off, path)
+        print(time.time() - t_start)
+
+        composition = input('パノラマ合成しますか？')
+
+        again = input('もう一度，写真撮影を行いますか？Y/N\t')
+        if again == 'Y':
+            pass
+        elif again == 'N':
+            print('END')
+            break
+        else:
+            print('Y/N')
+
+
+

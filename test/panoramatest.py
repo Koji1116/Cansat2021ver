@@ -4,10 +4,10 @@ import glob
 import time
 
 srcdir = '/home/pi/Desktop/Cansat2021ver/test/nisho-ground12_640_asyuku'
-dstdir = '/result'
+dstdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
 
 
-def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
+def panorama(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext='.jpg'):
     """
     パノラマを合成するための関数
     ソースディレクトリ内に合成用の写真を番号をつけて入れておく。（例：IMG0.jpg,IMG1.jpg）
@@ -31,7 +31,7 @@ def panorama(srcdir, dstdir, srcprefix='',srcext='.jpg',dstext='.jpg'):
 
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
-    cv2.imwrite(dstdir + '/' + srcdir + '-' + str(resultcount) + srcext, result)
+    cv2.imwrite(dstdir + '/' + dstprefix + str(resultcount) + srcext, result)
 
     if status == 0:
         print("success")

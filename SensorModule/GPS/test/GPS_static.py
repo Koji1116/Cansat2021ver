@@ -9,10 +9,7 @@ import numpy as np
 import traceback
 import Other
 import glob
-<<<<<<< HEAD
 
-=======
->>>>>>> 7387e1ca427a4979bccbe966d2db3507d2c5795b
 RX = 20
 pi = pigpio.pi()
 

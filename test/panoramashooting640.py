@@ -28,7 +28,7 @@ def panorama_shooting(srcdir, dstdir, width=640, height=480):
     
     if input('パノラマ合成しますか？y/n') == 'y':
         t_start = time.time()
-        panoramatest.panorama(srcdir=srcdir, dstdir=dstdir)
+        panoramatest.panorama(srcdir=srcdir, dstdir=dstdir, dstprefix='panoramashooting640')
         print(time.time()-t_start)
     
     else:
