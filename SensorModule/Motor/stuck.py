@@ -1,14 +1,29 @@
-from time import sleep
-from gpiozero import Motor
-import BMC050
-import Xbee
-import stuck
-import motor
+from SensorModule.GPS.GPS_Navigate import vincenty_inverse
 import sys
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
+from time import sleep
+from math import*
+from gpiozero import Motor
+import BMC050
+import Xbee
+import stuck
+import motor
+import GPS_Nacigate
+
+
+def stuck_jug(lat1, lon1, lat2, lon2, thd = 10 ):
+    data_stuck = vincenty_inverse(lat1, lon1, lat2, lon2)
+    if data_stuck['distance'] >= thd:
+        print('スタックした')
+        Xbee.str_trans('スタックした')
+        return False
+    else:
+        print('まだしてない')
+        Xbee.str_trans('まだしてない')
+        return True
 
 
 def stuck_jud(thd=11):  # しきい値thd調整必要

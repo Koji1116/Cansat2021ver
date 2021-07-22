@@ -13,10 +13,10 @@ Lpin2 = 20
 
 def motor_move(strength_r, strength_l, time):
     # ピン番号は仮
-    Rpin1 = 5
-    Rpin2 = 6
-    Lpin1 = 9
-    Lpin2 = 10
+    Rpin1 = 6
+    Rpin2 = 5
+    Lpin1 = 10
+    Lpin2 = 9
     # 前進
     if strength_r >= 0 and strength_l >= 0:
         motor_r = Motor(Rpin1, Rpin2)
