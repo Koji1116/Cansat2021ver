@@ -4,7 +4,7 @@ sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
 from time import sleep
-
+from gpiozero import Motor
 import motor
 
 while 1:
