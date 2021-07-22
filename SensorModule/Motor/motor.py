@@ -74,7 +74,7 @@ def motor(strength_l, strength_r, time, x=1):
     motor_stop(x)
 
 #motor(0.8,0.8,3)
-motor_r = Motor.Motor(5, 6)
+motor_r = Motor(5, 6)
 motor_l = Motor(9, 10)
 sleep(5)
 motor_r.stop()
