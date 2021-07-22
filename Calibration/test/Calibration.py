@@ -317,6 +317,7 @@ if __name__ == "__main__":
 		magz_array_new = magdata_new[:,2]
 		Other.saveLog(path_log + str(filecount), magx_array_Old, magy_array_Old, magx_array_new, magy_array_new)
 
+		print("success")
 
 
 	except KeyboardInterrupt:
