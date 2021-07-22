@@ -27,6 +27,7 @@ import GPS_Navigate
 #import for log
 import Other
 import glob
+from gpiozero import Motor
 
 
 
