@@ -8,6 +8,7 @@ from time import sleep
 import motor
 
 while 1:
+    print('入力しろ')
     a =input()
     if a =='a':
         motor.motor(0.5,0.8,2)
