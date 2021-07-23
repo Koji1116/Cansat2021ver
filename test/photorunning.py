@@ -27,6 +27,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 
 
 
+
 # 赤色の検出
 def detect_red_color(img):
     # HSV色空間に変換
@@ -64,7 +65,7 @@ def get_center(contour):
     return cx, cy
 
 
-def GoalDetection(imgpath, G_thd=5):
+def GoalDetection(imgpath, G_thd=7000):
     '''
     引数
     imgpath：画像のpath
@@ -108,18 +109,16 @@ def GoalDetection(imgpath, G_thd=5):
         return [-1, 0, -1, imgname]
 
     # goal
-    elif max_area >= G_thd:
+    elif max_area / (hig * wid) * 100 >= G_thd:
         centers = get_center(contours[max_area_contour])
         print(centers)
         GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-        max_area = max_area / (hig * wid) * 100
         print((centers[1] - hig / 2) / (hig / 2))
         return [0, max_area, GAP, imgname]
     else:
         # rectangle
         centers = get_center(max_area_contour)
         GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-        max_area = max_area / (hig * wid) * 100
         return [1, max_area, GAP, imgname]
 
 if __name__ == "__main__":
