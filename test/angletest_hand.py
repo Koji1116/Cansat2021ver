@@ -32,7 +32,7 @@ if __name__ == '__main__':
     BMC050.bmc050_setup()
     try:
         magdata_offset = Calibration.magdata_matrix_hand()
-        magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_offset)
+        _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_offset)
         time.sleep(0.1)
         while True:
             magdata = BMC050.mag_dataRead()
