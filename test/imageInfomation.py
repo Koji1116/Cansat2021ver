@@ -1,12 +1,12 @@
 # -*- coding:utf-8 -*-
 import sys
-sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
+#sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 
 import cv2
 import numpy as np
 import time
 
-import Capture
+#import Capture
 
 
 
@@ -109,7 +109,8 @@ if __name__ == '__main__':
         while 1:
             G_thd = float(input('ゴールの閾値を入力(初期値:5%):\t'))
             time.sleep(2)
-            photoName = Capture.Capture('photostorage/information', 320, 240)
+            #photoName = Capture.Capture('photostorage/information', 320, 240)
+            photoName = "photostorage/information43.jpg"
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, G_thd)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             time.sleep(1)
