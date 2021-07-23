@@ -313,8 +313,7 @@ if __name__ == "__main__":
         r = float(input('右の出力は？'))
         l = float(input('左の出力は？'))
         t = float(input('一回の回転時間は？'))
-        n = int(input('磁気データの取得回数は？'))
-        # number = int(input("取得するデータ数は？"))
+        # n = int(input("取得するデータ数は？"))
         # --- setup ---#
         mag.bmc050_setup()
         t_start = time.time()

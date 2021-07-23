@@ -26,10 +26,7 @@ def angle(magx, magy, magx_off=0, magy_off=0):
 if __name__ == '__main__':
     BMC050.bmc050_setup()
     try:
-        r = float(input('右の出力は？'))
-        l = float(input('左の出力は？'))
-        t = float(input('一回の回転時間は？'))
-        magdata_offset = Calibration.magdata_matrix(l, r, t)
+        magdata_offset = Calibration.magdata_matrix_hand()
         magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_Old)
         time.sleep(0.1)
         while True:
@@ -37,7 +34,7 @@ if __name__ == '__main__':
             mag_x = magdata[0]
             mag_y = magdata[1]
             θ = angle(mag_x, mag_y, magx_off, magy_off)
-            print(mag_x,mag_y)
+            # print(mag_x,mag_y)
             print(θ)
             time.sleep(0.5)
     except KeyboardInterrupt:

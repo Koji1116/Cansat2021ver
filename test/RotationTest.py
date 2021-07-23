@@ -9,7 +9,7 @@ import BMC050
 import Calibration
 import Xbee
 
-def rotation(magx_off, magy_off,count=1):
+def rotation(magx_off, magy_off, count=1):
     """
     回転テスト用(パノラマ撮影もこれからスタート？)
     引数は磁気のオフセット、countは回転する回数
