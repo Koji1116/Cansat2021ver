@@ -77,7 +77,7 @@ def motor(strength_l, strength_r, t_moving, x=1):
     motor_move(strength_l, strength_r, t_moving)
     t_stop = time.time()
     while time.time() - t_stop <= 1:
-        coefficient_power = 1 - (time.time() - t_stop)
+        coefficient_power = abs(1 - (time.time() - t_stop))
         motor_move(strength_l*coefficient_power, strength_r*coefficient_power, 0.1)
     motor_stop(x)
 

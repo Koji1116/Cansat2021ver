@@ -11,22 +11,21 @@ import BMC050
 import Xbee
 import stuck
 import motor
-import GPS_Nacigate
+import GPS_Navigate
+import GPS
 
 
 def stuck_jug(lat1, lon1, lat2, lon2, thd = 10 ):
-    data_stuck = vincenty_inverse(lat1, lon1, lat2, lon2)
+    data_stuck =GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
     if data_stuck['distance'] >= thd:
         print('スタックした')
-        Xbee.str_trans('スタックした')
         return False
     else:
         print('まだしてない')
-        Xbee.str_trans('まだしてない')
         return True
 
 
-def stuck_jud(thd=11):  # しきい値thd調整必要
+#def stuck_jud(thd=11):  # しきい値thd調整必要
     BMC050.bmc050_setup()
     acc_max = 0
     for i in range(20):
@@ -50,103 +49,77 @@ def stuck_jud(thd=11):  # しきい値thd調整必要
 
 def stuck_avoid_move(x):
     if x == 0:
-        Xbee.str_trans('sutck_avoid_move():0')
-        motor.motor_move(1, 1, 5)
-        motor.stop()
-        sleep(0.5)
-        motor.motor_move(0.8, 0.8, 0.2)
+        print('sutck_avoid_move():0')
+        motor.move(1, 1, 5)
+        motor.move(1, 1, 3)
     elif x == 1:
-        Xbee.str_trans('sutck_avoid_move():1')
-        motor.motor_move(-1, -1, 5)
-        motor.stop()
-        sleep(0.5)
-        motor.motor_move(-0.8, -0.8, 0.2)
+        print('sutck_avoid_move():1')
+        motor.move(-1, -1, 5)
+        motor.move(-1, -1, 3)
     elif x == 2:
-        Xbee.str_trans('sutck_avoid_move():2')
-        motor.motor_move(0, 1, 5)
-        motor.stop()
-        sleep(0.5)
-        motor.motor_move(0.8, 0.8, 0.2)
+        print('sutck_avoid_move():2')
+        motor.move(0.8, 1, 5)
+        motor.move(1, 1, 3)
 
     elif x == 3:
-        Xbee.str_trans('sutck_avoid_move():3')
-        motor.motor_move(1, 0, 5)
-        motor.stop()
-        sleep(0.5)
-        motor.motor_move(0.8, 0.8, 0.2)
+        print('sutck_avoid_move():3')
+        motor.move(1, 0.6, 5)
+        motor.move(1, 1, 3)
 
     elif x == 4:
-        Xbee.str_trans('sutck_avoid_move():4')
-        motor.motor_move(0, -1, 5)
-        motor.stop()
-        sleep(0.5)
-        motor.motor_move(-0.8, -0.8, 0.2)
+        print('sutck_avoid_move():4')
+        motor.move(-0.6, -1, 5)
+        motor.move(-1, -1, 3)
 
     elif x == 5:
-        Xbee.str_trans('sutck_avoid_move():5')
-        motor.motor_move(-1, 0, 5)
-        motor.stop()
-        sleep(0.5)
-        motor.motor_move(-0.8, -0.8, 0.2)
+        print('sutck_avoid_move():5')
+        motor.move(-1, -0.6, 5)
+        motor.move(-1, -1, 3)
 
     elif x == 6:
-        Xbee.str_trans('sutck_avoid_move():6')
-        motor.motor_move(1, -1, 5)
-        motor.stop()
-        sleep(0.5)
-        motor.motor_move(0.8, -0.8, 0.2)
-        sleep(0.2)
+        print('sutck_avoid_move():6')
+        motor.move(1, -1, 5)
+        motor.move(1, 1, 3)
 
-# ここ途中
 
 
 def stuck_avoid():
-    Xbee.str_trans('スタック回避開始')
+    print('スタック回避開始')
     flag = False
     while 1:
         # 0~6
         for i in range(7):
+            utc1, lat1, lon1, sHeight1, gHeight1 = GPS.GPSdeta_read()
             stuck.stuck_avoid_move(i)
-            bool_stuck = stuck.stuck_jud()
-            motor.motor_stop()
+            utc2, lat2, lon2, sHeight2, gHeight2 = GPS.GPSdeta_read()
+            bool_stuck = stuck.stuck_jud(lat1, lon1 ,lat2 , lon2,1)
             if bool_stuck == False:
                 if i == 1 or i == 4 or i == 5:
-                    Xbee.str_trans('スタック避ける')
-                    motor.motor_move(-0.8, -0.8, 2)
-                    motor.stop()
-                    sleep(1)
-                    motor.motor_move(0.2, 0.8, 1)
-                    motor.stop()
-                    sleep(1)
-                    motor.motor_move(0.8, 0.8, 5)
-                    motor.stop()
-                    sleep(1)
+                    print('スタックもう一度引っかからないように避ける')
+                    motor.move(-0.8, -0.8, 2)
+                    motor.move(0.2, 0.8, 1)
+                    motor.move(0.8, 0.8, 3)
                 flag = True
                 break
         if flag:
             break
         # 3,2,1,0
         for i in range(7):
+            utc1, lat1, lon1, sHeight1, gHeight1 = GPS.GPSdeta_read()
             stuck.stuck_avoid_move(7-i)
-            bool_stuck = stuck.stuck_jud()
-            motor.motor_stop()
+            utc2, lat2, lon2, sHeight2, gHeight2 = GPS.GPSdeta_read()
+            bool_stuck = stuck.stuck_jud(lat1, lon1 ,lat2 , lon2,1)
             if bool_stuck == False:
                 if i == 1 or i == 4 or i == 5:
-                    Xbee.str_trans('スタック脱出中')
-                    motor.motor_move(-0.8, -0.8, 2)
-                    motor.stop()
-                    sleep(1)
-                    motor.motor_move(0.2, 0.8, 1)
-                    motor.stop()
-                    sleep(1)
-                    motor.motor_move(0.8, 0.8, 5)
-                    motor.stop()
-                    sleep(1)
+                    print('スタックもう一度引っかからないように避ける')
+                    motor.move(-0.8, -0.8, 2)
+                    motor.move(0.2, 0.8, 1)
+                    motor.move(0.8, 0.8, 5)
                 flag = True
                 break
         if flag:
             break
-    Xbee.str_trans('スタック回避完了')
+    print('スタック回避完了')
 
 
 if __name__ == '__main__':
