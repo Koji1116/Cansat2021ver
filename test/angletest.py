@@ -34,7 +34,7 @@ if __name__ == '__main__':
         l = float(input('左の出力は？'))
         t = float(input('一回の回転時間は？'))
         magdata_offset = Calibration.magdata_matrix(l, r, t)
-        magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_Old)
+        magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_offset)
         time.sleep(0.1)
         while True:
             magdata = BMC050.mag_dataRead()
