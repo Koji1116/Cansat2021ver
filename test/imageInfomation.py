@@ -110,8 +110,8 @@ if __name__ == '__main__':
             G_thd = float(input('ゴールの閾値を入力(初期値:5%):\t'))
             time.sleep(2)
             photoName = Capture.Capture('photostorage/information', 320, 240)
-            goalflug, goalarea, gap, _ = GoalDetection(photoName, G_thd)
-            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}%')
+            goalflug, goalarea, gap, imgname = GoalDetection(photoName, G_thd)
+            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             time.sleep(1)
     except KeyboardInterrupt:
         print('Interrupted')
