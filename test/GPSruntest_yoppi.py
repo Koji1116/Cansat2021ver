@@ -20,16 +20,9 @@ import pigpio
 import time
 import traceback
 from threading import Thread
-
-
-# --- original module ---#
-
-# --- must be installed module ---#
-# import numpy as np
-
-# --- default module ---#
-# import difflib
-
+# --- difine goal latitude and longitude ---#
+lon2 = 139.90833592590076
+lat2 = 35.91817558805946
 GPS_data = [0.0, 0.0, 0.0, 0.0, 0.0]
 
 
@@ -46,41 +39,31 @@ def adjust_direction(theta):
     print('theta = '+str(theta)+'---回転調整開始！')
     count = 0
     while abs(theta) > 30:
-        print(str(count))
-        if count > 8:
-            print('スタックもしくはこの場所が適切ではない')
-            stuck.stuck_avoid()
-
+        print('回転'+str(count)+'回目開始')
         if abs(theta) <= 180:
             if abs(theta) <= 60:
                 print('theta = '+str(theta)+'---回転開始ver1')
-                motor.motor_move(
-                    np.sign(theta)*0.5, -1*np.sign(theta)*0.5, 3)
+                motor.motor_move(np.sign(theta)*0.5, -1*np.sign(theta)*0.5, 3)
                 motor.stop()
 
             elif abs(theta) <= 180:
                 print('theta = '+str(theta)+'---回転開始ver2')
-                motor.motor_move(-np.sign(theta)
-                                 * 0.5, np.sign(theta)*0.5, 3)
+                motor.motor_move(-np.sign(theta)* 0.5, np.sign(theta)*0.5, 3)
                 motor.motor_stop()
         elif abs(theta) > 180:
             if abs(theta) >= 300:
                 print('theta = '+str(theta)+'---回転開始ver3')
-                motor.motor_move(-np.sign(theta)
-                                 * 0.5, np.sign(theta)*0.5, 5)
+                motor.motor_move(-np.sign(theta)* 0.5, np.sign(theta)*0.5, 5)
                 motor.motor_stop()
             elif abs(theta) > 180:
                 print('theta = '+str(theta)+'---回転開始ver4')
-                motor.motor_move(
-                    np.sign(theta)*0.5, -np.sign(theta)*0.5, 5)
+                motor.motor_move(np.sign(theta)*0.5, -np.sign(theta)*0.5, 5)
                 motor.motor_stop()
         count += 1
-        data = Calibration.get_data()
-        magx = data[0]
-        magy = data[1]
-        # --- 0 <= θ <= 360 ---#
-        theta = Calibration.calculate_angle_2D(
-            magx, magy, magx_off, magy_off)
+        magdata = BMC050.mag_dataRead()
+        mag_x = magdata[0]
+        mag_y = magdata[1]
+        theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
         direction = Calibration.calculate_direction(lon2, lat2)
         azimuth = direction["azimuth1"]
         theta = theta-azimuth
@@ -93,9 +76,7 @@ if __name__ == "__main__":
     GPS.openGPS()
     print('Run Phase Start!')
     print('GPS走行開始')
-    # --- difine goal latitude and longitude ---#
-    lon2 = 139.90833592590076
-    lat2 = 35.91817558805946
+    
 
     # ------------- program start -------------#
     direction = Calibration.calculate_direction(lon2, lat2)
