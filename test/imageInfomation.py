@@ -111,7 +111,7 @@ if __name__ == '__main__':
             time.sleep(2)
             photoName = Capture.Capture('photostorage/information', 320, 240)
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, G_thd)
-            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
+            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}%\timagename:{imgname}')
             time.sleep(1)
     except KeyboardInterrupt:
         print('Interrupted')
