@@ -14,7 +14,6 @@ import datetime
 from gpiozero import Motor
 import time
 
-import sys
 
 
 #写真内の赤色面積で進時間を決める用　調整必要
@@ -58,13 +57,17 @@ def get_center(contour):
     # 輪郭のモーメントを計算する。
     M = cv2.moments(contour)
     # モーメントから重心を計算する。
-    cx = M["m10"] / M["m00"]
-    cy = M["m01"] / M["m00"]
+    if M["m00"] != 0:
+        cx = int(M["m10"] / M["m00"])
+        cy = int(M["m01"] / M["m00"])
+    else:
+        # set values as what you need in the situation
+        cx, cy = 0, 0
 
     return cx, cy
 
 
-def GoalDetection(imgpath, G_thd=5):
+def GoalDetection(imgpath, G_thd=30):
     '''
     引数
     imgpath：画像のpath
@@ -83,7 +86,7 @@ def GoalDetection(imgpath, G_thd=5):
     img = cv2.imread(imgpath)
     imgname = imgpath
     hig, wid, col = img.shape
-    print(img.shape)
+    # print(img.shape)
     i = 100
 
     mask, _ = detect_red_color(img)
@@ -104,70 +107,77 @@ def GoalDetection(imgpath, G_thd=5):
     # no goal
     if max_area_contour == -1:
         return [-1, 0, -1, imgname]
-    elif max_area <= 1:
-        return [-1, 0, -1, imgname]
+    # elif max_area <= 1:
+    #     return [-1, 0, -1, imgname]
 
     # goal
     elif max_area >= G_thd:
         centers = get_center(contours[max_area_contour])
         print(centers)
         GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-        max_area = max_area / (hig * wid) * 100
-        print((centers[1] - hig / 2) / (hig / 2))
+        # max_area = max_area / (hig * wid)
+        # print((centers[1] - hig / 2) / (hig / 2))
+        print('goal')
         return [0, max_area, GAP, imgname]
     else:
         # rectangle
-        centers = get_center(max_area_contour)
+        centers = get_center(contours[max_area_contour])
+        # print(centers)
         GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-        max_area = max_area / (hig * wid) * 100
+        # max_area = max_area / (hig * wid)
+        print('No goal')
         return [1, max_area, GAP, imgname]
 
 
-        if __name__ == "__main__":
-            try:
-                goalflug = 1
-                startTime = time.time()
-                dateTime = datetime.datetime.now()
-                path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
-                while goalflug != 0:
-                    photoName = Capture.Capture(path)
-                    goalflug, goalarea, gap, imgname = GoalDetection(photoName)
-                    print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
-                    time.sleep(1)
-                    # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
-                    # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
-                    if goalarea <= 5:
-                if gap <= -30:
-                    print('Turn left')
-                    # Xbee.str_trans('Turn left')
-                    # motor.motor(-0.2, 0.2, 0.3)
-                    print('motor.motor(-0.2, 0.2, 0.3)')
-                    # --- if the pixcel error is 30 or more, rotate right --- #
-                elif 30 <= gap:
-                    print('Turn right')
+if __name__ == "__main__":
+    try:
+        goalflug = 1
+        startTime = time.time()
+        dateTime = datetime.datetime.now()
+        path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+        # photoName = 'photostorage/practice13.png'
+        while goalflug != 0:
+            photoName = Capture.Capture(path)
+            goalflug, goalarea, gap, imgname = GoalDetection(photoName)
+            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
+            time.sleep(1)
+            # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
+            # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
+            if gap <= -30:
+                print('Turn left')
+                # Xbee.str_trans('Turn left')
+                # motor.motor(-0.2, 0.2, 0.3)
+                print('motor.motor(-0.2, 0.2, 0.3)')
+                # --- if the pixcel error is 30 or more, rotate right --- #
+            elif 30 <= gap:
+                print('Turn right')
                 # Xbee.str_trans('Turn right')
                 # motor.motor(0.2, -0.2, 0.3)
                 print('motor.motor(0.2, -0.2, 0.3)')
-        elif gap == -1:
-            print('Nogoal detected')
-            # motor.motor(0.2, -0.2, 0.5)
-            print('motor.motor(0.2, -0.2, 0.5)')
-            # --- if the pixcel error is greater than -30 and less than 30, go straight --- #
-        else:
-            print('Go straight')
-            if goalarea <= area_short:
-                # motor.motor(1, 1, 10)
-                print('motor.motor(1, 1, 10)')
-            elif goalarea <= area_middle:
-                # motor.motor(1, 1, 5)
-                print('motor.motor(1, 1, 5)')
-            elif goalarea <= area_long:
-                # motor.motor(1, 1, 2)
-                print('motor.motor(1, 1, 2)')
+            elif gap == -1:
+                print('Nogoal detected')
+                # motor.motor(0.2, -0.2, 0.5)
+                print('motor.motor(0.2, -0.2, 0.5)')
+                # --- if the pixcel error is greater than -30 and less than 30, go straight --- #
+            else:
+                print('Go straight')
+                if goalarea <= area_long:
+                    motor.motor(1, 1, 10)
+                    # print('motor.motor(1, 1, 10)')
+                    print('long')
+                elif goalarea <= area_middle:
+                    motor.motor(1, 1, 5)
+                    # print('motor.motor(1, 1, 5)')
+                    print('middle')
+                elif goalarea <= area_short:
+                    motor.motor(1, 1, 2)
+                    # print('motor.motor(1, 1, 2)')
+                    print('short')
 
         time.sleep(1.0)
 
     except KeyboardInterrupt:
-		print('stop')
-	except:
-		print('error')
+        print('stop')
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
