@@ -64,7 +64,7 @@ def get_center(contour):
     return cx, cy
 
 
-def GoalDetection(imgpath, G_thd=7000):
+def GoalDetection(imgpath, G_thd=5):
     '''
     引数
     imgpath：画像のpath
