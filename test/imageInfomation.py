@@ -88,7 +88,7 @@ def GoalDetection(imgpath, G_thd=7000):
     elif max_area <= 5:
         return [-1, 0, -1, imgname]
 
-
+    # goal
     elif max_area >= G_thd:
         centers = get_center(contours[max_area_contour])
         print(centers)
@@ -108,7 +108,7 @@ if __name__ == '__main__':
     try:
         while 1:
             G_thd = float(input('ゴールの閾値を入力，初期値:7000\t'))
-            time.sleep(1)
+            time.sleep(2)
             photoName = Capture.Capture('photostorage/information', 320, 240)
             goalflug, goalarea, gap, _ = GoalDetection(photoName, G_thd)
             print(f'goalflug:{goalflug} goalarea{goalarea} gap{gap}')
