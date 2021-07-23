@@ -108,6 +108,7 @@ if __name__ == '__main__':
     try:
         while 1:
             G_thd = float(input('ゴールの閾値を入力，初期値:7000\t'))
+            time.sleep(1)
             photoName = Capture.Capture('photostorage/information', 320, 240)
             goalflug, goalarea, gap, _ = GoalDetection(photoName, G_thd)
             print(f'goalflug:{goalflug} goalarea{goalarea} gap{gap}')
