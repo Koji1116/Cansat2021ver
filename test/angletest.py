@@ -20,6 +20,10 @@ def angle(magx, magy, magx_off=0, magy_off=0):
     elif magx - magx_off > 0 and magy - magy_off < 0:  # Fourth quadrant
         θ = 360 + θ  # 270 <= θ <= 360
 
+    θ += 90
+    if 360 <= θ <= 450:
+        θ -= 360
+
     return θ
 
 
