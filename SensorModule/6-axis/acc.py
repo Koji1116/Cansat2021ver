@@ -1,0 +1,74 @@
+import sys
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
+from smbus import SMBus
+import time
+import Other
+import datetime
+
+ACC_ADDRESS = 0x18
+ACC_REGISTER_ADDRESS = 0x02
+
+i2c = SMBus(1)
+
+def bmc050_setup():
+    # --- BMC050Setup --- #
+    # Initialize ACC
+    try:
+        print('0')
+        i2c.write_byte_data(ACC_ADDRESS, 0x0F, 0x03)
+        print('1')
+        time.sleep(0.1)
+        i2c.write_byte_data(ACC_ADDRESS, 0x10, 0x0F)
+        print('2')
+        time.sleep(0.1)
+        i2c.write_byte_data(ACC_ADDRESS, 0x11, 0x00)
+        print('3')
+        time.sleep(0.1)
+    except:
+        time.sleep(0.1)
+        print("BMC050 Setup Error")
+        i2c.write_byte_data(ACC_ADDRESS, 0x0F, 0x03)
+        time.sleep(0.1)
+        i2c.write_byte_data(ACC_ADDRESS, 0x10, 0x0F)
+        time.sleep(0.1)
+        i2c.write_byte_data(ACC_ADDRESS, 0x11, 0x00)
+        time.sleep(0.1)
+
+
+def acc_dataRead():
+    # --- Read Acc Data --- #
+    accData = [0, 0, 0, 0, 0, 0]
+    value = [0.0, 0.0, 0.0]
+    for i in range(6):
+        try:
+            accData[i] = i2c.read_byte_data(
+                ACC_ADDRESS, ACC_REGISTER_ADDRESS+i)
+        except:
+            pass
+            # print("error")
+
+    for i in range(3):
+        value[i] = (accData[2*i+1] * 16) + (int(accData[2*i] & 0xF0) / 16)
+        value[i] = value[i] if value[i] < 2048 else value[i] - 4096
+        value[i] = value[i] * 0.0098 * 1
+
+    return value
+
+
+
+if __name__ == '__main__':
+    try:
+        bmc050_setup()
+        time.sleep(0.2)
+        startTime = time.time()
+        while 1:
+            accData = acc_dataRead()
+            print(f'x:{accData[0]} y:{accData[1]} z:{accData[2]}')
+            Other.saveLog('BMC050test', datetime.datetime.now(), startTime - time.time(), accData[0], accData[1], accData[2])
+            time.sleep(1)
+
+    except KeyboardInterrupt:
+        print()
+    except Exception as e:
+        print('fuck')
+        #print(e.message)
