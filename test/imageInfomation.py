@@ -82,10 +82,12 @@ def GoalDetection(imgpath, G_thd=7000):
             max_area = area
             max_area_contour = j
 
+    max_area = max_area / (hig * wid) * 100
+
     # no goal
     if max_area_contour == -1:
         return [-1, 0, -1, imgname]
-    elif max_area <= 5:
+    elif max_area <= 1:
         return [-1, 0, -1, imgname]
 
     # goal
@@ -93,25 +95,23 @@ def GoalDetection(imgpath, G_thd=7000):
         centers = get_center(contours[max_area_contour])
         print(centers)
         GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-        max_area = max_area/(hig * wid) * 100
         print((centers[1] - hig / 2) / (hig / 2))
         return [0, max_area, GAP, imgname]
     else:
         # rectangle
         centers = get_center(max_area_contour)
         GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-        max_area = max_area / (hig * wid) * 100
         return [1, max_area, GAP, imgname]
 
 
 if __name__ == '__main__':
     try:
         while 1:
-            G_thd = float(input('ゴールの閾値を入力，初期値:7000\t'))
+            G_thd = float(input('ゴールの閾値を入力(初期値:5%):\t'))
             time.sleep(2)
             photoName = Capture.Capture('photostorage/information', 320, 240)
-            goalflug, goalarea, gap, _ = GoalDetection(photoName, G_thd)
-            print(f'goalflug:{goalflug}\tgoalarea{goalarea}%\tgap{gap}%')
+            goalflug, goalarea, gap, imgname = GoalDetection(photoName, G_thd)
+            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             time.sleep(1)
     except KeyboardInterrupt:
         print('Interrupted')
