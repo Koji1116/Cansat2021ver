@@ -27,6 +27,8 @@ def ParaJudge(LuxThd):
 
 
 def ParaDetection(imgpath, width , height , H_min, H_max, S_thd):
+	#結局ここからのプログラムは使ってない
+	#ゴールディテクションからのGAPを使用予定
 	try:
 		imgname = Capture.Capture(imgpath,width,height)
 		#--- read from image file ---#

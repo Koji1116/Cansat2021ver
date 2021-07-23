@@ -72,20 +72,20 @@ def Parachute_Avoidance(flug):
 		try:
 			goalflug, goalarea, goalGAP, photoname = goaldetection.GoalDetection("/home/pi/photo/photo", 200, 20, 80, 7000)
 			if (goalGAP >= -160) and (goalGAP <= -80):
-				motor.motor(0.5,-0.5,0.8)
-				motor.motor(0.7,0.7,2)
+				motor.motor(0.5,-0.5,0.1)
+				motor.motor(0.7,0.7,1)
 
 			if (goalGAP >= -80) and (goalGAP <= 0):
-				motor.motor(0.8,-0.8,0.8)
-				motor.motor(0.7,0.7,2)
+				motor.motor(0.8,-0.8,0.1)
+				motor.motor(0.7,0.7,1)
 
 			if (goalGAP >= 0) and (goalGAP <= 80):
-				motor.motor(-0.5,0.5,0.8)
-				motor.motor(0.7,0.7,2)
+				motor.motor(-0.5,0.5,0.1)
+				motor.motor(0.7,0.7,1)
 
 			if (goalGAP >= 80) and (goalGAP <= 160):
-				motor.motor(-0.8,0.8,0.8)
-				motor.motor(0.7,0.7,2)
+				motor.motor(-0.8,0.8,0.1)
+				motor.motor(0.7,0.7,1)
 		
 		except KeyboardInterrupt:
 			print("stop")
@@ -120,7 +120,7 @@ if __name__ == '__main__':
 	#--- Paracute judge ---#
 	#--- timeout is 60s ---#
 	while t2 - t1 < 60:
-		Luxflug = ParaDetection.ParaJudge(5000)
+		Luxflug = ParaDetection.ParaJudge(10000)
 		print(Luxflug)
 		if Luxflug[0] == 1:
 			break
