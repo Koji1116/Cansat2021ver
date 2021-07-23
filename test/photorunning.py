@@ -133,7 +133,7 @@ if __name__ == "__main__":
 			goalflug, goalarea, goalGAP, imagename = GoalDetection(imgpath)
 			print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgoalGAP:{goalGAP}%\timagename:{imagename}')
 			# Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
-			Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
+			# Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
 			if goalarea <= 5:
 				if goalGAP <= -30:
 					print('Turn left')

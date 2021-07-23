@@ -91,7 +91,7 @@ def GoalDetection(imgpath, G_thd=7000):
         return [-1, 0, -1, imgname]
 
     # goal
-    elif max_area >= G_thd:
+    elif max_area / (hig * wid) * 100 >= G_thd:
         centers = get_center(contours[max_area_contour])
         print(centers)
         GAP = (centers[0] - wid / 2) / (wid / 2) * 100
