@@ -1,4 +1,5 @@
 import pigpio
 
 pi = pigpio.pi()
-pi.write(12,0)
+pi.write(12,1)
+
