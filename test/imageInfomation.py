@@ -87,7 +87,7 @@ def GoalDetection(imgpath, G_thd=7000):
     # no goal
     if max_area_contour == -1:
         return [-1, 0, -1, imgname]
-    elif max_area <= 5:
+    elif max_area <= 1:
         return [-1, 0, -1, imgname]
 
     # goal
