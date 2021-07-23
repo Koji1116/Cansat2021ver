@@ -3,7 +3,7 @@ import pigpio
 
 pi = pigpio.pi()
 
-meltPin = 4
+meltPin = 17
 
 def Melting(t_melt = 3):
 	pi.write(meltPin, 0)
