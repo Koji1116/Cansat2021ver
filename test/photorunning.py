@@ -18,9 +18,9 @@ import sys
 
 
 #写真内の赤色面積で進時間を決める用　調整必要
-area_short = 0
-area_middle = 0
-area_long = 0
+area_short = 20
+area_middle = 6
+area_long = 1
 
 
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
@@ -122,37 +122,44 @@ def GoalDetection(imgpath, G_thd=7000):
 
 if __name__ == "__main__":
 	try:
-		path = '/home/pi/Desktop/Cansat2021ver/photostorage'
 		goalflug = 1
 		startTime = time.time()
 		dateTime = datetime.datetime.now()
-		path = f'ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+		path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
 		while goalflug != 0:
-			goalflug, goalarea, goalGAP, _ = GoalDetection(path)
-			print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgoalGAP:{goalGAP}%')
+			imgpath = Capture.Capture(path)
+			goalflug, goalarea, goalGAP, imagename = GoalDetection(imgpath)
+			print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgoalGAP:{goalGAP}%\timagename:{imagename}')
 			# Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
 			Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
 			if goalarea <= 5:
 				if goalGAP <= -30:
 					print('Turn left')
 					# Xbee.str_trans('Turn left')
-					motor.motor(-0.2, 0.2, 0.2)
+					# motor.motor(-0.2, 0.2, 0.3)
+					print('motor.motor(-0.2, 0.2, 0.3)')
 				# --- if the pixcel error is 30 or more, rotate right --- #
 				elif 30 <= goalGAP:
 					print('Turn right')
 					# Xbee.str_trans('Turn right')
-					motor.motor(0.2, -0.2, 0.2)
+					# motor.motor(0.2, -0.2, 0.3)
+					print('motor.motor(0.2, -0.2, 0.3)')
 				elif goalGAP == -1:
-
+					print('Nogoal detected')
+					# motor.motor(0.2, -0.2, 0.5)
+					print('motor.motor(0.2, -0.2, 0.5)')
 				# --- if the pixcel error is greater than -30 and less than 30, go straight --- #
 				else:
 					print('Go straight')
 					if goalarea <= area_short:
-						motor.motor(1, 1, 10)
+						# motor.motor(1, 1, 10)
+						print('motor.motor(1, 1, 10)')
 					elif goalarea <= area_middle:
-						motor.motor(1, 1, 5)
+						# motor.motor(1, 1, 5)
+						print('motor.motor(1, 1, 5)')
 					elif goalarea <= area_long:
-						motor.motor(1, 1, 2)
+						# motor.motor(1, 1, 2)
+						print('motor.motor(1, 1, 2)')
 
 			time.sleep(1.0)
 
