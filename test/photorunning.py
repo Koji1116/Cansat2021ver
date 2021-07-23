@@ -123,30 +123,31 @@ def GoalDetection(imgpath, G_thd=5):
         return [1, max_area, GAP, imgname]
 
 if __name__ == "__main__":
-	try:
-		goalflug = 1
-		startTime = time.time()
-		dateTime = datetime.datetime.now()
-		path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
-		while goalflug != 0:
-			imgpath = Capture.Capture(path)
-			goalflug, goalarea, goalGAP, imagename = GoalDetection(imgpath)
-			print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgoalGAP:{goalGAP}%\timagename:{imagename}')
-			# Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
+    try:
+        goalflug = 1
+        startTime = time.time()
+        dateTime = datetime.datetime.now()
+        path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+        while goalflug != 0:
+            photoName = Capture.Capture(path)
+            goalflug, goalarea, gap, imgname = GoalDetection(photoName)
+            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
+            time.sleep(1)
+            # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
 			# Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
 			if goalarea <= 5:
-				if goalGAP <= -30:
+				if gap <= -30:
 					print('Turn left')
 					# Xbee.str_trans('Turn left')
 					# motor.motor(-0.2, 0.2, 0.3)
 					print('motor.motor(-0.2, 0.2, 0.3)')
 				# --- if the pixcel error is 30 or more, rotate right --- #
-				elif 30 <= goalGAP:
+				elif 30 <= gap:
 					print('Turn right')
 					# Xbee.str_trans('Turn right')
 					# motor.motor(0.2, -0.2, 0.3)
 					print('motor.motor(0.2, -0.2, 0.3)')
-				elif goalGAP == -1:
+				elif gap == -1:
 					print('Nogoal detected')
 					# motor.motor(0.2, -0.2, 0.5)
 					print('motor.motor(0.2, -0.2, 0.5)')
