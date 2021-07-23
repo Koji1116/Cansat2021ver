@@ -135,7 +135,7 @@ if __name__ == '__main__':
 		a,b = land_point_save()
 		length = Parachute_area_judge(a,b)
 		while length < 3:
-		    flug, area, photoname = ParaDetection.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
+		    flug, area, GAP, photoname = goaldetection.GoalDetection("/home/pi/photo/photo",320,240,200,10,120)
 		    Parachute_Avoidance(flug)
 
 	except KeyboardInterrupt:

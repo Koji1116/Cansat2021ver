@@ -96,7 +96,7 @@ def GoalDetection(imgpath, H_min=200, H_max=20, S_thd=80, G_thd=7000):
     
 
 
-# 輪郭の中心を取り出す。
+#輪郭の中心を取り出す。
 #centers = [get_center(x) for x in contours]
 #print("centers=="+str(centers))
 anan = GoalDetection('img/red2.png')
