@@ -12,7 +12,7 @@ import gps_navigate
 import Xbee
 import BMC050
 import GPS
-import stuck
+import motor_koji
 import motor
 import stuck
 import Calibration
@@ -101,21 +101,23 @@ if __name__ == "__main__":
     direction = Calibration.calculate_direction(lon2, lat2)
     goal_distance = direction['distance']
     print('goal distance = ' + str(goal_distance))
+    # ------------- Calibration -------------#
+    print('Calibration Start')
+    # --- calculate offset ---#
+    BMC050.bmc050_setup()
+    ##-----------テスト用--------
+    r = float(input('右の出力は？'))
+    l = float(input('左の出力は？'))
+    t = float(input('一回の回転時間は？'))
+    # --- calibration ---#
+    magdata_Old = Calibration.magdata_matrix(l, r, t)
+    magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_Old)
+    time.sleep(0.1)
+    print('GPS run strat')
     # ------------- GPS navigate -------------#
-    while goal_distance >= 15:  # この値調整必要
+    while 1:  # この値調整必要
 
-        # ------------- Calibration -------------#
-        print('Calibration Start')
-        # --- calculate offset ---#
-        BMC050.bmc050_setup()
-        ##-----------テスト用--------
-        r = float(input('右の出力は？'))
-        l = float(input('左の出力は？'))
-        t = float(input('一回の回転時間は？'))
-        # --- calibration ---#
-        magdata_Old = Calibration.magdata_matrix(l, r, t)
-        magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_Old)
-        time.sleep(0.1)
+        
 
         #----
         magdata = BMC050.mag_dataRead()
@@ -128,15 +130,12 @@ if __name__ == "__main__":
         theta = θ
         adjust_direction(theta)
 
-        # パラメータ要確認
-        print('theta = '+str(theta)+'---直進開始')
         
+        print('theta = '+str(theta)+'---直進開始')
+        motor_koji.motor_koji(0.8,0.8,6)
 
         # --- calculate  goal direction ---#
         direction = Calibration.calculate_direction(lon2, lat2)
         goal_distance = direction["distance"]
-        if goal_distance >= 15:
-            print('goal distance =' +str(goal_distance)+'----GPS走行続く')
-        else:
-            print('goal distance =' +str(goal_distance)+'----GPS走行終了！')
-        print('goal distance =' + str(goal_distance))
+        print(str(goal_distance))
+        
