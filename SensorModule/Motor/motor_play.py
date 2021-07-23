@@ -16,10 +16,10 @@ Lpin2 = 10
 
 def motor_stop(x=1):
     '''motor_move()とセットで使用'''
-    Rpin1 = 6
-    Rpin2 = 5
-    Lpin1 = 10
-    Lpin2 = 9
+    Rpin1 = 10
+    Rpin2 = 9
+    Lpin1 = 6
+    Lpin2 = 5
     motor_r = Motor(Rpin1, Rpin2)
     motor_l = Motor(Lpin1, Lpin2)
     motor_r.stop()
@@ -33,10 +33,10 @@ def motor_move(strength_l, strength_r, time_wait):
     strength_l、strength_rは-1~1で表す。負の値だったら後ろ走行。
     必ずmotor_stop()セットで用いる。めんどくさかったら下にあるmotor()を使用
     '''
-    Rpin1 = 6
-    Rpin2 = 5
-    Lpin1 = 10
-    Lpin2 = 9
+    Rpin1 = 10
+    Rpin2 = 9
+    Lpin1 = 6
+    Lpin2 = 5
     # 前進するときのみスタック判定
     if strength_r >= 0 and strength_l >= 0:
         motor_r = Motor(Rpin1, Rpin2)
@@ -79,10 +79,10 @@ if __name__ == '__main__':
         elif a =='w':
             motor(0.8,0.8,2)
         elif a =='d':
-            motor(0.5,0.8,2)
+            motor(0.8,0.5,2)
         elif a =='s':
             motor(-0.5,-0.5,2)
+        elif a =='f':
+             motor(-0.5,0.5,2)
         else:
             pass
-
-    
