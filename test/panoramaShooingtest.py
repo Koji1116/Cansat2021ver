@@ -95,7 +95,7 @@ if __name__ == '__main__':
         print(time.time() - t_start)
 
         composition = input('パノラマ合成しますか？')
-
+        
         again = input('もう一度，写真撮影を行いますか？Y/N\t')
         if again == 'Y':
             pass
