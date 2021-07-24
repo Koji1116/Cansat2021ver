@@ -17,6 +17,7 @@ import motor
 import math
 import mag
 import Calibration
+import panoramatest
 
 
 
@@ -96,7 +97,12 @@ if __name__ == '__main__':
         panorama_shooting(l, r, t, magx_off, magy_off, path)
         print(time.time() - t_start)
 
-        composition = input('パノラマ合成しますか？')
+        composition = input('パノラマ合成しますか？Y/N')
+        if composition == 'Y':
+            srcdir = 'src_panorama'
+            dstdir = 'result_panorama'
+            panoramatest.panorama(srcdir, dstdir, path+'00')
+
 
         again = input('もう一度，写真撮影を行いますか？Y/N\t')
         if again == 'Y':
