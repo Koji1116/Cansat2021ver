@@ -138,7 +138,7 @@ if __name__ == "__main__":
         path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
         # photoName = 'photostorage/practice13.png'
         while goalflug != 0:
-            photoName = Capture.Capture(path)
+            photoName = Capture.Capture(path, 640, 320)
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, G_thd)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             time.sleep(1)
