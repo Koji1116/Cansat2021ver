@@ -180,7 +180,7 @@ def magdata_matrix(l, r, t, t_sleeptime=0.2):
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
         for _ in range(60):
-            motor_koji.motor_koji(l, r, t)
+            motor_koji(l, r, t)
             magx, magy, magz = get_data()
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
