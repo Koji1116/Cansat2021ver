@@ -32,13 +32,13 @@ import motor
 
 
 
-path_log = '/home/pi/Desktop/Cansat2021ver/Calibration/test/Caltest'
+path_log = 'Calibration.txt'
 filecount = len(glob.glob1(path_log, '*'+ '.txt'))
 
 GPS_data = [0.0,0.0,0.0,0.0,0.0]
 RX = 18
 
-Calibration_rotate_controlLog = '/home/pi/log/Calibration_rotate_controlLog.txt'
+# Calibration_rotate_controlLog = '/home/pi/log/Calibration_rotate_controlLog.txt'
 
 
 def get_data():        
