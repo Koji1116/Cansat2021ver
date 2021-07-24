@@ -83,6 +83,7 @@ if __name__ == '__main__':
     r = float(input('右モータの出力を入力してください\t'))
     t = float(input('一回転の回転時間を入力してください\t'))
     n = int(input('取得データ数を入力してください\t'))
+    mag.bmc050_setup()
     t_start = time.time()
     magdata = Calibration.magdata_matrix(l, r, t, n)
     magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata)
