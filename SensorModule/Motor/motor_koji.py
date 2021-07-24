@@ -9,11 +9,11 @@ import time
 
 
 # ピン番号は仮
-Rpin1 = 10
-Rpin2 = 9
+Rpin1 = 5
+Rpin2 = 6
 
-Lpin1 = 6
-Lpin2 = 5
+Lpin1 = 9
+Lpin2 = 10
 
 
 def motor_stop(x=1):
