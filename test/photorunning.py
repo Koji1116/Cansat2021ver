@@ -8,7 +8,7 @@ import numpy as np
 import time
 import Capture
 import Xbee
-import motor
+import motor_koji
 import Other
 import datetime
 from gpiozero import Motor
@@ -147,31 +147,31 @@ if __name__ == "__main__":
             if gap <= -30:
                 print('Turn left')
                 # Xbee.str_trans('Turn left')
-                # motor.motor(-0.2, 0.2, 0.3)
-                print('motor.motor(-0.2, 0.2, 0.3)')
+                motor_koji.motor_koji(-0.2, 0.2, 0.3)
+                # print('motor.motor(-0.2, 0.2, 0.3)')
                 # --- if the pixcel error is 30 or more, rotate right --- #
             elif 30 <= gap:
                 print('Turn right')
                 # Xbee.str_trans('Turn right')
-                # motor.motor(0.2, -0.2, 0.3)
-                print('motor.motor(0.2, -0.2, 0.3)')
+                motor_koji.motor_koji(0.2, -0.2, 0.3)
+                # print('motor.motor(0.2, -0.2, 0.3)')
             elif gap == -1:
                 print('Nogoal detected')
-                # motor.motor(0.2, -0.2, 0.5)
-                print('motor.motor(0.2, -0.2, 0.5)')
+                motor_koji.motor_koji(0.2, -0.2, 0.5)
+                # print('motor.motor(0.2, -0.2, 0.5)')
                 # --- if the pixcel error is greater than -30 and less than 30, go straight --- #
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor.motor(1, 1, 10)
+                    motor_koji.motor_koji(1, 1, 10)
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
-                    motor.motor(1, 1, 5)
+                    motor_koji.motor_koji(1, 1, 5)
                     # print('motor.motor(1, 1, 5)')
                     print('middle')
                 elif goalarea <= area_short:
-                    motor.motor(1, 1, 2)
+                    motor_koji.motor_koji(1, 1, 2)
                     # print('motor.motor(1, 1, 2)')
                     print('short')
 
