@@ -286,9 +286,12 @@ def calculate_direction(lon2, lat2):
     # --- read GPS data ---#
     try:
         while True:
+            print("-----")
             GPS_data = GPS.readGPS()
             lat1 = GPS_data[1]
             lon1 = GPS_data[2]
+            print(lat1)
+            print(lon2)
             if lat1 != -1.0 and lat1 != 0.0:
                 break
     except KeyboardInterrupt:
