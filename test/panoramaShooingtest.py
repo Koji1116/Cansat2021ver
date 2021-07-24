@@ -175,6 +175,30 @@ def magdata_matrix(l, r, t, t_sleeptime=0.2):
         print(e.message())
     return magdata
 
+def calculate_offset(magdata):
+    """
+    オフセットを計算する関数
+    """
+    # --- manage each element sepalately ---#
+    magx_array = magdata[:, 0]
+    magy_array = magdata[:, 1]
+    magz_array = magdata[:, 2]
+
+    # --- find maximam GPS value and minimam GPS value respectively ---#
+    magx_max = magx_array[np.argmax(magx_array)]
+    magy_max = magy_array[np.argmax(magy_array)]
+    magz_max = magz_array[np.argmax(magz_array)]
+
+    magx_min = magx_array[np.argmin(magx_array)]
+    magy_min = magy_array[np.argmin(magy_array)]
+    magz_min = magz_array[np.argmin(magz_array)]
+
+    # --- calucurate offset ---#
+    magx_off = (magx_max + magx_min) / 2
+    magy_off = (magy_max + magy_min) / 2
+    magz_off = (magz_max + magz_min) / 2
+    return magx_array, magy_array, magz_array, magx_off, magy_off, magz_off
+
 if __name__ == '__main__':
     path = 'photostorage/panoramaShootingtest'
     l = float(input('左モータの出力を入力してください\t'))
@@ -182,7 +206,7 @@ if __name__ == '__main__':
     t = float(input('一回転の回転時間を入力してください\t'))
     t_start = time.time()
     magdata = magdata_matrix(l, r, t)
-    magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata)
+    magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = calculate_offset(magdata)
     print(f'キャリブレーション終了:{time.time()-t_start}')
     while 1:
         l = float(input('左モータの出力を入力してください\t'))
