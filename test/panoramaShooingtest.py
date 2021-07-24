@@ -13,6 +13,7 @@ import BMC050
 import Xbee
 from gpiozero import Motor
 import Calibration
+import numpy as np
 
 Rpin1 = 5
 Rpin2 = 6
@@ -134,6 +135,42 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
         # Xbee.str_trans('sumθ:', sumθ, ' preθ:', preθ, ' deltaθ:', deltaθ)
         print(f'sumθ:{sumθ} preθ:{preθ} deltaθ:{deltaθ}')
 
+def get_data():
+    """
+	MBC050からデータを得る
+	"""
+    try:
+        magData = mag.mag_dataRead()
+    except KeyboardInterrupt:
+        print()
+    except Exception as e:
+        print()
+        print(e)
+    # --- get magnet sensor data ---#
+    magx = magData[0]
+    magy = magData[1]
+    magz = magData[2]
+    return magx, magy, magz
+
+def magdata_matrix(l, r, t, t_sleeptime=0.2):
+    """
+	キャリブレーション用の磁気値を得るための関数
+	forループ内(run)を変える必要がある2021/07/04
+	"""
+    try:
+        magx, magy, magz = get_data()
+        magdata = np.array([[magx, magy, magz]])
+        for _ in range(60):
+            motor_koji.motor_koji(l, r, t)
+            magx, magy, magz = get_data()
+            # --- multi dimention matrix ---#
+            magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
+            time.sleep(t_sleeptime)
+    except KeyboardInterrupt:
+        print('Interrupt')
+    except Exception as e:
+        print(e.message())
+    return magdata
 
 if __name__ == '__main__':
     path = 'photostorage/panoramaShootingtest'
@@ -141,7 +178,7 @@ if __name__ == '__main__':
     r = float(input('右モータの出力を入力してください\t'))
     t = float(input('一回転の回転時間を入力してください\t'))
     t_start = time.time()
-    magdata = Calibration.magdata_matrix(l, r, t)
+    magdata = magdata_matrix(l, r, t)
     magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata)
     print(f'キャリブレーション終了:{time.time()-t_start}')
     while 1:
