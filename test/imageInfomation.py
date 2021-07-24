@@ -134,7 +134,7 @@ if __name__ == "__main__":
         goalflug = 1
         startTime = time.time()
         dateTime = datetime.datetime.now()
-        path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+        path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}:{dateTime.second}'
         # photoName = 'photostorage/practice13.png'
         while 1:
             photoName = Capture.Capture(path)
