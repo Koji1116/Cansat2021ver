@@ -90,18 +90,18 @@ if __name__ == '__main__':
     while 1:
         command = input('操作\t')
         if command == 'a':
-            motor_koji(0.4, 0.8, 2)
+            motor(0.4, 0.8, 2)
         elif command == 'w':
-            motor_koji(0.8, 0.8, 2)
+            motor(0.8, 0.8, 2)
         elif command == 'd':
-            motor_koji(0.8, 0.4, 2)
+            motor(0.8, 0.4, 2)
         elif command == 's':
-            motor_koji(-0.5, -0.5, 2)
+            motor(-0.5, -0.5, 2)
         elif command == 'manual':
             l = input('左の出力は？')
             r = input('右の出力は？')
             t = input('移動時間は？')
             time.sleep(0.8)
-            motor_koji(l, r, t)
+            motor(l, r, t)
         else:
             print('もう一度入力してください')
