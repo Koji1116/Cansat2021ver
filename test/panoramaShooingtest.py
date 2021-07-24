@@ -11,7 +11,7 @@ import panorama
 import Capture
 import BMC050
 import Xbee
-import motor
+
 
 
 import Calibration
