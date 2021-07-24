@@ -12,19 +12,12 @@ import serial
 #    timeout=5
 #)
 
-# 画像をバイト変換
-
-
 def ImageToByte(img1):
     img = Image.open(img1)
     with io.BytesIO() as output:
         img.save(output, format="JPEG")
         ImgTobyte = output.getvalue()
         return ImgTobyte
-
-# 画像をｐｃに送信
-
-
 def img_trans(string):
     port = serial.Serial(
         port="/dev/ttyAMA0",
@@ -36,9 +29,6 @@ def img_trans(string):
     )
     port.write(string)
     port.close()
-
-# 文字列送信
-
 
 def str_trans(string):
     ser = serial. Serial(
@@ -57,7 +47,7 @@ def str_trans(string):
     ser.flush()
     ser.close()
 
-str_trans('!')
+#str_trans('!')
 str_trans('hello')
 # img1 = "/home/pi/Desktop/transfer-test/003.jpg"
 # img_string = convert_string(img1)

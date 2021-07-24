@@ -13,7 +13,7 @@ MAG_REGISTER_ADDRESS = 0x42
 i2c = SMBus(1)
 
 
-def bmc050_setup():
+def BMC050_setup():
     # --- BMC050Setup --- #
     # Initialize ACC
     try:
