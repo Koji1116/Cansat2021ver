@@ -1,4 +1,4 @@
-#着地判定後にキャリブレーション前にパラシュート回避を行う
+#着地判定後キャリブレーション前にパラシュート回避を行う
 #パラシュート回避エリアは設定せずに、パラシュートが検出されない場合が3回以上(下のプログラムのzで設定)
 #のときパラシュート回避を行ったと判定
 #そこでキャリブレーションを行い、ローバーをゴール方向に向かせる。
@@ -84,6 +84,7 @@ if __name__ == '__main__':
 
 		flug, area, GAP, photoname = goaldetection.GoalDetection("/home/pi/photo/photo,320,240,200,10,120")
 		Parachute_Avoidance(flug)
+		
 
 	except KeyboardInterrupt:
 		print("emergency!")
