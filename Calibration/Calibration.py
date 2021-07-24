@@ -103,8 +103,8 @@ def motor_move(strength_l, strength_r, t_wait):
         time.sleep(t_wait)
 
 
-def motor(strength_l, strength_r, time, x=1):
-    motor_move(strength_l, strength_r, time)
+def motor(strength_l, strength_r, t_running, x=1):
+    motor_move(strength_l, strength_r, t_running)
     motor_stop(x)
 
 
