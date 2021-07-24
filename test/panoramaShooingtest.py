@@ -6,14 +6,17 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 import time
 import panorama
 import Capture
 import BMC050
 import Xbee
 from gpiozero import Motor
-import Calibration
+# import Calibration
 import numpy as np
+import motor_koji
+import Calibration
 
 Rpin1 = 5
 Rpin2 = 6
