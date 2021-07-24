@@ -163,15 +163,15 @@ if __name__ == "__main__":
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor_koji.motor_koji(1, 1, 10)
+                    motor_koji.motor_koji(1, 1, 6)
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
-                    motor_koji.motor_koji(1, 1, 5)
+                    motor_koji.motor_koji(1, 1, 3)
                     # print('motor.motor(1, 1, 5)')
                     print('middle')
                 elif goalarea <= area_short:
-                    motor_koji.motor_koji(1, 1, 2)
+                    motor_koji.motor_koji(1, 1, 0.5)
                     # print('motor.motor(1, 1, 2)')
                     print('short')
 
