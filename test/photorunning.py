@@ -67,7 +67,7 @@ def get_center(contour):
     return cx, cy
 
 
-def GoalDetection(imgpath, G_thd=30):
+def GoalDetection(imgpath, G_thd):
     '''
     引数
     imgpath：画像のpath
@@ -131,6 +131,7 @@ def GoalDetection(imgpath, G_thd=30):
 
 if __name__ == "__main__":
     try:
+        G_thd = float(input('ゴール閾値'))
         goalflug = 1
         startTime = time.time()
         dateTime = datetime.datetime.now()
@@ -138,7 +139,7 @@ if __name__ == "__main__":
         # photoName = 'photostorage/practice13.png'
         while goalflug != 0:
             photoName = Capture.Capture(path)
-            goalflug, goalarea, gap, imgname = GoalDetection(photoName)
+            goalflug, goalarea, gap, imgname = GoalDetection(photoName, G_thd)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             time.sleep(1)
             # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
