@@ -7,7 +7,6 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 import time
-import panorama
 import Capture
 import BMC050
 import Xbee
