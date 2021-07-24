@@ -257,8 +257,8 @@ if __name__ == "__main__":
 		magy_array_new = magdata_new[:,1]
 		magz_array_new = magdata_new[:,2]
 
-		Other.saveLog(path_log, magx_array_Old, magy_array_Old, magx_array_new, magy_array_new)
-
+		for i in range(len(magx_array_new)):
+			Other.saveLog(path_log, magx_array_Old[i], magy_array_Old[i], magx_array_new[i], magy_array_new[i])
 		print("success")
 
 
