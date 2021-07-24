@@ -16,7 +16,7 @@ from gpiozero import Motor
 # import Calibration
 import numpy as np
 import motor_koji
-import Calibration
+# import Calibration
 
 Rpin1 = 5
 Rpin2 = 6
