@@ -82,8 +82,9 @@ if __name__ == '__main__':
     l = float(input('左モータの出力を入力してください\t'))
     r = float(input('右モータの出力を入力してください\t'))
     t = float(input('一回転の回転時間を入力してください\t'))
+    n = int(input('取得データ数を入力してください\t'))
     t_start = time.time()
-    magdata = Calibration.magdata_matrix(l, r, t)
+    magdata = Calibration.magdata_matrix(l, r, t, n)
     magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata)
     print(f'キャリブレーション終了:{time.time()-t_start}')
     while 1:
@@ -95,7 +96,7 @@ if __name__ == '__main__':
         print(time.time() - t_start)
 
         composition = input('パノラマ合成しますか？')
-        
+
         again = input('もう一度，写真撮影を行いますか？Y/N\t')
         if again == 'Y':
             pass
