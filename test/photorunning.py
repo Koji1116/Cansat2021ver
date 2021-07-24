@@ -206,29 +206,29 @@ if __name__ == "__main__":
             if gap <= -30:                                                                                  #調整するところ
                 print('Turn left')
                 # Xbee.str_trans('Turn left')
-                motor_koji.motor_koji(0.2, -0.2, 0.2)                                                       #調整するところ
+                motor_koji.motor_koji(-0.2, 0.2, 0.2)                                                       #調整するところ
                 # print('motor.motor(-0.2, 0.2, 0.3)')
             elif 30 <= gap:
                 print('Turn right')
                 # Xbee.str_trans('Turn right')
-                motor_koji.motor_koji(-0.2, 0.2, 0.2)                                                       #調整するところ
+                motor_koji.motor_koji(0.2, -0.2, 0.2)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.3)')
             elif gap == -1:
                 print('Nogoal detected')
-                motor_koji.motor_koji(-0.2, 0.2, 0.2)                                                       #調整するところ
+                motor_koji.motor_koji(0.2, -0.2, 0.2)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.5)')
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor_koji.motor_koji(-1, -1, 6)                                                        #調整するところ
+                    motor_koji.motor_koji(1, 1, 6)                                                        #調整するところ
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
-                    motor_koji.motor_koji(-1, -1, 3)                                                        #調整するところ
+                    motor_koji.motor_koji(1, 1, 3)                                                        #調整するところ
                     # print('motor.motor(1, 1, 5)')
                     print('middle')
                 elif goalarea <= area_short:
-                    motor_koji.motor_koji(-1, -1, 0.5)                                                      #調整するところ
+                    motor_koji.motor_koji(1, 1, 0.5)                                                      #調整するところ
                     # print('motor.motor(1, 1, 2)')
                     print('short')
 
