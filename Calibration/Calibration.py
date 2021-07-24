@@ -144,7 +144,7 @@ def get_data_offset(magx_off, magy_off, magz_off):
     return magx, magy, magz
 
 
-def magdata_matrix(l, r, t, t_sleeptime=0.2):
+def magdata_matrix(l, r, t, t_sleeptime=0.1):
     """
 	キャリブレーション用の磁気値を得るための関数
 	forループ内(run)を変える必要がある2021/07/04
@@ -152,8 +152,8 @@ def magdata_matrix(l, r, t, t_sleeptime=0.2):
     try:
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
-        for _ in range(60):
-            motor_koji.motor_koji(l, r, t)
+        for _ in range(n):
+            motor.motor(l, r, t)
             magx, magy, magz = get_data()
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
