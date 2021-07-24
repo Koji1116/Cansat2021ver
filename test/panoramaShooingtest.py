@@ -79,7 +79,7 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
 
 
 if __name__ == '__main__':
-    path = 'photostorage/panoramaShootingtest'
+    path = 'src_panorama/panoramaShootingtest'
     l = float(input('左モータの出力を入力してください\t'))
     r = float(input('右モータの出力を入力してください\t'))
     t = float(input('一回転の回転時間を入力してください\t'))
@@ -101,7 +101,7 @@ if __name__ == '__main__':
         if composition == 'Y':
             srcdir = 'src_panorama'
             dstdir = 'result_panorama'
-            panoramatest.panorama(srcdir, dstdir, path+'00')
+            panoramatest.panorama(srcdir, dstdir, 'panoramaShootingtest00')
 
 
         again = input('もう一度，写真撮影を行いますか？Y/N\t')
