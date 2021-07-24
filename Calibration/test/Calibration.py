@@ -77,7 +77,7 @@ def get_data_offset(magx_off, magy_off, magz_off):
 	magz = magData[2] - magz_off
 	return magx, magy, magz
 	
-def magdata_matrix(l, r, t, n, t_sleeptime=0.2):
+def magdata_matrix(l, r, t, n):
 	"""
 	キャリブレーション用の磁気値を得るための関数
 	forループ内(run)を変える必要がある2021/07/04
@@ -90,7 +90,6 @@ def magdata_matrix(l, r, t, n, t_sleeptime=0.2):
 			magx, magy, magz = get_data()
 			#--- multi dimention matrix ---#
 			magdata = np.append(magdata , np.array([[magx,magy,magz]]) , axis = 0)
-			time.sleep(t_sleeptime)
 	except KeyboardInterrupt:
 		print('Interrupt')
 	except Exception as e:
