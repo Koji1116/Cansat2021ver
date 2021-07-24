@@ -30,6 +30,8 @@ import Other
 import glob
 from gpiozero import Motor
 
+import motor_koji
+
 
 
 path_log = '/home/pi/Desktop/Cansat2021ver/log/Calibration.txt'
@@ -151,7 +153,7 @@ def magdata_matrix(l, r, t, t_sleeptime=0.2):
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
         for _ in range(60):
-            motor(l, r, t)
+            motor_koji.motor_koji(l, r, t)
             magx, magy, magz = get_data()
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
