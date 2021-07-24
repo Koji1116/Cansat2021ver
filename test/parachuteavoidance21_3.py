@@ -31,47 +31,6 @@ import motor
 import GPS
 import GPS_Navigate
 
-def land_point_save():
-	try:
-		while True:
-			value = GPS.readGPS()
-			latitude_land = value[1]
-			longitude_land = value[2]
-			time.sleep(1)
-			if latitude_land != -1.0 and longitude_land != 0.0 :
-				break
-	except KeyboardInterrupt:
-		GPS.closeGPS()
-		print("\r\nKeyboard Intruppted, Serial Closed")
-	except:
-		GPS.closeGPS()
-		print (traceback.format_exc())
-	return longitude_land,latitude_land
-
-def Parachute_area_judge(longitude_land,latitude_land):
-	try:
-		while True:
-			value = GPS.readGPS()
-			latitude_new = value[1]
-			longitude_new = value[2]
-			print(value)
-			print('longitude = '+str(longitude_new))
-			print('latitude = '+str(latitude_new))
-			time.sleep(1)
-			if latitude_new != -1.0 and longitude_new != 0.0 :
-				break
-	except KeyboardInterrupt:
-		GPS.closeGPS()
-		print("\r\nKeyboard Intruppted, Serial Closed")
-
-	except:
-		GPS.closeGPS()
-		print (traceback.format_exc())
-	direction = GPS_Navigate.vincenty_inverse(longitude_land,latitude_land,longitude_new,latitude_new)
-	distance = direction["distance"]        
-	return distance
-
-
 def Parachute_Avoidance(flug):
 	#--- There is Parachute around rover ---#
 	z = 0
