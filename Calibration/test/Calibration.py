@@ -29,11 +29,13 @@ import Other
 import glob
 from gpiozero import Motor
 import motor
+import datetime
 
 
 
-path_log = 'Calibration.txt'
-filecount = len(glob.glob1(path_log, '*'+ '.txt'))
+
+
+
 
 GPS_data = [0.0,0.0,0.0,0.0,0.0]
 RX = 18
@@ -234,6 +236,9 @@ def timer(t):
 
 if __name__ == "__main__":
 	try:
+		dateTime = datetime.datetime.now()
+		path_log = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+		# filecount = len(glob.glob1(path_log, '*' + '.txt'))
 		r = float(input("右の出力は？"))
 		l = float(input("左の出力は？"))
 		t = float(input("一回の回転時間は？"))
@@ -251,7 +256,8 @@ if __name__ == "__main__":
 		magx_array_new = magdata_new[:,0]
 		magy_array_new = magdata_new[:,1]
 		magz_array_new = magdata_new[:,2]
-		Other.saveLog(path_log + str(filecount), magx_array_Old, magy_array_Old, magx_array_new, magy_array_new)
+
+		Other.saveLog(path_log, magx_array_Old, magy_array_Old, magx_array_new, magy_array_new)
 
 		print("success")
 
