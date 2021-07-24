@@ -128,20 +128,22 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
         latestθ = angle(magx, magy, magx_off, magy_off)
         
         #------Stuck------#
-        if latestθ - preθ <= 10:
-            # Xbee.str_trans('Stuck')
-            print('Stuck')
-            motor_koji(l, r, t)
-            #----Initialize-----#
-            magdata = BMC050.mag_dataRead()
-            magx = magdata[0]
-            magy = magdata[1]
-            preθ = angle(magx, magy, magx_off, magy_off)
-            sumθ = 0
-            deltaθ = 0
-            # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
-            print(f'whileスタート　preθ:{preθ}')
-            continue
+        if preθ >= 300 and latestθ <= 100:
+            latestθ += 360
+            if latestθ - preθ <= 10:
+                # Xbee.str_trans('Stuck')
+                print('Stuck')
+                motor_koji(l, r, t)
+                #----Initialize-----#
+                magdata = BMC050.mag_dataRead()
+                magx = magdata[0]
+                magy = magdata[1]
+                preθ = angle(magx, magy, magx_off, magy_off)
+                sumθ = 0
+                deltaθ = 0
+                # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
+                print(f'whileスタート　preθ:{preθ}')
+                continue
         
         if preθ >= 300 and latestθ <= 100:
             latestθ += 360
