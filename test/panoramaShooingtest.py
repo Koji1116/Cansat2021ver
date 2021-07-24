@@ -16,7 +16,6 @@ from gpiozero import Motor
 # import Calibration
 import numpy as np
 import motor_koji
-# import Calibration
 import math
 import mag
 
@@ -129,7 +128,7 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
         magy = magdata[1]
-        latestθ = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
+        latestθ = angle(magx, magy, magx_off, magy_off)
         
         #------Stuck------#
         if latestθ - preθ <= 10:
@@ -140,7 +139,7 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
             magdata = BMC050.mag_dataRead()
             magx = magdata[0]
             magy = magdata[1]
-            preθ = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
+            preθ = angle(magx, magy, magx_off, magy_off)
             sumθ = 0
             deltaθ = 0
             # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
