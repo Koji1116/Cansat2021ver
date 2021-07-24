@@ -150,10 +150,10 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
         
         if latestθ >= 360:
             latestθ -= 360
-        latestθ2 = latestθ
+        preθ2 = preθ
         preθ = latestθ
         # Xbee.str_trans('sumθ:', sumθ, ' preθ:', preθ, ' deltaθ:', deltaθ)
-        print(f'sumθ: {sumθ}  latestθ: {latestθ2}  preθ: {preθ}  deltaθ: {deltaθ}')
+        print(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
 
 def get_data():
     """
