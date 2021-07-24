@@ -77,7 +77,7 @@ def get_data_offset(magx_off, magy_off, magz_off):
 	magz = magData[2] - magz_off
 	return magx, magy, magz
 	
-def magdata_matrix(l, r, t,t_sleeptime=0.2):
+def magdata_matrix(l, r, t, n, t_sleeptime=0.2):
 	"""
 	キャリブレーション用の磁気値を得るための関数
 	forループ内(run)を変える必要がある2021/07/04
@@ -85,7 +85,7 @@ def magdata_matrix(l, r, t,t_sleeptime=0.2):
 	try:
 		magx, magy, magz = get_data()
 		magdata = np.array([[magx, magy, magz]])
-		for _ in range(20):
+		for _ in range(n):
 			motor.motor(l, r, t)
 			magx, magy, magz = get_data()
 			#--- multi dimention matrix ---#
@@ -117,14 +117,14 @@ def magdata_matrix_hand():
 		print(e.message())
 	return magdata
 
-def magdata_matrix_offset(l, r, t, magx_off, magy_off, magz_off):
+def magdata_matrix_offset(l, r, t, n, magx_off, magy_off, magz_off):
 	"""
 	オフセットを考慮したデータセットを取得するための関数
 	"""
 	try:
 		magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
 		magdata = np.array([[magx, magy, magz]])
-		for _ in range(20):
+		for _ in range(n):
 			motor.motor(l, r, t)
 			magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
 			#--- multi dimention matrix ---#
@@ -239,20 +239,21 @@ if __name__ == "__main__":
 		dateTime = datetime.datetime.now()
 		path_log = f'Calibration-{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
 		# filecount = len(glob.glob1(path_log, '*' + '.txt'))
-		r = float(input("右の出力は？"))
-		l = float(input("左の出力は？"))
-		t = float(input("一回の回転時間は？"))
+		r = float(input("右の出力は？\t"))
+		l = float(input("左の出力は\t"))
+		t = float(input("一回の回転時間は\t"))
+		n = int(input('取得データ数は\t'))
 		# number = int(input("取得するデータ数は？"))
 		#--- setup ---#
 		mag.bmc050_setup()
 		t_start = time.time()
 		#--- calibration ---#
-		magdata_Old = magdata_matrix(l, r, t)
+		magdata_Old = magdata_matrix(l, r, t, n)
 		#--- calculate offset ---#
 		magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
 		time.sleep(0.1)
 		#----Take magnetic data considering offset----#
-		magdata_new = magdata_matrix_offset(r, l, t, magx_off, magy_off, magz_off)
+		magdata_new = magdata_matrix_offset(r, l, t, n, magx_off, magy_off, magz_off)
 		magx_array_new = magdata_new[:,0]
 		magy_array_new = magdata_new[:,1]
 		magz_array_new = magdata_new[:,2]
