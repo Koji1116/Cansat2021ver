@@ -57,7 +57,7 @@ def motor_move(strength_l, strength_r, t_moving):
     elif strength_r >= 0 and strength_l < 0:
         motor_r = Motor(Rpin1, Rpin2)
         motor_l = Motor(Lpin1, Lpin2)
-        motor_r.forkward(abs(strength_r))
+        motor_r.forward(abs(strength_r))
         motor_l.backward(abs(strength_l))
         time.sleep(t_moving)
     # 左回転
@@ -65,7 +65,7 @@ def motor_move(strength_l, strength_r, t_moving):
         motor_r = Motor(Rpin1, Rpin2)
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.backward(abs(strength_r))
-        motor_l.forkward(abs(strength_l))
+        motor_l.forward(abs(strength_l))
         time.sleep(t_moving)
 
 
