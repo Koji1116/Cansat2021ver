@@ -69,7 +69,7 @@ def motor_move(strength_l, strength_r, t_moving):
         time.sleep(t_moving)
 
 
-def motor_koji(strength_l, strength_r, t_moving, x=1):
+def motor(strength_l, strength_r, t_moving, x=1):
     """
     急停止回避を組み込み 7/23 takayama
     テストまだ
