@@ -17,6 +17,8 @@ from gpiozero import Motor
 import numpy as np
 import motor_koji
 # import Calibration
+import math
+import mag
 
 Rpin1 = 5
 Rpin2 = 6
@@ -86,6 +88,24 @@ def motor_koji(strength_l, strength_r, t_moving, x=1):
             motor_move(strength_l*coefficient_power, strength_r*coefficient_power, 0.1)
     motor_stop(x)
 
+def angle(magx, magy, magx_off=0, magy_off=0):
+    θ = math.degrees(math.atan((magy - magy_off) / (magx - magx_off)))
+
+    if magx - magx_off > 0 and magy - magy_off > 0:  # First quadrant
+        pass  # 0 <= θ <= 90
+    elif magx - magx_off < 0 and magy - magy_off > 0:  # Second quadrant
+        θ = 180 + θ  # 90 <= θ <= 180
+    elif magx - magx_off < 0 and magy - magy_off < 0:  # Third quadrant
+        θ = θ + 180  # 180 <= θ <= 270
+    elif magx - magx_off > 0 and magy - magy_off < 0:  # Fourth quadrant
+        θ = 360 + θ  # 270 <= θ <= 360
+
+    θ += 90
+    if 360 <= θ <= 450:
+        θ -= 360
+
+    return θ
+
 def panorama_shooting(l, r, t, magx_off, magy_off, path):
     """
     パノラマ撮影用の関数
@@ -95,7 +115,7 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
     magdata = BMC050.mag_dataRead()
     magx = magdata[0]
     magy = magdata[1]
-    preθ = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
+    preθ = angle(magx, magy, magx_off, magy_off)
     sumθ = 0
     deltaθ = 0
     # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
