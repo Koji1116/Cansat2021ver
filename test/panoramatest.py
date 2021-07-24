@@ -32,6 +32,8 @@ def panorama(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext='.j
         else:
             photos.append(cv2.imread(srcdir + '/' + srcprefix + str(i) + srcext))
 
+    print(len(photos))
+
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
     cv2.imwrite(dstdir + '/' + dstprefix + str(resultcount) + srcext, result)
