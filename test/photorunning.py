@@ -174,7 +174,6 @@ if __name__ == "__main__":
                     # print('motor.motor(1, 1, 2)')
                     print('short')
 
-        time.sleep(1.0)
 
     except KeyboardInterrupt:
         print('stop')
