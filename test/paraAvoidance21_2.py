@@ -1,3 +1,14 @@
+#着地判定後キャリブレーション前にパラシュート回避を行う
+#パラシュート回避エリアは設定せずに、パラシュートが検出されない場合が3回以上(下のプログラムのzで設定)
+#のときパラシュート回避を行ったと判定
+#そこでキャリブレーションを行い、ローバーをゴール方向に向かせる。
+#そのあとにもう一度パラシュート回避を同じ判定方法で行ってGPS走行に移行する。
+#パラシュートエリアを省いたのがparachuteavoidance21_3
+
+
+
+
+
 import sys
 sys.path.append('/home/pi/git/kimuralab/SensorModuleTest/Camera')
 sys.path.append('/home/pi/git/kimuralab//SensorModuleTest/TSL2561')
