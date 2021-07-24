@@ -236,7 +236,7 @@ def timer(t):
 if __name__ == "__main__":
 	try:
 		dateTime = datetime.datetime.now()
-		path_log = f'Calibration-{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+		path_log = f'Calibration-{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}:{dateTime.second}'
 		# filecount = len(glob.glob1(path_log, '*' + '.txt'))
 		r = float(input("右の出力は？\t"))
 		l = float(input("左の出力は\t"))
