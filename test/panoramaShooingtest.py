@@ -33,7 +33,6 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
     magy = magdata[1]
     preθ = Calibration.angle(magx, magy, magx_off, magy_off)
     sumθ = 0
-    deltaθ = 0
     # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
     print(f'whileスタート　preθ:{preθ}')
 
@@ -60,7 +59,6 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
                 magy = magdata[1]
                 preθ = Calibration.angle(magx, magy, magx_off, magy_off)
                 sumθ = 0
-                deltaθ = 0
                 # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
                 print(f'whileスタート　preθ:{preθ}')
                 continue
