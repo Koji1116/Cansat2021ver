@@ -145,14 +145,14 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
         
         if preθ >= 300 and latestθ <= 100:
             latestθ += 360
-        deltaθ = preθ - latestθ
+        deltaθ = latestθ - preθ
         sumθ += deltaθ
         
         if latestθ >= 360:
             latestθ -= 360
         preθ = latestθ
         # Xbee.str_trans('sumθ:', sumθ, ' preθ:', preθ, ' deltaθ:', deltaθ)
-        print(f'sumθ:{sumθ} preθ:{preθ} deltaθ:{deltaθ}')
+        print(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ}  deltaθ: {deltaθ}')
 
 def get_data():
     """
@@ -179,7 +179,7 @@ def magdata_matrix(l, r, t, t_sleeptime=0.2):
     try:
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
-        for _ in range(60):
+        for _ in range(30):
             motor_koji(l, r, t)
             magx, magy, magz = get_data()
             # --- multi dimention matrix ---#
