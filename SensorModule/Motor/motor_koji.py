@@ -74,6 +74,8 @@ def motor_koji(strength_l, strength_r, t_moving, x=1):
     急停止回避を組み込み 7/23 takayama
     テストまだ
     """
+    strength_r /= 100
+    strength_l /= 100
     motor_move(strength_l, strength_r, t_moving)
     t_stop = time.time()
     if abs(strength_l) == abs(strength_r):

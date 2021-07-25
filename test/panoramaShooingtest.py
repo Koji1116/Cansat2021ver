@@ -4,16 +4,23 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Emvironmental')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
-sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration/test')
 import time
-import panorama
 import Capture
 import BMC050
 import Xbee
+from gpiozero import Motor
+import numpy as np
 import motor
-
-
+import math
+import mag
 import Calibration
+import panoramatest
+
+
+
 
 def panorama_shooting(l, r, t, magx_off, magy_off, path):
     """
@@ -24,9 +31,8 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
     magdata = BMC050.mag_dataRead()
     magx = magdata[0]
     magy = magdata[1]
-    preθ = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
+    preθ = Calibration.angle(magx, magy, magx_off, magy_off)
     sumθ = 0
-    deltaθ = 0
     # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
     print(f'whileスタート　preθ:{preθ}')
 
@@ -34,47 +40,51 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
         Capture.Capture(path)
         # filename = Capture.Capture(path)
         # photobox.append(filename)
-        motor.move(l, r, t)
+        motor.motor(l, r, t)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
         magy = magdata[1]
-        latestθ = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
+        latestθ = Calibration.angle(magx, magy, magx_off, magy_off)
         
         #------Stuck------#
-        if latestθ - preθ <= 10:
-            # Xbee.str_trans('Stuck')
-            print('Stuck')
-            motor.move(1, 1, 3)
-            #----Initialize-----#
-            magdata = BMC050.mag_dataRead()
-            magx = magdata[0]
-            magy = magdata[1]
-            preθ = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
-            sumθ = 0
-            deltaθ = 0
-            # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
-            print(f'whileスタート　preθ:{preθ}')
-            continue
+        if preθ >= 300 and latestθ <= 100:
+            latestθ += 360
+            if latestθ - preθ <= 10:
+                # Xbee.str_trans('Stuck')
+                print('Stuck')
+                motor.motor(l, r, t)
+                #----Initialize-----#
+                magdata = BMC050.mag_dataRead()
+                magx = magdata[0]
+                magy = magdata[1]
+                preθ = Calibration.angle(magx, magy, magx_off, magy_off)
+                sumθ = 0
+                # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
+                print(f'whileスタート　preθ:{preθ}')
+                continue
         
         if preθ >= 300 and latestθ <= 100:
             latestθ += 360
-        deltaθ = preθ - latestθ
+        deltaθ = latestθ - preθ
         sumθ += deltaθ
         
         if latestθ >= 360:
             latestθ -= 360
+        preθ2 = preθ
         preθ = latestθ
         # Xbee.str_trans('sumθ:', sumθ, ' preθ:', preθ, ' deltaθ:', deltaθ)
-        print(f'sumθ:{sumθ} preθ:{preθ} deltaθ:{deltaθ}')
+        print(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
 
 
 if __name__ == '__main__':
-    path = 'photostorage/panoramaShootingtest'
+    path = 'src_panorama/panoramaShootingtest'
     l = float(input('左モータの出力を入力してください\t'))
     r = float(input('右モータの出力を入力してください\t'))
     t = float(input('一回転の回転時間を入力してください\t'))
+    n = int(input('取得データ数を入力してください\t'))
+    mag.bmc050_setup()
     t_start = time.time()
-    magdata = Calibration.magdata_matrix(l, r, t)
+    magdata = Calibration.magdata_matrix(l, r, t, n)
     magx_array, magy_array, magz_array, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata)
     print(f'キャリブレーション終了:{time.time()-t_start}')
     while 1:
@@ -85,7 +95,12 @@ if __name__ == '__main__':
         panorama_shooting(l, r, t, magx_off, magy_off, path)
         print(time.time() - t_start)
 
-        composition = input('パノラマ合成しますか？')
+        composition = input('パノラマ合成しますか？Y/N')
+        if composition == 'Y':
+            srcdir = 'src_panorama'
+            dstdir = 'result_panorama'
+            panoramatest.panorama(srcdir, dstdir, 'panoramaShootingtest00')
+
 
         again = input('もう一度，写真撮影を行いますか？Y/N\t')
         if again == 'Y':
@@ -95,6 +110,7 @@ if __name__ == '__main__':
             break
         else:
             print('Y/N')
+
 
 
 
