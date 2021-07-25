@@ -219,15 +219,15 @@ if __name__ == "__main__":
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor.move(80, 50, 0.5)                                                        #調整するところ
+                    motor.move(80, 80, 0.5)                                                        #調整するところ
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
-                    motor.move(80, 50, 0.3)                                                        #調整するところ
+                    motor.move(80, 80, 0.3)                                                        #調整するところ
                     # print('motor.motor(1, 1, 5)')
                     print('middle')
                 elif goalarea <= area_short:
-                    motor.move(80, 50, 0.2)                                                      #調整するところ
+                    motor.move(80, 80, 0.2)                                                      #調整するところ
                     # print('motor.motor(1, 1, 2)')
                     print('short')
 
