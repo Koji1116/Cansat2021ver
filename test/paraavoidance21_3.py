@@ -102,7 +102,7 @@ def Parachute_Avoidance(flug):
 		    except KeyboardInterrupt:
 			    print("stop")
 		if flug == 0:
-			motor.motor_koji(1, 1, 0.5)
+			motor.move(1, 1, 0.5)
 			z = z + 1
 		print(z)
 			
