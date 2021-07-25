@@ -218,7 +218,7 @@ if __name__ == "__main__":
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor.move(80, 80, 1)                                                        #調整するところ
+                    motor.move(80, 80, 2)                                                        #調整するところ
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
