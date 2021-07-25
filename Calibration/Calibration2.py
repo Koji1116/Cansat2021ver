@@ -6,6 +6,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 # sys.path.append('/home/pi/Desktop/Cansat2021ver/Detection/Run_phase')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 
 # --- must be installed module ---#
 # import matplotlib.pyplot as plt
@@ -30,7 +31,13 @@ import Other
 import glob
 from gpiozero import Motor
 
-import motor_koji
+import motor
+
+#import for panorama
+import Capture
+import panorama
+import panoramaShooting
+
 
 
 
@@ -48,65 +55,6 @@ Rpin2 = 6
 
 Lpin1 = 9
 Lpin2 = 10
-
-
-def motor_stop(x=1):
-    '''motor_move()とセットで使用'''
-    Rpin1 = 5
-    Rpin2 = 6
-    Lpin1 = 9
-    Lpin2 = 10
-    motor_r = Motor(Rpin1, Rpin2)
-    motor_l = Motor(Lpin1, Lpin2)
-    motor_r.stop()
-    motor_l.stop()
-    time.sleep(x)
-
-
-def motor_move(strength_l, strength_r, t_wait):
-    '''
-    引数は左のmotorの強さ、右のmotorの強さ、走る時間。
-    strength_l、strength_rは-1~1で表す。負の値だったら後ろ走行。
-    必ずmotor_stop()セットで用いる。めんどくさかったら下にあるmotor()を使用
-    '''
-    Rpin1 = 5
-    Rpin2 = 6
-    Lpin1 = 9
-    Lpin2 = 10
-    # 前進するときのみスタック判定
-    if strength_r >= 0 and strength_l >= 0:
-        motor_r = Motor(Rpin1, Rpin2)
-        motor_l = Motor(Lpin1, Lpin2)
-        motor_r.forward(strength_r)
-        motor_l.forward(strength_l)
-        time.sleep(t_wait)
-    # 後進
-    elif strength_r < 0 and strength_l < 0:
-        motor_r = Motor(Rpin1, Rpin2)
-        motor_l = Motor(Lpin1, Lpin2)
-        motor_r.backward(abs(strength_r))
-        motor_l.backward(abs(strength_l))
-        time.sleep(t_wait)
-    # 右回転
-    elif strength_r >= 0 and strength_l < 0:
-        motor_r = Motor(Rpin1, Rpin2)
-        motor_l = Motor(Lpin1, Lpin2)
-        motor_r.forward(abs(strength_r))
-        motor_l.backward(abs(strength_l))
-        time.sleep(t_wait)
-    # 左回転
-    elif strength_r < 0 and strength_l >= 0:
-        motor_r = Motor(Rpin1, Rpin2)
-        motor_l = Motor(Lpin1, Lpin2)
-        motor_r.backward(abs(strength_r))
-        motor_l.forward(abs(strength_l))
-        time.sleep(t_wait)
-
-
-def motor(strength_l, strength_r, t_running, x=1):
-    motor_move(strength_l, strength_r, t_running)
-    motor_stop(x)
-
 
 def get_data():
     """
@@ -144,7 +92,7 @@ def get_data_offset(magx_off, magy_off, magz_off):
     return magx, magy, magz
 
 
-def magdata_matrix(l, r, t, t_sleeptime=0.2):
+def magdata_matrix(l, r, t, n, t_sleeptime=0.1):
     """
 	キャリブレーション用の磁気値を得るための関数
 	forループ内(run)を変える必要がある2021/07/04
@@ -152,9 +100,31 @@ def magdata_matrix(l, r, t, t_sleeptime=0.2):
     try:
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
-        for _ in range(60):
-            motor_koji.motor_koji(l, r, t)
+        for _ in range(n):
+            motor.motor(l, r, t)
             magx, magy, magz = get_data()
+            # --- multi dimention matrix ---#
+            magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
+            time.sleep(t_sleeptime)
+    except KeyboardInterrupt:
+        print('Interrupt')
+    except Exception as e:
+        print(e.message())
+    return magdata
+
+
+def magdata_matrix_with_shooting(l, r, t, n, path, t_sleeptime=0.1):
+    """
+	キャリブレーション用の磁気値を得るための関数
+	forループ内(run)を変える必要がある2021/07/04
+	"""
+    try:
+        magx, magy, magz = get_data()
+        magdata = np.array([[magx, magy, magz]])
+        for _ in range(n):
+            motor.motor(l, r, t)
+            magx, magy, magz = get_data()
+            Capture.Capture(path)
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
             time.sleep(t_sleeptime)
@@ -186,14 +156,14 @@ def magdata_matrix_hand():
     return magdata
 
 
-def magdata_matrix_offset(l, r, t, magx_off, magy_off, magz_off):
+def magdata_matrix_offset(l, r, t, n, magx_off, magy_off, magz_off):
     """
 	オフセットを考慮したデータセットを取得するための関数
 	"""
     try:
         magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
         magdata = np.array([[magx, magy, magz]])
-        for _ in range(60):
+        for _ in range(n):
             motor(l, r, t)
             magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
             # --- multi dimention matrix ---#
@@ -230,7 +200,28 @@ def calculate_offset(magdata):
     return magx_array, magy_array, magz_array, magx_off, magy_off, magz_off
 
 
+def angle(magx, magy, magx_off=0, magy_off=0):
+    θ = math.degrees(math.atan((magy - magy_off) / (magx - magx_off)))
+
+    if magx - magx_off > 0 and magy - magy_off > 0:  # First quadrant
+        pass  # 0 <= θ <= 90
+    elif magx - magx_off < 0 and magy - magy_off > 0:  # Second quadrant
+        θ = 180 + θ  # 90 <= θ <= 180
+    elif magx - magx_off < 0 and magy - magy_off < 0:  # Third quadrant
+        θ = θ + 180  # 180 <= θ <= 270
+    elif magx - magx_off > 0 and magy - magy_off < 0:  # Fourth quadrant
+        θ = 360 + θ  # 270 <= θ <= 360
+
+    θ += 90
+    if 360 <= θ <= 450:
+        θ -= 360
+    return θ
+
+
 def calculate_angle_2D(magx, magy, magx_off, magy_off):
+    """
+    2021は使わない？
+    """
     # --- recognize rover's direction ---#
     # --- North = 0 , θ = (direction of sensor) ---#
     # --- -90 <= θ <= 90 ---#
@@ -288,9 +279,12 @@ def calculate_direction(lon2, lat2):
     # --- read GPS data ---#
     try:
         while True:
+            print("-----")
             GPS_data = GPS.readGPS()
             lat1 = GPS_data[1]
             lon1 = GPS_data[2]
+            print(lat1)
+            print(lon2)
             if lat1 != -1.0 and lat1 != 0.0:
                 break
     except KeyboardInterrupt:
@@ -330,28 +324,31 @@ def timer(t):
 
 if __name__ == "__main__":
     try:
+        srcdir = 'src_panorama'
+        dstdir = 'dst_panorama'
+        src_path = srcdir + '/src'
         r = float(input('右の出力は？'))
         l = float(input('左の出力は？'))
         t = float(input('一回の回転時間は？'))
-        # n = int(input("取得するデータ数は？"))
+        n = int(input("取得するデータ数は？"))
         # --- setup ---#
         mag.bmc050_setup()
         t_start = time.time()
         # --- calibration ---#
-        magdata_Old = magdata_matrix(l, r, t)
-        # --- calculate offset ---#
-        magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
-        time.sleep(0.1)
-        # ----Take magnetic data considering offset----#
-        magdata_new = magdata_matrix_offset(l, r, t, magx_off, magy_off, magz_off)
-        magx_array_new = magdata_new[:, 0]
-        magy_array_new = magdata_new[:, 1]
-        magz_array_new = magdata_new[:, 2]
-        for i in range(len(magx_array_new)):
-            Other.saveLog(path_log, magx_array_Old[i], magy_array_Old[i], magx_array_new[i], magy_array_new[i])
-        print("success")
+        magdata_Old = magdata_matrix_with_shooting(l, r, t, src_path)
+        panorama.panorama(srcdir, dstdir, 'src', 'panorama')
 
-
+        # # --- calculate offset ---#
+        # magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
+        # time.sleep(0.1)
+        # # ----Take magnetic data considering offset----#
+        # magdata_new = magdata_matrix_offset(l, r, t, magx_off, magy_off, magz_off)
+        # magx_array_new = magdata_new[:, 0]
+        # magy_array_new = magdata_new[:, 1]
+        # magz_array_new = magdata_new[:, 2]
+        # for i in range(len(magx_array_new)):
+        #     Other.saveLog(path_log, magx_array_Old[i], magy_array_Old[i], magx_array_new[i], magy_array_new[i])
+        # print("success")
     except KeyboardInterrupt:
         print("Interrupted")
 
