@@ -96,13 +96,13 @@ if __name__ == '__main__':
     while 1:
         command = input('操作\t')
         if command == 'a':
-            move(0.4, 0.8, 2)
+            move(40, 80, 2)
         elif command == 'w':
-            move(0.8, 0.8, 2)
+            move(80, 80, 2)
         elif command == 'd':
-            move(0.8, 0.4, 2)
+            move(80, 40, 2)
         elif command == 's':
-            move(-0.5, -0.5, 2)
+            move(-50, -50, 2)
         elif command == 'manual':
             l = input('左の出力は？')
             r = input('右の出力は？')
