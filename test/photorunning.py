@@ -175,18 +175,16 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
 
         if max_area_contour == -1:
             return [-1, 0, -1, imgname]
-        elif max_area <= 2:
-            return [-1, max_area, -1, imgname]
+        # elif max_area <= 2:
+        #     return [-1, max_area, -1, imgname]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [0, max_area, GAP, imgname]
         else:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [1, max_area, GAP, imgname]
-    except KeyboardInterrupt:
-        print('Interrupted')
     except:
-        print('a')
+        return [100, 100, 100, imgname]
 
 if __name__ == "__main__":
     try:
