@@ -8,15 +8,15 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 import numpy as np
-import gps_navigate
+import GPS_Navigate
 import Xbee
 import BMC050
 import GPS
 import stuck
 import motor
-import stuck
 import Calibration
 import pigpio
+from gpiozero import Motor
 import time
 import traceback
 from threading import Thread
