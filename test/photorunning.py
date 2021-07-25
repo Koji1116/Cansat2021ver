@@ -183,10 +183,8 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         else:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [1, max_area, GAP, imgname]
-    except KeyboardInterrupt:
-        print('Interrupted')
     except:
-        print('a')
+        return [100, 100, 100, imgname]
 
 if __name__ == "__main__":
     try:
