@@ -128,7 +128,7 @@ if __name__ == "__main__":
         adjust_direction(theta)
 
         print('theta = '+str(theta)+'--strat straight')
-        motor_koji.motor_koji(0.8,0.8,6)
+        motor_koji.motor_koji(80,80,10)
 
         # --- calculate  goal direction ---#
         direction = Calibration.calculate_direction(lon2, lat2)
