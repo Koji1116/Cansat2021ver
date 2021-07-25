@@ -5,19 +5,21 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 import numpy as np
-import gps_navigate
+import GPS_Navigate
 import Xbee
 import BMC050
 import GPS
 import motor
 import Calibration
 import pigpio
-from pigpio import Motor
+from gpiozero import Motor
 import time
 import traceback
 from threading import Thread
 import math
+import mag
 
 
 # --- original module ---#
@@ -87,7 +89,7 @@ def adjust_direction(theta):
 
 
 if __name__ == "__main__":
-    BMC050.bmc050_setup()
+    mag.bmc050_setup()
     GPS.openGPS()
     print('Run Phase Start!')
     print('GPS走行開始')
