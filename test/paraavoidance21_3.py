@@ -107,25 +107,26 @@ def Parachute_Avoidance(flug):
 
 if __name__ == '__main__':
 	try:
-		print("START: Judge covered by Parachute")
-		TSL2561.tsl2561_setup()
-		t2 = time.time()
-		t1 = t2
+		#print("START: Judge covered by Parachute")
+		#TSL2561.tsl2561_setup()
+		#t2 = time.time()
+		#t1 = t2
 		#--- Paracute judge ---#
 		#--- timeout is 60s ---#
-		while t2 - t1 < 60:
-			Luxflug = ParaDetection.ParaJudge(10000)
-			print(Luxflug)
-			if Luxflug[0] == 1:
-				break
-			t1 =time.time()
-			time.sleep(1)
-			print("rover is covered with parachute!")
+		#while t2 - t1 < 60:
+			#Luxflug = ParaDetection.ParaJudge(10000)
+			#print(Luxflug)
+			#if Luxflug[0] == 1:
+			#	break
+			#t1 =time.time()
+			#time.sleep(1)
+			#print("rover is covered with parachute!")
 
 		print("START: Parachute avoidance")
 
 		flug, area, GAP, photoname = paradetection21_2.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
 		Parachute_Avoidance(flug)
+		print("success")
 
 	except KeyboardInterrupt:
 		print("emergency!")

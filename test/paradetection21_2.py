@@ -91,7 +91,7 @@ if __name__ == "__main__":
 	#--- lux data test ---#
 	try:
 		while 1:
-			ParaJudge(100)
+			ParaJudge(10000)
 			time.sleep(1)
 
 	except KeyboardInterrupt:
