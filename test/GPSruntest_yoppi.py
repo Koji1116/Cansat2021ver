@@ -5,6 +5,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 import numpy as np
 import GPS_Navigate
 import Xbee
