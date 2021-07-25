@@ -33,7 +33,7 @@ import motor
 import GPS
 import GPS_Navigate
 import paradetection21_2
-import photorunning
+
 
 def land_point_save():
 	try:
