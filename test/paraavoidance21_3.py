@@ -77,34 +77,33 @@ def Parachute_area_judge(longitude_land,latitude_land):
 
 def Parachute_Avoidance(flug):
 	#--- There is Parachute around rover ---#
-	z = 0
-	while z < 3:
-		if flug == 1:
+
+	if flug == 1:
 		#--- Avoid parachute by back control ---#
-		    try:
-			    goalflug, goalarea, goalGAP, photoname = goaldetection.GoalDetection("/home/pi/photo/photo", 200, 20, 80, 7000)
-			    if (goalGAP >= -100) and (goalGAP <= -50):
-				    motor.move(50,-50,0.1)
-				    motor.move(70,70,1)
+		try:
+			goalflug, goalarea, goalGAP, photoname = paradetection21_2.ParaDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
+			if (goalGAP >= -100) and (goalGAP <= -50):
+				motor.move(50,-50,0.1)
+				motor.move(70,70,1)
 
-			    if (goalGAP >= -50) and (goalGAP <= 0):
-				    motor.move(80,-80,1)
-				    motor.move(70,70,1)
+			if (goalGAP >= -50) and (goalGAP <= 0):
+				motor.move(80,-80,1)
+				motor.move(70,70,1)
 
-			    if (goalGAP >= 0) and (goalGAP <= 50):
-				    motor.move(-50,50,0.1)
-				    motor.move(70,70,1)
+			if (goalGAP >= 0) and (goalGAP <= 50):
+				motor.move(-50,50,0.1)
+				motor.move(70,70,1)
 
-			    if (goalGAP >= 50) and (goalGAP <= 100):
-				    motor.move(-80,80,1)
-				    motor.move(70,70,1)
+			if (goalGAP >= 50) and (goalGAP <= 100):
+				motor.move(-80,80,1)
+				motor.move(70,70,1)
 		
-		    except KeyboardInterrupt:
+		except KeyboardInterrupt:
 			    print("stop")
-		if flug == -1:
-			motor.move(50, 50, 0.5)
-			z = z + 1
-		print(z)
+	if flug == -1:
+		motor.move(50, 50, 0.5)
+		z = z + 1
+	print(z)
 	return flug
 			
 
