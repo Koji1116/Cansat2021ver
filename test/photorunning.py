@@ -206,29 +206,29 @@ if __name__ == "__main__":
             if gap <= -30:                                                                                  #調整するところ
                 print('Turn left')
                 # Xbee.str_trans('Turn left')
-                motor.move(-0.2, 0.2, 0.2)                                                       #調整するところ
+                motor.move(-20, 20, 0.2)                                                       #調整するところ
                 # print('motor.motor(-0.2, 0.2, 0.3)')
             elif 30 <= gap:
                 print('Turn right')
                 # Xbee.str_trans('Turn right')
-                motor.move(0.2, -0.2, 0.2)                                                       #調整するところ
+                motor.move(20, -20, 0.2)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.3)')
             elif gap == -1:
                 print('Nogoal detected')
-                motor.move(0.2, -0.2, 0.2)                                                       #調整するところ
+                motor.move(20, -20, 0.2)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.5)')
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor.move(1, 1, 6)                                                        #調整するところ
+                    motor.move(90, 90, 6)                                                        #調整するところ
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
-                    motor.move(1, 1, 3)                                                        #調整するところ
+                    motor.move(90, 90, 3)                                                        #調整するところ
                     # print('motor.motor(1, 1, 5)')
                     print('middle')
                 elif goalarea <= area_short:
-                    motor.move(1, 1, 0.5)                                                      #調整するところ
+                    motor.move(90, 90, 0.5)                                                      #調整するところ
                     # print('motor.motor(1, 1, 2)')
                     print('short')
 
