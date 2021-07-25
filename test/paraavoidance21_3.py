@@ -23,7 +23,7 @@ import cv2
 #import gps_navigate
 import Capture
 #import ParaDetection
-import TSL2561
+#import TSL2561
 import Other
 import goaldetection
 import motor
