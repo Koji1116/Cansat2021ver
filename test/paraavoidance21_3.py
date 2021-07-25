@@ -34,6 +34,7 @@ import GPS
 import GPS_Navigate
 import paradetection21_2
 
+
 def land_point_save():
 	try:
 		while True:
@@ -75,13 +76,13 @@ def Parachute_area_judge(longitude_land,latitude_land):
 	return distance
 
 
-def Parachute_Avoidance(flug):
+def Parachute_Avoidance(flug,goalGAP):
 	#--- There is Parachute around rover ---#
 
 	if flug == 1:
 		#--- Avoid parachute by back control ---#
 		try:
-			goalflug, goalarea, goalGAP, photoname = paradetection21_2.ParaDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
+			#goalflug, goalarea, goalGAP, photoname = photorunning.GoalDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
 			if (goalGAP >= -100) and (goalGAP <= -50):
 				motor.move(50,-50,0.1)
 				motor.move(70,70,1)
@@ -126,9 +127,11 @@ if __name__ == '__main__':
 		print("START: Parachute avoidance")
 
 		flug, area, GAP, photoname = paradetection21_2.ParaDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
+		print("paradetection phase success")
 		z=0
 		while z < 3:
-			a = Parachute_Avoidance(flug)
+			a = Parachute_Avoidance(flug,GAP)
+			print(a)
 			if a == -1:
 				z = z + 1
 		
