@@ -24,7 +24,7 @@ import Xbee
 # import pwm_control
 import GPS
 import GPS_Navigate
-
+import time
 # import for log
 import Other
 import glob
@@ -285,25 +285,29 @@ def calculate_angle_3D(accx, accy, accz, magx, magy, magz, magx_off, magy_off, m
 def calculate_direction(lon2, lat2):
     # --- read GPS data ---#
     try:
-        while True:
-            GPS_data = GPS.readGPS()
+        #while True:
+            #GPS_data = GPS.readGPS()
             #lat1 = GPS_data[1]
             #lon1 = GPS_data[2]
-            while True:
-                utc, lat, lon, sHeight, gHeight = GPS.readGPS()
-                if utc == -1.0:
-                    if lat == -1.0:
-                        print("Reading GPS Error")
-                        # pass
-                    else:
-                        # pass
-                        print("Status V")
+        while True:
+            utc, lat, lon, sHeight, gHeight = GPS.readGPS()
+            print(utc, lat, lon, sHeight, gHeight)
+
+            if utc == -1.0:
+                if lat == -1.0:
+                    print("Reading GPS Error")
+                    # pass
                 else:
                     # pass
-                    print(utc, lat, lon, sHeight, gHeight)
-                    lat1 = lat
-                    lon1 = lon
-                    break
+                    print("Status V")
+            else:
+                # pass
+                print(utc, lat, lon, sHeight, gHeight)
+                lat1 = lat
+                lon1 = lon
+                break
+            time.sleep(1)
+                
             #if lat1 != -1.0 and lat1 != 0.0:
              #   break
     except KeyboardInterrupt:
