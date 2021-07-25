@@ -104,9 +104,9 @@ if __name__ == '__main__':
         elif command == 's':
             move(-50, -50, 2)
         elif command == 'manual':
-            l = input('左の出力は？')
-            r = input('右の出力は？')
-            t = input('移動時間は？')
+            l = float(input('左の出力は？'))
+            r = float(input('右の出力は？'))
+            t = float(input('移動時間は？'))
             time.sleep(0.8)
             move(l, r, t)
         else:
