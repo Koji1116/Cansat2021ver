@@ -30,6 +30,7 @@ import goaldetection
 import motor
 import GPS
 import GPS_Navigate
+import paradetection21_2
 
 def land_point_save():
 	try:
@@ -80,21 +81,21 @@ def Parachute_Avoidance(flug):
 		#--- Avoid parachute by back control ---#
 		    try:
 			    goalflug, goalarea, goalGAP, photoname = goaldetection.GoalDetection("/home/pi/photo/photo", 200, 20, 80, 7000)
-			    if (goalGAP >= -160) and (goalGAP <= -80):
-				    motor.motor_koji(0.5,-0.5,0.1)
-				    motor.motor_koji(0.7,0.7,1)
+			    if (goalGAP >= -100) and (goalGAP <= -50):
+				    motor.move(50,-50,0.1)
+				    motor.move(70,70,1)
 
-			    if (goalGAP >= -80) and (goalGAP <= 0):
-				    motor.motor_koji(0.8,-0.8,0.1)
-				    motor.motor_koji(0.7,0.7,1)
+			    if (goalGAP >= -50) and (goalGAP <= 0):
+				    motor.move(80,-80,1)
+				    motor.move(70,70,1)
 
-			    if (goalGAP >= 0) and (goalGAP <= 80):
-				    motor.motor_koji(-0.5,0.5,0.1)
-				    motor.motor_koji(0.7,0.7,1)
+			    if (goalGAP >= 0) and (goalGAP <= 50):
+				    motor.move(-50,50,0.1)
+				    motor.move(70,70,1)
 
-			    if (goalGAP >= 80) and (goalGAP <= 160):
-				    motor.motor_koji(-0.8,0.8,0.1)
-				    motor.motor_koji(0.7,0.7,1)
+			    if (goalGAP >= 50) and (goalGAP <= 100):
+				    motor.move(-80,80,1)
+				    motor.move(70,70,1)
 		
 		    except KeyboardInterrupt:
 			    print("stop")
@@ -106,25 +107,26 @@ def Parachute_Avoidance(flug):
 
 if __name__ == '__main__':
 	try:
-		print("START: Judge covered by Parachute")
-		TSL2561.tsl2561_setup()
-		t2 = time.time()
-		t1 = t2
+		#print("START: Judge covered by Parachute")
+		#TSL2561.tsl2561_setup()
+		#t2 = time.time()
+		#t1 = t2
 		#--- Paracute judge ---#
 		#--- timeout is 60s ---#
-		while t2 - t1 < 60:
-			Luxflug = ParaDetection.ParaJudge(10000)
-			print(Luxflug)
-			if Luxflug[0] == 1:
-				break
-			t1 =time.time()
-			time.sleep(1)
-			print("rover is covered with parachute!")
+		#while t2 - t1 < 60:
+			#Luxflug = ParaDetection.ParaJudge(10000)
+			#print(Luxflug)
+			#if Luxflug[0] == 1:
+			#	break
+			#t1 =time.time()
+			#time.sleep(1)
+			#print("rover is covered with parachute!")
 
 		print("START: Parachute avoidance")
 
-		flug, area, GAP, photoname = goaldetection.GoalDetection("/home/pi/photo/photo,320,240,200,10,120")
+		flug, area, GAP, photoname = paradetection21_2.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
 		Parachute_Avoidance(flug)
+		print("success")
 
 	except KeyboardInterrupt:
 		print("emergency!")
