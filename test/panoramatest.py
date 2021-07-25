@@ -51,6 +51,5 @@ if __name__ == "__main__":
         endTime = time.time() #プログラムの終了時間
         runTime = endTime - startTime
         print(runTime)
-    except Exception as e:
-        print(e.message)
-        print('Error')
+    except KeyboardInterrupt:
+        print('Interrupted')
