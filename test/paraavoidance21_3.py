@@ -7,7 +7,7 @@
 
 import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
-sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/TSL2561')
+#sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/TSL2561')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 #sys.path.append('/home/pi/git/kimuralab/Detection/Run_phase')
