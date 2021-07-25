@@ -18,7 +18,7 @@ import motor
 import math
 import mag
 import Calibration
-import panoramatest
+import panorama
 
 
 def panorama_shooting(l, r, t, magx_off, magy_off, path):
@@ -39,7 +39,7 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
         Capture.Capture(path)
         # filename = Capture.Capture(path)
         # photobox.append(filename)
-        motor.motor(l, r, t)
+        motor.move(l, r, t)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
         magy = magdata[1]
@@ -51,7 +51,7 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
             if latestθ - preθ <= 10:
                 # Xbee.str_trans('Stuck')
                 print('Stuck')
-                motor.motor(l, r, t)
+                motor.move(l, r, t)
                 # ----Initialize-----#
                 magdata = BMC050.mag_dataRead()
                 magx = magdata[0]
@@ -98,7 +98,7 @@ if __name__ == '__main__':
         if composition == 'Y':
             srcdir = 'src_panorama'
             dstdir = 'result_panorama'
-            panoramatest.panorama(srcdir, dstdir, 'panoramaShootingtest00')
+            panorama.panorama(srcdir, dstdir, 'panoramaShootingtest00')
 
         again = input('もう一度，写真撮影を行いますか？Y/N\t')
         if again == 'Y':
@@ -108,7 +108,3 @@ if __name__ == '__main__':
             break
         else:
             print('Y/N')
-
-
-
-

@@ -82,20 +82,20 @@ def Parachute_Avoidance(flug):
 		    try:
 			    goalflug, goalarea, goalGAP, photoname = goaldetection.GoalDetection("/home/pi/photo/photo", 200, 20, 80, 7000)
 			    if (goalGAP >= -100) and (goalGAP <= -50):
-				    motor.motor_koji(0.5,-0.5,0.1)
-				    motor.motor_koji(0.7,0.7,1)
+				    motor.move(50,-50,0.1)
+				    motor.move(70,70,1)
 
 			    if (goalGAP >= -50) and (goalGAP <= 0):
-				    motor.motor_koji(0.8,-0.8,0.1)
-				    motor.motor_koji(0.7,0.7,1)
+				    motor.move(80,-80,1)
+				    motor.move(70,70,1)
 
 			    if (goalGAP >= 0) and (goalGAP <= 50):
-				    motor.motor_koji(-0.5,0.5,0.1)
-				    motor.motor_koji(0.7,0.7,1)
+				    motor.move(-50,50,0.1)
+				    motor.move(70,70,1)
 
 			    if (goalGAP >= 50) and (goalGAP <= 100):
-				    motor.motor_koji(-0.8,0.8,0.1)
-				    motor.motor_koji(0.7,0.7,1)
+				    motor.move(-80,80,1)
+				    motor.move(70,70,1)
 		
 		    except KeyboardInterrupt:
 			    print("stop")
