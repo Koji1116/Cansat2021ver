@@ -30,8 +30,6 @@ import Other
 import glob
 from gpiozero import Motor
 
-import motor_koji
-
 
 
 path_log = '/home/pi/Desktop/Cansat2021ver/log/Calibration.txt'
@@ -103,8 +101,8 @@ def motor_move(strength_l, strength_r, t_wait):
         time.sleep(t_wait)
 
 
-def motor(strength_l, strength_r, t_running, x=1):
-    motor_move(strength_l, strength_r, t_running)
+def motor(strength_l, strength_r, time, x=1):
+    motor_move(strength_l, strength_r, time)
     motor_stop(x)
 
 
@@ -144,7 +142,7 @@ def get_data_offset(magx_off, magy_off, magz_off):
     return magx, magy, magz
 
 
-def magdata_matrix(l, r, t, t_sleeptime=0.1):
+def magdata_matrix(l, r, t, t_sleeptime=0.2):
     """
 	キャリブレーション用の磁気値を得るための関数
 	forループ内(run)を変える必要がある2021/07/04
@@ -152,8 +150,8 @@ def magdata_matrix(l, r, t, t_sleeptime=0.1):
     try:
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
-        for _ in range(n):
-            motor.motor(l, r, t)
+        for _ in range(60):
+            motor(l, r, t)
             magx, magy, magz = get_data()
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
@@ -230,28 +228,7 @@ def calculate_offset(magdata):
     return magx_array, magy_array, magz_array, magx_off, magy_off, magz_off
 
 
-def angle(magx, magy, magx_off=0, magy_off=0):
-    θ = math.degrees(math.atan((magy - magy_off) / (magx - magx_off)))
-
-    if magx - magx_off > 0 and magy - magy_off > 0:  # First quadrant
-        pass  # 0 <= θ <= 90
-    elif magx - magx_off < 0 and magy - magy_off > 0:  # Second quadrant
-        θ = 180 + θ  # 90 <= θ <= 180
-    elif magx - magx_off < 0 and magy - magy_off < 0:  # Third quadrant
-        θ = θ + 180  # 180 <= θ <= 270
-    elif magx - magx_off > 0 and magy - magy_off < 0:  # Fourth quadrant
-        θ = 360 + θ  # 270 <= θ <= 360
-
-    θ += 90
-    if 360 <= θ <= 450:
-        θ -= 360
-    return θ
-
-
 def calculate_angle_2D(magx, magy, magx_off, magy_off):
-    """
-    2021は使わない？
-    """
     # --- recognize rover's direction ---#
     # --- North = 0 , θ = (direction of sensor) ---#
     # --- -90 <= θ <= 90 ---#
@@ -309,14 +286,26 @@ def calculate_direction(lon2, lat2):
     # --- read GPS data ---#
     try:
         while True:
-            print("-----")
             GPS_data = GPS.readGPS()
-            lat1 = GPS_data[1]
-            lon1 = GPS_data[2]
-            print(lat1)
-            print(lon2)
-            if lat1 != -1.0 and lat1 != 0.0:
-                break
+            #lat1 = GPS_data[1]
+            #lon1 = GPS_data[2]
+            while True:
+                utc, lat, lon, sHeight, gHeight = GPS.readGPS()
+                if utc == -1.0:
+                    if lat == -1.0:
+                        print("Reading GPS Error")
+                        # pass
+                    else:
+                        # pass
+                        print("Status V")
+                else:
+                    # pass
+                    print(utc, lat, lon, sHeight, gHeight)
+                    lat1 = lat
+                    lon1 = lon
+                    break
+            #if lat1 != -1.0 and lat1 != 0.0:
+             #   break
     except KeyboardInterrupt:
         GPS.closeGPS()
         print("\r\nKeyboard Intruppted, Serial Closed")
