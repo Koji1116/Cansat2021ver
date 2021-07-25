@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
 		print("START: Parachute avoidance")
 
-		flug, area, GAP, photoname = paradetection21_2.ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
+		flug, area, GAP, photoname = paradetection21_2.ParaDetection("photostorage/photostorage_paradete",320,240,200,10,120)
 		Parachute_Avoidance(flug)
 		print("success")
 
