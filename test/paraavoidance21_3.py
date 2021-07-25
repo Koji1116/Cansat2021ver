@@ -22,7 +22,7 @@ import cv2
 #import GPS
 #import gps_navigate
 import Capture
-import ParaDetection
+#import ParaDetection
 import TSL2561
 import Other
 import goaldetection
