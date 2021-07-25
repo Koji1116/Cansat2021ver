@@ -199,7 +199,6 @@ if __name__ == "__main__":
             photoName = Capture.Capture(path, 320, 320)                                               #解像度調整するところ？
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
-            time.sleep(1)
             # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
             if -100 <= gap and gap <= -60:                                                                                  #調整するところ
@@ -219,11 +218,11 @@ if __name__ == "__main__":
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor.move(80, 80, 0.5)                                                        #調整するところ
+                    motor.move(80, 80, 1)                                                        #調整するところ
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
-                    motor.move(80, 80, 0.3)                                                        #調整するところ
+                    motor.move(80, 80, 0.5)                                                        #調整するところ
                     # print('motor.motor(1, 1, 5)')
                     print('middle')
                 elif goalarea <= area_short:
