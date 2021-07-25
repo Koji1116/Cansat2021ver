@@ -129,11 +129,13 @@ if __name__ == '__main__':
 		flug, area, GAP, photoname = paradetection21_2.ParaDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
 		print("paradetection phase success")
 		z=0
+		print(z)
 		while z < 3:
 			a = Parachute_Avoidance(flug,GAP)
 			print(a)
 			if a == -1:
 				z = z + 1
+				print(z)
 		
 		print("success")
 	
