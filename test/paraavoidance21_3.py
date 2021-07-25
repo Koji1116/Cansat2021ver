@@ -102,8 +102,7 @@ def Parachute_Avoidance(flug):
 			    print("stop")
 	if flug == -1:
 		motor.move(50, 50, 0.5)
-		z = z + 1
-	print(z)
+		
 	return flug
 			
 
