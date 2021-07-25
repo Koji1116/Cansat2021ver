@@ -202,12 +202,12 @@ if __name__ == "__main__":
             time.sleep(1)
             # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
-            if -100 <= gap and gap <= -40:                                                                                  #調整するところ
+            if -100 <= gap and gap <= -59:                                                                                  #調整するところ
                 print('Turn left')
                 # Xbee.str_trans('Turn left')
                 motor.move(-45, 45, 0.1)                                                       #調整するところ
                 # print('motor.motor(-0.2, 0.2, 0.3)')
-            elif 40 <= gap and gap <= 100:
+            elif 50 <= gap and gap <= 100:
                 print('Turn right')
                 # Xbee.str_trans('Turn right')
                 motor.move(45, -45, 0.1)                                                       #調整するところ
