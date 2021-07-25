@@ -174,9 +174,9 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         centers = get_center(contours[max_area_contour])
 
         if max_area_contour == -1:
-            return [-1, 0, -1000, imgname]
+            return [1, 0, 1000, imgname]
         elif max_area <= 2:
-            return [-1, 0, -1000, imgname]
+            return [1, 0, 1000, imgname]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [0, max_area, GAP, imgname]
@@ -202,12 +202,12 @@ if __name__ == "__main__":
             time.sleep(1)
             # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
-            if gap <= -30:                                                                                  #調整するところ
+            if -100 <= gap and gap <= -30:                                                                                  #調整するところ
                 print('Turn left')
                 # Xbee.str_trans('Turn left')
                 motor.move(-20, 20, 0.2)                                                       #調整するところ
                 # print('motor.motor(-0.2, 0.2, 0.3)')
-            elif 30 <= gap:
+            elif 30 <= gap and gap <= 100:
                 print('Turn right')
                 # Xbee.str_trans('Turn right')
                 motor.move(20, -20, 0.2)                                                       #調整するところ
