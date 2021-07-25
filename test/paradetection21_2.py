@@ -102,7 +102,7 @@ if __name__ == "__main__":
 		while 1:
 			flug = -1
 			while flug == -1:
-				f, a, n = ParaDetection("/home/pi/photo/photo",320,240,200,10,120)
+				f, a, n = ParaDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
 				print(f'flug:{f}	area:{a}	name:{n}')
 			print('ParaDetected')
 			print(f'flug:{f}	area:{a}	name:{n}')
