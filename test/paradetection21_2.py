@@ -87,15 +87,15 @@ def ParaDetection(imgpath, width, height, H_min, H_max, S_thd):
 
 if __name__ == "__main__":
 	
-	TSL2572.tsl2572_setup()
+	#TSL2572.tsl2572_setup()
 	#--- lux data test ---#
-	try:
-		while 1:
-			ParaJudge(10000)
-			time.sleep(1)
+	#try:
+		#while 1:
+			#ParaJudge(10000)
+			#time.sleep(1)
 
-	except KeyboardInterrupt:
-		print('Stop lux data test')
+	#except KeyboardInterrupt:
+		#print('Stop lux data test')
 
 	#--- Parachute detection test ---#
 	try:
