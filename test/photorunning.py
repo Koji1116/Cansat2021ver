@@ -174,9 +174,9 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         centers = get_center(contours[max_area_contour])
 
         if max_area_contour == -1:
-            return [-1, 0, -100, imgname]
+            return [-1, 0, -1000, imgname]
         elif max_area <= 2:
-            return [-1, 0, -100, imgname]
+            return [-1, 0, -1000, imgname]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [0, max_area, GAP, imgname]
@@ -184,7 +184,7 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [1, max_area, GAP, imgname]
     except:
-        return [100, 100, 100, imgname]
+        return [1000, 1000, 1000, imgname]
 
 if __name__ == "__main__":
     try:
