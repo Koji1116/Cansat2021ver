@@ -101,10 +101,11 @@ def Parachute_Avoidance(flug):
 		
 		    except KeyboardInterrupt:
 			    print("stop")
-		if flug == 0:
+		if flug == -1:
 			motor.move(50, 50, 0.5)
 			z = z + 1
 		print(z)
+	return flug
 			
 
 if __name__ == '__main__':
@@ -126,10 +127,15 @@ if __name__ == '__main__':
 
 		print("START: Parachute avoidance")
 
-		flug, area, GAP, photoname = paradetection21_2.ParaDetection("photostorage/photostorage_paradete",320,240,200,10,120)
-		Parachute_Avoidance(flug)
+		flug, area, GAP, photoname = paradetection21_2.ParaDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
+		z=0
+		while z < 3:
+			a = Parachute_Avoidance(flug)
+			if a == -1:
+				z = z + 1
+		
 		print("success")
-
+	
 	except KeyboardInterrupt:
 		print("emergency!")
 
