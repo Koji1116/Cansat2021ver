@@ -175,7 +175,7 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
 
         if max_area_contour == -1:
             return [1, 0, 1000, imgname]
-        elif max_area <= 2:
+        elif max_area <= 1.5:
             return [1, 0, 1000000, imgname]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
@@ -212,7 +212,7 @@ if __name__ == "__main__":
                 # Xbee.str_trans('Turn right')
                 motor.move(50, -50, 0.1)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.3)')
-            elif gap == 1000:
+            elif gap == 1000 and gap==1000000:
                 print('Nogoal detected')
                 motor.move(50, -50, 0.1)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.5)')
