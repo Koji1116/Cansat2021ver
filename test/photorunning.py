@@ -174,9 +174,9 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         centers = get_center(contours[max_area_contour])
 
         if max_area_contour == -1:
-            return [-1, 0, -1, imgname]
+            return [1, 0, 1000, imgname]
         elif max_area <= 2:
-            return [-1, max_area, -1, imgname]
+            return [1, 0, 1000, imgname]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [0, max_area, GAP, imgname]
@@ -184,7 +184,7 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [1, max_area, GAP, imgname]
     except:
-        return [100, 100, 100, imgname]
+        return [1000, 1000, 1000, imgname]
 
 if __name__ == "__main__":
     try:
@@ -202,32 +202,32 @@ if __name__ == "__main__":
             time.sleep(1)
             # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
-            if gap <= -30:                                                                                  #調整するところ
+            if -100 <= gap and gap <= -30:                                                                                  #調整するところ
                 print('Turn left')
                 # Xbee.str_trans('Turn left')
                 motor.move(-20, 20, 0.2)                                                       #調整するところ
                 # print('motor.motor(-0.2, 0.2, 0.3)')
-            elif 30 <= gap:
+            elif 30 <= gap and gap <= 100:
                 print('Turn right')
                 # Xbee.str_trans('Turn right')
                 motor.move(20, -20, 0.2)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.3)')
-            elif gap == -1:
+            elif gap == 1000:
                 print('Nogoal detected')
                 motor.move(20, -20, 0.2)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.5)')
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor.move(90, 90, 3)                                                        #調整するところ
+                    motor.move(80, 50, 0.5)                                                        #調整するところ
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
-                    motor.move(90, 90, 1)                                                        #調整するところ
+                    motor.move(80, 50, 0.3)                                                        #調整するところ
                     # print('motor.motor(1, 1, 5)')
                     print('middle')
                 elif goalarea <= area_short:
-                    motor.move(90, 90, 0.5)                                                      #調整するところ
+                    motor.move(80, 50, 0.2)                                                      #調整するところ
                     # print('motor.motor(1, 1, 2)')
                     print('short')
 
