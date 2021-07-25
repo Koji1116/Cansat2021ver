@@ -39,7 +39,7 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
         Capture.Capture(path)
         # filename = Capture.Capture(path)
         # photobox.append(filename)
-        motor.motor(l, r, t)
+        motor.move(l, r, t)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
         magy = magdata[1]
@@ -51,7 +51,7 @@ def panorama_shooting(l, r, t, magx_off, magy_off, path):
             if latestθ - preθ <= 10:
                 # Xbee.str_trans('Stuck')
                 print('Stuck')
-                motor.motor(l, r, t)
+                motor.move(l, r, t)
                 # ----Initialize-----#
                 magdata = BMC050.mag_dataRead()
                 magx = magdata[0]
