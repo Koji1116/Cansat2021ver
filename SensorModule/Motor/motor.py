@@ -13,10 +13,10 @@ import time
 
 def motor_stop(x=1):
     '''motor_move()とセットで使用'''
-    Rpin1 = 9
-    Rpin2 = 10
-    Lpin1 = 5
-    Lpin2 = 6
+    Rpin1 = 6
+    Rpin2 = 5
+    Lpin1 = 10
+    Lpin2 = 9
     motor_r = Motor(Rpin1, Rpin2)
     motor_l = Motor(Lpin1, Lpin2)
     motor_r.stop()
@@ -30,10 +30,10 @@ def motor_move(strength_l, strength_r, t_moving):
     strength_l、strength_rは-1~1で表す。負の値だったら後ろ走行。
     必ずmotor_stop()セットで用いる。めんどくさかったら下にあるmotor()を使用
     '''
-    Rpin1 = 9
-    Rpin2 = 10
-    Lpin1 = 5
-    Lpin2 = 6
+    Rpin1 = 6
+    Rpin2 = 5
+    Lpin1 = 10
+    Lpin2 = 9
     # 前進するときのみスタック判定
     if strength_r >= 0 and strength_l >= 0:
         motor_r = Motor(Rpin1, Rpin2)
@@ -64,10 +64,9 @@ def motor_move(strength_l, strength_r, t_moving):
         time.sleep(t_moving)
 
 
-def motor(strength_l, strength_r, t_moving, x=0.1):
+def move(strength_l, strength_r, t_moving, x=0.1):
     """
     急停止回避を組み込み 7/23 takayama
-    テストまだ
     """
     strength_r /= 100
     strength_l /= 100
@@ -96,18 +95,18 @@ if __name__ == '__main__':
     while 1:
         command = input('操作\t')
         if command == 'a':
-            motor(0.4, 0.8, 2)
+            move(40, 80, 2)
         elif command == 'w':
-            motor(0.8, 0.8, 2)
+            move(80, 80, 2)
         elif command == 'd':
-            motor(0.8, 0.4, 2)
+            move(80, 40, 2)
         elif command == 's':
-            motor(-0.5, -0.5, 2)
+            move(-50, -50, 2)
         elif command == 'manual':
-            l = input('左の出力は？')
-            r = input('右の出力は？')
-            t = input('移動時間は？')
+            l = float(input('左の出力は？'))
+            r = float(input('右の出力は？'))
+            t = float(input('移動時間は？'))
             time.sleep(0.8)
-            motor(l, r, t)
+            move(l, r, t)
         else:
             print('もう一度入力してください')

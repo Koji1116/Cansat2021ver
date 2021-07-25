@@ -8,7 +8,7 @@ import numpy as np
 import time
 import Capture
 import Xbee
-import motor_koji
+import motor
 import Other
 import datetime
 from gpiozero import Motor
@@ -198,7 +198,7 @@ if __name__ == "__main__":
         # photoName = 'photostorage/practice13.png'
         while goalflug != 0:
             photoName = Capture.Capture(path, 640, 320)                                               #解像度調整するところ？
-            goalflug, goalarea, gap, imgname = GoalDetection(photoName, G_thd)
+            goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             time.sleep(1)
             # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
@@ -206,29 +206,29 @@ if __name__ == "__main__":
             if gap <= -30:                                                                                  #調整するところ
                 print('Turn left')
                 # Xbee.str_trans('Turn left')
-                motor_koji.motor_koji(-0.2, 0.2, 0.2)                                                       #調整するところ
+                motor.move(-20, 20, 0.2)                                                       #調整するところ
                 # print('motor.motor(-0.2, 0.2, 0.3)')
             elif 30 <= gap:
                 print('Turn right')
                 # Xbee.str_trans('Turn right')
-                motor_koji.motor_koji(0.2, -0.2, 0.2)                                                       #調整するところ
+                motor.move(20, -20, 0.2)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.3)')
             elif gap == -1:
                 print('Nogoal detected')
-                motor_koji.motor_koji(0.2, -0.2, 0.2)                                                       #調整するところ
+                motor.move(20, -20, 0.2)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.5)')
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor_koji.motor_koji(1, 1, 6)                                                        #調整するところ
+                    motor.move(90, 90, 6)                                                        #調整するところ
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
-                    motor_koji.motor_koji(1, 1, 3)                                                        #調整するところ
+                    motor.move(90, 90, 3)                                                        #調整するところ
                     # print('motor.motor(1, 1, 5)')
                     print('middle')
                 elif goalarea <= area_short:
-                    motor_koji.motor_koji(1, 1, 0.5)                                                      #調整するところ
+                    motor.move(90, 90, 0.5)                                                      #調整するところ
                     # print('motor.motor(1, 1, 2)')
                     print('short')
 
