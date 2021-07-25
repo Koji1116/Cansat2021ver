@@ -191,7 +191,7 @@ def magdata_matrix_offset(l, r, t, magx_off, magy_off, magz_off):
     try:
         magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
         magdata = np.array([[magx, magy, magz]])
-        for _ in range(60):
+        for _ in range(20):
             motor(l, r, t)
             magx, magy, magz = get_data_offset(magx_off, magy_off, magz_off)
             # --- multi dimention matrix ---#
