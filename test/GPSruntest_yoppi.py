@@ -5,19 +5,21 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 import numpy as np
-import gps_navigate
+import GPS_Navigate
 import Xbee
 import BMC050
 import GPS
 import motor
 import Calibration
 import pigpio
-from pigpio import Motor
+from gpiozero import Motor
 import time
 import traceback
 from threading import Thread
 import math
+import mag
 
 
 # --- original module ---#
@@ -43,8 +45,8 @@ def adjust_direction(theta):
     """
     print('theta = '+str(theta)+'---回転調整開始！')
     count = 0
-    small = 20
-    big = 50
+    t_small = 0.1
+    t_big = 0.2
     while abs(theta) > 30:
         print(str(count))
         
@@ -56,23 +58,22 @@ def adjust_direction(theta):
             if abs(theta) <= 60:
                 
                 print('theta = '+str(theta)+'---回転開始ver1')
-                motor.move(np.cos(theta)*0.5 *100, -1*np.cos(theta)*0.5 *100, 0.1)
+                motor.move(20,-20, t_small )
             
-            elif abs(theta) <= 180:
-                
+            else:
                 print('theta = '+str(theta)+'---回転開始ver2')
-                motor.move(-np.cos(theta) *0.5 *100, np.cos(theta)*0.5 *100, 0.2)
+                motor.move(20,-20, t_big)
                 
         elif abs(theta) > 180:
             if abs(theta) >= 300:
                 
                 print('theta = '+str(theta)+'---回転開始ver3')
-                motor.move(-np.cos(theta)*0.5 *100, np.cos(theta)*0.5 *100, 0.1)
+                motor.move(-20,20, t_small)
                 
-            elif abs(theta) > 180:
+            else:
                 
                 print('theta = '+str(theta)+'---回転開始ver4')
-                motor.move(np.cos(theta)*0.5 *100, -np.cos(theta)*0.5 *100, 0.2)
+                motor.move(-20,20, t_big)
                
         count += 1
         data = Calibration.get_data()
@@ -88,7 +89,7 @@ def adjust_direction(theta):
 
 
 if __name__ == "__main__":
-    BMC050.bmc050_setup()
+    mag.bmc050_setup()
     GPS.openGPS()
     print('Run Phase Start!')
     print('GPS走行開始')
