@@ -96,18 +96,18 @@ if __name__ == '__main__':
     while 1:
         command = input('操作\t')
         if command == 'a':
-            motor(0.4, 0.8, 2)
+            move(0.4, 0.8, 2)
         elif command == 'w':
-            motor(0.8, 0.8, 2)
+            move(0.8, 0.8, 2)
         elif command == 'd':
-            motor(0.8, 0.4, 2)
+            move(0.8, 0.4, 2)
         elif command == 's':
-            motor(-0.5, -0.5, 2)
+            move(-0.5, -0.5, 2)
         elif command == 'manual':
             l = input('左の出力は？')
             r = input('右の出力は？')
             t = input('移動時間は？')
             time.sleep(0.8)
-            motor(l, r, t)
+            move(l, r, t)
         else:
             print('もう一度入力してください')
