@@ -1,5 +1,5 @@
 import sys
-sys.path.append('')
+#sys.path.append('')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Illuminance')
 import time
