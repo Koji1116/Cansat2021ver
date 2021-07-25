@@ -19,6 +19,7 @@ import time
 import traceback
 from threading import Thread
 import math
+import mag
 
 
 # --- original module ---#
@@ -88,7 +89,7 @@ def adjust_direction(theta):
 
 
 if __name__ == "__main__":
-    BMC050.BMC050_setup()
+    mag.bmc050_setup()
     GPS.openGPS()
     print('Run Phase Start!')
     print('GPS走行開始')
