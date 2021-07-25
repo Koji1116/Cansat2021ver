@@ -212,7 +212,7 @@ if __name__ == "__main__":
                 # Xbee.str_trans('Turn right')
                 motor.move(50, -50, 0.1)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.3)')
-            elif gap == 1000 and gap==1000000:
+            elif gap == 1000 or gap==1000000:
                 print('Nogoal detected')
                 motor.move(50, -50, 0.1)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.5)')
