@@ -184,8 +184,7 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [1, max_area, GAP, imgname]
     except:
-        pass
-
+        return [100, 100, 100, imgname]
 
 if __name__ == "__main__":
     try:
@@ -220,11 +219,11 @@ if __name__ == "__main__":
             else:
                 print('Go straight')
                 if goalarea <= area_long:
-                    motor.move(90, 90, 6)                                                        #調整するところ
+                    motor.move(90, 90, 3)                                                        #調整するところ
                     # print('motor.motor(1, 1, 10)')
                     print('long')
                 elif goalarea <= area_middle:
-                    motor.move(90, 90, 3)                                                        #調整するところ
+                    motor.move(90, 90, 1)                                                        #調整するところ
                     # print('motor.motor(1, 1, 5)')
                     print('middle')
                 elif goalarea <= area_short:
