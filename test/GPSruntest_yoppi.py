@@ -49,30 +49,30 @@ def adjust_direction(theta):
         print(str(count))
         if count > 8:
             print('not ')
-            stuck.stuck_avoid()
+            #stuck.stuck_avoid()
 
         if abs(theta) <= 180:
             if abs(theta) <= 60:
                 print('theta = '+str(theta)+'---ver1')
                 motor.motor_move(
-                    np.sign(theta)*0.5, -1*np.sign(theta)*0.5, 3)
+                    np.sign(theta)*0.5, -1*np.sign(theta)*0.5, 0.1)
                 motor.stop()
 
             elif abs(theta) <= 180:
                 print('theta = '+str(theta)+'---ver2')
                 motor.motor_move(-np.sign(theta)
-                                 * 0.5, np.sign(theta)*0.5, 3)
+                                 * 0.5, np.sign(theta)*0.5, 0.1)
                 motor.motor_stop()
         elif abs(theta) > 180:
             if abs(theta) >= 300:
                 print('theta = '+str(theta)+'---ver3')
                 motor.motor_move(-np.sign(theta)
-                                 * 0.5, np.sign(theta)*0.5, 5)
+                                 * 0.5, np.sign(theta)*0.5, 0.1)
                 motor.motor_stop()
             elif abs(theta) > 180:
                 print('theta = '+str(theta)+'---ver4')
                 motor.motor_move(
-                    np.sign(theta)*0.5, -np.sign(theta)*0.5, 5)
+                    np.sign(theta)*0.5, -np.sign(theta)*0.5, 0.1)
                 motor.motor_stop()
         count += 1
         data = Calibration.get_data()
@@ -128,7 +128,7 @@ if __name__ == "__main__":
         adjust_direction(theta)
 
         print('theta = '+str(theta)+'--strat straight')
-        motor_koji.motor_koji(0.8,0.8,6)
+        motor_koji.motor_koji(80,80,10)
 
         # --- calculate  goal direction ---#
         direction = Calibration.calculate_direction(lon2, lat2)
