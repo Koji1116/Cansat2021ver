@@ -130,8 +130,8 @@ if __name__ == '__main__':
 		print("paradetection phase success")
 		z=0
 		while z < 3:
-			a, b = Parachute_Avoidance(flug,GAP)
-			print(a, b)
+			a = Parachute_Avoidance(flug,GAP)
+			print(a)
 			if a == -1:
 				z = z + 1
 		
