@@ -81,19 +81,19 @@ def Parachute_Avoidance(flug):
 		#--- Avoid parachute by back control ---#
 		    try:
 			    goalflug, goalarea, goalGAP, photoname = goaldetection.GoalDetection("/home/pi/photo/photo", 200, 20, 80, 7000)
-			    if (goalGAP >= -160) and (goalGAP <= -80):
+			    if (goalGAP >= -100) and (goalGAP <= -50):
 				    motor.motor_koji(0.5,-0.5,0.1)
 				    motor.motor_koji(0.7,0.7,1)
 
-			    if (goalGAP >= -80) and (goalGAP <= 0):
+			    if (goalGAP >= -50) and (goalGAP <= 0):
 				    motor.motor_koji(0.8,-0.8,0.1)
 				    motor.motor_koji(0.7,0.7,1)
 
-			    if (goalGAP >= 0) and (goalGAP <= 80):
+			    if (goalGAP >= 0) and (goalGAP <= 50):
 				    motor.motor_koji(-0.5,0.5,0.1)
 				    motor.motor_koji(0.7,0.7,1)
 
-			    if (goalGAP >= 80) and (goalGAP <= 160):
+			    if (goalGAP >= 50) and (goalGAP <= 100):
 				    motor.motor_koji(-0.8,0.8,0.1)
 				    motor.motor_koji(0.7,0.7,1)
 		
