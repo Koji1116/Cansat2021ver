@@ -201,19 +201,19 @@ if __name__ == "__main__":
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
-            if -100 <= gap and gap <= -60:                                                                                  #調整するところ
+            if -100 <= gap and gap <= -65:                                                                                  #調整するところ
                 print('Turn left')
                 # Xbee.str_trans('Turn left')
-                motor.move(-45, 45, 0.1)                                                       #調整するところ
+                motor.move(-40, 40, 0.1)                                                       #調整するところ
                 # print('motor.motor(-0.2, 0.2, 0.3)')
-            elif 60 <= gap and gap <= 100:
+            elif 65 <= gap and gap <= 100:
                 print('Turn right')
                 # Xbee.str_trans('Turn right')
-                motor.move(45, -45, 0.1)                                                       #調整するところ
+                motor.move(40, -40, 0.1)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.3)')
             elif gap == 1000 or gap==1000000:
                 print('Nogoal detected')
-                motor.move(45, -45, 0.1)                                                       #調整するところ
+                motor.move(40, -40, 0.1)                                                       #調整するところ
                 # print('motor.motor(0.2, -0.2, 0.5)')
             else:
                 print('Go straight')
