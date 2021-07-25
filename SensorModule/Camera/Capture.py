@@ -16,7 +16,7 @@ def Capture(path, width = 320, height = 240):
 			#使用するカメラの解像度は静止画解像度で3280×2464
 			filepath = Other.fileName(path,"jpg")
 			#指定したパスを持つファイルを作成
-			#個々の関数がよくわからない
+			
 			camera.capture(filepath)
 			#そのファイルに取得した画像を入れる
 	except picamera.exc.PiCameraMMALError:
