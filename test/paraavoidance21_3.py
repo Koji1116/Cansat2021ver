@@ -104,7 +104,7 @@ def Parachute_Avoidance(flug,goalGAP):
 	if flug == -1:
 		motor.move(50, 50, 0.5)
 		
-	return flug
+	
 			
 
 if __name__ == '__main__':
@@ -131,9 +131,11 @@ if __name__ == '__main__':
 		z=0
 		print(z)
 		while z < 3:
-			a = Parachute_Avoidance(flug,GAP)
-			print(a)
-			if a == -1:
+			flug, area, GAP, photoname = paradetection21_2.ParaDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
+			print("paradetection phase success")
+			Parachute_Avoidance(flug,GAP)
+			print(flug)
+			if flug == -1:
 				z = z + 1
 				print(z)
 		
