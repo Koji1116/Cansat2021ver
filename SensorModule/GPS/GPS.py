@@ -250,18 +250,14 @@ def vincentyInverse(lat1, lon1, lat2, lon2, ellipsoid=None):
     # return s(distance), and alpha(angle)
     return s, math.degrees(alpha)
 
-def GPSdeta_read():
+def GPSdata_read():
     '''
     GPSを読み込むまでデータを撮り続けル関数
-    
     '''
     try:
-        openGPS()
-        t_start = time.time()
         while True:
             utc, lat, lon, sHeight, gHeight = readGPS()
-            if utc !=-1:
-                closeGPS()
+            if utc !=-1 and utc !=-1.0:
                 break
             time.sleep(0.5)
         return utc, lat, lon, sHeight, gHeight
@@ -270,6 +266,8 @@ def GPSdeta_read():
         print("\r\nKeyboard Intruppted, Serial Closed")
 
 if __name__ == '__main__':
+    
+    
     try:
         openGPS()
         t_start = time.time()
@@ -281,7 +279,7 @@ if __name__ == '__main__':
                     # pass
                 else:
                     # pass
-                    print("Status V")
+                   print("Status V")
             else:
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
