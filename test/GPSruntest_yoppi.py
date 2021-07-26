@@ -89,6 +89,7 @@ def adjust_direction(theta):
         theta = azimuth-theta
         if theta <0:
             theta = 360+theta
+        time.sleep(20)
 
     print('theta = '+str(theta)+'---回転終了!!!')
 
