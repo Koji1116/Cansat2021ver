@@ -111,7 +111,7 @@ if __name__ == "__main__":
     t = float(input('一回の回転時間は？'))
     n = int(input('データ何回？'))
     # --- calibration ---#
-    magdata_Old = Calibration.magdata_matrix(l, r,n, t)
+    magdata_Old = Calibration.magdata_matrix(l, r, t,n)
     magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_Old)
     time.sleep(0.1)
     print('GPS run strat')
