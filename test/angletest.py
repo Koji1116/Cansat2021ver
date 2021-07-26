@@ -1,7 +1,7 @@
 import sys
-sys.path.append('/home/pi/desktop/Cansat2021ver/Calibration')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/6-axis')
-sys.path.append('/home/pi/desktop/Cansat2021ver/Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 import math
 # import BMC050
 import time
