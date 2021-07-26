@@ -138,7 +138,7 @@ if __name__ == "__main__":
         adjust_direction(theta)
 
         
-        print('theta = '+str(theta)+'---直進開始')
+        #print('theta = '+str(theta)+'---直進開始')
         print('finish')
         #motor.move(50,50,5)
 
