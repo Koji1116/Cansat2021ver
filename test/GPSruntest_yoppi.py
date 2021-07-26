@@ -59,22 +59,22 @@ def adjust_direction(theta):
             
             print('theta = '+str(theta)+'---回転開始ver1')
             time.sleep(3)
-            motor.move(-20,20, t_small )
+            motor.move(20,-20, t_small )
         
         elif 60 < theta  <=180:
             print('theta = '+str(theta)+'---回転開始ver2')
             time.sleep(3)
-            motor.move(-20,20, t_big)    
+            motor.move(20,-20, t_big)    
         elif theta >= 300:
             
             print('theta = '+str(theta)+'---回転開始ver3')
             time.sleep(3)
-            motor.move(20,-20, t_small)
+            motor.move(-20,20, t_small)
         elif 180 <theta <=360:
             
             print('theta = '+str(theta)+'---回転開始ver4')
             time.sleep(3)
-            motor.move(20,-20, t_big)
+            motor.move(-20,20, t_big)
         
         count += 1
         data = Calibration.get_data()
@@ -103,7 +103,9 @@ if __name__ == "__main__":
     # ------------- program start -------------#
     direction = Calibration.calculate_direction(lon2, lat2)
     goal_distance = direction['distance']
+    aaa = direction['azimuth1']
     print('goal distance = ' + str(goal_distance))
+    print('goal direction = ' + str(aaa))
     # ------------- Calibration -------------#
     print('Calibration Start')
     # --- calculate offset ---#
