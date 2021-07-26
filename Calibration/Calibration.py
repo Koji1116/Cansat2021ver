@@ -244,6 +244,7 @@ def calculate_direction(lon2, lat2):
         print(data)
         lat1 = data[1]
         lon1 = data [2]
+        print('vbbbbbbbbbbbbbbb')
         #while True:
                     #GPS_data = GPS.readGPS()
                     #lat1 = GPS_data[1]
@@ -282,6 +283,7 @@ def calculate_direction(lon2, lat2):
         print(traceback.format_exc())
     # --- calculate angle to goal ---#
     direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
+    print('aaaaaaaaaaaaaaaaaaaaaaa')
     return direction
 
 def angle(magx, magy, magx_off=0, magy_off=0):
