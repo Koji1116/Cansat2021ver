@@ -83,7 +83,7 @@ def adjust_direction(theta):
         theta = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
         direction = Calibration.calculate_direction(lon2, lat2)
         azimuth = direction["azimuth1"]
-        theta = azimuth-theta
+        theta = theta - azimuth
         if theta <0:
             theta = 360+theta
 
@@ -96,8 +96,8 @@ if __name__ == "__main__":
     print('Run Phase Start!')
     print('GPS走行開始')
     # --- difine goal latitude and longitude ---#
-    lon2 = 139.9082386
-    lat2 = 35.9184307
+    lon2 = 139.9089035
+    lat2 = 35.9185520
 
     # ------------- program start -------------#
     direction = Calibration.calculate_direction(lon2, lat2)
