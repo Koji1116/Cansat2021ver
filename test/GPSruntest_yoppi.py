@@ -40,6 +40,8 @@ def timer(t):
 
 
 def adjust_direction(theta):
+    global magx_off
+    global magy_off
     """
     方向調整
     """
@@ -76,7 +78,7 @@ def adjust_direction(theta):
             time.sleep(3)
             motor.move(-20,20, t_big)
         
-        count += 1
+        #count += 1
         data = Calibration.get_data()
         magx = data[0]
         magy = data[1]
@@ -140,6 +142,7 @@ if __name__ == "__main__":
         
         #print('theta = '+str(theta)+'---直進開始')
         print('finish')
+        break
         #motor.move(50,50,5)
 
         # --- calculate  goal direction ---#
