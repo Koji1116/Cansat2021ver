@@ -83,7 +83,7 @@ def adjust_direction(theta):
         theta = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
         direction = Calibration.calculate_direction(lon2, lat2)
         azimuth = direction["azimuth1"]
-        theta = theta - azimuth
+        theta = azimuth
         if theta <0:
             theta = 360+theta
 
