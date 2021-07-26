@@ -109,7 +109,7 @@ if __name__ == "__main__":
     r = float(input('右の出力は？'))
     l = float(input('左の出力は？'))
     t = float(input('一回の回転時間は？'))
-    n = float(input('データ何回？'))
+    n = int(input('データ何回？'))
     # --- calibration ---#
     magdata_Old = Calibration.magdata_matrix(l, r,n, t)
     magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_Old)
