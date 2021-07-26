@@ -240,31 +240,32 @@ def calculate_angle_3D(accx, accy, accz, magx, magy, magz, magx_off, magy_off, m
 def calculate_direction(lon2, lat2):
     # --- read GPS data ---#
     try:
-        
+        data = GPS.GPSdata_read()
+        print(data)
+        lat1 = data[1]
+        lon1 = data [2]
         #while True:
                     #GPS_data = GPS.readGPS()
                     #lat1 = GPS_data[1]
                     #lon1 = GPS_data[2]
-        while True:
-            utc, lat, lon, sHeight, gHeight = GPS.readGPS()
-<<<<<<< HEAD
-=======
-            print(utc, lat, lon, sHeight, gHeight)
+        #while True:
+        #    utc, lat, lon, sHeight, gHeight = GPS.readGPS()
+        #    print(utc, lat, lon, sHeight, gHeight)#
 
->>>>>>> 349a65ef4c616bbb711fe62c29bc53dbd16d549d
-            if utc == -1.0:
-                if lat == -1.0:
-                    print("Reading GPS Error")
-                    # pass
-                else:
-                    # pass
-                    print("Status V")
-            else:
-                # pass
-                print(utc, lat, lon, sHeight, gHeight)
-                lat1 = lat
-                lon1 = lon
-                break
+
+        #    if utc == -1.0:
+        #        if lat == -1.0:
+        #            print("Reading GPS Error")
+        #            # pass
+        #        else:
+        #            # pass
+        #            print("Status V")
+        #    else:
+        #        # pass
+        #        print(utc, lat, lon, sHeight, gHeight)
+        #        lat1 = lat
+        #        lon1 = lon
+        #        break
         #while True:
           #  GPS_data = GPS.readGPS()
            # lat1 = GPS_data[1]
