@@ -34,11 +34,12 @@ if __name__ == '__main__':
         r = float(input('右の出力は？'))
         l = float(input('左の出力は？'))
         t = float(input('一回の回転時間は？'))
-        magdata_offset = Calibration.magdata_matrix(l, r, t)
+        n = int(input('取得データ数は？'))
+        magdata_offset = Calibration.magdata_matrix(l, r, t , n)
         magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_offset)
         time.sleep(0.1)
         while True:
-            magdata = BMC050.mag_dataRead()
+            magdata = mag.mag_dataRead()
             mag_x = magdata[0]
             mag_y = magdata[1]
             θ = angle(mag_x, mag_y, magx_off, magy_off)
