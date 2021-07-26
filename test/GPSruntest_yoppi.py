@@ -58,22 +58,22 @@ def adjust_direction(theta):
             if abs(theta) <= 60:
                 
                 print('theta = '+str(theta)+'---回転開始ver1')
-                motor.move(20,-20, t_small )
+                motor.move(-20,20, t_small )
             
             else:
                 print('theta = '+str(theta)+'---回転開始ver2')
-                motor.move(20,-20, t_big)
+                motor.move(-20,20, t_big)
                 
         elif abs(theta) > 180:
             if abs(theta) >= 300:
                 
                 print('theta = '+str(theta)+'---回転開始ver3')
-                motor.move(-20,20, t_small)
+                motor.move(20,-20, t_small)
                 
             else:
                 
                 print('theta = '+str(theta)+'---回転開始ver4')
-                motor.move(-20,20, t_big)
+                motor.move(20,-20, t_big)
         time.sleep(3)
         count += 1
         data = Calibration.get_data()
