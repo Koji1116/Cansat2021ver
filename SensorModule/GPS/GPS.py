@@ -250,10 +250,9 @@ def vincentyInverse(lat1, lon1, lat2, lon2, ellipsoid=None):
     # return s(distance), and alpha(angle)
     return s, math.degrees(alpha)
 
-def GPSdeta_read():
+def GPSdata_read():
     '''
     GPSを読み込むまでデータを撮り続けル関数
-    
     '''
     try:
         while True:
@@ -267,26 +266,30 @@ def GPSdeta_read():
         print("\r\nKeyboard Intruppted, Serial Closed")
 
 if __name__ == '__main__':
-    try:
-        openGPS()
-        t_start = time.time()
-        while True:
-            utc, lat, lon, sHeight, gHeight = readGPS()
-            if utc == -1.0:
-                if lat == -1.0:
-                    print("Reading GPS Error")
-                    # pass
-                else:
-                    # pass
-                    print("Status V")
-            else:
-                # pass
-                print(utc, lat, lon, sHeight, gHeight)
-                Other.saveLog('GPStest', datetime.datetime.now(), time.time() - t_start, utc, lat, lon, sHeight, gHeight)
-            time.sleep(0.5)
-    except KeyboardInterrupt:
-        closeGPS()
-        print("\r\nKeyboard Intruppted, Serial Closed")
-    except:
-        closeGPS()
-        print(traceback.format_exc())
+    openGPS()
+    data = GPSdata_read()
+    print(data)
+    
+    #try:
+    #    openGPS()
+    #    t_start = time.time()
+    #    while True:
+    #        utc, lat, lon, sHeight, gHeight = readGPS()
+    #        if utc == -1.0:
+    #            if lat == -1.0:
+    #                print("Reading GPS Error")
+    #                # pass
+    #            else:
+    #                # pass
+    #               print("Status V")
+    #        else:
+    #            # pass
+    #            print(utc, lat, lon, sHeight, gHeight)
+    #            Other.saveLog('GPStest', datetime.datetime.now(), time.time() - t_start, utc, lat, lon, sHeight, gHeight)
+    #        time.sleep(0.5)
+    #except KeyboardInterrupt:
+    #    closeGPS()
+    #    print("\r\nKeyboard Intruppted, Serial Closed")
+    #except:
+    #    closeGPS()
+    #    print(traceback.format_exc())
