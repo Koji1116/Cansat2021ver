@@ -48,7 +48,7 @@ if __name__ == '__main__':
             theta =90 -θ
             if theta <0:
                 theta +=360 
-            print(90-theta)
+            print(theta )
             time.sleep(0.5)
     except KeyboardInterrupt:
         print('end')
