@@ -74,7 +74,7 @@ def adjust_direction(theta):
                 
                 print('theta = '+str(theta)+'---回転開始ver4')
                 motor.move(-20,20, t_big)
-               
+        time.sleep(3)
         count += 1
         data = Calibration.get_data()
         magx = data[0]
