@@ -206,7 +206,7 @@ def calculate_angle_2D(magx, magy, magx_off, magy_off):
         θ -= 360
     # print('magx-magx_off = '+str(magx-magx_off))
     # print('magy-magy_off = '+str(magy-magy_off))
-    print('calculate:θ = ' + str(θ))
+    print('calculate:θ ============ ' + str(θ))
     # --- 0 <= θ <= 360 ---#
     return θ
 
