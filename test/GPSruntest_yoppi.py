@@ -84,6 +84,8 @@ def adjust_direction(theta):
         direction = Calibration.calculate_direction(lon2, lat2)
         azimuth = direction["azimuth1"]
         theta = theta-azimuth
+        if theta <0:
+            theta = 360+theta
 
     print('theta = '+str(theta)+'---回転終了!!!')
 
@@ -133,7 +135,7 @@ if __name__ == "__main__":
 
         
         print('theta = '+str(theta)+'---直進開始')
-        motor_koji.motor_koji(0.8,0.8,6)
+        motor.move(50,50,5)
 
         # --- calculate  goal direction ---#
         direction = Calibration.calculate_direction(lon2, lat2)
