@@ -44,46 +44,46 @@ def adjust_direction(theta):
     方向調整
     """
     print('theta = '+str(theta)+'---回転調整開始！')
+    
     count = 0
     t_small = 0.1
     t_big = 0.2
     while abs(theta) > 30:
-        print(str(count))
         
         #if count > 8:
            # print('スタックもしくはこの場所が適切ではない')
            # stuck.stuck_avoid()
 
-        if abs(theta) <= 180:
-            if abs(theta) <= 60:
-                
-                print('theta = '+str(theta)+'---回転開始ver1')
-                motor.move(20,-20, t_small )
+        
+        if abs(theta) <= 60:
             
-            else:
-                print('theta = '+str(theta)+'---回転開始ver2')
-                motor.move(20,-20, t_big)
-                
-        elif abs(theta) > 180:
-            if abs(theta) >= 300:
-                
-                print('theta = '+str(theta)+'---回転開始ver3')
-                motor.move(-20,20, t_small)
-                
-            else:
-                
-                print('theta = '+str(theta)+'---回転開始ver4')
-                motor.move(-20,20, t_big)
-               
+            print('theta = '+str(theta)+'---回転開始ver1')
+            motor.move(20,-20, t_small )
+        
+        elif 60<theta  <=180:
+            print('theta = '+str(theta)+'---回転開始ver2')
+            motor.move(20,-20, t_big)    
+        elif abs(theta) >= 300:
+            
+            print('theta = '+str(theta)+'---回転開始ver3')
+            motor.move(-20,20, t_small)
+        elif 180 <theta <=360:
+            
+            print('theta = '+str(theta)+'---回転開始ver4')
+            motor.move(-20,20, t_big)
+        time.sleep(3)
         count += 1
         data = Calibration.get_data()
         magx = data[0]
         magy = data[1]
         # --- 0 <= θ <= 360 ---#
         theta = Calibration.calculate_angle_2D(magx, magy, magx_off, magy_off)
+        print('ccccccccccccccccc')
         direction = Calibration.calculate_direction(lon2, lat2)
         azimuth = direction["azimuth1"]
-        theta = theta-azimuth
+        theta = azimuth-theta
+        if theta <0:
+            theta = 360+theta
 
     print('theta = '+str(theta)+'---回転終了!!!')
 
@@ -94,8 +94,8 @@ if __name__ == "__main__":
     print('Run Phase Start!')
     print('GPS走行開始')
     # --- difine goal latitude and longitude ---#
-    lon2 = 139.9082386
-    lat2 = 35.9184307
+    lon2 = 139.9089035
+    lat2 = 35.9185520
 
     # ------------- program start -------------#
     direction = Calibration.calculate_direction(lon2, lat2)
@@ -109,8 +109,9 @@ if __name__ == "__main__":
     r = float(input('右の出力は？'))
     l = float(input('左の出力は？'))
     t = float(input('一回の回転時間は？'))
+    n = int(input('データ何回？'))
     # --- calibration ---#
-    magdata_Old = Calibration.magdata_matrix(l, r, t)
+    magdata_Old = Calibration.magdata_matrix(l, r, t,n)
     magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_Old)
     time.sleep(0.1)
     print('GPS run strat')
@@ -124,15 +125,18 @@ if __name__ == "__main__":
         mag_x = magdata[0]
         mag_y = magdata[1]
         θ = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
-        print(mag_x,mag_y)
-        print(θ)
         time.sleep(0.5)
         theta = θ
+        direction = Calibration.calculate_direction(lon2, lat2)
+        azimuth = direction["azimuth1"]
+        theta = azimuth-theta
+        if theta <0:
+            theta = 360+theta
         adjust_direction(theta)
 
         
         print('theta = '+str(theta)+'---直進開始')
-        motor_koji.motor_koji(0.8,0.8,6)
+        motor.move(50,50,5)
 
         # --- calculate  goal direction ---#
         direction = Calibration.calculate_direction(lon2, lat2)
