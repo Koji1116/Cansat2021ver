@@ -59,7 +59,7 @@ def adjust_direction(theta):
                 print('theta = '+str(theta)+'---回転開始ver1')
                 motor.move(-20,20, t_small )
             
-            else:
+            elif 60<theta  <=180:
                 print('theta = '+str(theta)+'---回転開始ver2')
                 motor.move(-20,20, t_big)
                 
@@ -69,7 +69,7 @@ def adjust_direction(theta):
                 print('theta = '+str(theta)+'---回転開始ver3')
                 motor.move(20,-20, t_small)
                 
-            else:
+            elif 180 <theta <=360:
                 
                 print('theta = '+str(theta)+'---回転開始ver4')
                 motor.move(20,-20, t_big)
@@ -126,10 +126,13 @@ if __name__ == "__main__":
         mag_x = magdata[0]
         mag_y = magdata[1]
         θ = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
-        print(mag_x,mag_y)
-        print(θ)
         time.sleep(0.5)
         theta = θ
+        direction = Calibration.calculate_direction(lon2, lat2)
+        azimuth = direction["azimuth1"]
+        theta = azimuth-theta
+        if theta <0:
+            theta = 360+theta
         adjust_direction(theta)
 
         
