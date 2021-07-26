@@ -241,7 +241,7 @@ def calculate_direction(lon2, lat2):
     # --- read GPS data ---#
     try:
         while True:
-            utc, lat, lon, sHeight, gHeight = readGPS()
+            utc, lat, lon, sHeight, gHeight = GPS.readGPS()
             if utc == -1.0:
                 if lat == -1.0:
                     print("Reading GPS Error")
