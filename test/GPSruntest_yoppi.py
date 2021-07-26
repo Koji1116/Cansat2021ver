@@ -45,7 +45,7 @@ def adjust_direction(theta):
     """
     方向調整
     """
-    print('theta = '+str(theta)+'---回転調整開始！')
+    print('ゴールとの角度theta = '+str(theta)+'---回転調整開始！')
     
     count = 0
     t_small = 0.1

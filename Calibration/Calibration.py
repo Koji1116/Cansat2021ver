@@ -242,7 +242,7 @@ def calculate_direction(lon2, lat2):
     try:
         GPS.openGPS()
         utc, lat, lon, sHeight, gHeight =GPS.GPSdata_read()
-        print(utc, lat, lon, sHeight, gHeight)
+        #print(utc, lat, lon, sHeight, gHeight)
         lat1 = lat
         lon1 = lon
         
