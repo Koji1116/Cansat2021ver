@@ -6,6 +6,7 @@ import math
 import BMC050
 import time
 import Calibration
+import mag
 
 
 def angle(magx, magy, magx_off=0, magy_off=0):
@@ -28,7 +29,7 @@ def angle(magx, magy, magx_off=0, magy_off=0):
 
 
 if __name__ == '__main__':
-    BMC050.bmc050_setup()
+    mag.bmc050_setup()
     try:
         r = float(input('右の出力は？'))
         l = float(input('左の出力は？'))
