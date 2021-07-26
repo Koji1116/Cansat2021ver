@@ -48,7 +48,7 @@ def str_trans(string):
     ser.close()
 
 #str_trans('!')
-str_trans('hello')
+str_trans('sex')
 # img1 = "/home/pi/Desktop/transfer-test/003.jpg"
 # img_string = convert_string(img1)
 # img_string = ImageToByte(img1)
