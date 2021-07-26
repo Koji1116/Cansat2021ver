@@ -48,30 +48,34 @@ def adjust_direction(theta):
     count = 0
     t_small = 0.1
     t_big = 0.2
-    while abs(theta) > 30:
+    while theta> 30:
         
         #if count > 8:
            # print('スタックもしくはこの場所が適切ではない')
            # stuck.stuck_avoid()
 
         
-        if abs(theta) <= 60:
+        if theta <= 60:
             
             print('theta = '+str(theta)+'---回転開始ver1')
+            time.sleep(3)
             motor.move(20,-20, t_small )
         
-        elif 60<theta  <=180:
+        elif 60 < theta  <=180:
             print('theta = '+str(theta)+'---回転開始ver2')
+            time.sleep(3)
             motor.move(20,-20, t_big)    
-        elif abs(theta) >= 300:
+        elif theta >= 300:
             
             print('theta = '+str(theta)+'---回転開始ver3')
+            time.sleep(3)
             motor.move(-20,20, t_small)
         elif 180 <theta <=360:
             
             print('theta = '+str(theta)+'---回転開始ver4')
+            time.sleep(3)
             motor.move(-20,20, t_big)
-        time.sleep(3)
+        
         count += 1
         data = Calibration.get_data()
         magx = data[0]
@@ -111,7 +115,7 @@ if __name__ == "__main__":
     n = int(input('データ何回？'))
     # --- calibration ---#
     magdata_Old = Calibration.magdata_matrix(l, r, t,n)
-    magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_Old)
+    _, _, _, magx_off, magy_off, _= Calibration.calculate_offset(magdata_Old)
     time.sleep(0.1)
     print('GPS run strat')
     # ------------- GPS navigate -------------#
@@ -123,9 +127,7 @@ if __name__ == "__main__":
         magdata = BMC050.mag_dataRead()
         mag_x = magdata[0]
         mag_y = magdata[1]
-        θ = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
-        time.sleep(0.5)
-        theta = θ
+        theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)        
         direction = Calibration.calculate_direction(lon2, lat2)
         azimuth = direction["azimuth1"]
         theta = azimuth-theta
@@ -135,10 +137,11 @@ if __name__ == "__main__":
 
         
         print('theta = '+str(theta)+'---直進開始')
-        motor.move(50,50,5)
+        print('finish')
+        #motor.move(50,50,5)
 
         # --- calculate  goal direction ---#
-        direction = Calibration.calculate_direction(lon2, lat2)
-        goal_distance = direction["distance"]
-        print(str(goal_distance))
+        ##direction = Calibration.calculate_direction(lon2, lat2)
+        #goal_distance = direction["distance"]
+        #print(str(goal_distance))
         
