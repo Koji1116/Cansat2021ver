@@ -94,7 +94,8 @@ def magdata_matrix(l, r, t, n, t_sleeptime = 1):
         #    time.sleep(0.1)
         #motor.motor_stop()
             
-            
+        magx, magy, magz = get_data()
+        magdata = np.array([[magx, magy, magz]])  
         for _ in range(n):
             motor.move(l, r, t)
             magx, magy, magz = get_data()
