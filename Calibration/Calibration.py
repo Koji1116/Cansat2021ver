@@ -85,13 +85,13 @@ def magdata_matrix(l, r, t, n, t_sleeptime=0.1):
         t_strat = time.time()
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
-        motor.move(l, r, t)
+        motor.motor_move_continuous(l, r)
         while time.time() -t_strat <= t:
             magx, magy, magz = get_data()
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
             time.sleep(0.1)
-        
+        motor.motor_stop()
             
             
         #for _ in range(n):
