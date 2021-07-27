@@ -33,8 +33,8 @@ if __name__ == '__main__':
     try:
         r = float(input('右の出力は？'))
         l = float(input('左の出力は？'))
-        t = float(input('一回の回転時間は？'))
-        n = int(input('取得データ数は？'))
+        t = float(input('何秒間回転する？'))
+        n = int(input('整数値入力適当な値でよい？'))
         magdata_offset = Calibration.magdata_matrix(l, r, t , n)
         magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = Calibration.calculate_offset(magdata_offset)
         time.sleep(0.1)
