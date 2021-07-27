@@ -24,6 +24,37 @@ def motor_stop(x=1):
     time.sleep(x)
 
 
+def motor_move_continuous(strength_l, strength_r):
+    Rpin1 = 6
+    Rpin2 = 5
+    Lpin1 = 10
+    Lpin2 = 9
+    # 前進するときのみスタック判定
+    if strength_r >= 0 and strength_l >= 0:
+        motor_r = Motor(Rpin1, Rpin2)
+        motor_l = Motor(Lpin1, Lpin2)
+        motor_r.forward(strength_r)
+        motor_l.forward(strength_l)
+    # 後進
+    elif strength_r < 0 and strength_l < 0:
+        motor_r = Motor(Rpin1, Rpin2)
+        motor_l = Motor(Lpin1, Lpin2)
+        motor_r.backward(abs(strength_r))
+        motor_l.backward(abs(strength_l))
+    # 右回転
+    elif strength_r >= 0 and strength_l < 0:
+        motor_r = Motor(Rpin1, Rpin2)
+        motor_l = Motor(Lpin1, Lpin2)
+        motor_r.forward(abs(strength_r))
+        motor_l.backward(abs(strength_l))
+    # 左回転
+    elif strength_r < 0 and strength_l >= 0:
+        motor_r = Motor(Rpin1, Rpin2)
+        motor_l = Motor(Lpin1, Lpin2)
+        motor_r.backward(abs(strength_r))
+        motor_l.forward(abs(strength_l))
+
+
 def motor_move(strength_l, strength_r, t_moving):
     '''
     引数は左のmotorの強さ、右のmotorの強さ、走る時間。
