@@ -72,7 +72,7 @@ def adjust_direction(theta):
             print('theta = '+str(theta)+'---回転開始ver3')
             time.sleep(3)
             motor.move(-20,20, t_small)
-        elif 180 <theta <=360:
+        elif 180 <theta <360:
             
             print('theta = '+str(theta)+'---回転開始ver4')
             time.sleep(3)
@@ -89,6 +89,8 @@ def adjust_direction(theta):
         theta = azimuth-theta
         if theta <0:
             theta = 360+theta
+        elif 360 <= theta <= 450:
+            theta = theta -360
         print('計算後のゴールとなす角度theta'+str(theta))
         time.sleep(20)
         
@@ -140,6 +142,8 @@ if __name__ == "__main__":
         theta = azimuth-theta
         if theta <0:
             theta = 360+theta
+        elif 360 <= theta <= 450:
+            theta = theta -360
         adjust_direction(theta)
 
         
