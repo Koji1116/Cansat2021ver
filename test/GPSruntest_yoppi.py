@@ -50,7 +50,7 @@ def adjust_direction(theta):
     count = 0
     t_small = 0.1
     t_big = 0.2
-    while 30 <theta < 330:
+    while 15 <theta < 345:
         
         #if count > 8:
            # print('スタックもしくはこの場所が適切ではない')
