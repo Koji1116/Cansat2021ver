@@ -144,7 +144,6 @@ if __name__ == "__main__":
         
         print('theta = '+str(theta)+'---直進開始')
         motor.move(50,50,6)
-        break
         
 
         # --- calculate  goal direction ---#
