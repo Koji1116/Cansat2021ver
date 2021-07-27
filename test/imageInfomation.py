@@ -160,7 +160,6 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
 
 		contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
-
 		max_area = 0
 		max_area_contour = -1
 
@@ -170,19 +169,24 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
 				max_area = area
 				max_area_contour = j
 
-		max_area /= hig * wid
-		max_area *= 100
+		# 最大の赤色の面積を画像全体に対する比率に計算する
+		# max_area /= hig * wid
+		# max_area *= 100
 
 		centers = get_center(contours[max_area_contour])
 
 		if max_area_contour == -1:
 			return [-1, 0, -1, imgname]
 		elif max_area >= G_thd:
-			GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-			return [0, max_area, GAP, imgname]
+			max_area /= hig * wid
+			max_area *= 100
+			gap = (centers[0] - wid / 2) / (wid / 2) * 100
+			return [0, max_area, gap, imgname]
 		else:
-			GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-			return [1, max_area, GAP, imgname]
+			max_area /= hig * wid
+			max_area *= 100
+			gap = (centers[0] - wid / 2) / (wid / 2) * 100
+			return [1, max_area, gap, imgname]
 	except:
 		return[100, 100, 100, imgname]
 
@@ -192,7 +196,7 @@ if __name__ == "__main__":
         goalflug = 1
         startTime = time.time()
         dateTime = datetime.datetime.now()
-        path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}:{dateTime.second}'
+        path = f'photostorage/ImageInformation_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}:{dateTime.second}-'
         # photoName = 'photostorage/practice13.png'
         while 1:
             photoName = Capture.Capture(path, 320, 320)

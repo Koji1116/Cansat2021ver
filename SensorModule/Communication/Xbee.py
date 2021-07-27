@@ -1,7 +1,9 @@
 import io
 from PIL import Image
 import serial
+import pigpio
 
+pi = pigpio.pi()
 
 #port = serial.Serial(
 #    port="/dev/ttyAMA0",
@@ -47,8 +49,14 @@ def str_trans(string):
     ser.flush()
     ser.close()
 
+def on():
+    pi.write(12, 0)
+
+def off():
+    pi.write(12, 1)
+
 #str_trans('!')
-str_trans('sex')
+str_trans('aaaaaaaaa')
 # img1 = "/home/pi/Desktop/transfer-test/003.jpg"
 # img_string = convert_string(img1)
 # img_string = ImageToByte(img1)
