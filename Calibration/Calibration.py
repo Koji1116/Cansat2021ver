@@ -76,7 +76,7 @@ def get_data_offset(magx_off, magy_off, magz_off):
     return magx, magy, magz
 
 
-def magdata_matrix(l, r, t, n, t_sleeptime = 1):
+def magdata_matrix(l, r, t, n, t_sleeptime = 0):
     """
 	キャリブレーション用の磁気値を得るための関数
 	forループ内(run)を変える必要がある2021/07/04

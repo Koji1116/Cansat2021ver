@@ -60,22 +60,18 @@ def adjust_direction(theta):
         if theta <= 60:
             
             print('theta = '+str(theta)+'---回転開始ver1')
-            time.sleep(3)
             motor.move(20,-20, t_small )
         
         elif 60 < theta  <=180:
             print('theta = '+str(theta)+'---回転開始ver2')
-            time.sleep(3)
             motor.move(20,-20, t_big)    
         elif theta >= 300:
             
             print('theta = '+str(theta)+'---回転開始ver3')
-            time.sleep(3)
             motor.move(-20,20, t_small)
         elif 180 <theta <360:
             
             print('theta = '+str(theta)+'---回転開始ver4')
-            time.sleep(3)
             motor.move(-20,20, t_big)
         
         #count += 1
@@ -92,7 +88,6 @@ def adjust_direction(theta):
         elif 360 <= theta <= 450:
             theta = theta -360
         print('計算後のゴールとなす角度theta'+str(theta))
-        time.sleep(20)
         
 
     print('theta = '+str(theta)+'---回転終了!!!')
@@ -120,8 +115,8 @@ if __name__ == "__main__":
     ##-----------テスト用--------
     r = float(input('右の出力は？'))
     l = float(input('左の出力は？'))
-    t = float(input('何秒間回転する？'))
-    n = int(input('整数値入力適当'))
+    t = float(input('難病回転する？'))
+    n = int(input('データ数いくつ'))
     # --- calibration ---#
     magdata_Old = Calibration.magdata_matrix(l, r, t,n)
     _, _, _, magx_off, magy_off, _= Calibration.calculate_offset(magdata_Old)
@@ -147,13 +142,14 @@ if __name__ == "__main__":
         adjust_direction(theta)
 
         
-        #print('theta = '+str(theta)+'---直進開始')
-        print('finish')
+        print('theta = '+str(theta)+'---直進開始')
+        motor.move(50,50,6)
         break
-        #motor.move(50,50,5)
+        
 
         # --- calculate  goal direction ---#
-        ##direction = Calibration.calculate_direction(lon2, lat2)
-        #goal_distance = direction["distance"]
-        #print(str(goal_distance))
+        direction = Calibration.calculate_direction(lon2, lat2)
+        goal_distance = direction["distance"]
+        print(str(goal_distance))
+        print('またループするよ')
         
