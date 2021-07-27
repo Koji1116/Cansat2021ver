@@ -76,7 +76,7 @@ def get_data_offset(magx_off, magy_off, magz_off):
     return magx, magy, magz
 
 
-def magdata_matrix(l, r, t, n):
+def magdata_matrix(l, r, t, n, t_sleeptime = 1):
     """
 	キャリブレーション用の磁気値を得るための関数
 	forループ内(run)を変える必要がある2021/07/04
@@ -95,12 +95,12 @@ def magdata_matrix(l, r, t, n):
         motor.motor_stop()
             
             
-        #for _ in range(n):
-        #   motor.move(l, r, t)
-        #    magx, magy, magz = get_data()
-        #    # --- multi dimention matrix ---#
-        #    magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
-        #    time.sleep(t_sleeptime)
+        for _ in range(n):
+            motor.move(l, r, t)
+            magx, magy, magz = get_data()
+            # --- multi dimention matrix ---#
+            magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
+            time.sleep(t_sleeptime)
     except KeyboardInterrupt:
         print('Interrupt')
     except Exception as e:
