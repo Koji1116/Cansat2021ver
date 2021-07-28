@@ -6,7 +6,7 @@ import motor
 
 def escape(t_melt):
     # melt.down(t_melt)
-    motor.move(50, 50, 1)
+    motor.move(20, 20, 1)
     # for i in range(5):
     #     strength_l = i * 10
     #     strength_r = i * 10
