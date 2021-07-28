@@ -135,7 +135,7 @@ if __name__ == '__main__':
             print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}')
             Parachute_Avoidance(flug, gap)
             print(flug)
-            if flug == -1:
+            if flug == -1 and flug == 0:
                 z += 1
                 print(z)
 
