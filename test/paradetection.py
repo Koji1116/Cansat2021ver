@@ -117,5 +117,4 @@ if __name__ == "__main__":
 			# print("name", n)
 	except KeyboardInterrupt:
 		print('Stop')
-	except:
-		print('End:Parachute_Detection')
+	
