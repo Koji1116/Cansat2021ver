@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Detection')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
@@ -20,7 +21,6 @@ import traceback
 from threading import Thread
 import math
 import mag
-
 
 # --- original module ---#
 
@@ -45,36 +45,35 @@ def adjust_direction(theta):
     """
     方向調整
     """
-    print('ゴールとの角度theta = '+str(theta)+'---回転調整開始！')
-    
+    print('ゴールとの角度theta = ' + str(theta) + '---回転調整開始！')
+
     count = 0
     t_small = 0.1
     t_big = 0.2
-    while 15 <theta < 345:
-        
-        #if count > 8:
-           # print('スタックもしくはこの場所が適切ではない')
-           # stuck.stuck_avoid()
+    while 15 < theta < 345:
 
-        
+        # if count > 8:
+        # print('スタックもしくはこの場所が適切ではない')
+        # stuck.stuck_avoid()
+
         if theta <= 60:
-            
-            print('theta = '+str(theta)+'---回転開始ver1')
-            motor.move(20,-20, t_small )
-        
-        elif 60 < theta  <=180:
-            print('theta = '+str(theta)+'---回転開始ver2')
-            motor.move(20,-20, t_big)    
+
+            print('theta = ' + str(theta) + '---回転開始ver1')
+            motor.move(20, -20, t_small)
+
+        elif 60 < theta <= 180:
+            print('theta = ' + str(theta) + '---回転開始ver2')
+            motor.move(20, -20, t_big)
         elif theta >= 300:
-            
-            print('theta = '+str(theta)+'---回転開始ver3')
-            motor.move(-20,20, t_small)
-        elif 180 <theta <360:
-            
-            print('theta = '+str(theta)+'---回転開始ver4')
-            motor.move(-20,20, t_big)
-        
-        #count += 1
+
+            print('theta = ' + str(theta) + '---回転開始ver3')
+            motor.move(-20, 20, t_small)
+        elif 180 < theta < 360:
+
+            print('theta = ' + str(theta) + '---回転開始ver4')
+            motor.move(-20, 20, t_big)
+
+        # count += 1
         data = Calibration.get_data()
         magx = data[0]
         magy = data[1]
@@ -82,15 +81,14 @@ def adjust_direction(theta):
         theta = Calibration.angle(magx, magy, magx_off, magy_off)
         direction = Calibration.calculate_direction(lon2, lat2)
         azimuth = direction["azimuth1"]
-        theta = azimuth-theta
-        if theta <0:
-            theta = 360+theta
+        theta = azimuth - theta
+        if theta < 0:
+            theta = 360 + theta
         elif 360 <= theta <= 450:
-            theta = theta -360
-        print('計算後のゴールとなす角度theta'+str(theta))
-        
+            theta = theta - 360
+        print('計算後のゴールとなす角度theta' + str(theta))
 
-    print('theta = '+str(theta)+'---回転終了!!!')
+    print('theta = ' + str(theta) + '---回転終了!!!')
 
 
 if __name__ == "__main__":
@@ -114,7 +112,7 @@ if __name__ == "__main__":
     l = float(input('左の出力は？'))
     t = float(input('何秒回転する？'))
     n = int(input('データ数いくつ'))
-    while goal_distance >=10:
+    while goal_distance >= 10:
         if count % 4 == 0:
             # ------------- Calibration -------------#
             print('Calibration Start')
@@ -124,31 +122,29 @@ if __name__ == "__main__":
             l = float(input('左の出力は？'))
             t = float(input('難病回転する？'))
             n = int(input('データ数いくつ'))
-            magdata_Old = Calibration.magdata_matrix(l, r, t,n)
-            _, _, _, magx_off, magy_off, _= Calibration.calculate_offset(magdata_Old)
+            magdata_Old = Calibration.magdata_matrix(l, r, t, n)
+            _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
         print('GPS run strat')
-    # ------------- GPS navigate -------------# 
+        # ------------- GPS navigate -------------#
         magdata = BMC050.mag_dataRead()
         mag_x = magdata[0]
         mag_y = magdata[1]
-        theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)        
+        theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
         direction = Calibration.calculate_direction(lon2, lat2)
         azimuth = direction["azimuth1"]
-        theta = azimuth-theta
-        if theta <0:
-            theta = 360+theta
+        theta = azimuth - theta
+        if theta < 0:
+            theta = 360 + theta
         elif 360 <= theta <= 450:
-            theta = theta -360
+            theta = theta - 360
 
-        adjust_direction(theta)    
-        print('theta = '+str(theta)+'---直進開始')
+        adjust_direction(theta)
+        print('theta = ' + str(theta) + '---直進開始')
         ######直進するように左の出力強くしてます↓ 7/28 by oosima
-        motor.move(65,50,6)
-        
+        motor.move(65, 50, 6)
 
         # --- calculate  goal direction ---#
         direction = Calibration.calculate_direction(lon2, lat2)
         goal_distance = direction["distance"]
-        print('------ゴールとの距離は'+str(goal_distance) +'m------')
-        count +=1
-        
+        print('------ゴールとの距離は' + str(goal_distance) + 'm------')
+        count += 1
