@@ -84,25 +84,27 @@ def Parachute_Avoidance(flug, goalGAP):
         try:
             # goalflug, goalarea, goalGAP, photoname = photorunning.GoalDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
             if goalGAP >= -100 and goalGAP <= -50:
-                motor.move(50, -50, 0.1)
-                motor.move(70, 70, 1)
-
+                # motor.move(50, -50, 0.1)
+                # motor.move(70, 70, 1)
+                print('# motor.move(50, -50, 0.1)# motor.move(70, 70, 1)')
             if goalGAP >= -50 and goalGAP <= 0:
-                motor.move(80, -80, 1)
-                motor.move(70, 70, 1)
-
+                # motor.move(80, -80, 1)
+                # motor.move(70, 70, 1)
+                print('motor.move(80, -80, 1)motor.move(70, 70, 1)')
             if goalGAP >= 0 and goalGAP <= 50:
-                motor.move(-50, 50, 0.1)
-                motor.move(70, 70, 1)
-
+                # motor.move(-50, 50, 0.1)
+                # motor.move(70, 70, 1)
+                print('motor.move(-50, 50, 0.1)motor.move(70, 70, 1)')
             if goalGAP >= 50 and goalGAP <= 100:
-                motor.move(-80, 80, 1)
-                motor.move(70, 70, 1)
+                # motor.move(-80, 80, 1)
+                # motor.move(70, 70, 1)
+                print(' # motor.move(-80, 80, 1)# motor.move(70, 70, 1)')
 
         except KeyboardInterrupt:
             print("stop")
     if flug == -1:
-        motor.move(50, 50, 0.5)
+        print('flug')
+        # motor.move(50, 50, 0.5)
 
 
 if __name__ == '__main__':
@@ -124,7 +126,8 @@ if __name__ == '__main__':
 
         print("START: Parachute avoidance")
 
-        flug, area, GAP, photoname = paradetection.ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120)
+        f, a, n = ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
+        print(f'flug:{f}	area:{a}	name:{n}')
         print("paradetection phase success")
         z = 0
         while z < 3:
