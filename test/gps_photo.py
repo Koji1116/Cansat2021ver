@@ -22,7 +22,7 @@ from threading import Thread
 import math
 import mag
 import datetime
-import goaldetection
+# import goaldetection
 import Capture
 import photorunning
 
