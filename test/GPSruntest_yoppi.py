@@ -117,11 +117,6 @@ if __name__ == "__main__":
             # ------------- Calibration -------------#
             print('Calibration Start')
             mag.bmc050_setup()
-            ##-----------テスト用--------
-            r = float(input('右の出力は？'))
-            l = float(input('左の出力は？'))
-            t = float(input('難病回転する？'))
-            n = int(input('データ数いくつ'))
             magdata_Old = Calibration.magdata_matrix(l, r, t, n)
             _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
         print('GPS run strat')
