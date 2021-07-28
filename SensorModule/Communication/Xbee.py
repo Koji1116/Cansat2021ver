@@ -1,9 +1,7 @@
 import io
 from PIL import Image
 import serial
-import pigpio
 
-pi = pigpio.pi()
 
 #port = serial.Serial(
 #    port="/dev/ttyAMA0",
@@ -48,12 +46,6 @@ def str_trans(string):
         ser.write(cmd)
     ser.flush()
     ser.close()
-
-def on():
-    pi.write(12, 0)
-
-def off():
-    pi.write(12, 1)
 
 #str_trans('!')
 str_trans('Hello')
