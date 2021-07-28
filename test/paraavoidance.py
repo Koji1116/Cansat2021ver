@@ -126,14 +126,14 @@ if __name__ == '__main__':
 
         print("START: Parachute avoidance")
 
-        f, a, g, p = paradetection.ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
-        print(f'flug:{f}\tarea:{a}\tgap:{g}\tphotoname:{p}')
+        flug, area, gap, photoname = paradetection.ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
+        print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}')
         print("paradetection phase success")
         z = 0
         while z < 3:
-            f, a, g, p = paradetection.ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
-            print(f'flug:{f}\tarea:{a}\tgap:{g}\tphotoname:{p}')
-            Parachute_Avoidance(flug, GAP)
+            flug, area, gap, photoname = paradetection.ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
+            print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}')
+            Parachute_Avoidance(flug, gap)
             print(flug)
             if flug == -1:
                 z += 1
