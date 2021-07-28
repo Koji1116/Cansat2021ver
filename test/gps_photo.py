@@ -1,5 +1,4 @@
 import sys
-
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Detection')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
@@ -7,6 +6,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
+sys.path.append('/home/pi/Desktop/Casnat2021ver/Detection')
 import numpy as np
 import GPS_Navigate
 import Xbee
@@ -21,22 +21,21 @@ import traceback
 from threading import Thread
 import math
 import mag
+import datetime
+import goaldetection
+import Capture
+import photorunning
 
-# --- original module ---#
+#写真内の赤色面積で進時間を決める用　調整必要
+area_short = 100
+area_middle = 6
+area_long = 1
 
-# --- must be installed module ---#
-# import numpy as np
-
-# --- default module ---#
-# import difflib
-
-GPS_data = [0.0, 0.0, 0.0, 0.0, 0.0]
-
-
-def timer(t):
-    global cond
-    time.sleep(t)
-    cond = False
+G_thd = 80  # 調整するところ
+goalflug = 1
+startTime = time.time()
+dateTime = datetime.datetime.now()
+path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
 
 
 def adjust_direction(theta):
@@ -89,7 +88,6 @@ def adjust_direction(theta):
         print('計算後のゴールとなす角度theta' + str(theta))
 
     print('theta = ' + str(theta) + '---回転終了!!!')
-
 
 if __name__ == "__main__":
     mag.bmc050_setup()
@@ -148,3 +146,11 @@ if __name__ == "__main__":
         goal_distance = direction["distance"]
         print('------ゴールとの距離は' + str(goal_distance) + 'm------')
         count += 1
+
+    #-----------photo_run------------#
+    G_thd = 80  # 調整するところ
+    goalflug = 1
+    startTime = time.time()
+    dateTime = datetime.datetime.now()
+    path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+    photorunning.image_guided_driving(path_photo_imagerun, 50)
