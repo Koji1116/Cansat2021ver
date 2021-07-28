@@ -108,26 +108,26 @@ if __name__ == "__main__":
     aaa = direction['azimuth1']
     print('goal distance = ' + str(goal_distance))
     print('goal direction = ' + str(aaa))
-    # ------------- Calibration -------------#
-    print('Calibration Start')
-    # --- calculate offset ---#
-    mag.bmc050_setup()
+    count = 0
     ##-----------テスト用--------
     r = float(input('右の出力は？'))
     l = float(input('左の出力は？'))
-    t = float(input('難病回転する？'))
+    t = float(input('何秒回転する？'))
     n = int(input('データ数いくつ'))
-    # --- calibration ---#
-    magdata_Old = Calibration.magdata_matrix(l, r, t,n)
-    _, _, _, magx_off, magy_off, _= Calibration.calculate_offset(magdata_Old)
-    time.sleep(0.1)
-    print('GPS run strat')
-    # ------------- GPS navigate -------------#
-    while 1:  # この値調整必要
-
-        
-
-        #----
+    while goal_distance >=10:
+        if count % 4 == 0:
+            # ------------- Calibration -------------#
+            print('Calibration Start')
+            mag.bmc050_setup()
+            ##-----------テスト用--------
+            r = float(input('右の出力は？'))
+            l = float(input('左の出力は？'))
+            t = float(input('難病回転する？'))
+            n = int(input('データ数いくつ'))
+            magdata_Old = Calibration.magdata_matrix(l, r, t,n)
+            _, _, _, magx_off, magy_off, _= Calibration.calculate_offset(magdata_Old)
+        print('GPS run strat')
+    # ------------- GPS navigate -------------# 
         magdata = BMC050.mag_dataRead()
         mag_x = magdata[0]
         mag_y = magdata[1]
@@ -139,16 +139,16 @@ if __name__ == "__main__":
             theta = 360+theta
         elif 360 <= theta <= 450:
             theta = theta -360
-        adjust_direction(theta)
 
-        
+        adjust_direction(theta)    
         print('theta = '+str(theta)+'---直進開始')
-        motor.move(50,50,6)
+        ######直進するように左の出力強くしてます↓ 7/28 by oosima
+        motor.move(65,50,6)
         
 
         # --- calculate  goal direction ---#
         direction = Calibration.calculate_direction(lon2, lat2)
         goal_distance = direction["distance"]
-        print(str(goal_distance))
-        print('またループするよ')
+        print('------ゴールとの距離は'+str(goal_distance) +'m------')
+        count +=1
         
