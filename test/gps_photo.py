@@ -95,8 +95,8 @@ if __name__ == "__main__":
     print('Run Phase Start!')
     print('GPS走行開始')
     # --- difine goal latitude and longitude ---#
-    lon2 = 139.9105443
-    lat2 = 35.9233106
+    lon2 = 139.9082128
+    lat2 = 35.9185224
 
     # ------------- program start -------------#
     direction = Calibration.calculate_direction(lon2, lat2)
