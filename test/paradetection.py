@@ -80,12 +80,12 @@ def ParaDetection(imgpath, width, height, H_min, H_max, S_thd, para_thd):
 			max_area /= hig * wid
 			max_area *= 100
 			gap = (centers[0] - wid / 2) / (wid / 2) * 100
-			return [0, max_area, gap, imgname]
+			return [1, max_area, gap, imgname]
 		else:
 			max_area /= hig * wid
 			max_area *= 100
 			gap = (centers[0] - wid / 2) / (wid / 2) * 100
-			return [1, max_area, gap, imgname]
+			return [0, max_area, gap, imgname]
 	except:
 		return[100, 100, 100, imgname]
 
