@@ -102,7 +102,7 @@ def Parachute_Avoidance(flug, goalGAP):
 
         except KeyboardInterrupt:
             print("stop")
-    if flug == -1:
+    if flug == -1 and flug == 0:
         print('flug')
         # motor.move(50, 50, 0.5)
 
