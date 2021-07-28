@@ -107,10 +107,10 @@ if __name__ == "__main__":
 		while 1:
 			flug = -1
 			while flug != 1:
-				f, a, n = ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
-				print(f'flug:{f}	area:{a}	name:{n}')
+				f, a, n, p = ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
+				print(f'flug:{f}	area:{a}	name:{n}	photoname:{p}')
 			print('ParaDetected')
-			print(f'flug:{f}	area:{a}	name:{n}')
+			print(f'flug:{f}	area:{a}	name:{n}	photoname:{p}')
 			print('-----------------------------------')
 			# print("flug", f)
 			# print("area", a)
