@@ -24,6 +24,7 @@ import mag
 import datetime
 import goaldetection
 import Capture
+import photorunning
 
 #写真内の赤色面積で進時間を決める用　調整必要
 area_short = 100
@@ -147,37 +148,9 @@ if __name__ == "__main__":
         count += 1
 
     #-----------photo_run------------#
-    while goalflug != 0:
-        photoName = Capture.Capture(path, 320, 320)  # 解像度調整するところ？
-        goalflug, goalarea, gap, imgname = goaldetection.GoalDetection(photoName, 200, 20, 80, 50)
-        print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
-        # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
-        # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
-        if -100 <= gap and gap <= -65:  # 調整するところ
-            print('Turn left')
-            # Xbee.str_trans('Turn left')
-            motor.move(-40, 40, 0.1)  # 調整するところ
-            # print('motor.motor(-0.2, 0.2, 0.3)')
-        elif 65 <= gap and gap <= 100:
-            print('Turn right')
-            # Xbee.str_trans('Turn right')
-            motor.move(40, -40, 0.1)  # 調整するところ
-            # print('motor.motor(0.2, -0.2, 0.3)')
-        elif gap == 1000 or gap == 1000000:
-            print('Nogoal detected')
-            motor.move(40, -40, 0.1)  # 調整するところ
-            # print('motor.motor(0.2, -0.2, 0.5)')
-        else:
-            print('Go straight')
-            if goalarea <= area_long:
-                motor.move(80, 80, 3)  # 調整するところ
-                # print('motor.motor(1, 1, 10)')
-                print('long')
-            elif goalarea <= area_middle:
-                motor.move(80, 80, 1)  # 調整するところ
-                # print('motor.motor(1, 1, 5)')
-                print('middle')
-            elif goalarea <= area_short:
-                motor.move(80, 80, 0.2)  # 調整するところ
-                # print('motor.motor(1, 1, 2)')
-                print('short')
+    G_thd = 80  # 調整するところ
+    goalflug = 1
+    startTime = time.time()
+    dateTime = datetime.datetime.now()
+    path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+    photorunning.image_guided_driving(path_photo_imagerun, 50)
