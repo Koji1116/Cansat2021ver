@@ -37,7 +37,7 @@ def str_trans(string):
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
         bytesize=serial.EIGHTBITS,
-        timeout=5
+        timeout=20
     )
     string = string + '\n'
     moji = string.encode()
@@ -48,7 +48,7 @@ def str_trans(string):
     ser.close()
 
 #str_trans('!')
-str_trans('sex')
+str_trans('Hello')
 # img1 = "/home/pi/Desktop/transfer-test/003.jpg"
 # img_string = convert_string(img1)
 # img_string = ImageToByte(img1)
