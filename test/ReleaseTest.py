@@ -21,7 +21,7 @@ pressreleasejudge = 0
 
 
 
-def pressdetect(anypress):
+def pressdetect_release(anypress):
 	pressreleasecount = 0
 	pressreleasejudge = 0
 	try:
@@ -60,7 +60,7 @@ if __name__=="__main__":
 	BME280.bme280_calib_param()
 
 	while True:
-		pressreleasecount, pressreleasejudge = pressdetect(0.3)
+		pressreleasecount, pressreleasejudge = pressdetect_release(0.3)
 		print(f'count:{pressreleasecount}\tjudge{pressreleasejudge}')
 		if pressreleasejudge == 1:
 			print('Press')
