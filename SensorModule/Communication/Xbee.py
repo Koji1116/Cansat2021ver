@@ -50,10 +50,10 @@ def str_trans(string):
     ser.close()
 
 def on():
-    pi.write(12, 0)
+    pi.write(12, 1)
 
 def off():
-    pi.write(12, 1)
+    pi.write(12, 0)
 
 #str_trans('!')
 str_trans('aaaaaaaaa')
