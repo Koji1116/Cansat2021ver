@@ -37,7 +37,8 @@ while True:
 # print('Convert Complete')
 # print('All Complete')
 
-a = bytes_receive()
+while 1:
+    a = bytes_receive()
 
-if a == 'a':
-    print('Hello World')
+    if a == 'a':
+        print('Hello World')
