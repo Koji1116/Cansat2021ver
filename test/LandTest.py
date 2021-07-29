@@ -26,10 +26,11 @@ def pressdetect_land(anypress):
     気圧情報による着地判定用
     引数はどのくらい気圧が変化したら判定にするかの閾値
     """
+    global Pcount
+    global pressdata
     presslandjudge = 0
-    Plandcount = 0
+    plandcount = 0
     try:
-
         pressdata = BME280.bme280_read()
         Prevpress = pressdata[1]
         time.sleep(1)
@@ -39,19 +40,18 @@ def pressdetect_land(anypress):
         if 0.0 in pressdata:
             print("BME280error!")
             presslandjudge = 2
-            Plandcount = 0
+            plandcount = 0
         elif deltP < anypress:
-            Plandcount += 1
+            plandcount += 1
             if Pcount > 4:
                 presslandjudge = 1
                 print("presslandjudge")
         else:
-            Pcount = 0
+            plandcount = 0
     except:
-        print(traceback.format_exc())
-        Plandcount = 0
+        Pcount = 0
         presslandjudge = 2
-    return Plandcount, presslandjudge
+    return plandcount, presslandjudge
 
 
 if __name__ == "__main__":
