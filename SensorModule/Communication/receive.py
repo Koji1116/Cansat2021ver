@@ -37,9 +37,9 @@ def convert_img(img_bytes):
 # print('Convert Complete')
 # print('All Complete')
 
-while 1:
-    a = bytes_receive()
-    print(a)
+
+a = bytes_receive()
+print(a)
 
     # if a == 'a':
     #     print('Hello World')
