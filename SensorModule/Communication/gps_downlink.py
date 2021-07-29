@@ -1,5 +1,4 @@
 import sys
-sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 
 import GPS
