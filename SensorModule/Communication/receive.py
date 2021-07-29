@@ -13,7 +13,7 @@ ser = serial.Serial(
 
 
 def bytes_receive():
-    img_bytes = ser.read()
+    img_bytes = ser.readline()
     img_bytes1 = b"".join(img_bytes)  # リスト　→　文字列
     ser.close()
     print("End")
