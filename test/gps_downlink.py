@@ -11,7 +11,7 @@ if __name__ == '__main__':
         GPS.openGPS()
         Xbee.on()
         while 1:
-            _, lat, lon, _, _, = GPS.dataGPS()
+            _, lat, lon, _, _, = GPS.GPSdata_read()
             print(f'lat: {lat} \t lon:{lon}')
             Xbee.str_trans(f'lat: {lat} \t lon:{lon}')
     except KeyboardInterrupt:
