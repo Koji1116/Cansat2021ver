@@ -31,8 +31,13 @@ while True:
         Check＿transfer_2 = ser.write(b'Ready!')
         break
 
-img_bytes = bytes_receive()
-print('Receive Complete')
-img = convert_img(img_bytes)
-print('Convert Complete')
-print('All Complete')
+# img_bytes = bytes_receive()
+# print('Receive Complete')
+# img = convert_img(img_bytes)
+# print('Convert Complete')
+# print('All Complete')
+
+a = bytes_receive()
+
+if a == 'a':
+    print('Hello World')
