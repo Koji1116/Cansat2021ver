@@ -60,8 +60,9 @@ if __name__=="__main__":
 	BME280.bme280_calib_param()
 
 	while True:
-		_, pressreleasejudge = pressdetect(0.3)
-		if pressreleasecount == 1:
+		pressreleasecount, pressreleasejudge = pressdetect(0.3)
+		print(f'count:{pressreleasecount}\tjudge{pressreleasejudge})
+		if pressreleasejudge == 1:
 			print('Press')
 		else:
 			print('unfulfilled')
