@@ -61,7 +61,7 @@ if __name__=="__main__":
 
 	while True:
 		pressreleasecount, pressreleasejudge = pressdetect(0.3)
-		print(f'count:{pressreleasecount}\tjudge{pressreleasejudge})
+		print(f'count:{pressreleasecount}\tjudge{pressreleasejudge}')
 		if pressreleasejudge == 1:
 			print('Press')
 		else:
