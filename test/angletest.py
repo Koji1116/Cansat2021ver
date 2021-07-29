@@ -44,11 +44,8 @@ if __name__ == '__main__':
             mag_y = magdata[1]
             θ = angle(mag_x, mag_y, magx_off, magy_off)
             #print(mag_x,mag_y)
-            #print(θ)
-            theta =90 -θ
-            if theta <0:
-                theta +=360 
-            print(theta )
+            print(θ)
+            # print(theta )
             time.sleep(0.5)
     except KeyboardInterrupt:
         print('end')

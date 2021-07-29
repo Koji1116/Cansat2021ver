@@ -3,8 +3,8 @@ import os
 import glob
 import time
 
-srcdir = '/home/pi/Desktop/Cansat2021ver/test/nisho-ground12_640_asyuku'
-dstdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
+srcdir = 'src_panorama'
+dstdir = 'result_panorama'
 
 
 def panorama(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext='.jpg'):
@@ -25,14 +25,14 @@ def panorama(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext='.j
     print(resultcount)
 
     photos = []
-
+   
     for i in range(1, srcfilecount+1):
         if len(str(i)) == 1:
             photos.append(cv2.imread(srcdir +'/' + srcprefix + '0' +  str(i) + srcext))
         else:
             photos.append(cv2.imread(srcdir + '/' + srcprefix + str(i) + srcext))
 
-
+    print(len(photos))
 
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
@@ -47,7 +47,7 @@ def panorama(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext='.j
 if __name__ == "__main__":
     try:
         startTime = time.time()  # プログラムの開始時刻
-        panorama(srcdir, dstdir, 'comp_')
+        panorama(srcdir, dstdir, 'panoramaShootingtest00')
         endTime = time.time() #プログラムの終了時間
         runTime = endTime - startTime
         print(runTime)
