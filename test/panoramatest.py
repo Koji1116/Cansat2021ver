@@ -25,7 +25,7 @@ def panorama(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext='.j
     print(resultcount)
 
     photos = []
-
+    print(len(photos))
     for i in range(1, srcfilecount+1):
         if len(str(i)) == 1:
             photos.append(cv2.imread(srcdir +'/' + srcprefix + '0' +  str(i) + srcext))
