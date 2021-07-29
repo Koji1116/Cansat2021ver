@@ -21,34 +21,35 @@ pressreleasejudge = 0
 
 
 
-def pressdetect_release(anypress):
-	pressreleasecount = 0
-	pressreleasejudge = 0
+def pressdetect_release(thd_press_release):
+	'''
+	気圧による放出判定
+	'''
+	global presscount_release
+	global pressjudge_release
 	try:
 		pressdata = BME280.bme280_read()
 		prevpress = pressdata[1]
 		time.sleep(1)
 		pressdata = BME280.bme280_read()
 		latestpress = pressdata[1]
-		#print(presscount)
 		deltP = latestpress - prevpress
 		if 0.0 in pressdata:
 			print("BME280rror!")
-			pressreleasejudge = 2
-			pressreleasecount = 0
-		elif deltP > anypress:
-			pressreleasecount += 1
-			if pressreleasecount > 2:
-				pressreleasejudge = 1
+			pressjudge_release = 2
+			presscount_release = 0
+		elif deltP > thd_press_release:
+			presscount_release += 1
+			if presscount_release > 2:
+				pressjudge_release = 1
 				print("pressreleasejudge")
 		else:
-			pressreleasecount = 0
-		#print(str(latestpress) + "	:	" + str(prevpress))
+			presscount_release = 0
 	except:
-		print(traceback.format_exc())
-		pressreleasecount = 0
-		pressreleasejudge = 2
-	return pressreleasecount, pressreleasejudge
+		presscount_release = 0
+		pressjudge_release = 2
+	return presscount_release, pressjudge_release
+
 
 def releasejudge(thd_p_release):
 
