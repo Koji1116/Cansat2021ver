@@ -13,7 +13,7 @@ ser = serial.Serial(
 
 
 def bytes_receive():
-    img_bytes = ser.readline()
+    img_bytes = ser.readlines()
     img_bytes1 = b"".join(img_bytes)  # リスト　→　文字列
     ser.close()
     print("End")
@@ -37,9 +37,17 @@ def convert_img(img_bytes):
 # print('Convert Complete')
 # print('All Complete')
 
+test = ser.read()
+print(test)
 
-a = bytes_receive()
-print(a)
+if test == b'A':
+    result = test.decode()
+    print(result.strip())
+    print('trans')
+
+
+# a = bytes_receive()
+# print(a)
 
     # if a == 'a':
     #     print('Hello World')
