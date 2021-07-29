@@ -11,8 +11,8 @@ if __name__ == '__main__':
         Xbee.on()
         while 1:
             _, lat, lon, _, _, = GPS.GPSdata_read()
-            print(f'lat: {lat} \t lon:{lon}\r\r')
-            Xbee.str_trans(f'lat: {lat} \t lon:{lon}\r\r')
+            print(f'lat: {lat} \t lon:{lon}')
+            Xbee.str_trans(f'lat: {lat} \t lon:{lon}')
     except KeyboardInterrupt:
         print('Interrupted')
         Xbee.str_trans('Interrupted')
