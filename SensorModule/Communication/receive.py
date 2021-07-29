@@ -40,9 +40,9 @@ def convert_img(img_bytes):
 test = ser.read()
 print(test)
 
-if test == b'A':
-    result = test.decode()
-    print(result.strip())
+result = test.decode()
+
+if result == 'A':
     print('trans')
 
 
