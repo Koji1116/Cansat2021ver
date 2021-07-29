@@ -25,11 +25,11 @@ def convert_img(img_bytes):
     ByteToImg.save('decoded_img_01.jpg')
 
 
-while True:
-    Check＿transfer_1 = ser.readline().strip().decode('utf-8')
-    if Check＿transfer_1 == 'Ready?':
-        Check＿transfer_2 = ser.write(b'Ready!')
-        break
+# while True:
+#     Check＿transfer_1 = ser.readline().strip().decode('utf-8')
+#     if Check＿transfer_1 == 'Ready?':
+#         Check＿transfer_2 = ser.write(b'Ready!')
+#         break
 
 # img_bytes = bytes_receive()
 # print('Receive Complete')
