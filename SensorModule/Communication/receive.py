@@ -3,7 +3,7 @@ import io
 from PIL import Image, ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 ser = serial.Serial(
-    port="COM3",
+    port="/dev/ttyAMA0",
     baudrate=57600,
     parity=serial.PARITY_NONE,
     stopbits=serial.STOPBITS_ONE,
