@@ -11,7 +11,7 @@ def pressdetect_release(thd_press_release):
     try:
         pressdata = BME280.bme280_read()
         prevpress = pressdata[1]
-        time.sleep(1)
+        time.sleep(5)
         pressdata = BME280.bme280_read()
         latestpress = pressdata[1]
         deltP = latestpress - prevpress
