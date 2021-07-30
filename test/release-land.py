@@ -58,7 +58,6 @@ def pressdetect_land(anypress):
         else:
             presscount_land = 0
     except:
-        print('w')
         presscount_land = 0
         pressjudge_land = 2
     return presscount_land, pressjudge_land
@@ -78,30 +77,18 @@ if __name__ == '__main__':
 
     try:
         while 1:
-            try:
-                presscount_release, pressjudge_release = pressdetect_release(0.3)
-                print(f'count{presscount_release}\tjudge{pressjudge_release}')
-                if pressjudge_release == 1:
-                    print('release detected')
-                    break
-            except KeyboardInterrupt:
-                print('release interrupted')
+            presscount_release, pressjudge_release = pressdetect_release(0.3)
+            print(f'count{presscount_release}\tjudge{pressjudge_release}')
+            if pressjudge_release == 1:
+                print('release detected')
                 break
-            except:
-                pass
 
         while 1:
-            try:
-                presscount_land, pressjudge_land = pressdetect_land(0.2)
-                print(f'count{presscount_land}\tjudge{pressjudge_land}')
-                if pressjudge_land == 1:
-                    print('land detected')
-                    break
-            except KeyboardInterrupt:
-                print('land interrupted')
+            presscount_land, pressjudge_land = pressdetect_land(0.1)
+            print(f'count{presscount_land}\tjudge{pressjudge_land}')
+            if pressjudge_land == 1:
+                print('land detected')
                 break
-            except:
-                pass
 
         print('finished')
     except KeyboardInterrupt:
