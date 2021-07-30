@@ -49,6 +49,20 @@ def str_trans(string):
     ser.flush()
     ser.close()
 
+
+def receive_str():
+    ser = serial.Serial(
+        port="/dev/ttyAMA0",
+        baudrate=57600,
+        parity=serial.PARITY_NONE,
+        stopbits=serial.STOPBITS_ONE,
+        bytesize=serial.EIGHTBITS,
+        timeout=10
+    )
+    received = ser.read()
+    received_str = received.decode()
+    return received_str
+
 def on():
     pi.write(12, 1)
 

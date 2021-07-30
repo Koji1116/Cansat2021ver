@@ -6,11 +6,6 @@ from gpiozero import Motor
 from time import sleep
 import time
 
-
-
-
-
-
 def motor_stop(x=1):
     '''motor_move()とセットで使用'''
     Rpin1 = 6

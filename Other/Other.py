@@ -18,7 +18,7 @@ def fileName(f, ext):
 	num = ""
 	while 1:
 		num = ""
-		if(len(str(i)) <= 4):
+		if len(str(i)) <= 4:
 			for j in range(4 - len(str(i))):
 				num = num + "0"
 			num = num + str(i)

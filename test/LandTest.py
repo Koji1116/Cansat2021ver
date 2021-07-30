@@ -21,16 +21,14 @@ pressdata = [0.0, 0.0, 0.0, 0.0]
 # accdata = [0.0, 0.0, 0.0]
 
 
-def Pressdetect(anypress):
+def pressdetect_land(anypress):
     """
     気圧情報による着地判定用
     引数はどのくらい気圧が変化したら判定にするかの閾値
     """
-    global Pcount
-    global pressdata
-    presslandjudge = 0
+    global presscount_land
+    global pressjudge_land
     try:
-
         pressdata = BME280.bme280_read()
         Prevpress = pressdata[1]
         time.sleep(1)
@@ -39,20 +37,19 @@ def Pressdetect(anypress):
         deltP = abs(Latestpress - Prevpress)
         if 0.0 in pressdata:
             print("BME280error!")
-            presslandjudge = 2
-            Pcount = 0
+            presscount_land = 0
+            pressjudge_land = 2
         elif deltP < anypress:
-            Pcount += 1
-            if Pcount > 4:
-                presslandjudge = 1
+            presscount_land += 1
+            if presscount_land > 4:
+                pressjudge_land = 1
                 print("presslandjudge")
         else:
-            Pcount = 0
+            presscount_land = 0
     except:
-        print(traceback.format_exc())
-        Pcount = 0
-        presslandjudge = 2
-    return Plandcount, presslandjudge
+        presscount_land = 0
+        pressjudge_land = 2
+    return presscount_land, pressjudge_land
 
 
 if __name__ == "__main__":
@@ -64,7 +61,8 @@ if __name__ == "__main__":
     while True:
         presslandjudge = 0
 
-        _, presslandjudge = Pressdetect(0.1)                                            #調整するところ
+        Plandcount, presslandjudge = pressdetect_land(0.1)                                            #調整するところ
+        print(f'count:{Plandcount}\tjudge:{presslandjudge}')
         if presslandjudge == 1:
             print('Press')
         else:
