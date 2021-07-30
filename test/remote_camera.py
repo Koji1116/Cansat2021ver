@@ -18,8 +18,7 @@ try:
         #     received_str = Xbee.receive_str()
 
         if received_str == 'a':
-            path = Other.fileName('photostorage/remote_camera', 'jpg')
-            Capture.Capture('path')
+            Capture.Capture('photostorage/remote_photo')
             print('photoed')
 
 except KeyboardInterrupt:
