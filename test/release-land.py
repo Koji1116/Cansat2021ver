@@ -88,7 +88,7 @@ if __name__ == '__main__':
             print(f'count{presscount_land}\tjudge{pressjudge_land}')
             if pressjudge_land == 1:
                 print('land detected')
-                break
+                break*＼
 
         print('finished')
     except KeyboardInterrupt:
