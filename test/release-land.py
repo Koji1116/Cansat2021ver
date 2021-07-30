@@ -91,3 +91,7 @@ if __name__ == '__main__':
                 break
 
         print('finished')
+    except KeyboardInterrupt:
+        print('interrupted')
+    except:
+        print('finished')
