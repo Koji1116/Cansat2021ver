@@ -78,18 +78,24 @@ if __name__ == '__main__':
 
     try:
         while 1:
-            presscount_release, pressjudge_release = pressdetect_release(0.3)
-            print(f'count{presscount_release}\tjudge{pressjudge_release}')
-            if pressjudge_release == 1:
-                print('release detected')
-                break
+            try:
+                presscount_release, pressjudge_release = pressdetect_release(0.3)
+                print(f'count{presscount_release}\tjudge{pressjudge_release}')
+                if pressjudge_release == 1:
+                    print('release detected')
+                    break
+            except KeyboardInterrupt:
+                print('release interrupted')
 
         while 1:
-            presscount_land, pressjudge_land = pressdetect_land(0.2)
-            print(f'count{presscount_land}\tjudge{pressjudge_land}')
-            if pressjudge_land == 1:
-                print('land detected')
-                break
+            try:
+                presscount_land, pressjudge_land = pressdetect_land(0.2)
+                print(f'count{presscount_land}\tjudge{pressjudge_land}')
+                if pressjudge_land == 1:
+                    print('land detected')
+                    break
+            except KeyboardInterrupt:
+                print('land interrupted')
 
         print('finished')
     except KeyboardInterrupt:
