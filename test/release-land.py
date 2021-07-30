@@ -58,6 +58,7 @@ def pressdetect_land(anypress):
         else:
             presscount_land = 0
     except:
+        print('w')
         presscount_land = 0
         pressjudge_land = 2
     return presscount_land, pressjudge_land
@@ -84,7 +85,7 @@ if __name__ == '__main__':
                 break
 
         while 1:
-            presscount_land, pressjudge_land = pressdetect_land(0.1)
+            presscount_land, pressjudge_land = pressdetect_land(0.2)
             print(f'count{presscount_land}\tjudge{pressjudge_land}')
             if pressjudge_land == 1:
                 print('land detected')
