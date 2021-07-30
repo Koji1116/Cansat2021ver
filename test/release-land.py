@@ -86,6 +86,9 @@ if __name__ == '__main__':
                     break
             except KeyboardInterrupt:
                 print('release interrupted')
+                break
+            except:
+                pass
 
         while 1:
             try:
@@ -96,6 +99,9 @@ if __name__ == '__main__':
                     break
             except KeyboardInterrupt:
                 print('land interrupted')
+                break
+            except:
+                pass
 
         print('finished')
     except KeyboardInterrupt:
