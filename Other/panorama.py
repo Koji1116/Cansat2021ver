@@ -46,7 +46,7 @@ if __name__ == "__main__":
         srcdir = '/home/pi/Desktop/Cansat2021ver/test/nisho-ground12_640_asyuku'
         dstdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
         startTime = time.time()  # プログラムの開始時刻
-        panorama(srcdir, dstdir, 'comp_')
+        panorama(srcdir, dstdir, 'panoramaShootingtest00')
         endTime = time.time() #プログラムの終了時間
         runTime = endTime - startTime
         print(runTime)
