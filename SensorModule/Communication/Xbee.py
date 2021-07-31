@@ -50,7 +50,7 @@ def str_trans(string):
     ser.close()
 
 
-def receive_str():
+def str_receive():
     ser = serial.Serial(
         port="/dev/ttyAMA0",
         baudrate=57600,

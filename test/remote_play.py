@@ -10,7 +10,7 @@ try:
     Xbee.on()
     while 1:
         Xbee.str_trans('操作\t')
-        command = Xbee.receive_str()
+        command = Xbee.str_receive()
         if command == 'a':
             motor.move(40, 80, 2)
         elif command == 'w':

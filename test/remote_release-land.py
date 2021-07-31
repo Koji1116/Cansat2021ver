@@ -81,7 +81,7 @@ if __name__ == '__main__':
         while 1:
             presscount_release, pressjudge_release = pressdetect_release(0.3)
             print(f'count{presscount_release}\tjudge{pressjudge_release}')
-            if Xbee.receive_str() == 'e':
+            if Xbee.str_receive() == 'e':
                 exit()
             if pressjudge_release == 1:
                 print('release detected')
