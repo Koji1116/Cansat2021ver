@@ -202,11 +202,19 @@ def main():
     tsl2572 = TSL2572(0x39)
     if tsl2572.id_read():
         tsl2572.meas_single()
-        # tsl2572.print_meas()
         lux = tsl2572.lux
         print('lux:{0}'.format(lux))
     else:
         print('ID Read Failed')
+
+def read():
+    tsl2572 = TSL2572(0x39)
+    if tsl2572.id_read():
+        tsl2572.meas_single()
+        lux = tsl2572.lux
+        return lux
+    else:
+        return 0
 
 if __name__ == '__main__':
     main()

@@ -1,9 +1,11 @@
 import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
+
 
 import BME280
 import time
-
+import Xbee
 
 def pressdetect_release(thd_press_release):
     global presscount_release
@@ -67,7 +69,7 @@ def pressdetect_land(anypress):
 if __name__ == '__main__':
     BME280.bme280_setup()
     BME280.bme280_calib_param()
-    startTime = time.time()
+    t_start = time.time()
     #放出判定用
     presscount_release = 0
     pressjudge_release = 0
@@ -79,6 +81,8 @@ if __name__ == '__main__':
         while 1:
             presscount_release, pressjudge_release = pressdetect_release(0.3)
             print(f'count{presscount_release}\tjudge{pressjudge_release}')
+            if Xbee.receive_str() == 'e':
+                exit()
             if pressjudge_release == 1:
                 print('release detected')
                 break
