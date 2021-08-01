@@ -87,7 +87,6 @@ def setup():
     global phaseChk
     BME280.bme280_setup()
     BME280.bme280_calib_param()
-    mag.bmc050_setup()
     phaseChk = Other.phaseCheck(phaseLog)
     print(phaseChk)
 
@@ -121,8 +120,7 @@ if __name__ == "__main__":
         # if phaseChk == 2:
         #     t_wait_start = time.time()
         #     while time.time() - t_wait_start <= t_setup:
-        #         Other.saveLog(waitingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), TSL2572.read(),
-        #                       BMC050.bmc050_read())
+        #         Other.saveLog(waitingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), TSL2572.read())
         #         print('Waiting')
         #         Xbee.str_trans('Sleep')
         #         time.sleep(1)
@@ -146,8 +144,7 @@ if __name__ == "__main__":
                     break
                 else:
                     Xbee.str_trans('Not Released')
-                Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(),
-                              mag.bmc050_read())
+                Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read())
                 i += 1
             else:
                 # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
@@ -178,13 +175,11 @@ if __name__ == "__main__":
                     break
                 else:
                     Xbee.str_trans('Not Landed')
-                Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(),
-                              mag.bmc050_read())
+                Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read())
                 i += 1
             else:
                 Xbee.str_trans('Landed Timeout')
-            Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(),
-                          mag.bmc050_read(), 'Land judge finished')
+            Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), 'Land judge finished')
             Xbee.str_trans('######-----Landed-----######\n')
 
         # ------------------- Melting Phase ------------------- #
@@ -231,6 +226,7 @@ if __name__ == "__main__":
             Xbee.str_trans('#####-----paraavoided-----#####\n')
 
         # ------------------- Panorama Shooting Phase ------------------- #
+        mag.bmc050_setup()
         Xbee.str_trans('#####-----Panorama-----#####\n')
         Other.saveLog(phaseLog, '7', 'Panorama Shooting phase', time.time() - t_start)
         phaseChk = Other.phaseCheck(phaseLog)
