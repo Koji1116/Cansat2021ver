@@ -212,7 +212,7 @@ if __name__ == "__main__":
                 Luxflug, Lux = paradetection.ParaJudge(LuxThd)
                 Xbee.str_trans(f'Luxflug: {Luxflug}\t lux: {Lux}\n')
                 if Luxflug == 1:
-                    Xbee.str_trans(f'rover is not covered with parachute. Lux:{Lux}\n')
+                    Xbee.str_trans(f'rover is not covered with parachute. Lux: {Lux}\n')
                     break
                 else:
                     print(f'rover is covered with parachute! Lux: {Lux}\n')

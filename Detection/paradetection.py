@@ -19,7 +19,7 @@ def ParaJudge(LuxThd):
     # print("lux1: "+str(lux[0]))
 
     # --- rover is covered with parachute ---#
-    if lux[0] < LuxThd:  # LuxThd: 照度センサの閾値
+    if lux < LuxThd:  # LuxThd: 照度センサの閾値
         time.sleep(1)
         return [0, lux[0]]
 
