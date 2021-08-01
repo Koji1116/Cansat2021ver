@@ -82,6 +82,10 @@ if __name__ == '__main__':
     presscount_land = 0
     pressjudge_land = 0
 
+    t_out_release = 80
+    t_out_release_safe = 150
+    t_out_land = 40
+
     while 1:
         if Xbee.str_receive() == 's':
             Xbee.str_trans('program start')
@@ -90,6 +94,7 @@ if __name__ == '__main__':
             Xbee.str_trans('standby')
 
     try:
+        t_release_start = time.time()
         while time.time() - t_release_start <= t_out_release:
             i = 1
             Xbee.str_trans(f'loop_release\t {i}')
@@ -115,6 +120,7 @@ if __name__ == '__main__':
         pass
 
     try:
+        t_land_start = time.time()
         while time.time() - t_land_start <= t_out_land:
             i = 1
             Xbee.str_trans(f"loop_land\t{i}")
@@ -132,8 +138,8 @@ if __name__ == '__main__':
         Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read(),
                       'Land judge finished')
         Xbee.str_trans('######-----Landed-----######\n')
-except KeyboardInterrupt:
-pass
+    except KeyboardInterrupt:
+        pass
 
 
 # try:
