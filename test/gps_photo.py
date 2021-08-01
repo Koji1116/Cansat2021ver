@@ -95,8 +95,8 @@ if __name__ == "__main__":
     Xbee.str_trans('Run Phase Start!')
     Xbee.str_trans('GPS走行開始')
     # --- difine goal latitude and longitude ---#
-    lon2 = 139.9082128
-    lat2 = 35.9185224
+    lon2 = 139.9113326
+    lat2 = 35.9252649
 
     # ------------- program start -------------#
     direction = Calibration.calculate_direction(lon2, lat2)
