@@ -39,7 +39,7 @@ bmx055data = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 t_setup = 60  # variable to set waiting time after setup
 t = 1  # Unknown Variable
-t_out_release = 180  # time for release(loopx)
+t_out_release = 100  # time for release(loopx)
 t_out_release_safe = 1000
 t_out_land = 180  # time for land(loopy)
 
@@ -136,27 +136,30 @@ if __name__ == "__main__":
             t_release_start = time.time()
             print(f"Releasing Judgement Program Start  {time.time() - t_start}")
             # bme280Data = BME280.bme280_read()
-            while time.time() - t_release_start <= t_out_release:
-                i = 1
-                Xbee.str_trans(f'loop_release\t {i}')
-                press_count_release, press_judge_release = release.pressdetect_release(thd_press_release)
-                Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
-                if press_judge_release == 1:
-                    Xbee.str_trans('Released')
-                    break
-                else:
-                    Xbee.str_trans('Not Released')
-                Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS, BME280.bme280_read())
-                i += 1
-            else:
-                # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
-                while time.time() - t_release_start <= t_out_release_safe:
-                    Xbee.str_trans('continue? y/n')
-                    if Xbee.str_receive() == 'y':
+            i = 1
+            try:
+                while time.time() - t_release_start <= t_out_release:
+                    Xbee.str_trans(f'loop_release\t {i}')
+                    press_count_release, press_judge_release = release.pressdetect_release(thd_press_release)
+                    Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
+                    if press_judge_release == 1:
+                        Xbee.str_trans('Released')
                         break
-                    elif Xbee.str_receive() == 'n':
-                        exit()
-                Xbee.str_trans('release timeout')
+                    else:
+                        Xbee.str_trans('Not Released')
+                    Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS, BME280.bme280_read())
+                    i += 1
+                else:
+                    # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
+                    while time.time() - t_release_start <= t_out_release_safe:
+                        Xbee.str_trans('continue? y/n')
+                        if Xbee.str_receive() == 'y':
+                            break
+                        elif Xbee.str_receive() == 'n':
+                            exit()
+                    Xbee.str_trans('release timeout')
+            except KeyboardInterrupt:
+                print('interrupted')
             Xbee.str_trans("######-----Released-----#####")
 
         # ------------------- Landing Phase ------------------- #
