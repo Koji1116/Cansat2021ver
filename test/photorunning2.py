@@ -194,6 +194,8 @@ if __name__ == "__main__":
 
     except KeyboardInterrupt:
         print('stop')
+        Xbee.off()
     except Exception as e:
+        Xbee.off()
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
