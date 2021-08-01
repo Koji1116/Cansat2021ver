@@ -117,7 +117,8 @@ if __name__ == '__main__':
             Xbee.str_trans('release timeout')
         Xbee.str_trans("######-----Released-----#####")
     except KeyboardInterrupt:
-        pass
+        Xbee.off()
+        print('interrupted')
 
     try:
         t_land_start = time.time()
@@ -131,15 +132,13 @@ if __name__ == '__main__':
                 break
             else:
                 Xbee.str_trans('Not Landed')
-            Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
             i += 1
         else:
             Xbee.str_trans('Landed Timeout')
-        Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read(),
-                      'Land judge finished')
         Xbee.str_trans('######-----Landed-----######\n')
     except KeyboardInterrupt:
-        pass
+        Xbee.off()
+        print('interrupted')
 
 
 # try:
