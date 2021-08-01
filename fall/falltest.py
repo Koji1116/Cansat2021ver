@@ -232,18 +232,18 @@ if __name__ == "__main__":
             Xbee.str_trans('#####-----paraavoided-----#####\n')
 
         # ------------------- Panorama Shooting Phase ------------------- #
-        mag.bmc050_setup()
-        Xbee.str_trans('#####-----Panorama-----#####\n')
-        Other.saveLog(phaseLog, '7', 'Panorama Shooting phase', time.time() - t_start)
-        phaseChk = Other.phaseCheck(phaseLog)
-        Xbee.str_trans(f'Phase: {phaseChk}\n')
-        if phaseChk <= 7:
-            t_PanoramaShooting_start = time.time()
-            print(f'Panorama Shooting Phase Started {time.time() - t_start}')
-            magdata = Calibration.magdata_matrix()
-            magx_off, magy_off = Calibration.calculate_offset(magdata)
-            panorama.shooting(20, -20, 0.2, magx_off, magy_off, path_src_panorama)
-            panorama.composition(srcdir=path_src_panorama, dstdir=path_dst_panoraam)
+        # mag.bmc050_setup()
+        # Xbee.str_trans('#####-----Panorama-----#####\n')
+        # Other.saveLog(phaseLog, '7', 'Panorama Shooting phase', time.time() - t_start)
+        # phaseChk = Other.phaseCheck(phaseLog)
+        # Xbee.str_trans(f'Phase: {phaseChk}\n')
+        # if phaseChk <= 7:
+        #     t_PanoramaShooting_start = time.time()
+        #     print(f'Panorama Shooting Phase Started {time.time() - t_start}')
+        #     magdata = Calibration.magdata_matrix()
+        #     magx_off, magy_off = Calibration.calculate_offset(magdata)
+        #     panorama.shooting(20, -20, 0.2, magx_off, magy_off, path_src_panorama)
+        #     panorama.composition(srcdir=path_src_panorama, dstdir=path_dst_panoraam)
         Xbee.str_trans('Progam Finished')
         close()
     except KeyboardInterrupt:
@@ -252,4 +252,4 @@ if __name__ == "__main__":
     except Exception as e:
         Xbee.str_trans("error")
         close()
-        Other.saveLog("/home/pi/Desktop/log/Cansat2021ver/errorLog.txt", t_start - time.time(), "Error")
+        Other.saveLog("/home/pi/Desktop/Cansat2021ver/log/errorLog.txt", t_start - time.time(), "Error")
