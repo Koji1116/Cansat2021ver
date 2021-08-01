@@ -233,3 +233,5 @@ if __name__ == '__main__':
         Xbee.str_trans("error")
         close()
         Other.saveLog("/home/pi/Desktop/Cansat2021ver/log/errorLog.txt", t_start - time.time(), "Error")
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
