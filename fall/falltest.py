@@ -22,11 +22,11 @@ import BME280
 import Release
 import Land
 import GPS
-import Melting
+import melt
 import Motor
 import TSL2572
 import paradetection
-import paraAvoidance21_2
+import paraavoidance
 import Other
 import panoramaShooting
 import Calibration
@@ -158,11 +158,11 @@ if __name__ == "__main__":
                     Xbee.str_trans("######RELEASE#####")
 
                 # ------------------- Landing Phase ------------------- #
-                Xbee.str_trans('Landing Phase')
+                Xbee.str_trans('Landing Phase start')
                 Other.saveLog(phaseLog, "4", "Landing Phase Started", time.time() - t_start)
                 phaseChk = Other.phaseCheck(phaseLog)
                 Xbee.str_trans(f'Phase\t{phaseChk}')
-                if phaseChk <= 4:
+                if phaseChk == 4:
                     Xbee.str_trans(f'Landing Judgement Program Start  {time.time() - t_start}')
                     t_land_start = time.time()
                     while time.time() - t_land_start <= t_out_land:
@@ -186,27 +186,21 @@ if __name__ == "__main__":
                 Other.saveLog(phaseLog, '5', 'Melting phase start', time.time() - t_start)
                 phaseChk = Other.phaseCheck(phaseLog)
                 Xbee.str_trans(f'Phase:\t {phaseChk}')
-                if phaseChk <= 5:
-                    print("Melting Phase Started")
+                if phaseChk == 5:
                     Xbee.str_trans('Melting Phase Started')
                     Other.saveLog(meltingLog, time.time() - t_start, GPS.readGPS(), "Melting Start")
-                    Melting.Melting()
-                    print('Melting Finished')
+                    melt.down()
                     Xbee.str_trans('Melting Finished')
                     Other.saveLog(meltingLog, time.time() - t_start, GPS.readGPS(), "Melting Finished")
 
                 # ------------------- ParaAvoidance Phase ------------------- #
-                Xbee.str_trans("ParaAvo Started")
+                Xbee.str_trans("ParaAvo phase start")
                 Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start)
                 phaseChk = Other.phaseCheck(phaseLog)
                 Xbee.str_trans(f'Phase:{phaseChk}')
-                if phaseChk <= 6:
+                if phaseChk == 6:
                     # Other.saveLog(phaseLog, '7', 'Parachute Avoidance Phase Started', time.time() - t_start)
                     t_ParaAvoidance_start = time.time()
-                    print('Parachute Avoidance Phase Started {0}'.format(time.time() - t_start))
-                    print(f'Parachute Avoicance Phase Started{time.time() - t_start}')
-                    print("START: Judge covered by Parachute")
-
                     # --- Paracute judge ---#
                     # --- timeout is 60s ---#
                     t_parajudge = time.time()
