@@ -64,7 +64,7 @@ Landjudgment = [presslandjudge, gpslandjudge, acclandjudge]
 
 # variable used for ParaDetection
 LuxThd = 100
-imgpath_para = "/home/pi/Cansat2021ver/photostorage/paradetection"
+imgpath_para = "/home/pi/Desktop/Cansat2021ver/photostorage/paradetection"
 width = 320
 height = 240
 H_min = 200
@@ -73,14 +73,14 @@ S_thd = 120
 
 paraExsist = 0  # variable used for Para Detection
 
-phaseLog = "/home/pi/Cansat2021ver/log/phaseLog.txt"
-waitingLog = "/home/pi/Cansat2021ver/log/waitingLog.txt"
-releaseLog = "/home/pi/Cansat2021ver/log/releaseLog.txt"
-landingLog = "/home/pi/Cansat2021ver/log/landingLog.txt"
-meltingLog = "/home/pi/Cansat2021ver/log/meltingLog.txt"
-paraAvoidanceLog = "/home/pi/Cansat2021ver/log/paraAvoidanceLog.txt"
-path_src_panorama = '/home/pi/Cansat2021ver/panorama_src'
-path_dst_panoraam = '/home/pi/Cansat2021ver/panorama_dst'
+phaseLog = "/home/pi/Desktop/Cansat2021ver/log/phaseLog.txt"
+waitingLog = "/home/pi/Desktop/Cansat2021ver/log/waitingLog.txt"
+releaseLog = "/home/pi/Desktop/Cansat2021ver/log/releaseLog.txt"
+landingLog = "/home/pi/Desktop/Cansat2021ver/log/landingLog.txt"
+meltingLog = "/home/pi/Desktop/Cansat2021ver/log/meltingLog.txt"
+paraAvoidanceLog = "/home/pi/Desktop/Cansat2021ver/log/paraAvoidanceLog.txt"
+path_src_panorama = '/home/pi/Desktop/Cansat2021ver/panorama_src'
+path_dst_panoraam = '/home/pi/Desktop/Cansat2021ver/panorama_dst'
 
 
 def setup():
