@@ -95,8 +95,8 @@ if __name__ == "__main__":
     print('Run Phase Start!')
     print('GPS走行開始')
     # --- difine goal latitude and longitude ---#
-    lon2 = 139.9116179
-    lat2 = 35.9238862
+    lon2 = 139.9082128
+    lat2 = 35.9185224
 
     # ------------- program start -------------#
     direction = Calibration.calculate_direction(lon2, lat2)
@@ -144,7 +144,6 @@ if __name__ == "__main__":
     print('!!!!!GPS走行終了。次は画像誘導!!!!!!!!!!!!')
 
     #-----------photo_run------------#
-    G_thd = 80  # 調整するところ
     goalflug = 1
     startTime = time.time()
     dateTime = datetime.datetime.now()

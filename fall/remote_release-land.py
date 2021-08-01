@@ -7,6 +7,10 @@ import BME280
 import time
 import Xbee
 
+phaseLog = "/home/pi/Cansat2021ver/log/phaseLog.txt"
+releaseLog = "/home/pi/Cansat2021ver/log/releaseLog.txt"
+landingLog = "/home/pi/Cansat2021ver/log/landingLog.txt"
+
 def pressdetect_release(thd_press_release):
     global presscount_release
     global pressjudge_release
@@ -70,12 +74,17 @@ if __name__ == '__main__':
     BME280.bme280_setup()
     BME280.bme280_calib_param()
     t_start = time.time()
+    Xbee.on()
     #放出判定用
     presscount_release = 0
     pressjudge_release = 0
     #着地判定用
     presscount_land = 0
     pressjudge_land = 0
+
+    while 1:
+        if Xbee.str_receive == 's':
+            break
 
     try:
         while 1:
