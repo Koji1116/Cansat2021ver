@@ -87,7 +87,7 @@ def setup():
     global phaseChk
     BME280.bme280_setup()
     BME280.bme280_calib_param()
-    BMC050.bmc050_setup()
+    BMC050.BMC050_setup()
     phaseChk = Other.phaseCheck(phaseLog)
     print(phaseChk)
 
