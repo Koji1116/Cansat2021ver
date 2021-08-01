@@ -83,28 +83,54 @@ if __name__ == '__main__':
     pressjudge_land = 0
 
     while 1:
-        if Xbee.str_receive == 's':
+        if Xbee.str_receive() == 's':
+            Xbee.str_trans('program start')
             break
+        else:
+            Xbee.str_trans('standby')
 
     try:
-        while 1:
-            presscount_release, pressjudge_release = pressdetect_release(0.3)
-            print(f'count{presscount_release}\tjudge{pressjudge_release}')
-            if Xbee.str_receive() == 'e':
-                exit()
-            if pressjudge_release == 1:
-                print('release detected')
+        while time.time() - t_release_start <= t_out_release:
+            i = 1
+            Xbee.str_trans(f'loop_release\t {i}')
+            press_count_release, press_judge_release = release.pressdetect_release(thd_press_release)
+            Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
+            if press_judge_release == 1:
+                Xbee.str_trans('Released')
                 break
+            else:
+                Xbee.str_trans('Not Released')
+            i += 1
+        else:
+            #落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
+            while time.time() - t_release_start <= t_out_release_safe:
+                Xbee.str_trans('continue? y/n')
+                if Xbee.str_receive() == 'y':
+                    break
+                elif Xbee.str_receive() == 'n':
+                    exit()
+            Xbee.str_trans('release timeout')
+        Xbee.str_trans("######-----Released-----#####")
     except KeyboardInterrupt:
         pass
 
     try:
-        while 1:
-            presscount_land, pressjudge_land = pressdetect_land(0.1)
-            print(f'count{presscount_land}\tjudge{pressjudge_land}')
-            if pressjudge_land == 1:
-                print('land detected')
-                break
+         while time.time() - t_land_start <= t_out_land:
+                        i = 1
+                        Xbee.str_trans(f"loop_land\t{i}")
+                        press_count_release, press_judge_release = land.pressdetect_land()
+                        Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
+                        if press_judge_release == 1:
+                            Xbee.str_trans('Landed')
+                            break
+                        else:
+                            Xbee.str_trans('Not Landed')
+                        Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
+                        i += 1                    
+                    else:
+                        Xbee.str_trans('Landed Timeout')
+                    Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read(), 'Land judge finished')
+                    Xbee.str_trans('######-----Landed-----######\n')
     except KeyboardInterrupt:
         pass
 
