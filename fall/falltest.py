@@ -223,7 +223,7 @@ if __name__ == "__main__":
             count_paraavo = 0
             while count_paraavo < 3:
                 flug, area, gap, photoname = paradetection.ParaDetection(
-                    "photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
+                    "photostorage/para", 320, 240, 200, 10, 120, 1)
                 Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n')
                 paraavoidance.Parachute_Avoidance(flug, gap)
 
@@ -252,4 +252,4 @@ if __name__ == "__main__":
     except Exception as e:
         Xbee.str_trans("error")
         close()
-        Other.saveLog("/home/pi/log/errorLog.txt", t_start - time.time(), "Error")
+        Other.saveLog("/home/pi/Desktop/log/errorLog.txt", t_start - time.time(), "Error")
