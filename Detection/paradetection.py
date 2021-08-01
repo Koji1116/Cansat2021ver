@@ -15,7 +15,7 @@ def ParaJudge(LuxThd):
     パラシュート被っているかを照度センサを用いて判定する関数
     引数は照度の閾値
     '''
-    lux = TSL2572.readLux()
+    lux = TSL2572.read()
     # print("lux1: "+str(lux[0]))
 
     # --- rover is covered with parachute ---#

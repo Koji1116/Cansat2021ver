@@ -171,8 +171,8 @@ if __name__ == "__main__":
         if phaseChk == 4:
             Xbee.str_trans(f'Landing Judgement Program Start  {time.time() - t_start}')
             t_land_start = time.time()
+            i = 1
             while time.time() - t_land_start <= t_out_land:
-                i = 1
                 Xbee.str_trans(f"loop_land\t{i}")
                 press_count_release, press_judge_release = land.pressdetect_land(thd_press_land)
                 Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
