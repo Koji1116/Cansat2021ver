@@ -209,7 +209,7 @@ if __name__ == "__main__":
                     t_parajudge = time.time()
                     while time.time() - t_parajudge < 60:
                         Luxflug, Lux = paradetection.ParaJudge(LuxThd)
-                        Xbee.str_trans(f'Luxflug: {Luxflug}\t lux: {lux}\n')
+                        Xbee.str_trans(f'Luxflug: {Luxflug}\t lux: {Lux}\n')
                         if Luxflug == 1:
                             Xbee.str_trans(f'rover is not covered with parachute. Lux:{Lux}\n')
                             break
@@ -219,14 +219,12 @@ if __name__ == "__main__":
                             time.sleep(1)
                     Xbee.str_trans(f'Prachute avoidance Started{time.time() - t_start}\n')
                     # --- first parachute detection ---#
-                    lon_land, lat_land = paraavoidance.land_point_save()
-                    dis_from_land = paraavoidance.Parachute_area_judge(lon_land, lat_land)
                     count_paraavo = 0
                     while count_paraavo < 3:
                         flug, area, gap, photoname = paradetection.ParaDetection(
                             "photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
                         Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n')
-                        Parachute_Avoidance(flug, gap)
+                        paraavoidance.Parachute_Avoidance(flug, gap)
 
                         if flug == -1 or flug == 0:
                             count_paraavo += 1
