@@ -98,7 +98,7 @@ if __name__ == '__main__':
         while time.time() - t_release_start <= t_out_release:
             i = 1
             Xbee.str_trans(f'loop_release\t {i}')
-            press_count_release, press_judge_release = release.pressdetect_release(thd_press_release)
+            press_count_release, press_judge_release = pressdetect_release(0.3)
             Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
             if press_judge_release == 1:
                 Xbee.str_trans('Released')
@@ -125,7 +125,7 @@ if __name__ == '__main__':
         while time.time() - t_land_start <= t_out_land:
             i = 1
             Xbee.str_trans(f"loop_land\t{i}")
-            press_count_release, press_judge_release = land.pressdetect_land()
+            press_count_release, press_judge_release = pressdetect_land(0.1)
             Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
             if press_judge_release == 1:
                 Xbee.str_trans('Landed')
