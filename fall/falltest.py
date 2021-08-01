@@ -47,8 +47,8 @@ t_start = 0.0  # time when program started
 
 # variable used for releasejudge
 thd_press_release = 0.3
-presscount_release = 0
-pressjudge_release = 0
+press_count_release = 0
+press_judge_release = 0
 
 releasealt = 2
 GArepeasecount = 0
