@@ -252,4 +252,4 @@ if __name__ == "__main__":
     except Exception as e:
         Xbee.str_trans("error")
         close()
-        Other.saveLog("/home/pi/Desktop/log/errorLog.txt", t_start - time.time(), "Error")
+        Other.saveLog("/home/pi/Desktop/log/Cansat2021ver/errorLog.txt", t_start - time.time(), "Error")
