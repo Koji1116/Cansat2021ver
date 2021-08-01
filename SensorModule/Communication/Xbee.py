@@ -39,7 +39,7 @@ def str_trans(string):
         parity=serial.PARITY_NONE,
         stopbits=serial.STOPBITS_ONE,
         bytesize=serial.EIGHTBITS,
-        timeout=20
+        timeout=2
     )
     string = string + '\n'
     moji = string.encode()
