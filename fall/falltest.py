@@ -39,9 +39,9 @@ bmx055data = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 t_setup = 60  # variable to set waiting time after setup
 t = 1  # Unknown Variable
-t_out_release = 100  # time for release(loopx)
+t_out_release = 10  # time for release(loopx)
 t_out_release_safe = 1000
-t_out_land = 180  # time for land(loopy)
+t_out_land = 10  # time for land(loopy)
 
 t_start = 0.0  # time when program started
 
@@ -57,6 +57,7 @@ gpsreleasejudge = 0
 pi = pigpio.pi()
 
 # variable used for landjudgment
+thd_press_land = 0.1
 presslandjudge = 0
 gpslandjudge = 0
 acclandjudge = 0
@@ -173,7 +174,7 @@ if __name__ == "__main__":
             while time.time() - t_land_start <= t_out_land:
                 i = 1
                 Xbee.str_trans(f"loop_land\t{i}")
-                press_count_release, press_judge_release = land.pressdetect_land()
+                press_count_release, press_judge_release = land.pressdetect_land(thd_press_land)
                 Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
                 if press_judge_release == 1:
                     Xbee.str_trans('Landed')

@@ -22,7 +22,7 @@ pressdata = [0.0, 0.0, 0.0, 0.0]
 # accdata = [0.0, 0.0, 0.0]
 
 
-def pressdetect_land(anypress):
+def pressdetect_land(thd_press_land):
     """
     気圧情報による着地判定用
     引数はどのくらい気圧が変化したら判定にするかの閾値
@@ -40,7 +40,7 @@ def pressdetect_land(anypress):
             print("BME280error!")
             press_count_land = 0
             press_judge_land = 2
-        elif deltP < anypress:
+        elif deltP < thd_press_land:
             press_count_land += 1
             if press_count_land > 4:
                 press_judge_land = 1
