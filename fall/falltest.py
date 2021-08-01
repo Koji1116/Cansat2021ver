@@ -149,7 +149,6 @@ if __name__ == "__main__":
                             break
                         else:
                             Xbee.str_trans('Not Released')
-                            pass
                         Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
                         i += 1
                     else:
