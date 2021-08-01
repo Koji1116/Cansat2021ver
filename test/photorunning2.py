@@ -85,10 +85,10 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
 def image_guided_driving(path, G_thd):
     try:
         while goalflug != 0:
-            photoName = Capture.Capture(path, 320, 320)                                               #解像度調整するところ？
+            photoName = Capture.Capture(path)                                               #解像度調整するところ？
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
-            # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
+            Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
             if gap == 1000 or gap == 1000000:
                 print('Nogoal detected')
