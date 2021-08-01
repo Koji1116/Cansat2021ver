@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import sys
 
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
@@ -30,50 +29,31 @@ import Calibration
 import release
 import land
 
-# variable for phase Check
-phaseChk = 0
+pi = pigpio.pi()
 
-gpsData = [0.0, 0.0, 0.0, 0.0, 0.0]
-bme280Data = [0.0, 0.0, 0.0, 0.0]
-bmx055data = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
-
-t_setup = 60  # variable to set waiting time after setup
-t = 1  # Unknown Variable
-t_out_release = 10  # time for release(loopx)
+#variable for timeout
+t_setup = 60
+t_out_release = 100
 t_out_release_safe = 1000
-t_out_land = 10  # time for land(loopy)
+t_out_land = 100
 
-t_start = 0.0  # time when program started
-
-# variable used for releasejudge
+# variable for releasejudge
 thd_press_release = 0.3
 press_count_release = 0
 press_judge_release = 0
 
-releasealt = 2
-GArepeasecount = 0
-gpsreleasejudge = 0
 
-pi = pigpio.pi()
-
-# variable used for landjudgment
+# variable for landjudgment
 thd_press_land = 0.15
-presslandjudge = 0
-gpslandjudge = 0
-acclandjudge = 0
-Landjudgment = [presslandjudge, gpslandjudge, acclandjudge]
+press_count_land = 0
+press_judge_land = 0
+
 
 # variable used for ParaDetection
 LuxThd = 100
 imgpath_para = "/home/pi/Desktop/Cansat2021ver/photostorage/paradetection"
-width = 320
-height = 240
-H_min = 200
-H_max = 10
-S_thd = 120
 
-paraExsist = 0  # variable used for Para Detection
-
+#path for save
 phaseLog = "/home/pi/Desktop/Cansat2021ver/log/phaseLog"
 waitingLog = "/home/pi/Desktop/Cansat2021ver/log/waitingLog.txt"
 releaseLog = "/home/pi/Desktop/Cansat2021ver/log/releaseLog.txt"
@@ -88,16 +68,15 @@ def setup():
     global phaseChk
     BME280.bme280_setup()
     BME280.bme280_calib_param()
-    phaseChk = Other.phaseCheck(phaseLog)
     GPS.openGPS()
-    print(phaseChk)
 
 
 def close():
     GPS.closeGPS()
+    Xbee.off()
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     Xbee.on()
     while 1:
         Xbee.str_trans('standby')
@@ -108,7 +87,7 @@ if __name__ == "__main__":
     try:
         t_start = time.time()
         # ------------------- Setup Phase --------------------- #
-        Other.saveLog(phaseLog, "1", "Setup phase", time.time() - t_start)
+        Other.saveLog(phaseLog, "1", "Setup phase", time.time() - t_start, datetime.datetime.now())
         print(f'Program Start  {time.time()}')
         Xbee.str_trans(f'Program Start:\t{time.time() - t_start}\n')
         Xbee.str_trans(f'Program Start:\t{datetime.datetime.now()}\n')
@@ -117,7 +96,7 @@ if __name__ == "__main__":
         Xbee.str_trans(f'Phase:{phaseChk}')
 
         # ------------------- Waiting Phase --------------------- #
-        Other.saveLog(phaseLog, "2", "Waiting Phase Started", time.time() - t_start)
+        Other.saveLog(phaseLog, "2", "Waiting Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
         Xbee.str_trans(f'Phase:{phaseChk}')
         # if phaseChk == 2:
@@ -130,7 +109,7 @@ if __name__ == "__main__":
         #     Xbee.str_trans('Waiting Finished')
 
         # ------------------- Release Phase ------------------- #
-        Other.saveLog(phaseLog, "3", "Release Phase Started", time.time() - t_start)
+        Other.saveLog(phaseLog, "3", "Release Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
         Xbee.str_trans(f'Phase:{phaseChk}')
         if phaseChk == 3:
@@ -148,7 +127,7 @@ if __name__ == "__main__":
                         break
                     else:
                         Xbee.str_trans('Not Released')
-                    Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS, BME280.bme280_read())
+                    Other.saveLog(releaseLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS, BME280.bme280_read())
                     i += 1
                 else:
                     # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
@@ -165,7 +144,7 @@ if __name__ == "__main__":
 
         # ------------------- Landing Phase ------------------- #
         Xbee.str_trans('#####-----Landing Phase start-----#####\n')
-        Other.saveLog(phaseLog, "4", "Landing Phase Started", time.time() - t_start)
+        Other.saveLog(phaseLog, "4", "Landing Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
         Xbee.str_trans(f'Phase\t{phaseChk}')
         if phaseChk == 4:
@@ -181,28 +160,28 @@ if __name__ == "__main__":
                     break
                 else:
                     Xbee.str_trans('Not Landed')
-                Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read())
+                Other.saveLog(landingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), BME280.bme280_read())
                 i += 1
             else:
                 Xbee.str_trans('Landed Timeout')
-            Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), 'Land judge finished')
+            Other.saveLog(landingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), 'Land judge finished')
             Xbee.str_trans('######-----Landed-----######\n')
 
         # ------------------- Melting Phase ------------------- #
         Xbee.str_trans('#####-----Melting phase start#####\n')
-        Other.saveLog(phaseLog, '5', 'Melting phase start', time.time() - t_start)
+        Other.saveLog(phaseLog, '5', 'Melting phase start', time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
         Xbee.str_trans(f'Phase:\t {phaseChk}\n')
         if phaseChk == 5:
             Xbee.str_trans('Melting Phase Started')
-            Other.saveLog(meltingLog, time.time() - t_start, GPS.readGPS(), "Melting Start")
+            Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Start")
             melt.down()
             Xbee.str_trans('Melting Finished')
-            Other.saveLog(meltingLog, time.time() - t_start, GPS.readGPS(), "Melting Finished")
+            Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Finished")
         Xbee.str_trans('########-----Melted-----##########\n')
         # ------------------- ParaAvoidance Phase ------------------- #
         Xbee.str_trans("#####-----ParaAvo phase start-----#####\n")
-        Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start)
+        Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
         Xbee.str_trans(f'Phase:{phaseChk}')
         if phaseChk == 6:
