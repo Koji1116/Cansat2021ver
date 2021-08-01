@@ -89,11 +89,10 @@ if __name__ == '__main__':
         t_start = time.time()
         # ------------------- Setup Phase --------------------- #
         Other.saveLog(phaseLog, "1", "Setup phase", time.time() - t_start, datetime.datetime.now())
-        print(f'Program Start  {time.time()}')
+        phaseChk = Other.phaseCheck(phaseLog)
         Xbee.str_trans(f'Program Start:\t{time.time() - t_start}\n')
         Xbee.str_trans(f'Program Start:\t{datetime.datetime.now()}\n')
         setup()
-        print(phaseChk)
         Xbee.str_trans(f'Phase:{phaseChk}')
 
         # ------------------- Waiting Phase --------------------- #
