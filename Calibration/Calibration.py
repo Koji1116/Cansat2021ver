@@ -289,9 +289,6 @@ def calculate_direction(lon2, lat2):
            # print(lon2)
            # if lat1 != -1.0 and lat1 != 0.0:
             #    break
-
-        direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
-        return direction
     except KeyboardInterrupt:
         GPS.closeGPS()
         print("\r\nKeyboard Intruppted, Serial Closed")
@@ -299,7 +296,8 @@ def calculate_direction(lon2, lat2):
         GPS.closeGPS()
         print(traceback.format_exc())
     # --- calculate angle to goal ---#
-
+    direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
+    return direction
 
 def angle(magx, magy, magx_off=0, magy_off=0):
     θ = math.degrees(math.atan((magy - magy_off) / (magx - magx_off)))

@@ -136,6 +136,9 @@ def image_guided_driving(path, G_thd):
             elif goalarea >= G_thd:
                 print('goal')
                 Xbee.str_trans('goal')
+                break
+        print('finish')
+        Xbee.str_trans('finish')
 
 
     except KeyboardInterrupt:

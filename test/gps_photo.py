@@ -13,7 +13,7 @@ import Xbee
 import BMC050
 import GPS
 import motor
-import Calibration2
+import Calibration
 import pigpio
 from gpiozero import Motor
 import time
@@ -73,12 +73,12 @@ def adjust_direction(theta):
             motor.move(-20, 20, t_big)
 
         # count += 1
-        data = Calibration2.get_data()
+        data = Calibration.get_data()
         magx = data[0]
         magy = data[1]
         # --- 0 <= θ <= 360 ---#
-        theta = Calibration2.angle(magx, magy, magx_off, magy_off)
-        direction = Calibration2.calculate_direction(lon2, lat2)
+        theta = Calibration.angle(magx, magy, magx_off, magy_off)
+        direction = Calibration.calculate_direction(lon2, lat2)
         azimuth = direction["azimuth1"]
         theta = azimuth - theta
         if theta < 0:
@@ -101,7 +101,7 @@ if __name__ == "__main__":
         lat2 = 35.9252649
 
         # ------------- program start -------------#
-        direction = Calibration2.calculate_direction(lon2, lat2)
+        direction = Calibration.calculate_direction(lon2, lat2)
         goal_distance = direction['distance']
         aaa = direction['azimuth1']
         Xbee.str_trans('goal distance = ' + str(goal_distance))
@@ -117,15 +117,15 @@ if __name__ == "__main__":
                 # ------------- Calibration -------------#
                 Xbee.str_trans('Calibration Start')
                 mag.bmc050_setup()
-                magdata_Old = Calibration2.magdata_matrix(l, r, t, n)
-                _, _, _, magx_off, magy_off, _ = Calibration2.calculate_offset(magdata_Old)
+                magdata_Old = Calibration.magdata_matrix(l, r, t, n)
+                _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
             Xbee.str_trans('GPS run strat')
             # ------------- GPS navigate -------------#
             magdata = BMC050.mag_dataRead()
             mag_x = magdata[0]
             mag_y = magdata[1]
-            theta = Calibration2.angle(mag_x, mag_y, magx_off, magy_off)
-            direction = Calibration2.calculate_direction(lon2, lat2)
+            theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+            direction = Calibration.calculate_direction(lon2, lat2)
             azimuth = direction["azimuth1"]
             theta = azimuth - theta
             if theta < 0:
@@ -139,7 +139,7 @@ if __name__ == "__main__":
             motor.move(65, 50, 6)
 
             # --- calculate  goal direction ---#
-            direction = Calibration2.calculate_direction(lon2, lat2)
+            direction = Calibration.calculate_direction(lon2, lat2)
             goal_distance = direction["distance"]
             Xbee.str_trans('------ゴールとの距離は' + str(goal_distance) + 'm------')
             count += 1
