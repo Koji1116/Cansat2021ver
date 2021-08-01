@@ -2,12 +2,21 @@ import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental')
-
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 import BME280.py
 import mag
 import GPS
 import TSL2572
 import acc
+import Xbee
+from gpiozero import Motor
+import time
+import motor
+
+print('---motor---')
+motor.move(20,20,2)
 
 
 print('---mag---')
