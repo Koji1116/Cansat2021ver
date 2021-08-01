@@ -161,10 +161,10 @@ if __name__ == "__main__":
                             elif Xbee.str_receive() == 'n':
                                 exit()
                         Xbee.str_trans('release timeout')
-                    Xbee.str_trans("######Released#####")
+                    Xbee.str_trans("######-----Released-----#####")
 
                 # ------------------- Landing Phase ------------------- #
-                Xbee.str_trans('Landing Phase start')
+                Xbee.str_trans('#####-----Landing Phase start-----#####\n')
                 Other.saveLog(phaseLog, "4", "Landing Phase Started", time.time() - t_start)
                 phaseChk = Other.phaseCheck(phaseLog)
                 Xbee.str_trans(f'Phase\t{phaseChk}')
@@ -186,10 +186,10 @@ if __name__ == "__main__":
                     else:
                         Xbee.str_trans('Landed Timeout')
                     Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read(), 'Land judge finished')
-                    Xbee.str_trans('#######Landed#######')
+                    Xbee.str_trans('######-----Landed-----######\n')
 
                 # ------------------- Melting Phase ------------------- #
-                Xbee.str_trans('Melting phase start')
+                Xbee.str_trans('#####-----Melting phase start#####\n')
                 Other.saveLog(phaseLog, '5', 'Melting phase start', time.time() - t_start)
                 phaseChk = Other.phaseCheck(phaseLog)
                 Xbee.str_trans(f'Phase:\t {phaseChk}\n')
