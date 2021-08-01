@@ -21,11 +21,11 @@ def ParaJudge(LuxThd):
     # --- rover is covered with parachute ---#
     if lux < LuxThd:  # LuxThd: 照度センサの閾値
         time.sleep(1)
-        return [0, lux[0]]
+        return [0, lux]
 
     # --- rover is not covered with parachute ---#
     else:
-        return [1, lux[0]]
+        return [1, lux]
 
 
 def get_center(contour):
