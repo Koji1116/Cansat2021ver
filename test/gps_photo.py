@@ -24,10 +24,10 @@ import mag
 import datetime
 # import goaldetection
 import Capture
-import photorunning
+import photorunning2
 
 #写真内の赤色面積で進時間を決める用　調整必要
-area_short = 100
+area_short = 20
 area_middle = 6
 area_long = 1
 
@@ -148,4 +148,4 @@ if __name__ == "__main__":
     startTime = time.time()
     dateTime = datetime.datetime.now()
     path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
-    photorunning.image_guided_driving(path_photo_imagerun, 50)
+    photorunning2.image_guided_driving(path_photo_imagerun, 50)
