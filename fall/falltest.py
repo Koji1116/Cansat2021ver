@@ -28,7 +28,7 @@ import TSL2572
 import paradetection
 import paraavoidance
 import Other
-import panoramaShooting
+import panorama
 import Calibration
 import release
 import land
@@ -82,8 +82,8 @@ releaseLog = "/home/pi/Cansat2021ver/log/releaseLog.txt"
 landingLog = "/home/pi/Cansat2021ver/log/landingLog.txt"
 meltingLog = "/home/pi/Cansat2021ver/log/meltingLog.txt"
 paraAvoidanceLog = "/home/pi/Cansat2021ver/log/paraAvoidanceLog.txt"
-panoramapath = '/home/pi/Cansat2021ver/photostorage/panorama'
-
+path_src_panorama = '/home/pi/Cansat2021ver/panorama_src'
+path_dst_panoraam = '/home/pi/Cansat2021ver/panorama_dst'
 
 def setup():
     global phaseChk
@@ -242,9 +242,9 @@ if __name__ == "__main__":
                     print(f'Panorama Shooting Phase Started {time.time() - t_start}')
                     magdata = Calibration.magdata_matrix()
                     magx_off, magy_off = Calibration.calculate_offset(magdata)
-                    panoramaShooting.shooting(magx_off, magy_off, panoramapath)
-                    Other.panorama(srcdir=panoramapath)
-                Xbee.str_trans("Progam Finished")
+                    panorama.shooting(20, -20, 0.2, magx_off, magy_off, panoramapath)
+                    panorama.composition(srcdir=path_src_panorama, dstdir=path_dst_panoraam)
+                Xbee.str_trans('Progam Finished')
                 close()
             except KeyboardInterrupt:
                 close()
