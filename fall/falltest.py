@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import sys
+
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
@@ -85,6 +86,7 @@ paraAvoidanceLog = "/home/pi/Cansat2021ver/log/paraAvoidanceLog.txt"
 path_src_panorama = '/home/pi/Cansat2021ver/panorama_src'
 path_dst_panoraam = '/home/pi/Cansat2021ver/panorama_dst'
 
+
 def setup():
     global phaseChk
     BME280.bme280_setup()
@@ -130,7 +132,6 @@ if __name__ == "__main__":
                 #         time.sleep(1)
                 #     Xbee.str_trans('Waiting Finished')
 
-
                 # ------------------- Release Phase ------------------- #
                 Other.saveLog(phaseLog, "3", "Release Phase Started", time.time() - t_start)
                 phaseChk = Other.phaseCheck(phaseLog)
@@ -149,10 +150,11 @@ if __name__ == "__main__":
                             break
                         else:
                             Xbee.str_trans('Not Released')
-                        Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
+                        Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(),
+                                      BMC050.bmc050_read())
                         i += 1
                     else:
-                        #落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
+                        # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
                         while time.time() - t_release_start <= t_out_release_safe:
                             Xbee.str_trans('continue? y/n')
                             if Xbee.str_receive() == 'y':
@@ -180,11 +182,13 @@ if __name__ == "__main__":
                             break
                         else:
                             Xbee.str_trans('Not Landed')
-                        Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
-                        i += 1                    
+                        Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(),
+                                      BMC050.bmc050_read())
+                        i += 1
                     else:
                         Xbee.str_trans('Landed Timeout')
-                    Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read(), 'Land judge finished')
+                    Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(),
+                                  BMC050.bmc050_read(), 'Land judge finished')
                     Xbee.str_trans('######-----Landed-----######\n')
 
                 # ------------------- Melting Phase ------------------- #
@@ -223,7 +227,8 @@ if __name__ == "__main__":
                     dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_land, lat_land)
                     count_paraavo = 0
                     while count_paraavo < 3:
-                        flug, area, gap, photoname = paradetection.ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
+                        flug, area, gap, photoname = paradetection.ParaDetection(
+                            "photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
                         Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n')
                         Parachute_Avoidance(flug, gap)
 
@@ -252,4 +257,3 @@ if __name__ == "__main__":
                 Xbee.str_trans("error")
                 close()
                 Other.saveLog("/home/pi/log/errorLog.txt", t_start - time.time(), "Error")
-
