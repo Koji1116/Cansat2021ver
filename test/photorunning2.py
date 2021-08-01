@@ -83,12 +83,13 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
 
 
 def image_guided_driving(path, G_thd):
+    global goalflug
     try:
         while goalflug != 0:
             photoName = Capture.Capture(path)                                               #解像度調整するところ？
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
-            Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
+            Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', gap)
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
             if gap == 1000 or gap == 1000000:
                 print('Nogoal detected')
@@ -132,6 +133,9 @@ def image_guided_driving(path, G_thd):
                     print('Go stright short')
                     # Xbee.str_trans('Gos straight short')
                     motor.move(80, 80, 0.2)
+            elif goalarea >= G_thd:
+                print('goal')
+                Xbee.str_trans('goal')
 
 
     except KeyboardInterrupt:
@@ -143,12 +147,12 @@ def image_guided_driving(path, G_thd):
 if __name__ == "__main__":
     try:
         # G_thd = float(input('ゴール閾値'))
-        G_thd = 80                                                                                          #調整するところ
+        G_thd = 50                                                                                         #調整するところ
         goalflug = 1
         startTime = time.time()
         dateTime = datetime.datetime.now()
         path = f'photostorage/ImageGuidance2_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
-        image_guided_driving(path, 50)
+        image_guided_driving(path, G_thd)
 
 
         # photoName = 'photostorage/practice13.png'
