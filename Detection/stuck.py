@@ -4,6 +4,7 @@ sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 from time import sleep
 from math import*
 from gpiozero import Motor
