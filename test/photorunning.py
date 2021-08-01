@@ -19,7 +19,7 @@ import time
 
 
 #写真内の赤色面積で進時間を決める用　調整必要
-area_short = 100
+area_short = 20
 area_middle = 6
 area_long = 1
 
