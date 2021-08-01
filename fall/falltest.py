@@ -42,7 +42,8 @@ bmx055data = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 
 t_setup = 60  # variable to set waiting time after setup
 t = 1  # Unknown Variable
-t_out_release = 300  # time for release(loopx)
+t_out_release = 180  # time for release(loopx)
+t_out_release_safe = 1000
 t_out_land = 180  # time for land(loopy)
 
 t_start = 0.0  # time when program started
@@ -66,7 +67,7 @@ Landjudgment = [presslandjudge, gpslandjudge, acclandjudge]
 
 # variable used for ParaDetection
 LuxThd = 100
-imgpath = "/home/pi/photostorage/photo"
+imgpath_para = "/home/pi/Cansat2021ver/photostorage/paradetection"
 width = 320
 height = 240
 H_min = 200
@@ -150,12 +151,17 @@ if __name__ == "__main__":
                             Xbee.str_trans('Not Released')
                             pass
                         Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
-
                         i += 1
                     else:
+                        #落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
+                        while time.time() - t_release_start <= t_out_release_safe:
+                            Xbee.str_trans('continue? y/n')
+                            if Xbee.str_receive() == 'y':
+                                break
+                            elif Xbee.str_receive() == 'n':
+                                exit()
                         Xbee.str_trans('release timeout')
-                    print("THE ROVER HAS RELEASED")
-                    Xbee.str_trans("######RELEASE#####")
+                    Xbee.str_trans("######Released#####")
 
                 # ------------------- Landing Phase ------------------- #
                 Xbee.str_trans('Landing Phase start')
@@ -179,59 +185,58 @@ if __name__ == "__main__":
                         i += 1                    
                     else:
                         Xbee.str_trans('Landed Timeout')
+                    Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read(), 'Land judge finished')
                     Xbee.str_trans('#######Landed#######')
 
                 # ------------------- Melting Phase ------------------- #
                 Xbee.str_trans('Melting phase start')
                 Other.saveLog(phaseLog, '5', 'Melting phase start', time.time() - t_start)
                 phaseChk = Other.phaseCheck(phaseLog)
-                Xbee.str_trans(f'Phase:\t {phaseChk}')
+                Xbee.str_trans(f'Phase:\t {phaseChk}\n')
                 if phaseChk == 5:
                     Xbee.str_trans('Melting Phase Started')
                     Other.saveLog(meltingLog, time.time() - t_start, GPS.readGPS(), "Melting Start")
                     melt.down()
                     Xbee.str_trans('Melting Finished')
                     Other.saveLog(meltingLog, time.time() - t_start, GPS.readGPS(), "Melting Finished")
-
+                Xbee.str_trans('########-----Melted-----##########\n')
                 # ------------------- ParaAvoidance Phase ------------------- #
-                Xbee.str_trans("ParaAvo phase start")
+                Xbee.str_trans("#####-----ParaAvo phase start-----#####\n")
                 Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start)
                 phaseChk = Other.phaseCheck(phaseLog)
                 Xbee.str_trans(f'Phase:{phaseChk}')
                 if phaseChk == 6:
-                    # Other.saveLog(phaseLog, '7', 'Parachute Avoidance Phase Started', time.time() - t_start)
                     t_ParaAvoidance_start = time.time()
-                    # --- Paracute judge ---#
-                    # --- timeout is 60s ---#
                     t_parajudge = time.time()
                     while time.time() - t_parajudge < 60:
                         Luxflug, Lux = paradetection.ParaJudge(LuxThd)
-                        print(Luxflug)
-                        Xbee.str_trans(f'Luxflug:{Luxflug}')
+                        Xbee.str_trans(f'Luxflug: {Luxflug}\t lux: {lux}\n')
                         if Luxflug == 1:
-                            print(f'rover is not covered with parachute. Lux:{Lux}')
-                            Xbee.str_trans(f'rover is not covered with parachute. Lux:{Lux}')
+                            Xbee.str_trans(f'rover is not covered with parachute. Lux:{Lux}\n')
                             break
                         else:
-                            print(f'rover is covered with parachute! Lux:{Lux}')
-                            Xbee.str_trans(f'rover is covered with parachute! Lux:{Lux}')
+                            print(f'rover is covered with parachute! Lux: {Lux}\n')
+                            Xbee.str_trans(f'rover is covered with parachute! Lux: {Lux}\n')
                             time.sleep(1)
-                    print(f'Prachute avoidance Started{time.time() - t_start}')
-                    Xbee.str_trans(f'Prachute avoidance Started{time.time() - t_start}')
+                    Xbee.str_trans(f'Prachute avoidance Started{time.time() - t_start}\n')
                     # --- first parachute detection ---#
                     lon_land, lat_land = paraAvoidance21_2.land_point_save()
                     dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_land, lat_land)
-                    while dis_from_land <= 3:
-                        flug, _, _ = paradetection.ParaDetection("/home/pi/photo/photo", 320, 240, 200, 10, 120)
-                        paraAvoidance21_2.Parachute_Avoidance(flug)
-                        _, lon_new, lat_new, _, _ = GPS.readGPS()
-                        dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_new, lat_new)
+                    count_paraavo = 0
+                    while count_paraavo < 3:
+                        flug, area, gap, photoname = paradetection.ParaDetection("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
+                        Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n')
+                        Parachute_Avoidance(flug, gap)
+
+                        if flug == -1 or flug == 0:
+                            count_paraavo += 1
+                    Xbee.str_trans('#####-----paraavoided-----#####\n')
 
                 # ------------------- Panorama Shooting Phase ------------------- #
-                Xbee.str_trans('Panorama')
+                Xbee.str_trans('#####-----Panorama-----#####\n')
                 Other.saveLog(phaseLog, '7', 'Panorama Shooting phase', time.time() - t_start)
                 phaseChk = Other.phaseCheck(phaseLog)
-                Xbee.str_trans(f'Phase:{phaseChk}')
+                Xbee.str_trans(f'Phase: {phaseChk}\n')
                 if phaseChk <= 7:
                     t_PanoramaShooting_start = time.time()
                     print(f'Panorama Shooting Phase Started {time.time() - t_start}')
@@ -248,4 +253,4 @@ if __name__ == "__main__":
                 Xbee.str_trans("error")
                 close()
                 Other.saveLog("/home/pi/log/errorLog.txt", t_start - time.time(), "Error")
-                print(e.message)
+

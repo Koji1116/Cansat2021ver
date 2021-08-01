@@ -40,6 +40,59 @@ def panorama(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext='.j
     else:
         print('failed')
 
+def shooting(l, r, t, magx_off, magy_off, path):
+    """
+    パノラマ撮影用の関数
+    引数は磁気のオフセット
+    """
+    # photobox = []
+    magdata = BMC050.mag_dataRead()
+    magx = magdata[0]
+    magy = magdata[1]
+    preθ = Calibration.angle(magx, magy, magx_off, magy_off)
+    sumθ = 0
+    # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
+    print(f'whileスタート　preθ:{preθ}')
+
+    while sumθ <= 360:
+        Capture.Capture(path)
+        # filename = Capture.Capture(path)
+        # photobox.append(filename)
+        motor.move(l, r, t)
+        magdata = BMC050.mag_dataRead()
+        magx = magdata[0]
+        magy = magdata[1]
+        latestθ = Calibration.angle(magx, magy, magx_off, magy_off)
+
+        # ------Stuck------#
+        if preθ >= 300 and latestθ <= 100:
+            latestθ += 360
+            if latestθ - preθ <= 10:
+                # Xbee.str_trans('Stuck')
+                print('Stuck')
+                motor.move(l, r, t)
+                # ----Initialize-----#
+                magdata = BMC050.mag_dataRead()
+                magx = magdata[0]
+                magy = magdata[1]
+                preθ = Calibration.angle(magx, magy, magx_off, magy_off)
+                sumθ = 0
+                # Xbee.str_trans('whileスタート preθ:{0}'.format(preθ))
+                print(f'whileスタート　preθ:{preθ}')
+                continue
+
+        if preθ >= 300 and latestθ <= 100:
+            latestθ += 360
+        deltaθ = latestθ - preθ
+        sumθ += deltaθ
+
+        if latestθ >= 360:
+            latestθ -= 360
+        preθ2 = preθ
+        preθ = latestθ
+        # Xbee.str_trans('sumθ:', sumθ, ' preθ:', preθ, ' deltaθ:', deltaθ)
+        print(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
+
 
 if __name__ == "__main__":
     try:

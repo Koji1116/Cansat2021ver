@@ -130,16 +130,16 @@ if __name__ == '__main__':
                                                                  200, 10, 120, 1)
         print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}')
         print("paradetection phase success")
-        z = 0
-        while z < 3:
+        count_paraavo = 0
+        while count_paraavo < 3:
             flug, area, gap, photoname = paradetection.ParaDetection("photostorage/photostorage_paradete/para", 320,
                                                                      240, 200, 10, 120, 1)
             print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}')
             Parachute_Avoidance(flug, gap)
             print(flug)
             if flug == -1 or flug == 0:
-                z += 1
-                print(z)
+                count_paraavo += 1
+                print(count_paraavo)
 
         print("success")
 
