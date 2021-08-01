@@ -87,11 +87,11 @@ if __name__ == '__main__':
     t_out_land = 40
 
     while 1:
+        Xbee.str_trans('standby')
         if Xbee.str_receive() == 's':
             Xbee.str_trans('program start')
             break
-        else:
-            Xbee.str_trans('standby')
+            
 
     try:
         t_release_start = time.time()
