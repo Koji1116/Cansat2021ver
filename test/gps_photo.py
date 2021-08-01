@@ -90,62 +90,69 @@ def adjust_direction(theta):
     Xbee.str_trans('theta = ' + str(theta) + '---回転終了!!!')
 
 if __name__ == "__main__":
-    mag.bmc050_setup()
-    GPS.openGPS()
-    Xbee.str_trans('Run Phase Start!')
-    Xbee.str_trans('GPS走行開始')
-    # --- difine goal latitude and longitude ---#
-    lon2 = 139.9113326
-    lat2 = 35.9252649
+    try:
+        mag.bmc050_setup()
+        GPS.openGPS()
+        Xbee.on()
+        Xbee.str_trans('Run Phase Start!')
+        Xbee.str_trans('GPS走行開始')
+        # --- difine goal latitude and longitude ---#
+        lon2 = 139.9113326
+        lat2 = 35.9252649
 
-    # ------------- program start -------------#
-    direction = Calibration.calculate_direction(lon2, lat2)
-    goal_distance = direction['distance']
-    aaa = direction['azimuth1']
-    Xbee.str_trans('goal distance = ' + str(goal_distance))
-    Xbee.str_trans('goal direction = ' + str(aaa))
-    count = 0
-    ##-----------テスト用--------
-    r = float(input('右の出力は？'))
-    l = float(input('左の出力は？'))
-    t = float(input('何秒回転する？'))
-    n = int(input('データ数いくつ'))
-    while goal_distance >= 10:
-        if count % 4 == 0:
-            # ------------- Calibration -------------#
-            Xbee.str_trans('Calibration Start')
-            mag.bmc050_setup()
-            magdata_Old = Calibration.magdata_matrix(l, r, t, n)
-            _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
-        Xbee.str_trans('GPS run strat')
-        # ------------- GPS navigate -------------#
-        magdata = BMC050.mag_dataRead()
-        mag_x = magdata[0]
-        mag_y = magdata[1]
-        theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+        # ------------- program start -------------#
         direction = Calibration.calculate_direction(lon2, lat2)
-        azimuth = direction["azimuth1"]
-        theta = azimuth - theta
-        if theta < 0:
-            theta = 360 + theta
-        elif 360 <= theta <= 450:
-            theta = theta - 360
+        goal_distance = direction['distance']
+        aaa = direction['azimuth1']
+        Xbee.str_trans('goal distance = ' + str(goal_distance))
+        Xbee.str_trans('goal direction = ' + str(aaa))
+        count = 0
+        ##-----------テスト用--------
+        r = float(input('右の出力は？'))
+        l = float(input('左の出力は？'))
+        t = float(input('何秒回転する？'))
+        n = int(input('データ数いくつ'))
+        while goal_distance >= 10:
+            if count % 4 == 0:
+                # ------------- Calibration -------------#
+                Xbee.str_trans('Calibration Start')
+                mag.bmc050_setup()
+                magdata_Old = Calibration.magdata_matrix(l, r, t, n)
+                _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
+            Xbee.str_trans('GPS run strat')
+            # ------------- GPS navigate -------------#
+            magdata = BMC050.mag_dataRead()
+            mag_x = magdata[0]
+            mag_y = magdata[1]
+            theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+            direction = Calibration.calculate_direction(lon2, lat2)
+            azimuth = direction["azimuth1"]
+            theta = azimuth - theta
+            if theta < 0:
+                theta = 360 + theta
+            elif 360 <= theta <= 450:
+                theta = theta - 360
 
-        adjust_direction(theta)
-        Xbee.str_trans('theta = ' + str(theta) + '---直進開始')
-        ######直進するように左の出力強くしてます↓ 7/28 by oosima
-        motor.move(65, 50, 6)
+            adjust_direction(theta)
+            Xbee.str_trans('theta = ' + str(theta) + '---直進開始')
+            ######直進するように左の出力強くしてます↓ 7/28 by oosima
+            motor.move(65, 50, 6)
 
-        # --- calculate  goal direction ---#
-        direction = Calibration.calculate_direction(lon2, lat2)
-        goal_distance = direction["distance"]
-        Xbee.str_trans('------ゴールとの距離は' + str(goal_distance) + 'm------')
-        count += 1
-    Xbee.str_trans('!!!!!GPS走行終了。次は画像誘導!!!!!!!!!!!!')
+            # --- calculate  goal direction ---#
+            direction = Calibration.calculate_direction(lon2, lat2)
+            goal_distance = direction["distance"]
+            Xbee.str_trans('------ゴールとの距離は' + str(goal_distance) + 'm------')
+            count += 1
+        Xbee.str_trans('!!!!!GPS走行終了。次は画像誘導!!!!!!!!!!!!')
 
-    #-----------photo_run------------#
-    goalflug = 1
-    startTime = time.time()
-    dateTime = datetime.datetime.now()
-    path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
-    photorunning2.image_guided_driving(path_photo_imagerun, 50)
+        #-----------photo_run------------#
+        goalflug = 1
+        startTime = time.time()
+        dateTime = datetime.datetime.now()
+        path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+        photorunning2.image_guided_driving(path_photo_imagerun, 50)
+    except KeyboardInterrupt:
+        print('interrupted')
+        GPS.closeGPS()
+    except:
+        GPS.closeGPS()
