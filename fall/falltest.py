@@ -57,7 +57,7 @@ gpsreleasejudge = 0
 pi = pigpio.pi()
 
 # variable used for landjudgment
-thd_press_land = 0.1
+thd_press_land = 0.15
 presslandjudge = 0
 gpslandjudge = 0
 acclandjudge = 0

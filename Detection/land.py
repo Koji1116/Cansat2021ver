@@ -47,6 +47,7 @@ def pressdetect_land(thd_press_land):
                 print("presslandjudge")
         else:
             press_count_land = 0
+            press_judge_land = 0
     except:
         press_count_land = 0
         press_judge_land = 2
