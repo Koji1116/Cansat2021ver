@@ -106,6 +106,7 @@ if __name__ == "__main__":
     try:
         t_start = time.time()
         # ------------------- Setup Phase --------------------- #
+        Other.saveLog(phaseLog, "1", "Setup phase", time.time() - t_start)
         print(f'Program Start  {time.time()}')
         Xbee.str_trans(f'Program Start:\t{time.time() - t_start}\n')
         Xbee.str_trans(f'Program Start:\t{datetime.datetime.now()}\n')
