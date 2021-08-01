@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 import sys
-
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
@@ -32,6 +31,7 @@ import Other
 import panoramaShooting
 import Calibration
 import release
+import land
 
 # variable for phase Check
 phaseChk = 0
@@ -98,8 +98,12 @@ def close():
 
 
 if __name__ == "__main__":
+    Xbee.on()
     while 1:
-        if Xbee.str_receive()
+        if Xbee.str_receive() == 's':
+            break
+        else:
+            Xbee.str_trans('standby')
         try:
             t_start = time.time()
             # ------------------- Setup Phase --------------------- #
@@ -137,7 +141,7 @@ if __name__ == "__main__":
                     i = 1
                     Xbee.str_trans(f'loop_release\t {i}')
                     press_count_release, press_judge_release = release.pressdetect_release(thd_press_release)
-                    Xbee.str_trans(f'count:{presscount_release}\tjudge{pressjudge_release}')
+                    Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
                     if press_judge_release == 1:
                         Xbee.str_trans('Released')
                         break
@@ -150,7 +154,7 @@ if __name__ == "__main__":
                 else:
                     Xbee.str_trans('release timeout')
                 print("THE ROVER HAS RELEASED")
-                Xbee.str_trans("RELEASE")
+                Xbee.str_trans("######RELEASE#####")
 
             # ------------------- Landing Phase ------------------- #
             Xbee.str_trans('Landing Phase')
@@ -162,35 +166,23 @@ if __name__ == "__main__":
                 t_land_start = time.time()
                 while time.time() - t_land_start <= t_out_land:
                     Xbee.str_trans("loop_land")
-                    # Initialize conditions
-                    presslandjudge = 0
-                    gpslandjudge = 0
-                    acclandjudge = 0
-
-                    # Judgment
-                    presslandjudge = Land.Pressdetect()
-                    gpslandjudge = Land.gpsdetect()
-                    acclanddetect = Land.accdetect()
-                    Landjudgment = [presslandjudge, gpslandjudge, acclandjudge]
-
-                    if Landjudgment.count(1) >= 2:
-                        print("THE ROVER HAS LANDED")
+                    press_count_release, press_judge_release = land.pressdetect_land()
+                    Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
+                    if press_judge_release == 1:
+                        Xbee.str_trans('Landed')
                         break
                     else:
-                        print("LAND NOT YET")
+                        Xbee.str_trans('Not Landed')
                     Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
-                    time.sleep(1)
                 else:
-                    print("LAND TIMEOUT")
-                print("THE ROVER HAS LANDED")
-                # pi.write(22,1)
-                Xbee.str_trans("LAND")
+                    Xbee.str_trans('Landed Timeout')
+                Xbee.str_trans('#######Landed#######')
 
             # ------------------- Melting Phase ------------------- #
             Xbee.str_trans("Melt Phase")
             Other.saveLog(phaseLog, "5", "Melting Phase Started", time.time() - t_start)
             phaseChk = Other.phaseCheck(phaseLog)
-            Xbee.str_trans(f'Phase:{phaseChk}')
+            Xbee.str_trans(f'Phase:\t {phaseChk}')
             if phaseChk <= 5:
                 print("Melting Phase Started")
                 Xbee.str_trans('Melting Phase Started')
