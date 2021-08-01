@@ -47,7 +47,7 @@ def pressdetect_release(thd_press_release):
     except:
         press_count_release = 0
         press_judge_release = 2
-    return press_judge_release, press_count_release
+    return press_count_release, press_judge_release
 
 
 # def releasejudge(thd_p_release):
