@@ -19,11 +19,11 @@ import GPS
 def stuck_jug(lat1, lon1, lat2, lon2, thd =5 ):
     data_stuck =GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
     if data_stuck['distance'] >= thd:
-        print(data_stuck['distance'])
+        print('動いた距離 = '+str(data_stuck['distance']))
         print('スタックした')
         return False
     else:
-        print(data_stuck['distance'])
+        print('動いた距離 = '+str(data_stuck['distance']))
         print('まだしてない')
         return True
 
@@ -126,10 +126,13 @@ def stuck_avoid():
 
 
 if __name__ == '__main__':
-    GPS.openGPS()
-    GPSdata_old = GPS.GPSdata_read()
-    motor.move(40, 40,  10)
-    GPSdata_new = GPS.GPSdata_read()
-    stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 5)
-    
+    while 1:
+        GPS.openGPS()
+        GPSdata_old = GPS.GPSdata_read()
+        motor.move(40, 40,  10)
+        GPSdata_new = GPS.GPSdata_read()
+        if stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 5):
+            pass
+        else:
+            break
 
