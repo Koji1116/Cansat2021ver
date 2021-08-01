@@ -18,7 +18,7 @@ import time
 import datetime
 import pigpio
 import Xbee
-import BMC050
+import mag
 import BME280
 import GPS
 import melt
@@ -87,7 +87,7 @@ def setup():
     global phaseChk
     BME280.bme280_setup()
     BME280.bme280_calib_param()
-    BMC050.BMC050_setup()
+    mag.bmc050_setup()
     phaseChk = Other.phaseCheck(phaseLog)
     print(phaseChk)
 
@@ -147,7 +147,7 @@ if __name__ == "__main__":
                 else:
                     Xbee.str_trans('Not Released')
                 Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(),
-                              BMC050.bmc050_read())
+                              mag.bmc050_read())
                 i += 1
             else:
                 # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
@@ -179,12 +179,12 @@ if __name__ == "__main__":
                 else:
                     Xbee.str_trans('Not Landed')
                 Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(),
-                              BMC050.bmc050_read())
+                              mag.bmc050_read())
                 i += 1
             else:
                 Xbee.str_trans('Landed Timeout')
             Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(),
-                          BMC050.bmc050_read(), 'Land judge finished')
+                          mag.bmc050_read(), 'Land judge finished')
             Xbee.str_trans('######-----Landed-----######\n')
 
         # ------------------- Melting Phase ------------------- #
