@@ -88,6 +88,7 @@ def setup():
     BME280.bme280_setup()
     BME280.bme280_calib_param()
     phaseChk = Other.phaseCheck(phaseLog)
+    GPS.openGPS()
     print(phaseChk)
 
 
@@ -145,7 +146,7 @@ if __name__ == "__main__":
                     break
                 else:
                     Xbee.str_trans('Not Released')
-                Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read())
+                Other.saveLog(releaseLog, time.time() - t_start, GPS.readGPS, BME280.bme280_read())
                 i += 1
             else:
                 # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
