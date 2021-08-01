@@ -81,6 +81,7 @@ if __name__ == '__main__':
     while 1:
         Xbee.str_trans('standby')
         if Xbee.str_receive() == 's':
+            Xbee.str_trans('\n')
             Xbee.str_trans('program start')
             break
 
