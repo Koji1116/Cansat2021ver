@@ -73,7 +73,7 @@ S_thd = 120
 
 paraExsist = 0  # variable used for Para Detection
 
-phaseLog = "/home/pi/Desktop/Cansat2021ver/log/phaseLog.txt"
+phaseLog = "/home/pi/Desktop/Cansat2021ver/log/phaseLog"
 waitingLog = "/home/pi/Desktop/Cansat2021ver/log/waitingLog.txt"
 releaseLog = "/home/pi/Desktop/Cansat2021ver/log/releaseLog.txt"
 landingLog = "/home/pi/Desktop/Cansat2021ver/log/landingLog.txt"
