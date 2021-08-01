@@ -20,12 +20,8 @@ import pigpio
 import Xbee
 import BMC050
 import BME280
-import Release
-import Land
 import GPS
 import melt
-import Motor
-import TSL2572
 import paradetection
 import paraavoidance
 import Other
@@ -223,8 +219,8 @@ if __name__ == "__main__":
                             time.sleep(1)
                     Xbee.str_trans(f'Prachute avoidance Started{time.time() - t_start}\n')
                     # --- first parachute detection ---#
-                    lon_land, lat_land = paraAvoidance21_2.land_point_save()
-                    dis_from_land = paraAvoidance21_2.Parachute_area_judge(lon_land, lat_land)
+                    lon_land, lat_land = paraavoidance.land_point_save()
+                    dis_from_land = paraavoidance.Parachute_area_judge(lon_land, lat_land)
                     count_paraavo = 0
                     while count_paraavo < 3:
                         flug, area, gap, photoname = paradetection.ParaDetection(
@@ -246,7 +242,7 @@ if __name__ == "__main__":
                     print(f'Panorama Shooting Phase Started {time.time() - t_start}')
                     magdata = Calibration.magdata_matrix()
                     magx_off, magy_off = Calibration.calculate_offset(magdata)
-                    panorama.shooting(20, -20, 0.2, magx_off, magy_off, panoramapath)
+                    panorama.shooting(20, -20, 0.2, magx_off, magy_off, path_src_panorama)
                     panorama.composition(srcdir=path_src_panorama, dstdir=path_dst_panoraam)
                 Xbee.str_trans('Progam Finished')
                 close()
