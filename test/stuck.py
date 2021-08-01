@@ -19,33 +19,35 @@ import GPS
 def stuck_jug(lat1, lon1, lat2, lon2, thd =5 ):
     data_stuck =GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
     if data_stuck['distance'] >= thd:
+        print(data_stuck['distance'])
         print('スタックした')
         return False
     else:
+        print(data_stuck['distance'])
         print('まだしてない')
         return True
 
 
 #def stuck_jud(thd=11):  # しきい値thd調整必要
-    BMC050.bmc050_setup()
-    acc_max = 0
-    for i in range(20):
-        accdata = BMC050.acc_data()
-        acc_x = accdata[0]
-        acc_y = accdata[1]
-        acc_z = accdata[2]
-        acc = (acc_x**2 + acc_y**2 + acc_z**2)**0.5
-        if acc_max < acc:
-            acc_max = acc
+    # BMC050.bmc050_setup()
+    # acc_max = 0
+    # for i in range(20):
+    #     accdata = BMC050.acc_data()
+    #     acc_x = accdata[0]
+    #     acc_y = accdata[1]
+    #     acc_z = accdata[2]
+    #     acc = (acc_x**2 + acc_y**2 + acc_z**2)**0.5
+    #     if acc_max < acc:
+    #         acc_max = acc
 
-    if acc_max < thd:
-        print('スタックした')
-        Xbee.str_trans('スタックした')
-        return True
-    else:
-        print('まだしてない')
-        Xbee.str_trans('まだしてない')
-        return False
+    # if acc_max < thd:
+    #     print('スタックした')
+    #     Xbee.str_trans('スタックした')
+    #     return True
+    # else:
+    #     print('まだしてない')
+    #     Xbee.str_trans('まだしてない')
+    #     return False
 
 
 def stuck_avoid_move(x):
