@@ -1,7 +1,7 @@
 import sys
+
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
-
 
 import BME280
 import time
@@ -10,6 +10,7 @@ import Xbee
 phaseLog = "/home/pi/Cansat2021ver/log/phaseLog.txt"
 releaseLog = "/home/pi/Cansat2021ver/log/releaseLog.txt"
 landingLog = "/home/pi/Cansat2021ver/log/landingLog.txt"
+
 
 def pressdetect_release(thd_press_release):
     global presscount_release
@@ -69,16 +70,15 @@ def pressdetect_land(anypress):
     return presscount_land, pressjudge_land
 
 
-
 if __name__ == '__main__':
     BME280.bme280_setup()
     BME280.bme280_calib_param()
     t_start = time.time()
     Xbee.on()
-    #放出判定用
+    # 放出判定用
     presscount_release = 0
     pressjudge_release = 0
-    #着地判定用
+    # 着地判定用
     presscount_land = 0
     pressjudge_land = 0
 
@@ -102,7 +102,7 @@ if __name__ == '__main__':
                 Xbee.str_trans('Not Released')
             i += 1
         else:
-            #落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
+            # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
             while time.time() - t_release_start <= t_out_release_safe:
                 Xbee.str_trans('continue? y/n')
                 if Xbee.str_receive() == 'y':
@@ -115,43 +115,44 @@ if __name__ == '__main__':
         pass
 
     try:
-         while time.time() - t_land_start <= t_out_land:
-                        i = 1
-                        Xbee.str_trans(f"loop_land\t{i}")
-                        press_count_release, press_judge_release = land.pressdetect_land()
-                        Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
-                        if press_judge_release == 1:
-                            Xbee.str_trans('Landed')
-                            break
-                        else:
-                            Xbee.str_trans('Not Landed')
-                        Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
-                        i += 1                    
-                    else:
-                        Xbee.str_trans('Landed Timeout')
-                    Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read(), 'Land judge finished')
-                    Xbee.str_trans('######-----Landed-----######\n')
-    except KeyboardInterrupt:
-        pass
+        while time.time() - t_land_start <= t_out_land:
+            i = 1
+            Xbee.str_trans(f"loop_land\t{i}")
+            press_count_release, press_judge_release = land.pressdetect_land()
+            Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
+            if press_judge_release == 1:
+                Xbee.str_trans('Landed')
+                break
+            else:
+                Xbee.str_trans('Not Landed')
+            Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read())
+            i += 1
+        else:
+            Xbee.str_trans('Landed Timeout')
+        Other.saveLog(landingLog, time.time() - t_start, GPS.readGPS(), BME280.bme280_read(), BMC050.bmc050_read(),
+                      'Land judge finished')
+        Xbee.str_trans('######-----Landed-----######\n')
+except KeyboardInterrupt:
+pass
 
 
-    # try:
-    #     while 1:
-    #         presscount_release, pressjudge_release = pressdetect_release(0.3)
-    #         print(f'count{presscount_release}\tjudge{pressjudge_release}')
-    #         if pressjudge_release == 1:
-    #             print('release detected')
-    #             break
-    #
-    #     while 1:
-    #         presscount_land, pressjudge_land = pressdetect_land(0.1)
-    #         print(f'count{presscount_land}\tjudge{pressjudge_land}')
-    #         if pressjudge_land == 1:
-    #             print('land detected')
-    #             break
-    #
-    #     print('finished')
-    # except KeyboardInterrupt:
-    #     print('interrupted')
-    # except:
-    #     print('finished')
+# try:
+#     while 1:
+#         presscount_release, pressjudge_release = pressdetect_release(0.3)
+#         print(f'count{presscount_release}\tjudge{pressjudge_release}')
+#         if pressjudge_release == 1:
+#             print('release detected')
+#             break
+#
+#     while 1:
+#         presscount_land, pressjudge_land = pressdetect_land(0.1)
+#         print(f'count{presscount_land}\tjudge{pressjudge_land}')
+#         if pressjudge_land == 1:
+#             print('land detected')
+#             break
+#
+#     print('finished')
+# except KeyboardInterrupt:
+#     print('interrupted')
+# except:
+#     print('finished')
