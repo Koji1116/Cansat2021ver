@@ -126,8 +126,9 @@ def stuck_avoid():
 
 
 if __name__ == '__main__':
+    GPS.openGPS()
     while 1:
-        GPS.openGPS()
+        
         GPSdata_old = GPS.GPSdata_read()
         motor.move(40, 40,  10)
         GPSdata_new = GPS.GPSdata_read()
