@@ -72,16 +72,18 @@ print('---motor---')
 print('---mag---')
 try:
     mag.bmc050_setup()
-    mag_data = mag.mag_dataRead()
-    print(mag_data)
+    for _ in range(5):
+        mag_data = mag.mag_dataRead()
+        print(mag_data)
 except:
     print('error:mag')
  
 print('---acc---')
 try:
     bmc050_setup()
-    acc_data = acc_dataRead()
-    print(acc_data)
+    for _ in range(5):
+        acc_data = acc_dataRead()
+        print(acc_data)
 except:
     print('error : acc')
 
