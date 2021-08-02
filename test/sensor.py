@@ -5,7 +5,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
-import BME280.py
+import BME280
 import mag
 import GPS
 import TSL2572
