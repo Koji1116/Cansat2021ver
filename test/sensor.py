@@ -6,6 +6,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 import BME280
+import Xbee
 import mag
 import GPS
 import TSL2572
@@ -109,6 +110,13 @@ try:
 except:
     print('error : TSL2572')
 
+print('---Xbee---')
+try:
+    Xbee.on()
+    for i in range(10):
+        Xbee.str_trans(str(i)'  : reseive?')
+except:
+    print('error : Xbee')
 
 print('---GPS---')
 try:
