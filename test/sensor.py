@@ -9,7 +9,7 @@ import BME280
 import mag
 import GPS
 import TSL2572
-import acc
+from 6-axis import acc 
 import Xbee
 from gpiozero import Motor
 import time
