@@ -70,36 +70,50 @@ print('---motor---')
 
 
 print('---mag---')
-mag.bmc050_setup()
-mag_data = mag.mag_dataRead()
-print(mag_data)
-
+try:
+    mag.bmc050_setup()
+    mag_data = mag.mag_dataRead()
+    print(mag_data)
+except:
+    print('error:mag')
+ 
 print('---acc---')
-bmc050_setup()
-acc_data = acc_dataRead()
-print(acc_data)
+try:
+    bmc050_setup()
+    acc_data = acc_dataRead()
+    print(acc_data)
+except:
+    print('error : acc')
 
 print('---Environment---')
-BME280.bme280_setup()
-bme_data = BME280.bme280_read()
-print(bme_data)
+try:
+    BME280.bme280_setup()
+    bme_data = BME280.bme280_read()
+    print(bme_data)
+except:
+    print('error : env')
 
 print('---Illuminance---')
-ill_data = TSL2572.main()
-print(ill_data)
-
+try:
+    ill_data = TSL2572.main()
+    print(ill_data)
+except:
+    print('error : TSL2572')
 
 print('---GPS---')
-GPS.openGPS()
-utc, lat, lon, sHeight, gHeight = GPS.readGPS()
-if utc == -1.0:
-    if lat == -1.0:
-        print("Reading GPS Error")
-        
+try:
+    GPS.openGPS()
+    utc, lat, lon, sHeight, gHeight = GPS.readGPS()
+    if utc == -1.0:
+        if lat == -1.0:
+            print("Reading GPS Error")
+            
+        else:
+            print("Status V")
     else:
-        print("Status V")
-else:
-    print(utc, lat, lon, sHeight, gHeight)
+        print(utc, lat, lon, sHeight, gHeight)
+except:
+    print('error : GPS')
 
 
 
