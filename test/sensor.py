@@ -5,6 +5,8 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
+import melt
 import BME280
 import Xbee
 import mag
@@ -16,6 +18,11 @@ from gpiozero import Motor
 import time
 import motor
 from smbus import SMBus
+import pigpio
+
+pi = pigpio.pi()
+
+meltPin  = 17
 
 ##### for only acc
 ACC_ADDRESS = 0x19
@@ -66,8 +73,19 @@ def acc_dataRead():
     return value
 
 GPS.openGPS()
+
+print('---melt----')
+try:
+	melt.down()
+except:
+	pi.write(meltPin, 0)
+
+
+
 print('---motor---')
-#motor.move(20,20,2)
+motor.move(20,20,2)
+
+
 
 
 print('---mag---')
