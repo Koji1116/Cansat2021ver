@@ -14,9 +14,59 @@ import Xbee
 from gpiozero import Motor
 import time
 import motor
+from smbus import SMBus
+
+##### for only acc
+ACC_ADDRESS = 0x19
+ACC_REGISTER_ADDRESS = 0x02
+i2c = SMBus(1)
+
+def bmc050_setup():
+    # --- BMC050Setup --- #
+    # Initialize ACC
+    try:
+        print('0')
+        i2c.write_byte_data(ACC_ADDRESS, 0x0F, 0x03)
+        print('1')
+        time.sleep(0.1)
+        i2c.write_byte_data(ACC_ADDRESS, 0x10, 0x0F)
+        print('2')
+        time.sleep(0.1)
+        i2c.write_byte_data(ACC_ADDRESS, 0x11, 0x00)
+        print('3')
+        time.sleep(0.1)
+    except:
+        time.sleep(0.1)
+        print("BMC050 Setup Error")
+        i2c.write_byte_data(ACC_ADDRESS, 0x0F, 0x03)
+        time.sleep(0.1)
+        i2c.write_byte_data(ACC_ADDRESS, 0x10, 0x0F)
+        time.sleep(0.1)
+        i2c.write_byte_data(ACC_ADDRESS, 0x11, 0x00)
+        time.sleep(0.1)
+
+def acc_dataRead():
+    # --- Read Acc Data --- #
+    accData = [0, 0, 0, 0, 0, 0]
+    value = [0.0, 0.0, 0.0]
+    for i in range(6):
+        try:
+            accData[i] = i2c.read_byte_data(
+                ACC_ADDRESS, ACC_REGISTER_ADDRESS+i)
+        except:
+            pass
+            # print("error")
+
+    for i in range(3):
+        value[i] = (accData[2*i+1] * 16) + (int(accData[2*i] & 0xF0) / 16)
+        value[i] = value[i] if value[i] < 2048 else value[i] - 4096
+        value[i] = value[i] * 0.0098 * 1
+
+    return value
+
 
 print('---motor---')
-motor.move(20,20,2)
+#motor.move(20,20,2)
 
 
 print('---mag---')
@@ -25,8 +75,8 @@ mag_data = mag.mag_dataRead()
 print(mag_data)
 
 print('---acc---')
-acc.bmc050_setup()
-acc_data = acc.acc_dataRead()
+bmc050_setup()
+acc_data = acc_dataRead()
 print(acc_data)
 
 print('---Environment---')
