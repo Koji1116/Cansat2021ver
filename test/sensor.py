@@ -19,10 +19,13 @@ import time
 import motor
 from smbus import SMBus
 import pigpio
+import picamera
+import Camera
 
 pi = pigpio.pi()
 
 meltPin  = 17
+camerapath = '/home/pi/Desktop/Cansat2021ver/test/img_falltest/falltest'
 
 ##### for only acc
 ACC_ADDRESS = 0x19
@@ -81,6 +84,11 @@ except:
 	pi.write(meltPin, 0)
 
 
+print('---camera')
+try:
+    Camera.Capture(camerapath)
+except:
+    print('error : camera')
 
 print('---motor---')
 motor.move(20,20,2)
@@ -95,7 +103,7 @@ try:
         mag_data = mag.mag_dataRead()
         print(mag_data)
 except:
-    print('error:mag')
+    print('error : mag')
  
 print('---acc---')
 try:
