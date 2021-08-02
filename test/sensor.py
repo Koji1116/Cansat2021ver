@@ -114,7 +114,7 @@ print('---Xbee---')
 try:
     Xbee.on()
     for i in range(10):
-        Xbee.str_trans(str(i)'  : reseive?')
+        Xbee.str_trans(str(i)+'  : reseive?')
 except:
     print('error : Xbee')
 
