@@ -64,7 +64,7 @@ def acc_dataRead():
 
     return value
 
-
+GPS.openGPS()
 print('---motor---')
 #motor.move(20,20,2)
 
@@ -85,33 +85,34 @@ try:
 except:
     print('error : acc')
 
+
+
 print('---Environment---')
 try:
     BME280.bme280_setup()
-    bme_data = BME280.bme280_read()
-    print(bme_data)
+    BME280.bme280_calib_param()
+    for _ in range(5):
+        bme_data = BME280.bme280_read()
+        print(bme_data)
 except:
     print('error : env')
 
+
+
 print('---Illuminance---')
 try:
-    ill_data = TSL2572.main()
-    print(ill_data)
+    for _ in range(5):
+        ill_data = TSL2572.main()
+        print(ill_data)
 except:
     print('error : TSL2572')
+
 
 print('---GPS---')
 try:
     GPS.openGPS()
-    utc, lat, lon, sHeight, gHeight = GPS.readGPS()
-    if utc == -1.0:
-        if lat == -1.0:
-            print("Reading GPS Error")
-            
-        else:
-            print("Status V")
-    else:
-        print(utc, lat, lon, sHeight, gHeight)
+    data = GPS.GPSdata_read()
+    print(data)
 except:
     print('error : GPS')
 
