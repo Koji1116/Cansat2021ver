@@ -1,7 +1,7 @@
 import serial
 
 port = serial.Serial(
-        port = "COM3",
+        port = "/dev/ttyAMA0",
 		baudrate = 57600,
 		parity = serial.PARITY_NONE,
 		stopbits = serial.STOPBITS_ONE,
@@ -11,7 +11,6 @@ port = serial.Serial(
 
 #現在使用中のチャンネルを別のチャンネルに変更する関数
 def Change_Channel():
-    port.open()
     print('Status  : Start ATmode')
     Enter_ATmode = '+++'
     Enter_ATmode = Enter_ATmode.encode()

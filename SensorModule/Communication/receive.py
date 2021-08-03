@@ -2,6 +2,7 @@ import serial
 import io
 from PIL import Image, ImageFile
 ImageFile.LOAD_TRUNCATED_IMAGES = True
+
 ser = serial.Serial(
     port="/dev/ttyAMA0",
     baudrate=57600,
@@ -49,7 +50,6 @@ def receive_str():
     received = ser.read()
     received_str = received.decode()
     return received_str
-
 
 
 

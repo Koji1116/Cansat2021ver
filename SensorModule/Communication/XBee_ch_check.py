@@ -1,7 +1,7 @@
 import serial
 
 port = serial.Serial(
-        port = "COM3",
+        port = "/dev/ttyAMA0",
 		baudrate = 57600,
 		parity = serial.PARITY_NONE,
 		stopbits = serial.STOPBITS_ONE,
