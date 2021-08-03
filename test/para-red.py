@@ -129,6 +129,8 @@ if __name__ == "__main__":
         while x == 1:
             circle_frame = DrawContours("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
             cv2.imshow('circle_frame' ,circle_frame)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
             s = input("")
             x = int(s)
             if x != 1:
