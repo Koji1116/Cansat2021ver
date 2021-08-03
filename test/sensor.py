@@ -5,6 +5,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 import melt
 import BME280
@@ -20,7 +21,7 @@ import motor
 from smbus import SMBus
 import pigpio
 import picamera
-import Camera
+import Capture
 
 pi = pigpio.pi()
 
@@ -86,7 +87,7 @@ except:
 
 print('---camera')
 try:
-    Camera.Capture(camerapath)
+    Capture.Capture(camerapath)
 except:
     print('error : camera')
 
