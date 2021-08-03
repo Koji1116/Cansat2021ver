@@ -280,37 +280,38 @@ def read():
 if __name__ == '__main__':
     
     
-    try:
-        openGPS()
-        t_start = time.time()
-        while True:
-            utc, lat, lon, sHeight, gHeight = readGPS()
-            if utc == -1.0:
-                if lat == -1.0:
-                    print("Reading GPS Error")
-                    # pass
-                else:
-                    # pass
-                   print("Status V")
-            else:
-                # pass
-                print(utc, lat, lon, sHeight, gHeight)
-                Other.saveLog('GPStest', datetime.datetime.now(), time.time() - t_start, utc, lat, lon, sHeight, gHeight)
-            time.sleep(0.5)
-    except KeyboardInterrupt:
-        closeGPS()
-        print("\r\nKeyboard Intruppted, Serial Closed")
-    except:
-        closeGPS()
-        print(traceback.format_exc())
     # try:
     #     openGPS()
+    #     t_start = time.time()
     #     while True:
-    #         utc, lat, lon, sHeight, gHeight = read()
-    #         print(utc, lat, lon, sHeight, gHeight)
+    #         utc, lat, lon, sHeight, gHeight = readGPS()
+    #         if utc == -1.0:
+    #             if lat == -1.0:
+    #                 print("Reading GPS Error")
+    #                 # pass
+    #             else:
+    #                 # pass
+    #                print("Status V")
+    #         else:
+    #             # pass
+    #             print(utc, lat, lon, sHeight, gHeight)
+    #             Other.saveLog('GPStest', datetime.datetime.now(), time.time() - t_start, utc, lat, lon, sHeight, gHeight)
+    #         time.sleep(0.5)
     # except KeyboardInterrupt:
     #     closeGPS()
     #     print("\r\nKeyboard Intruppted, Serial Closed")
     # except:
     #     closeGPS()
     #     print(traceback.format_exc())
+    try:
+        openGPS()
+        while True:
+            utc, lat, lon, sHeight, gHeight = read()
+            print(utc, lat, lon, sHeight, gHeight)
+            time.sleep(1)
+    except KeyboardInterrupt:
+        closeGPS()
+        print("\r\nKeyboard Intruppted, Serial Closed")
+    except:
+        closeGPS()
+        print(traceback.format_exc())
