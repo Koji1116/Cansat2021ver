@@ -83,13 +83,13 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
 
 
 def image_guided_driving(path, G_thd):
-    global goalflug
+    goalflug = 1
     try:
         while goalflug != 0:
             photoName = Capture.Capture(path)                                               #解像度調整するところ？
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
-            Xbee.str_trans(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
+            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
             if gap == 1000 or gap == 1000000:
                 print('Nogoal detected')
@@ -97,48 +97,48 @@ def image_guided_driving(path, G_thd):
             elif goalarea <= area_long:
                 if -100 <= gap and gap <= -65:
                     print('Turn left')
-                    # Xbee.str_trans('Turn left')
+                    # print('Turn left')
                     motor.move(-40, 40, 0.1)
                 elif 65 <= gap and gap <= 100:
                     print('Turn right')
-                    # Xbee.str_trans('Turn right')
+                    # print('Turn right')
                     motor.move(40, -40, 0.1)
                 else:
                     print('Go straight long')
-                    Xbee.str_trans('GO straight long')
+                    print('GO straight long')
                     motor.move(80, 80, 3)
             elif goalarea <= area_middle:
                 if -100 <= gap and gap <= -65:
                     print('Turn left')
-                    # Xbee.str_trans('Turn left')
+                    # print('Turn left')
                     motor.move(-25, 25, 0.1)
                 elif 65 <= gap and gap <= 100:
                     print('Turn right')
-                    # Xbee.str_trans('Turn right')
+                    # print('Turn right')
                     motor.move(25, -25, 0.1)
                 else:
                     print('Go straight middle')
-                    # Xbee.str_trans('Go straight middle')
+                    # print('Go straight middle')
                     motor.move(80, 80, 1)
             elif goalarea <= area_short:
                 if -100 <= gap and gap <= -65:
                     print('Turn left')
-                    # Xbee.str_trans('Turn left')
+                    # print('Turn left')
                     motor.move(-15, 15, 0.1)
                 elif 65 <= gap and gap <= 100:
                     print('Turn right')
-                    # Xbee.str_trans('Turn right')
+                    # print('Turn right')
                     motor.move(15, -15, 0.1)
                 else:
                     print('Go stright short')
-                    # Xbee.str_trans('Gos straight short')
+                    # print('Gos straight short')
                     motor.move(80, 80, 0.2)
             elif goalarea >= G_thd:
                 print('goal')
-                Xbee.str_trans('goal')
+                print('goal')
                 break
         print('finish')
-        Xbee.str_trans('finish')
+        print('finish')
 
 
     except KeyboardInterrupt:
@@ -163,16 +163,16 @@ if __name__ == "__main__":
         #     photoName = Capture.Capture(path, 320, 320)                                               #解像度調整するところ？
         #     goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
         #     print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
-        #     # Xbee.str_trans('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
+        #     # print('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
         #     # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
         #     if -100 <= gap and gap <= -65:                                                                                  #調整するところ
         #         print('Turn left')
-        #         # Xbee.str_trans('Turn left')
+        #         # print('Turn left')
         #         motor.move(-40, 40, 0.1)                                                       #調整するところ
         #         # print('motor.motor(-0.2, 0.2, 0.3)')
         #     elif 65 <= gap and gap <= 100:
         #         print('Turn right')
-        #         # Xbee.str_trans('Turn right')
+        #         # print('Turn right')
         #         motor.move(40, -40, 0.1)                                                       #調整するところ
         #         # print('motor.motor(0.2, -0.2, 0.3)')
         #     elif gap == 1000 or gap==1000000:
