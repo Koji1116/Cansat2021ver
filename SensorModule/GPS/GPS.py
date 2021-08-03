@@ -266,16 +266,12 @@ def GPSdata_read():
         print("\r\nKeyboard Intruppted, Serial Closed")
 
 def read():
-    utc, lat, lon, sHeight, gHeight = 0, 0, 0, 0, 0
-    while True:
-        utc, lat, lon, sHeight, gHeight = readGPS()
-        if utc == -1.0:
-            if lat == -1.0:
-                utc, lat, lon, sHeight, gHeight = 'e', 'r', 'r', 'o', 'r'
-            else:
-                utc, lat, lon, sHeight, gHeight = 's', 't', 'a', 't', 'u'
+    utc, lat, lon, sHeight, gHeight = readGPS()
+    if utc == -1.0:
+        if lat == -1.0:
+            utc, lat, lon, sHeight, gHeight = 'e', 'r', 'r', 'o', 'r'
         else:
-            break
+            utc, lat, lon, sHeight, gHeight = 's', 't', 'a', 't', 'u'
     return utc, lat, lon, sHeight, gHeight
 
 
