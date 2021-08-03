@@ -8,8 +8,8 @@ import time
 
 def motor_stop(x=1):
     '''motor_move()とセットで使用'''
-    Rpin1 = 6
-    Rpin2 = 5
+    Rpin1 = 5
+    Rpin2 = 6
     Lpin1 = 10
     Lpin2 = 9
     motor_r = Motor(Rpin1, Rpin2)
@@ -20,8 +20,8 @@ def motor_stop(x=1):
 
 
 def motor_move_continuous(strength_l, strength_r):
-    Rpin1 = 6
-    Rpin2 = 5
+    Rpin1 = 5
+    Rpin2 = 6
     Lpin1 = 10
     Lpin2 = 9
     # 前進するときのみスタック判定
@@ -56,8 +56,8 @@ def motor_move(strength_l, strength_r, t_moving):
     strength_l、strength_rは-1~1で表す。負の値だったら後ろ走行。
     必ずmotor_stop()セットで用いる。めんどくさかったら下にあるmotor()を使用
     '''
-    Rpin1 = 6
-    Rpin2 = 5
+    Rpin1 = 5
+    Rpin2 = 6
     Lpin1 = 10
     Lpin2 = 9
     # 前進するときのみスタック判定
