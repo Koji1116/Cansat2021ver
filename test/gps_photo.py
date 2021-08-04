@@ -114,7 +114,7 @@ if __name__ == "__main__":
         t = float(input('何秒回転する？'))
         n = int(input('データ数いくつ'))
         while goal_distance >= 10:
-            if count % 4 == 0:
+            if count % 2 == 0:
                 # ------------- Calibration -------------#
                 print('Calibration Start')
                 mag.bmc050_setup()
