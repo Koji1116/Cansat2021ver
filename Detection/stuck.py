@@ -1,9 +1,9 @@
 from SensorModule.GPS.GPS_Navigate import vincenty_inverse
 import sys
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/6-axis')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 from time import sleep
 from math import*
@@ -14,6 +14,22 @@ import stuck
 import motor
 import GPS_Navigate
 import GPS
+import acc
+
+def ue_jug():
+    """
+    ローバーの状態を確認する関数
+    通常状態：True
+    逆さになってる：False
+    加速度センサZ軸の正負で判定するよ
+    """
+    acc.bmc050_setup()
+    accdata = acc.acc_dataRead()
+    z = accdata[2]
+    if z >= 0 :
+        return True
+    else:
+        return False
 
 
 def stuck_jug(lat1, lon1, lat2, lon2, thd = 10 ):
@@ -26,61 +42,40 @@ def stuck_jug(lat1, lon1, lat2, lon2, thd = 10 ):
         return True
 
 
-#def stuck_jud(thd=11):  # しきい値thd調整必要
-    BMC050.bmc050_setup()
-    acc_max = 0
-    for i in range(20):
-        accdata = BMC050.acc_data()
-        acc_x = accdata[0]
-        acc_y = accdata[1]
-        acc_z = accdata[2]
-        acc = (acc_x**2 + acc_y**2 + acc_z**2)**0.5
-        if acc_max < acc:
-            acc_max = acc
-
-    if acc_max < thd:
-        print('スタックした')
-        Xbee.str_trans('スタックした')
-        return True
-    else:
-        print('まだしてない')
-        Xbee.str_trans('まだしてない')
-        return False
-
 
 def stuck_avoid_move(x):
     if x == 0:
         print('sutck_avoid_move():0')
-        motor.move(1, 1, 5)
-        motor.move(1, 1, 3)
+        motor.move(100, 100, 5)
+        motor.move(60, 60, 3)
     elif x == 1:
         print('sutck_avoid_move():1')
-        motor.move(-1, -1, 5)
-        motor.move(-1, -1, 3)
+        motor.move(-100, -100, 5)
+        motor.move(-60, -60, 3)
     elif x == 2:
         print('sutck_avoid_move():2')
-        motor.move(0.8, 1, 5)
-        motor.move(1, 1, 3)
+        motor.move(80, 100, 5)
+        motor.move(60, 60, 3)
 
     elif x == 3:
         print('sutck_avoid_move():3')
-        motor.move(1, 0.6, 5)
-        motor.move(1, 1, 3)
+        motor.move(100, 80, 5)
+        motor.move(60, 60, 3)
 
     elif x == 4:
         print('sutck_avoid_move():4')
-        motor.move(-0.6, -1, 5)
-        motor.move(-1, -1, 3)
+        motor.move(-80, -100, 5)
+        motor.move(-60, -60, 3)
 
     elif x == 5:
         print('sutck_avoid_move():5')
-        motor.move(-1, -0.6, 5)
-        motor.move(-1, -1, 3)
+        motor.move(-100, -80, 5)
+        motor.move(-60, -60, 3)
 
     elif x == 6:
         print('sutck_avoid_move():6')
-        motor.move(1, -1, 5)
-        motor.move(1, 1, 3)
+        motor.move(100, -100, 5)
+        motor.move(100, 100, 3)
 
 
 
@@ -93,13 +88,13 @@ def stuck_avoid():
             utc1, lat1, lon1, sHeight1, gHeight1 = GPS.GPSdeta_read()
             stuck.stuck_avoid_move(i)
             utc2, lat2, lon2, sHeight2, gHeight2 = GPS.GPSdeta_read()
-            bool_stuck = stuck.stuck_jud(lat1, lon1 ,lat2 , lon2,1)
-            if bool_stuck == False:
+            bool_stuck = stuck.stuck_jud(lat1, lon1, lat2, lon2, 1)
+            if bool_stuck == True:
                 if i == 1 or i == 4 or i == 5:
                     print('スタックもう一度引っかからないように避ける')
-                    motor.move(-0.8, -0.8, 2)
-                    motor.move(0.2, 0.8, 1)
-                    motor.move(0.8, 0.8, 3)
+                    motor.move(-60, -60, 2)
+                    motor.move(-60, 60, 0.5)
+                    motor.move(80, 80, 3)
                 flag = True
                 break
         if flag:
@@ -113,9 +108,9 @@ def stuck_avoid():
             if bool_stuck == False:
                 if i == 1 or i == 4 or i == 5:
                     print('スタックもう一度引っかからないように避ける')
-                    motor.move(-0.8, -0.8, 2)
-                    motor.move(0.2, 0.8, 1)
-                    motor.move(0.8, 0.8, 5)
+                    motor.move(-60, -60, 2)
+                    motor.move(-60, 60, 0.5)
+                    motor.move(80, 80, 3)
                 flag = True
                 break
         if flag:

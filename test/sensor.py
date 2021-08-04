@@ -129,13 +129,13 @@ except:
 
 
 
-print('---Illuminance---')
-try:
-    for _ in range(5):
-        ill_data = TSL2572.main()
-        print(ill_data)
-except:
-    print('error : TSL2572')
+# print('---Illuminance---')
+# try:
+#     for _ in range(5):
+#         ill_data = TSL2572.main()
+#         print(ill_data)
+# except:
+#     print('error : TSL2572')
 
 print('---Xbee---')
 try:
