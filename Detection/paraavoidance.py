@@ -141,7 +141,7 @@ if __name__ == '__main__':
                 count_paraavo += 1
                 print(count_paraavo)
 
-        print("success")
+        print("パラシュート回避完了")
 
     except KeyboardInterrupt:
         print("emergency!")
