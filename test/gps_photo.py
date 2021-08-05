@@ -118,7 +118,7 @@ if __name__ == "__main__":
             if stuck.ue_jug():
                 pass
             else:
-                motor.moce()
+                motor.move()
             #if count % 4 == 0:
             if count % 1 == 0:
                 # ------------- Calibration -------------#
