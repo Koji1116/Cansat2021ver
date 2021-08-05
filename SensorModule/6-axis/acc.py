@@ -59,7 +59,8 @@ if __name__ == '__main__':
         startTime = time.time()
         while 1:
             accData = acc_dataRead()
-            print(f'x:{accData[0]} y:{accData[1]} z:{accData[2]}')
+            norm = (accData[0]^2 + accData[1]^2 + accData[2]^2) ** 0.5
+            print(f'x:{accData[0]}\ty:{accData[1]}\tz:{accData[2]}\tnorm:{norm}')
             Other.saveLog('BMC050test', datetime.datetime.now(), startTime - time.time(), accData[0], accData[1], accData[2])
             time.sleep(1)
 
