@@ -77,7 +77,7 @@ def get_data_offset(magx_off, magy_off, magz_off):
     return magx, magy, magz
 
 
-def magdata_matrix(l, r, t, n, t_sleeptime = 0):
+def magdata_matrix(l, r, t, n, a, t_sleeptime = 0):
     """
 	キャリブレーション用の磁気値を得るための関数
 	forループ内(run)を変える必要がある2021/07/04
@@ -102,7 +102,7 @@ def magdata_matrix(l, r, t, n, t_sleeptime = 0):
             motor.move(l, r, t)
             accdata = acc.acc_dataRead()
             stuck_acc = (acc[0]**2 + acc[1]**2)** 0.5
-            if stuck_acc >= 11:
+            if stuck_acc >= a:
                 print('not stuck----'+str(stuck_acc))
             else:
                 print('fuck------' +str(stuck_acc) )
@@ -338,11 +338,12 @@ if __name__ == "__main__":
         l = float(input('左の出力は？'))
         t = float(input('一回の回転時間は？'))
         n = int(input("取得するデータ数は？"))
+        a = int(input('加速度の閾値は？'))
         # --- setup ---#
         mag.bmc050_setup()
         t_start = time.time()
         # --- calibration ---#
-        magdata_Old = magdata_matrix(l, r, t)
+        magdata_Old = magdata_matrix(l, r, t, n, a)
         # --- calculate offset ---#
         magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
         time.sleep(0.1)
