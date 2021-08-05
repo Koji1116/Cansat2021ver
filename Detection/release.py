@@ -11,16 +11,13 @@ import BME280  # Environmental
 # import GPS
 import traceback
 
-# anyalt = 2
-# GAreleasecount = 0
-# gpsreleasejudge = 0
 
 anypress = 0.3
 pressreleasecount = 0
 pressreleasejudge = 0
+t_delta_release = 3
 
-
-def pressdetect_release(thd_press_release):
+def pressdetect_release(thd_press_release, t_delta_release):
     '''
     気圧による放出判定
     '''
@@ -29,7 +26,7 @@ def pressdetect_release(thd_press_release):
     try:
         pressdata = BME280.bme280_read()
         prevpress = pressdata[1]
-        time.sleep(3)
+        time.sleep(t_delta_release)
         pressdata = BME280.bme280_read()
         latestpress = pressdata[1]
         deltP = latestpress - prevpress
@@ -59,7 +56,7 @@ if __name__ == "__main__":
     BME280.bme280_calib_param()
 
     while True:
-        press_count_release, press_judge_release = pressdetect_release(0.3)
+        press_count_release, press_judge_release = pressdetect_release(0.3, t_delta_release)
         print(f'count:{pressreleasecount}\tjudge{pressreleasejudge}')
         if pressreleasejudge == 1:
             print('Press')
