@@ -162,5 +162,7 @@ if __name__ == "__main__":
     except KeyboardInterrupt:
         print('interrupted')
         GPS.closeGPS()
-    except:
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print(e.with_traceback(tb))
         GPS.closeGPS()
