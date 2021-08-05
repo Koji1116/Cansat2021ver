@@ -1,4 +1,4 @@
-from SensorModule.GPS.GPS_Navigate import vincenty_inverse
+#from SensorModule.GPS.GPS_Navigate import vincenty_inverse
 import sys
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
