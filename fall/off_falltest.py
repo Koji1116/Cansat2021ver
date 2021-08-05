@@ -41,6 +41,7 @@ t_out_land = 100
 thd_press_release = 0.3
 press_count_release = 0
 press_judge_release = 0
+t_delta_release = 3  # エレベータ:3    パラシュート落下:0.75 ?
 
 # variable for landjudgment
 thd_press_land = 0.15
@@ -52,7 +53,7 @@ LuxThd = 100
 imgpath_para = "/home/pi/Desktop/Cansat2021ver/photostorage/paradetection"
 
 # path for save
-phaseLog = "/home/pi/Desktop/Cansat2021ver/log/phaseLog.txt"
+phaseLog = "/home/pi/Desktop/Cansat2021ver/log/phaseLog"
 waitingLog = "/home/pi/Desktop/Cansat2021ver/log/waitingLog.txt"
 releaseLog = "/home/pi/Desktop/Cansat2021ver/log/releaseLog.txt"
 landingLog = "/home/pi/Desktop/Cansat2021ver/log/landingLog.txt"
@@ -77,23 +78,27 @@ def close():
 if __name__ == '__main__':
     Xbee.on()
     while 1:
-        Xbee.str_trans('standby')
+        Xbee.str_trans('standby\t')
         if Xbee.str_receive() == 's':
             Xbee.str_trans('\n')
-            Xbee.str_trans('program start')
+            Xbee.str_trans('#####-----Program start-----#####\n \n')
             break
-    Xbee.off()
 
     try:
         t_start = time.time()
         # ------------------- Setup Phase --------------------- #
+        Xbee.str_trans('#####-----Setup Phase start-----#####')
         Other.saveLog(phaseLog, "1", "Setup phase", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
+        Xbee.str_trans(f'Phase:\t{phaseChk}')
         setup()
+        Xbee.str_trans('#####-----Setup Phase ended-----##### \n \n')
 
         # ------------------- Waiting Phase --------------------- #
+        Xbee.str_trans('#####-----Waiting Phase start-----#####')
         Other.saveLog(phaseLog, "2", "Waiting Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
+        Xbee.str_trans(f'Phase:\t{phaseChk}')
         # if phaseChk == 2:
         #     t_wait_start = time.time()
         #     while time.time() - t_wait_start <= t_setup:
@@ -101,43 +106,54 @@ if __name__ == '__main__':
         #         print('Waiting')
         #         Xbee.str_trans('Sleep')
         #         time.sleep(1)
-        #     Xbee.str_trans('Waiting Finished')
+        Xbee.str_trans('#####-----Waiting Phase ended-----##### \n \n')
 
         # ------------------- Release Phase ------------------- #
+        Xbee.str_trans('#####-----Release Phase start-----#####')
+        Xbee.off()
         Other.saveLog(phaseLog, "3", "Release Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
         if phaseChk == 3:
             t_release_start = time.time()
-            print(f"Releasing Judgement Program Start  {time.time() - t_start}")
             i = 1
             try:
                 while time.time() - t_release_start <= t_out_release:
-                    press_count_release, press_judge_release = release.pressdetect_release(thd_press_release)
-                    Other.saveLog(releaseLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS,
-                                  BME280.bme280_read(), press_count_release, press_judge_release)
+                    press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
+                                                                                           t_delta_release)
+                    Other.saveLog(releaseLog, datetime.datetime.now(), time.time() - t_start,
+                                  time.time() - t_release_start, GPS.readGPS, BME280.bme280_read(), press_count_release,
+                                  press_judge_release)
+
                     if press_judge_release == 1:
+                        Xbee.on()
+                        Xbee.str_trans('####----Xbee ON----####')
                         break
+
                     i += 1
                 else:
+                    Xbee.on()
+                    Xbee.str_trans('####----Xbee ON----####')
                     # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
                     while time.time() - t_release_start <= t_out_release_safe:
-                        Xbee.str_trans('continue? y/\n')
+                        Xbee.str_trans('continue? y/n \t')
                         if Xbee.str_receive() == 'y':
                             break
                         elif Xbee.str_receive() == 'n':
+                            Xbee.str_trans('Interrupted for safety')
+                            Xbee.str_trans('####----Program Finished----####')
                             exit()
-                    Xbee.str_trans('release timeout')
+                    Xbee.str_trans('##--release timeout--##')
             except KeyboardInterrupt:
                 print('interrupted')
-            Xbee.str_trans("######-----Released-----#####")
+            Xbee.str_trans("######-----Released-----##### \n \n")
 
         # ------------------- Landing Phase ------------------- #
-        Xbee.str_trans('#####-----Landing Phase start-----#####\n')
+        Xbee.str_trans('#####-----Landing Phase start-----#####')
         Other.saveLog(phaseLog, "4", "Landing Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
         Xbee.str_trans(f'Phase\t{phaseChk}')
         if phaseChk == 4:
-            Xbee.str_trans(f'Landing Judgement Program Start  {time.time() - t_start}')
+            Xbee.str_trans(f'Landing Judgement Program Start\t{time.time() - t_start}')
             t_land_start = time.time()
             i = 1
             while time.time() - t_land_start <= t_out_land:
@@ -156,50 +172,50 @@ if __name__ == '__main__':
                 Xbee.str_trans('Landed Timeout')
             Other.saveLog(landingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(),
                           BME280.bme280_read(), 'Land judge finished')
-            Xbee.str_trans('######-----Landed-----######\n')
+            Xbee.str_trans('######-----Landed-----######\n \n')
 
         # ------------------- Melting Phase ------------------- #
-        Xbee.str_trans('#####-----Melting phase start#####\n')
+        Xbee.str_trans('#####-----Melting phase start#####')
         Other.saveLog(phaseLog, '5', 'Melting phase start', time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
-        Xbee.str_trans(f'Phase:\t {phaseChk}\n')
+        Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 5:
-            Xbee.str_trans('Melting Phase Started')
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Start")
             melt.down()
-            Xbee.str_trans('Melting Finished')
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Finished")
-        Xbee.str_trans('########-----Melted-----##########\n')
+        Xbee.str_trans('########-----Melted-----#######\n \n')
         # ------------------- ParaAvoidance Phase ------------------- #
-        Xbee.str_trans("#####-----ParaAvo phase start-----#####\n")
+        Xbee.str_trans("#####-----ParaAvo phase start-----#####")
         Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
-        Xbee.str_trans(f'Phase:{phaseChk}')
+        Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 6:
             t_ParaAvoidance_start = time.time()
             t_parajudge = time.time()
-            while time.time() - t_parajudge < 60:
-                Luxflug, Lux = paradetection.ParaJudge(LuxThd)
-                Xbee.str_trans(f'Luxflug: {Luxflug}\t lux: {Lux}\n')
-                if Luxflug == 1:
-                    Xbee.str_trans(f'rover is not covered with parachute. Lux: {Lux}\n')
-                    break
-                else:
-                    print(f'rover is covered with parachute! Lux: {Lux}\n')
-                    Xbee.str_trans(f'rover is covered with parachute! Lux: {Lux}\n')
-                    time.sleep(1)
-            Xbee.str_trans(f'Prachute avoidance Started{time.time() - t_start}\n')
+            Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(),
+                          'ParaAvo Start')
+            # while time.time() - t_parajudge < 60:
+            #     Luxflug, Lux = paradetection.ParaJudge(LuxThd)
+            #     Xbee.str_trans(f'Luxflug: {Luxflug}\t lux: {Lux}\n')
+            #     if Luxflug == 1:
+            #         Xbee.str_trans(f'rover is not covered with parachute. Lux: {Lux}\n')
+            #         break
+            #     else:
+            #         Xbee.str_trans(f'rover is covered with parachute! Lux: {Lux}\n')
+            #         time.sleep(1)
+            Xbee.str_trans(f'Prachute avoidance Started \t{time.time() - t_start}\n')
             # --- first parachute detection ---#
             count_paraavo = 0
-            while count_paraavo < 3:
+            while count_paraavo < 2:
                 flug, area, gap, photoname = paradetection.ParaDetection(
                     "photostorage/para", 320, 240, 200, 10, 120, 1)
-                Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n')
+                Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
+                Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS, flug, area,
+                              gap, photoname)
                 paraavoidance.Parachute_Avoidance(flug, gap)
-
                 if flug == -1 or flug == 0:
                     count_paraavo += 1
-            Xbee.str_trans('#####-----paraavoided-----#####\n')
+            Xbee.str_trans('#####-----paraavoided-----#####\n \n')
 
         # ------------------- Panorama Shooting Phase ------------------- #
         # mag.bmc050_setup()
@@ -214,7 +230,7 @@ if __name__ == '__main__':
         #     magx_off, magy_off = Calibration.calculate_offset(magdata)
         #     panorama.shooting(20, -20, 0.2, magx_off, magy_off, path_src_panorama)
         #     panorama.composition(srcdir=path_src_panorama, dstdir=path_dst_panoraam)
-        Xbee.str_trans('Progam Finished')
+        Xbee.str_trans('########--Progam Finished--##########')
         close()
     except KeyboardInterrupt:
         close()
