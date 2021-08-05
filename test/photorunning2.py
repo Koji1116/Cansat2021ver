@@ -10,7 +10,7 @@ import cv2
 import numpy as np
 import time
 import Capture
-import stuck
+# import stuck
 import Xbee
 import motor
 import Other
@@ -119,10 +119,10 @@ def image_guided_driving(path, G_thd):
     goalflug = 1
     try:
         while goalflug != 0:
-            if stuck.ue_jug() :
-                pass
-            else:
-                motor.move(12, 12, 0.2)
+            # if stuck.ue_jug() :
+            #     pass
+            # else:
+            #     motor.move(12, 12, 0.2)
             photoName = Capture.Capture(path)  # 解像度調整するところ？
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
             imgname2 = DrawContours(imgname, 200, 20, 80)
