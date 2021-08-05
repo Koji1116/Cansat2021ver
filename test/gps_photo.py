@@ -36,7 +36,7 @@ G_thd = 80  # 調整するところ
 goalflug = 1
 startTime = time.time()
 dateTime = datetime.datetime.now()
-path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
 
 
 def adjust_direction(theta):

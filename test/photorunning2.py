@@ -154,7 +154,7 @@ if __name__ == "__main__":
         goalflug = 1
         startTime = time.time()
         dateTime = datetime.datetime.now()
-        path = f'photostorage/ImageGuidance2_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+        path = f'photostorage/ImageGuidance2_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
         image_guided_driving(path, G_thd)
 
         # photoName = 'photostorage/practice13.png'
