@@ -76,7 +76,16 @@ def acc_dataRead():
 
     return value
 
-GPS.openGPS()
+print('---Environment---')
+try:
+    BME280.bme280_setup()
+    BME280.bme280_calib_param()
+    for _ in range(5):
+        bme_data = BME280.bme280_read()
+        print(bme_data)
+except:
+    print('error : env')
+
 
 print('---melt----')
 try:
@@ -117,15 +126,7 @@ except:
 
 
 
-print('---Environment---')
-try:
-    BME280.bme280_setup()
-    BME280.bme280_calib_param()
-    for _ in range(5):
-        bme_data = BME280.bme280_read()
-        print(bme_data)
-except:
-    print('error : env')
+
 
 
 
