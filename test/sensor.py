@@ -80,9 +80,10 @@ print('---Environment---')
 try:
     BME280.bme280_setup()
     BME280.bme280_calib_param()
-    bme_data = BME280.bme280_read()
-    print(bme_data)
-
+    for _ in range(5):
+        bme_data = BME280.bme280_read()
+        print(bme_data)
+        time.sleep(1)
 except:
     print('error : env')
 
