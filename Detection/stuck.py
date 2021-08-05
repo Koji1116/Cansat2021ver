@@ -122,6 +122,6 @@ def stuck_avoid():
 if __name__ == '__main__':
     while 1:
         a = int(input('出力入力しろ'))
-        b = int(input('時間入力しろ'))
+        b = float(input('時間入力しろ'))
         motor.move(a,b,b)
     
