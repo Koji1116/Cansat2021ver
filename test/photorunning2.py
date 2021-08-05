@@ -102,11 +102,15 @@ def DrawContours(imgpath, H_min, H_max, S_thd):
                 center = (int(x), int(y))
                 radius = int(radius)
                 radius_frame = cv2.circle(img, center, radius, (0, 0, 255), 2)
-                path = Other.fileName('photostorage/photorunnning2', '.jpg')
+
+            path = Other.fileName('photostorage/photorunning2-', 'jpg')
+            cv2.imwrite(path, radius_frame)
                 
-            return radius_frame
+            return path
         else:
-            return img
+            path = Other.fileName('photostorage/photorunning2-', 'jpg')
+            cv2.imwrite(path, img)
+            return path
     except KeyboardInterrupt:
         print("end drawcircle")
 
@@ -121,8 +125,8 @@ def image_guided_driving(path, G_thd):
                 motor.move(12, 12, 0.2)
             photoName = Capture.Capture(path)  # 解像度調整するところ？
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
-            DrawContours(imgname, 200, 20, 80)
-            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
+            imgname2 = DrawContours(imgname, 200, 20, 80)
+            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}\timagename2:{imgname2}')
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
             if gap == 1000 or gap == 1000000:
                 print('Nogoal detected')
