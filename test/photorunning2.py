@@ -81,13 +81,42 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         return [1000, 1000, 1000, imgname]
 
 
+def DrawContours(imgpath, H_min, H_max, S_thd):
+    try:
+        img = cv2.imread(imgpath)
+        hig, wid, _ = img.shape
+
+        img_HSV = cv2.cvtColor(cv2.GaussianBlur(img, (15, 15), 0), cv2.COLOR_BGR2HSV_FULL)
+        h = img_HSV[:, :, 0]
+        s = img_HSV[:, :, 1]
+        mask = np.zeros(h.shape, dtype=np.uint8)
+        mask[((h < H_max) | (h > H_min)) & (s > S_thd)] = 255
+
+        contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+
+        if len(contours) > 0:
+            for cnt in contours:
+                # 最小外接円を描く
+                (x, y), radius = cv2.minEnclosingCircle(cnt)
+                center = (int(x), int(y))
+                radius = int(radius)
+                radius_frame = cv2.circle(img, center, radius, (0, 0, 255), 2)
+                path = Other.fileName('photostorage/photorunnning2', '.jpg')
+                
+            return radius_frame
+        else:
+            return img
+    except KeyboardInterrupt:
+        print("end drawcircle")
+
+
 def image_guided_driving(path, G_thd):
     goalflug = 1
     try:
         while goalflug != 0:
             photoName = Capture.Capture(path)  # 解像度調整するところ？
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
-            print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
+            DrawContours(imgname, 200, 20, 80)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
             if gap == 1000 or gap == 1000000:
