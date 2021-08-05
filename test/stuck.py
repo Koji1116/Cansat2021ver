@@ -139,8 +139,8 @@ if __name__ == '__main__':
         GPSdata_new = GPS.GPSdata_read()
         if stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 5):
             print('not stuck')
-            pass
+            
         else:
             print('fuck')
-            break
+            
 
