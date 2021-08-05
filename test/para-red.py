@@ -6,6 +6,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance')
 import time
 import cv2
 import numpy as np
+import Other
 import Capture
 import TSL2572
 
@@ -113,9 +114,12 @@ def DrawContours(imgpath, width, height, H_min, H_max, S_thd, r):
  
                 if radius > r:
                     radius_frame = cv2.circle(img,center,radius,(0,0,255),2)
-            return radius_frame
+            path = Other.fileName("photostorage/para-red","jpg")
+            cv2.imwrite(path ,radius_frame)
+            return path
         else:
-            return img
+            path = Other.fileName("photostorage/para-red","jpg")
+            return path
     except KeyboardInterrupt:
         print("end drawcircle")
 
@@ -127,10 +131,7 @@ if __name__ == "__main__":
     try:
         x = 1
         while x == 1:
-            circle_frame = DrawContours("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
-            cv2.imshow('circle_frame' ,circle_frame)
-            cv2.waitKey(0)
-            cv2.destroyAllWindows()
+            circle_frame_path = DrawContours("photostorage/photostorage_paradete/para", 320, 240, 200, 10, 120, 1)
             s = input("")
             x = int(s)
             if x != 1:
