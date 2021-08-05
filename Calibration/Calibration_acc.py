@@ -101,7 +101,7 @@ def magdata_matrix(l, r, t, n, t_sleeptime = 0):
         for _ in range(n):
             motor.move(l, r, t)
             accdata = acc.acc_dataRead()
-            stuck_acc = (acc[0]**2 + acc[1]**2 + acc[2]**2)** 0.5
+            stuck_acc = (acc[0]**2 + acc[1]**2)** 0.5
             if stuck_acc >= 11:
                 print('not stuck----'+str(stuck_acc))
             else:
@@ -337,7 +337,7 @@ if __name__ == "__main__":
         r = float(input('右の出力は？'))
         l = float(input('左の出力は？'))
         t = float(input('一回の回転時間は？'))
-        # n = int(input("取得するデータ数は？"))
+        n = int(input("取得するデータ数は？"))
         # --- setup ---#
         mag.bmc050_setup()
         t_start = time.time()
