@@ -3,6 +3,7 @@ import sys
 # sys.path.append('')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Illuminance')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 import time
 import cv2
 import numpy as np
