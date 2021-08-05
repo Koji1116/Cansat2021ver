@@ -74,6 +74,10 @@ def ParaDetection(imgpath, width, height, H_min, H_max, S_thd, para_thd):
 
         centers = get_center(contours[max_area_contour])
 
+
+
+        
+
         if max_area_contour == -1:
             return [-1, 0, -1, imgname]
         elif max_area >= para_thd:

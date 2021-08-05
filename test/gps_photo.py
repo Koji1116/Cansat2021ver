@@ -87,6 +87,7 @@ def adjust_direction(theta):
         elif 360 <= theta <= 450:
             theta = theta - 360
         print('計算後のゴールとなす角度theta' + str(theta))
+        time.sleep(1)
 
     print('theta = ' + str(theta) + '---回転終了!!!')
 
@@ -115,10 +116,11 @@ if __name__ == "__main__":
         t = float(input('何秒回転する？'))
         n = int(input('データ数いくつ'))
         while goal_distance >= 10:
-            if stuck.ue_jug():
+            if stuck.ue_jug() :
                 pass
             else:
-                motor.move()
+                motor.move(12, 12, 0.2)
+
             #if count % 4 == 0:
             if count % 1 == 0:
                 # ------------- Calibration -------------#
