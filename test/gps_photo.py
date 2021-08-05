@@ -116,7 +116,7 @@ if __name__ == "__main__":
         t = float(input('何秒回転する？'))
         n = int(input('データ数いくつ'))
         while goal_distance >= 10:
-            # if stuck.ue_jug() :
+            # if stuck.up_jug() :
             #     pass
             # else:
             #     motor.move(12, 12, 0.2)
