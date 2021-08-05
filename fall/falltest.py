@@ -41,7 +41,7 @@ t_out_land = 100
 thd_press_release = 0.3
 press_count_release = 0
 press_judge_release = 0
-t_delta_release = 3     #エレベータ:3    パラシュート落下:0.75 ?
+t_delta_release = 3  # エレベータ:3    パラシュート落下:0.75 ?
 
 # variable for landjudgment
 thd_press_land = 0.15
@@ -120,7 +120,8 @@ if __name__ == '__main__':
             try:
                 while time.time() - t_release_start <= t_out_release:
                     Xbee.str_trans(f'loop_release\t {i}')
-                    press_count_release, press_judge_release = release.pressdetect_release(thd_press_release, t_delta_release)
+                    press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
+                                                                                           t_delta_release)
                     Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
                     if press_judge_release == 1:
                         Xbee.str_trans('Release\n \n')
@@ -189,7 +190,8 @@ if __name__ == '__main__':
         if phaseChk == 6:
             t_ParaAvoidance_start = time.time()
             t_parajudge = time.time()
-            Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), 'ParaAvo Start')
+            Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(),
+                          'ParaAvo Start')
             # while time.time() - t_parajudge < 60:
             #     Luxflug, Lux = paradetection.ParaJudge(LuxThd)
             #     Xbee.str_trans(f'Luxflug: {Luxflug}\t lux: {Lux}\n')
@@ -206,7 +208,8 @@ if __name__ == '__main__':
                 flug, area, gap, photoname = paradetection.ParaDetection(
                     "photostorage/para", 320, 240, 200, 10, 120, 1)
                 Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-                Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS, flug, area, gap, photoname)
+                Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS, flug, area,
+                              gap, photoname)
                 paraavoidance.Parachute_Avoidance(flug, gap)
                 if flug == -1 or flug == 0:
                     count_paraavo += 1
