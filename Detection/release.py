@@ -12,7 +12,7 @@ import BME280  # Environmental
 import traceback
 
 
-anypress = 0.3
+thd_press_release = 0.3
 pressreleasecount = 0
 pressreleasejudge = 0
 t_delta_release = 3
@@ -56,7 +56,7 @@ if __name__ == "__main__":
     BME280.bme280_calib_param()
 
     while True:
-        press_count_release, press_judge_release = pressdetect_release(0.3, t_delta_release)
+        press_count_release, press_judge_release = pressdetect_release(thd_press_release, t_delta_release)
         print(f'count:{pressreleasecount}\tjudge{pressreleasejudge}')
         if pressreleasejudge == 1:
             print('Press')
