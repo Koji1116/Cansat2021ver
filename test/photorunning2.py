@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
@@ -16,9 +17,7 @@ import datetime
 from gpiozero import Motor
 import time
 
-
-
-#写真内の赤色面積で進時間を決める用　調整必要
+# 写真内の赤色面積で進時間を決める用　調整必要
 area_short = 59.9
 area_middle = 6
 area_long = 1
@@ -47,7 +46,7 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         img = cv2.imread(imgname)
         hig, wid, _ = img.shape
 
-        img_HSV = cv2.cvtColor(cv2.GaussianBlur(img,(15,15),0),cv2.COLOR_BGR2HSV_FULL)
+        img_HSV = cv2.cvtColor(cv2.GaussianBlur(img, (15, 15), 0), cv2.COLOR_BGR2HSV_FULL)
         h = img_HSV[:, :, 0]
         s = img_HSV[:, :, 1]
         mask = np.zeros(h.shape, dtype=np.uint8)
@@ -86,7 +85,7 @@ def image_guided_driving(path, G_thd):
     goalflug = 1
     try:
         while goalflug != 0:
-            photoName = Capture.Capture(path)                                               #解像度調整するところ？
+            photoName = Capture.Capture(path)  # 解像度調整するところ？
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
@@ -147,16 +146,16 @@ def image_guided_driving(path, G_thd):
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
 
+
 if __name__ == "__main__":
     try:
         # G_thd = float(input('ゴール閾値'))
-        G_thd = 80                                                                                        #調整するところ
+        G_thd = 80  # 調整するところ
         goalflug = 1
         startTime = time.time()
         dateTime = datetime.datetime.now()
         path = f'photostorage/ImageGuidance2_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
         image_guided_driving(path, G_thd)
-
 
         # photoName = 'photostorage/practice13.png'
         # while goalflug != 0:

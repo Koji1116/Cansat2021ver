@@ -119,7 +119,8 @@ if __name__ == "__main__":
                 pass
             else:
                 motor.moce()
-            if count % 4 == 0:
+            #if count % 4 == 0:
+            if count % 1 == 0:
                 # ------------- Calibration -------------#
                 print('Calibration Start')
                 mag.bmc050_setup()
@@ -142,7 +143,7 @@ if __name__ == "__main__":
             adjust_direction(theta)
             print('theta = ' + str(theta) + '---直進開始')
             ######直進するように左の出力強くしてます↓ 7/28 by oosima
-            motor.move(65, 50, 6)
+            motor.move(57, 50, 6)
 
             # --- calculate  goal direction ---#
             direction = Calibration.calculate_direction(lon2, lat2)

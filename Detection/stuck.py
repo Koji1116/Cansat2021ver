@@ -119,9 +119,8 @@ def stuck_avoid():
 
 
 if __name__ == '__main__':
-    Rpin1 = 17
-    Rpin2 = 18
-
-    Lpin1 = 19
-    Lpin2 = 20
-    stuck(12)
+    while 1:
+        a = int(input('出力入力しろ'))
+        b = int(input('時間入力しろ'))
+        motor.move(a,b,b)
+    

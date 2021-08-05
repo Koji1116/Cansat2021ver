@@ -31,6 +31,7 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         s = img_HSV[:, :, 1]
         mask = np.zeros(h.shape, dtype=np.uint8)
         mask[((h < H_max) | (h > H_min)) & (s > S_thd)] = 255
+
         contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         max_area = 0
