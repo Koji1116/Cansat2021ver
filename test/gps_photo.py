@@ -25,6 +25,7 @@ import datetime
 # import goaldetection
 import Capture
 import photorunning2
+import stuck
 
 #写真内の赤色面積で進時間を決める用　調整必要
 area_short = 20
@@ -114,6 +115,10 @@ if __name__ == "__main__":
         t = float(input('何秒回転する？'))
         n = int(input('データ数いくつ'))
         while goal_distance >= 10:
+            if stuck.ue_jug():
+                pass
+            else:
+                motor.moce()
             if count % 4 == 0:
                 # ------------- Calibration -------------#
                 print('Calibration Start')
