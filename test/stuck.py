@@ -1,31 +1,33 @@
-from SensorModule.GPS.GPS_Navigate import vincenty_inverse
+#from SensorModule.GPS.GPS_Navigate import vincenty_inverse
 import sys
 sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/6-axis')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Communication')
-sys.path.append('/home/pi/desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 from time import sleep
 from math import*
 from gpiozero import Motor
 import BMC050
 import Xbee
 import stuck
+import time
 import motor
 import GPS_Navigate
 import GPS
 
 
-def stuck_jug(lat1, lon1, lat2, lon2, thd =5 ):
+def stuck_jug(lat1, lon1, lat2, lon2, thd =1 ):
     data_stuck =GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
     if data_stuck['distance'] >= thd:
         print('動いた距離 = '+str(data_stuck['distance']))
-        print('スタックした')
-        return False
+        print('not stuck')
+        return True
     else:
         print('動いた距離 = '+str(data_stuck['distance']))
-        print('まだしてない')
-        return True
+        print('fuck')
+        return False
 
 
 #def stuck_jud(thd=11):  # しきい値thd調整必要
@@ -130,10 +132,15 @@ if __name__ == '__main__':
     while 1:
         
         GPSdata_old = GPS.GPSdata_read()
-        motor.move(40, 40,  10)
+        print('go')
+        #motor.move(40, 40,  10)
+        time.sleep(10)
+        print('stop')
         GPSdata_new = GPS.GPSdata_read()
         if stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 5):
+            print('not stuck')
             pass
         else:
+            print('fuck')
             break
 
