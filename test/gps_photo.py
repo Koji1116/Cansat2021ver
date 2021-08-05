@@ -36,7 +36,7 @@ G_thd = 80  # 調整するところ
 goalflug = 1
 startTime = time.time()
 dateTime = datetime.datetime.now()
-path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
+path = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
 
 
 def adjust_direction(theta):
@@ -87,6 +87,7 @@ def adjust_direction(theta):
         elif 360 <= theta <= 450:
             theta = theta - 360
         print('計算後のゴールとなす角度theta' + str(theta))
+        time.sleep(1)
 
     print('theta = ' + str(theta) + '---回転終了!!!')
 
@@ -115,10 +116,10 @@ if __name__ == "__main__":
         t = float(input('何秒回転する？'))
         n = int(input('データ数いくつ'))
         while goal_distance >= 10:
-            if stuck.ue_jug():
-                pass
-            else:
-                motor.move()
+            # if stuck.ue_jug():
+            #     pass
+            # else:
+            #     motor.move()
             #if count % 4 == 0:
             if count % 1 == 0:
                 # ------------- Calibration -------------#
