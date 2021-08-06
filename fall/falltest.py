@@ -28,6 +28,7 @@ import panorama
 import Calibration
 import release
 import land
+import stuck
 
 pi = pigpio.pi()
 
@@ -183,6 +184,12 @@ if __name__ == '__main__':
         Xbee.str_trans('########-----Melted-----#######\n \n')
         # ------------------- ParaAvoidance Phase ------------------- #
         Xbee.str_trans("#####-----ParaAvo phase start-----#####")
+        if stuck.ue_jug():
+            pass
+        else:
+            motor.move(12,12,0.2)
+
+
         Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
@@ -203,7 +210,7 @@ if __name__ == '__main__':
             Xbee.str_trans(f'Prachute avoidance Started \t{time.time() - t_start}\n')
             # --- first parachute detection ---#
             count_paraavo = 0
-            while count_paraavo < 2:
+            while count_paraavo < 1:
                 flug, area, gap, photoname = paradetection.ParaDetection(
                     "photostorage/para", 320, 240, 200, 10, 120, 1)
                 Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
