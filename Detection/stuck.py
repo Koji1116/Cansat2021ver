@@ -36,10 +36,10 @@ def ue_jug():
 def stuck_jug(lat1, lon1, lat2, lon2, thd = 1.0 ):
     data_stuck =GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
     if data_stuck['distance'] <= thd:
-        print(data_stuck['distance'] + str('----スタックした'))
+        print(str(data_stuck['distance']) + '----スタックした')
         return False
     else:
-        print(data_stuck['distance'] + str('----スタックした'))
+        print(str(data_stuck['distance']) + '----スタックしてないよ')
         return True
 
 
