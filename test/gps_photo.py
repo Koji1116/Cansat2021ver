@@ -155,7 +155,7 @@ if __name__ == "__main__":
             GPSdata_old = GPS.GPSdata_read()
             motor.move(50, 50, 6)
             GPSdata_new = GPS.GPSdata_read()
-            if stuck.stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 1):
+            if stuck.stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 1.0):
                 pass
             else:
                 #stuck.stuck_avoid()
