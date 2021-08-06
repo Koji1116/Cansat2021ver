@@ -185,10 +185,10 @@ if __name__ == '__main__':
         Xbee.str_trans('########-----Melted-----#######\n \n')
         # ------------------- ParaAvoidance Phase ------------------- #
         Xbee.str_trans("#####-----ParaAvo phase start-----#####")
-        # if stuck.ue_jug():
-        #     pass
-        # else:
-        #     motor.move(12,12,0.2)
+        if stuck.ue_jug():
+            pass
+        else:
+            motor.move(12,12,0.2)
 
 
         Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start, datetime.datetime.now())
