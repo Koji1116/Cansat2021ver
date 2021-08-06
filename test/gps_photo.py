@@ -48,33 +48,36 @@ def adjust_direction(theta):
     """
     print('ゴールとの角度theta = ' + str(theta) + '---回転調整開始！')
 
-    count = 0
+    stuck_count = 1
     t_small = 0.1
     t_big = 0.2
+    force = 20 
     while 15 < theta < 345:
-
+        if stuck_count >= 7:
+            print('出力強くするよ')
+            force +=10
         # if count > 8:
         # print('スタックもしくはこの場所が適切ではない')
         # stuck.stuck_avoid()
 
         if theta <= 60:
 
-            print('theta = ' + str(theta) + '---回転開始ver1')
-            motor.move(20, -20, t_small)
+            print('theta = ' + str(theta) + '---回転開始ver1('+str(stuck_count)+'回目)')
+            motor.move(force, -force, t_small)
 
         elif 60 < theta <= 180:
-            print('theta = ' + str(theta) + '---回転開始ver2')
-            motor.move(20, -20, t_big)
+            print('theta = ' + str(theta) + '---回転開始ver2('+str(stuck_count)+'回目)')
+            motor.move(force, -force, t_big)
         elif theta >= 300:
 
-            print('theta = ' + str(theta) + '---回転開始ver3')
-            motor.move(-20, 20, t_small)
+            print('theta = ' + str(theta) + '---回転開始ver3('+str(stuck_count)+'回目)')
+            motor.move(-force, force, t_small)
         elif 180 < theta < 360:
 
-            print('theta = ' + str(theta) + '---回転開始ver4')
-            motor.move(-20, 20, t_big)
-
-        # count += 1
+            print('theta = ' + str(theta) + '---回転開始ver4('+str(stuck_count)+'回目)')
+            motor.move(-force, force, t_big)
+    
+        stuck_count += 1
         data = Calibration.get_data()
         magx = data[0]
         magy = data[1]
@@ -116,6 +119,7 @@ if __name__ == "__main__":
         l = float(input('左の出力は？'))
         t = float(input('何秒回転する？'))
         n = int(input('データ数いくつ'))
+        cal = int(input('何回に一回キャリブレーションする？'))
         while goal_distance >= 10:
             if stuck.ue_jug() :
                 print('上だよ')
@@ -125,7 +129,7 @@ if __name__ == "__main__":
                 motor.move(12, 12, 0.2)
 
             #if count % 4 == 0:
-            if count % 1 == 0:
+            if count % cal == 0:
                 # ------------- Calibration -------------#
                 print('Calibration Start')
                 mag.bmc050_setup()
@@ -133,6 +137,7 @@ if __name__ == "__main__":
                 _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
             print('GPS run strat')
             # ------------- GPS navigate -------------#
+            
             magdata = BMC050.mag_dataRead()
             mag_x = magdata[0]
             mag_y = magdata[1]
@@ -147,8 +152,16 @@ if __name__ == "__main__":
 
             adjust_direction(theta)
             print('theta = ' + str(theta) + '---直進開始')
+            GPSdata_old = GPS.GPSdata_read()
             motor.move(50, 50, 6)
-
+            GPSdata_new = GPS.GPSdata_read()
+            if stuck.stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 1):
+                pass
+            else:
+                #stuck.stuck_avoid()
+                print('助けてくださいー')
+                time.sleep(8)
+                pass
             # --- calculate  goal direction ---#
             direction = Calibration.calculate_direction(lon2, lat2)
             goal_distance = direction["distance"]
