@@ -333,32 +333,43 @@ def timer(t):
 
 
 if __name__ == "__main__":
-    try:
-        r = float(input('右の出力は？'))
-        l = float(input('左の出力は？'))
-        t = float(input('一回の回転時間は？'))
-        n = int(input("取得するデータ数は？"))
-        a = int(input('加速度の閾値は？'))
-        # --- setup ---#
-        mag.bmc050_setup()
-        t_start = time.time()
-        # --- calibration ---#
-        magdata_Old = magdata_matrix(l, r, t, n, a)
-        # --- calculate offset ---#
-        magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
-        time.sleep(0.1)
-        # ----Take magnetic data considering offset----#
-        magdata_new = magdata_matrix_offset(l, r, t, magx_off, magy_off, magz_off)
-        magx_array_new = magdata_new[:, 0]
-        magy_array_new = magdata_new[:, 1]
-        magz_array_new = magdata_new[:, 2]
-        for i in range(len(magx_array_new)):
-            Other.saveLog(path_log, magx_array_Old[i], magy_array_Old[i], magx_array_new[i], magy_array_new[i])
-        print("success")
+    x = input('x')
+
+    if x == 'x':
+
+        try:
+            r = float(input('右の出力は？'))
+            l = float(input('左の出力は？'))
+            t = float(input('一回の回転時間は？'))
+            n = int(input("取得するデータ数は？"))
+            a = int(input('加速度の閾値は？'))
+            # --- setup ---#
+            mag.bmc050_setup()
+            t_start = time.time()
+            # --- calibration ---#
+            magdata_Old = magdata_matrix(l, r, t, n, a)
+            # --- calculate offset ---#
+            magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
+            time.sleep(0.1)
+            # ----Take magnetic data considering offset----#
+            magdata_new = magdata_matrix_offset(l, r, t, magx_off, magy_off, magz_off)
+            magx_array_new = magdata_new[:, 0]
+            magy_array_new = magdata_new[:, 1]
+            magz_array_new = magdata_new[:, 2]
+            for i in range(len(magx_array_new)):
+                Other.saveLog(path_log, magx_array_Old[i], magy_array_Old[i], magx_array_new[i], magy_array_new[i])
+            print("success")
 
 
-    except KeyboardInterrupt:
-        print("Interrupted")
+        except KeyboardInterrupt:
+            print("Interrupted")
 
-    finally:
-        print("End")
+        finally:
+            print("End")
+        
+    else:
+        acc.bmc050_setup()
+        accdata = acc.acc_dataRead()
+        stuck_acc = (accdata[0]**2 + accdata[1]**2)** 0.5
+        print(stuck_acc)
+        time.sleep(0.5)
