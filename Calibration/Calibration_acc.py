@@ -368,8 +368,10 @@ if __name__ == "__main__":
             print("End")
         
     else:
-        acc.bmc050_setup()
-        accdata = acc.acc_dataRead()
-        stuck_acc = (accdata[0]**2 + accdata[1]**2)** 0.5
-        print(stuck_acc)
-        time.sleep(0.5)
+        while 1:
+
+            acc.bmc050_setup()
+            accdata = acc.acc_dataRead()
+            stuck_acc = (accdata[0]**2 + accdata[1]**2)** 0.5
+            print(stuck_acc)
+            time.sleep(0.5)
