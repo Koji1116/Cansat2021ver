@@ -101,7 +101,7 @@ def magdata_matrix(l, r, t, n, a, t_sleeptime = 0):
         for _ in range(n):
             motor.move(l, r, t)
             accdata = acc.acc_dataRead()
-            stuck_acc = (acc[0]**2 + acc[1]**2)** 0.5
+            stuck_acc = (accdata[0]**2 + accdata[1]**2)** 0.5
             if stuck_acc >= a:
                 print('not stuck----'+str(stuck_acc))
             else:
