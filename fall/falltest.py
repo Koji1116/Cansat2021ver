@@ -29,12 +29,13 @@ import Calibration
 import release
 import land
 import stuck
+import motor
 
 pi = pigpio.pi()
 
 # variable for timeout
 t_setup = 60
-t_out_release = 100
+t_out_release = 10
 t_out_release_safe = 1000
 t_out_land = 100
 
@@ -184,10 +185,10 @@ if __name__ == '__main__':
         Xbee.str_trans('########-----Melted-----#######\n \n')
         # ------------------- ParaAvoidance Phase ------------------- #
         Xbee.str_trans("#####-----ParaAvo phase start-----#####")
-        if stuck.ue_jug():
-            pass
-        else:
-            motor.move(12,12,0.2)
+        # if stuck.ue_jug():
+        #     pass
+        # else:
+        #     motor.move(12,12,0.2)
 
 
         Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start, datetime.datetime.now())
