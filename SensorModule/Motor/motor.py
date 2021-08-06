@@ -39,7 +39,6 @@ def motor_move_acc(strength_l, strength_r, t_moving):
         motor_r.forward(strength_r)
         motor_l.forward(strength_l)
         print(acc.acc_dataRead())
-        time.sleep(t_moving)
     # 後進
     elif strength_r < 0 and strength_l < 0:
         motor_r = Motor(Rpin1, Rpin2)
@@ -47,7 +46,7 @@ def motor_move_acc(strength_l, strength_r, t_moving):
         motor_r.backward(abs(strength_r))
         motor_l.backward(abs(strength_l))
         print(acc.acc_dataRead())
-        time.sleep(t_moving)
+
     # 右回転
     elif strength_r >= 0 and strength_l < 0:
         motor_r = Motor(Rpin1, Rpin2)
@@ -55,7 +54,7 @@ def motor_move_acc(strength_l, strength_r, t_moving):
         motor_r.forward(abs(strength_r))
         motor_l.backward(abs(strength_l))
         print(acc.acc_dataRead())
-        time.sleep(t_moving)
+
     # 左回転
     elif strength_r < 0 and strength_l >= 0:
         motor_r = Motor(Rpin1, Rpin2)
@@ -63,7 +62,7 @@ def motor_move_acc(strength_l, strength_r, t_moving):
         motor_r.backward(abs(strength_r))
         motor_l.forward(abs(strength_l))
         print(acc.acc_dataRead())
-        time.sleep(t_moving)
+
 
 
 def motor_move(strength_l, strength_r, t_moving):
@@ -182,18 +181,19 @@ if __name__ == '__main__':
     while 1:
         command = input('操作\t')
         if command == 'a':
-            move_acc(40, 80, 2)
+            while 1:
+                motor_move_acc(40, -40, 2)
         elif command == 'w':
-            move_acc(80, 80, 2)
+            motor_move_acc(80, 80, 2)
         elif command == 'd':
-            move_acc(80, 40, 2)
+            motor_move_acc(80, 40, 2)
         elif command == 's':
-            move_acc(-50, -50, 2)
+            motor_move_acc(-50, -50, 2)
         elif command == 'manual':
             l = float(input('左の出力は？'))
             r = float(input('右の出力は？'))
             t = float(input('移動時間は？'))
             time.sleep(0.8)
-            move_acc(l, r, t)
+            motor_move_acc(l, r, t)
         else:
             print('もう一度入力してください')
