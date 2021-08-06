@@ -152,16 +152,16 @@ if __name__ == "__main__":
 
             adjust_direction(theta)
             print('theta = ' + str(theta) + '---直進開始')
-            GPSdata_old = GPS.GPSdata_read()
-            motor.move(50, 50, 6)
-            GPSdata_new = GPS.GPSdata_read()
-            if stuck.stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 1):
-                pass
-            else:
-                #stuck.stuck_avoid()
-                print('助けてくださいー')
-                time.sleep(8)
-                pass
+            # GPSdata_old = GPS.GPSdata_read()
+            # motor.move(50, 50, 6)
+            # GPSdata_new = GPS.GPSdata_read()
+            # if stuck.stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 1):
+            #     pass
+            # else:
+            #     #stuck.stuck_avoid()
+            #     print('助けてくださいー')
+            #     time.sleep(8)
+            #     pass
             # --- calculate  goal direction ---#
             direction = Calibration.calculate_direction(lon2, lat2)
             goal_distance = direction["distance"]
