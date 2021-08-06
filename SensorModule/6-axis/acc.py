@@ -20,6 +20,7 @@ def bmc050_setup():
         time.sleep(0.1)
         i2c.write_byte_data(ACC_ADDRESS, 0x11, 0x00)
         time.sleep(0.1)
+        return True
     except:
         time.sleep(0.1)
         print("BMC050 Setup Error")
@@ -29,7 +30,7 @@ def bmc050_setup():
         time.sleep(0.1)
         i2c.write_byte_data(ACC_ADDRESS, 0x11, 0x00)
         time.sleep(0.1)
-
+        return False
 
 def acc_dataRead():
     # --- Read Acc Data --- #

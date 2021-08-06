@@ -25,7 +25,8 @@ import datetime
 # import goaldetection
 import Capture
 import photorunning2
-# import stuck
+import stuck
+
 
 #写真内の赤色面積で進時間を決める用　調整必要
 area_short = 20
@@ -116,10 +117,12 @@ if __name__ == "__main__":
         t = float(input('何秒回転する？'))
         n = int(input('データ数いくつ'))
         while goal_distance >= 10:
-            # if stuck.up_jug() :
-            #     pass
-            # else:
-            #     motor.move(12, 12, 0.2)
+            if stuck.ue_jug() :
+                print('上だよ')
+                pass
+            else:
+                print('したーーーー')
+                motor.move(12, 12, 0.2)
 
             #if count % 4 == 0:
             if count % 1 == 0:
@@ -144,8 +147,7 @@ if __name__ == "__main__":
 
             adjust_direction(theta)
             print('theta = ' + str(theta) + '---直進開始')
-            ######直進するように左の出力強くしてます↓ 7/28 by oosima
-            motor.move(57, 50, 6)
+            motor.move(50, 50, 6)
 
             # --- calculate  goal direction ---#
             direction = Calibration.calculate_direction(lon2, lat2)

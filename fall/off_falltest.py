@@ -110,27 +110,29 @@ if __name__ == '__main__':
 
         # ------------------- Release Phase ------------------- #
         Xbee.str_trans('#####-----Release Phase start-----#####')
+        Xbee.off()
         Other.saveLog(phaseLog, "3", "Release Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 3:
             t_release_start = time.time()
             i = 1
             try:
                 while time.time() - t_release_start <= t_out_release:
-                    Xbee.str_trans(f'loop_release\t {i}')
                     press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
                                                                                            t_delta_release)
-                    Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
-                    Other.saveLog(releaseLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS,
-                                  BME280.bme280_read(), press_count_release, press_judge_release)
+                    Other.saveLog(releaseLog, datetime.datetime.now(), time.time() - t_start,
+                                  time.time() - t_release_start, GPS.readGPS, BME280.bme280_read(), press_count_release,
+                                  press_judge_release)
+
                     if press_judge_release == 1:
-                        Xbee.str_trans('Release\n \n')
+                        Xbee.on()
+                        Xbee.str_trans('####----Xbee ON----####')
                         break
-                    else:
-                        Xbee.str_trans('Not Release\n \n')
+
                     i += 1
                 else:
+                    Xbee.on()
+                    Xbee.str_trans('####----Xbee ON----####')
                     # 落下試験用の安全対策（落下しないときにXbeeでプログラム終了)
                     while time.time() - t_release_start <= t_out_release_safe:
                         Xbee.str_trans('continue? y/n \t')
@@ -138,6 +140,7 @@ if __name__ == '__main__':
                             break
                         elif Xbee.str_receive() == 'n':
                             Xbee.str_trans('Interrupted for safety')
+                            Xbee.str_trans('####----Program Finished----####')
                             exit()
                     Xbee.str_trans('##--release timeout--##')
             except KeyboardInterrupt:
