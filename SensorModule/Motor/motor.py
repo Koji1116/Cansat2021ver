@@ -40,7 +40,7 @@ def motor_move_acc(strength_l, strength_r, t_moving):
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.forward(strength_r)
         motor_l.forward(strength_l)
-        time.sleep(0.5)
+        time.sleep(0.2)
         print(acc.acc_dataRead())
         
     # 後進
@@ -49,7 +49,7 @@ def motor_move_acc(strength_l, strength_r, t_moving):
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.backward(abs(strength_r))
         motor_l.backward(abs(strength_l))
-        time.sleep(0.5)
+        time.sleep(0.2)
         print(acc.acc_dataRead())
         
     # 右回転
@@ -58,7 +58,7 @@ def motor_move_acc(strength_l, strength_r, t_moving):
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.forward(abs(strength_r))
         motor_l.backward(abs(strength_l))
-        time.sleep(0.5)
+        time.sleep(0.2)
         print(acc.acc_dataRead())
         
 
@@ -68,7 +68,7 @@ def motor_move_acc(strength_l, strength_r, t_moving):
         motor_l = Motor(Lpin1, Lpin2)
         motor_r.backward(abs(strength_r))
         motor_l.forward(abs(strength_l))
-        time.sleep(0.5)
+        
         print(acc.acc_dataRead())
         
 
