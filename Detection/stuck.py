@@ -17,20 +17,20 @@ import GPS_Navigate
 import GPS
 import acc
 
-# def ue_jug():
-#     """
-#     ローバーの状態を確認する関数
-#     通常状態：True
-#     逆さになってる：False
-#     加速度センサZ軸の正負で判定するよ
-#     """
-#     acc.bmc050_setup()
-#     accdata = acc.acc_dataRead()
-#     z = accdata[2]
-#     if z >= 0 :
-#         return True
-#     else:
-#         return False
+def ue_jug():
+    """
+    ローバーの状態を確認する関数
+    通常状態：True
+    逆さになってる：False
+    加速度センサZ軸の正負で判定するよ
+    """
+    acc.bmc050_setup()
+    accdata = acc.acc_dataRead()
+    z = accdata[2]
+    if z >= 0 :
+        return True
+    else:
+        return False
 
 
 def stuck_jug(lat1, lon1, lat2, lon2, thd = 10 ):
