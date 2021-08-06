@@ -84,8 +84,8 @@ def Parachute_Avoidance(flug, goalGAP):
         try:
             # goalflug, goalarea, goalGAP, photoname = photorunning.GoalDetection("photostorage/photostorage_paradete/para",320,240,200,10,120)
             if goalGAP >= -100 and goalGAP <= -50:
-                # motor.move(50, -50, 0.1)
-                motor.move(50, 50, 1)
+                motor.move(50, -50, 0.1)
+                #motor.move(50, 50, 1)
                 # print('# motor.move(50, -50, 0.1)# motor.move(70, 70, 1)')
             if goalGAP >= -50 and goalGAP <= 0:
                 motor.move(50, -50, 0.1)
@@ -96,15 +96,15 @@ def Parachute_Avoidance(flug, goalGAP):
                 # motor.move(70, 70, 1)
                 # print('motor.move(-50, 50, 0.1)motor.move(70, 70, 1)')
             if goalGAP >= 50 and goalGAP <= 100:
-                # motor.move(-80, 80, 1)
-                motor.move(50, 50, 1)
+                motor.move(-80, 80, 1)
+                #motor.move(50, 50, 1)
                 # print(' # motor.move(-80, 80, 1)# motor.move(70, 70, 1)')
 
         except KeyboardInterrupt:
             print("stop")
     if flug == -1 or flug == 0:
         # print('flug')
-        motor.move(50, 50, 1)
+        motor.move(50, 50, 0.5)
 
 
 if __name__ == '__main__':
