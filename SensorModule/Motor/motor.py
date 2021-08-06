@@ -27,6 +27,8 @@ def motor_move_acc(strength_l, strength_r, t_moving):
     必ずmotor_stop()セットで用いる。めんどくさかったら下にあるmotor()を使用
     
     '''
+    strength_r /= 100
+    strength_l /= 100
     acc.bmc050_setup()
     Rpin1 = 5
     Rpin2 = 6
