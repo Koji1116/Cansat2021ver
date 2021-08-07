@@ -34,7 +34,7 @@ pi = pigpio.pi()
 
 # variable for timeout
 t_setup = 60
-t_out_release = 10
+t_out_release = 80
 t_out_release_safe = 1000
 t_out_land = 100
 
