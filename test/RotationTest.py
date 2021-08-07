@@ -2,9 +2,10 @@ import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 
 
-import motorTest
+import motor
 import BMC050
 import Calibration
 import Xbee
@@ -25,7 +26,7 @@ def rotation(magx_off, magy_off, count=1):
         Xbee.str_trans('whileスタート {0}'.format(preθ))
 
         while sumθ <= 360:
-            motorTest.motor_move(-1, 1, 1) #調整するところ？
+            motor.motor_move(-1, 1, 1) #調整するところ？
             magdata = BMC050.mag_dataRead()
             magx = magdata[0]
             magy = magdata[1]
@@ -42,6 +43,7 @@ def rotation(magx_off, magy_off, count=1):
 
 if __name__ == "__main__":
     try:
+        motor.setup()
         BMC050.bmc050_setup()
         magdata = Calibration.magdata_matrix()  #magdata_matrix()内を変更する必要あり2021/07/04
         _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata)

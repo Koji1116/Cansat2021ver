@@ -91,6 +91,7 @@ def adjust_direction(theta):
 if __name__ == "__main__":
     BMC050.bmc050_setup()
     GPS.openGPS()
+    motor.setup()
     print('Run Phase Start!')
     print('GPS走行開始')
     # --- difine goal latitude and longitude ---#

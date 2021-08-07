@@ -105,6 +105,7 @@ def stuck_avoid_move(x):
 
 
 def stuck_avoid():
+    motor.setup()
     print('スタック回避開始')
     flag = False
     while 1:

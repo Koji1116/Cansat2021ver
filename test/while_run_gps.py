@@ -94,6 +94,7 @@ def adjust_direction(theta):
 
 GPS.openGPS()
 acc.bmc050_setup()
+motor.setup()
 n = float(input('何秒間走る？'))
 
 ##calibration
