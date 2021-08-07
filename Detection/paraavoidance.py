@@ -109,6 +109,7 @@ def Parachute_Avoidance(flug, goalGAP):
 
 if __name__ == '__main__':
     try:
+        motor.setup()
         # print("START: Judge covered by Parachute")
         # TSL2561.tsl2561_setup()
         # t2 = time.time()
