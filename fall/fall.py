@@ -180,14 +180,7 @@ if __name__ == '__main__':
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 5:
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Start")
-            while 1:
-                Xbee.str_trans('continue? y/n \t')
-                if Xbee.str_receive() == 'y':
-                    melt.down()
-                    break
-                elif Xbee.str_receive() == 'n':
-                    Xbee.str_trans('Interrupted for safety')
-                    exit()
+            melt.down()
             time.sleep(3)
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Finished")
         Xbee.str_trans('########-----Melted-----#######\n \n')
