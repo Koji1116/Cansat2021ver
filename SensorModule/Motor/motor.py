@@ -185,5 +185,10 @@ if __name__ == '__main__':
             t = float(input('移動時間は？'))
             time.sleep(0.8)
             move(l, r, t)
+        elif command == 'y':
+            motor = Motor(5,6)
+            motor.forward(0.6)
+            sleep(2)
+            motor.stop()
         else:
             print('もう一度入力してください')
