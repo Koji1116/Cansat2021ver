@@ -113,6 +113,26 @@ def magdata_matrix(l, r, t, n, t_sleeptime=0.1):
     return magdata
 
 
+def magdata_matrix(l, r, t, n, t_sleeptime=0.1):
+    """
+	キャリブレーション用の磁気値を得るための関数
+	forループ内(run)を変える必要がある2021/07/04
+	"""
+    try:
+        magx, magy, magz = get_data()
+        magdata = np.array([[magx, magy, magz]])
+        for _ in range(n):
+            motor.motor(l, r, t)
+            magx, magy, magz = get_data()
+            # --- multi dimention matrix ---#
+            magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
+            time.sleep(t_sleeptime)
+    except KeyboardInterrupt:
+        print('Interrupt')
+    except Exception as e:
+        print(e.message())
+    return magdata
+
 def magdata_matrix_with_shooting(l, r, t, n, path, t_sleeptime=0.1):
     """
 	キャリブレーション用の磁気値を得るための関数
