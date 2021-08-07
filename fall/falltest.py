@@ -162,6 +162,13 @@ if __name__ == '__main__':
                 Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
                 if press_judge_release == 1:
                     Xbee.str_trans('Landed')
+                    while 1:
+                        Xbee.str_trans('continue? y/n \t')
+                        if Xbee.str_receive() == 'y':
+                            break
+                        elif Xbee.str_receive() == 'n':
+                            Xbee.str_trans('Interrupted for safety')
+                            exit()
                     break
                 else:
                     Xbee.str_trans('Not Landed')
