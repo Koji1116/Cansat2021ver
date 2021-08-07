@@ -38,7 +38,7 @@ t_setup = 60
 t_out_release = 60
 t_out_release_safe = 1000
 t_out_land = 40
-t_out_land_safe = 1000
+
 
 # variable for releasejudge
 thd_press_release = 0.3
