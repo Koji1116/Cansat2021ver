@@ -34,8 +34,6 @@ run_l = 0
 run_r = 0
 run = 0
 
-
-
 def adjust_direction(theta):
     global magx_off
     global magy_off
