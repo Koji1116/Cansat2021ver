@@ -22,6 +22,7 @@ from smbus import SMBus
 import pigpio
 import picamera
 import Capture
+import os
 
 pi = pigpio.pi()
 
@@ -72,6 +73,11 @@ def acc_dataRead():
 
     return value
 
+print('i2cdetect')
+os.system('i2cdetect -y 1')
+
+print('camera')
+os.system('vcgencmd get_camera')
 print('---Environment---')
 try:
     BME280.bme280_setup()

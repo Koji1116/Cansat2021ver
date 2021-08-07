@@ -28,20 +28,23 @@ import panorama
 import Calibration
 import release
 import land
+import motor
+import stuck
 
 pi = pigpio.pi()
 
 # variable for timeout
 t_setup = 60
-t_out_release = 100
+t_out_release = 60
 t_out_release_safe = 1000
-t_out_land = 100
+t_out_land = 40
+
 
 # variable for releasejudge
 thd_press_release = 0.3
 press_count_release = 0
 press_judge_release = 0
-t_delta_release = 3  # エレベータ:3    パラシュート落下:0.75 ?
+t_delta_release = 1.3  # エレベータ:3    パラシュート落下:0.9 ?
 
 # variable for landjudgment
 thd_press_land = 0.15
@@ -178,11 +181,25 @@ if __name__ == '__main__':
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 5:
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Start")
-            melt.down()
+            while 1:
+                Xbee.str_trans('continue? y/n \t')
+                if Xbee.str_receive() == 'y':
+                    melt.down()
+                    break
+                elif Xbee.str_receive() == 'n':
+                    Xbee.str_trans('Interrupted for safety')
+                    exit()
+            time.sleep(3)
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Finished")
         Xbee.str_trans('########-----Melted-----#######\n \n')
         # ------------------- ParaAvoidance Phase ------------------- #
         Xbee.str_trans("#####-----ParaAvo phase start-----#####")
+        if stuck.ue_jug():
+            pass
+        else:
+            motor.move(12,12,0.2)
+
+
         Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start, datetime.datetime.now())
         phaseChk = Other.phaseCheck(phaseLog)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
@@ -203,7 +220,7 @@ if __name__ == '__main__':
             Xbee.str_trans(f'Prachute avoidance Started \t{time.time() - t_start}\n')
             # --- first parachute detection ---#
             count_paraavo = 0
-            while count_paraavo < 2:
+            while count_paraavo < 1:
                 flug, area, gap, photoname = paradetection.ParaDetection(
                     "photostorage/para", 320, 240, 200, 10, 120, 1)
                 Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
