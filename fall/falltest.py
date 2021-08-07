@@ -193,57 +193,57 @@ if __name__ == '__main__':
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Finished")
         Xbee.str_trans('########-----Melted-----#######\n \n')
         # ------------------- ParaAvoidance Phase ------------------- #
-        Xbee.str_trans("#####-----ParaAvo phase start-----#####")
-        if stuck.ue_jug():
-            pass
-        else:
-            motor.move(12,12,0.2)
+        # Xbee.str_trans("#####-----ParaAvo phase start-----#####")
+        # if stuck.ue_jug():
+        #     pass
+        # else:
+        #     motor.move(12,12,0.2)
 
 
-        Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start, datetime.datetime.now())
-        phaseChk = Other.phaseCheck(phaseLog)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
-        if phaseChk == 6:
-            t_ParaAvoidance_start = time.time()
-            t_parajudge = time.time()
-            Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(),
-                          'ParaAvo Start')
-            # while time.time() - t_parajudge < 60:
-            #     Luxflug, Lux = paradetection.ParaJudge(LuxThd)
-            #     Xbee.str_trans(f'Luxflug: {Luxflug}\t lux: {Lux}\n')
-            #     if Luxflug == 1:
-            #         Xbee.str_trans(f'rover is not covered with parachute. Lux: {Lux}\n')
-            #         break
-            #     else:
-            #         Xbee.str_trans(f'rover is covered with parachute! Lux: {Lux}\n')
-            #         time.sleep(1)
-            Xbee.str_trans(f'Prachute avoidance Started \t{time.time() - t_start}\n')
-            # --- first parachute detection ---#
-            count_paraavo = 0
-            while count_paraavo < 1:
-                flug, area, gap, photoname = paradetection.ParaDetection(
-                    "photostorage/para", 320, 240, 200, 10, 120, 1)
-                Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-                Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS, flug, area,
-                              gap, photoname)
-                paraavoidance.Parachute_Avoidance(flug, gap)
-                if flug == -1 or flug == 0:
-                    count_paraavo += 1
-            Xbee.str_trans('#####-----paraavoided-----#####\n \n')
-
-        # ------------------- Panorama Shooting Phase ------------------- #
-        # mag.bmc050_setup()
-        # Xbee.str_trans('#####-----Panorama-----#####\n')
-        # Other.saveLog(phaseLog, '7', 'Panorama Shooting phase', time.time() - t_start)
+        # Other.saveLog(phaseLog, "6", "ParaAvoidance Phase Started", time.time() - t_start, datetime.datetime.now())
         # phaseChk = Other.phaseCheck(phaseLog)
-        # Xbee.str_trans(f'Phase: {phaseChk}\n')
-        # if phaseChk <= 7:
-        #     t_PanoramaShooting_start = time.time()
-        #     print(f'Panorama Shooting Phase Started {time.time() - t_start}')
-        #     magdata = Calibration.magdata_matrix()
-        #     magx_off, magy_off = Calibration.calculate_offset(magdata)
-        #     panorama.shooting(20, -20, 0.2, magx_off, magy_off, path_src_panorama)
-        #     panorama.composition(srcdir=path_src_panorama, dstdir=path_dst_panoraam)
+        # Xbee.str_trans(f'Phase:\t{phaseChk}')
+        # if phaseChk == 6:
+        #     t_ParaAvoidance_start = time.time()
+        #     t_parajudge = time.time()
+        #     Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(),
+        #                   'ParaAvo Start')
+        #     # while time.time() - t_parajudge < 60:
+        #     #     Luxflug, Lux = paradetection.ParaJudge(LuxThd)
+        #     #     Xbee.str_trans(f'Luxflug: {Luxflug}\t lux: {Lux}\n')
+        #     #     if Luxflug == 1:
+        #     #         Xbee.str_trans(f'rover is not covered with parachute. Lux: {Lux}\n')
+        #     #         break
+        #     #     else:
+        #     #         Xbee.str_trans(f'rover is covered with parachute! Lux: {Lux}\n')
+        #     #         time.sleep(1)
+        #     Xbee.str_trans(f'Prachute avoidance Started \t{time.time() - t_start}\n')
+        #     # --- first parachute detection ---#
+        #     count_paraavo = 0
+        #     while count_paraavo < 1:
+        #         flug, area, gap, photoname = paradetection.ParaDetection(
+        #             "photostorage/para", 320, 240, 200, 10, 120, 1)
+        #         Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
+        #         Other.saveLog(paraAvoidanceLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS, flug, area,
+        #                       gap, photoname)
+        #         paraavoidance.Parachute_Avoidance(flug, gap)
+        #         if flug == -1 or flug == 0:
+        #             count_paraavo += 1
+        #     Xbee.str_trans('#####-----paraavoided-----#####\n \n')
+
+        # # ------------------- Panorama Shooting Phase ------------------- #
+        # # mag.bmc050_setup()
+        # # Xbee.str_trans('#####-----Panorama-----#####\n')
+        # # Other.saveLog(phaseLog, '7', 'Panorama Shooting phase', time.time() - t_start)
+        # # phaseChk = Other.phaseCheck(phaseLog)
+        # # Xbee.str_trans(f'Phase: {phaseChk}\n')
+        # # if phaseChk <= 7:
+        # #     t_PanoramaShooting_start = time.time()
+        # #     print(f'Panorama Shooting Phase Started {time.time() - t_start}')
+        # #     magdata = Calibration.magdata_matrix()
+        # #     magx_off, magy_off = Calibration.calculate_offset(magdata)
+        # #     panorama.shooting(20, -20, 0.2, magx_off, magy_off, path_src_panorama)
+        # #     panorama.composition(srcdir=path_src_panorama, dstdir=path_dst_panoraam)
         Xbee.str_trans('########--Progam Finished--##########')
         close()
     except KeyboardInterrupt:
