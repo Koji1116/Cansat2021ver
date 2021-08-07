@@ -17,4 +17,5 @@ def escape(t_melt):
     #     motor.move(strength_l, strength_r, 0.1)
 
 if __name__ == '__main__':
+    motor.setup()
     escape(t_melt=3)

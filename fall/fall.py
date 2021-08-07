@@ -79,6 +79,7 @@ def close():
 
 if __name__ == '__main__':
     Xbee.on()
+    motor.setup()
     while 1:
         Xbee.str_trans('standby\t')
         if Xbee.str_receive() == 's':
