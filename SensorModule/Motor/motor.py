@@ -205,7 +205,7 @@ if __name__ == '__main__':
             motor_r.stop()  
         elif command == 'l':
             motor_r = Motor(5,6)
-            motor_l = Motor(10,9)
+            motor_l = Motor(9,10)
             #motor_r.forward(0.6)
             motor_l.forward(0.6)
             sleep(2)
