@@ -174,7 +174,7 @@ if __name__ == "__main__":
         startTime = time.time()
         dateTime = datetime.datetime.now()
         path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
-        photorunning2.image_guided_driving(path_photo_imagerun, 50)
+        photorunning.image_guided_driving(path_photo_imagerun, 50)
     except KeyboardInterrupt:
         print('interrupted')
         GPS.closeGPS()
