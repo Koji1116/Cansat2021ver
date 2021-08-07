@@ -169,9 +169,9 @@ def move(strength_l, strength_r, t_moving, x=0.1):
 
 
 if __name__ == '__main__':
+    motor_r = Motor(5,6)
+    motor_l = Motor(10,9)
     while 1:
-        motor_r = Motor(5,6)
-        motor_l = Motor(10,9)
         print(motor_r.is_active)
         print(motor_l.is_active)
         command = input('操作\t')
