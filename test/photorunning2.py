@@ -188,6 +188,7 @@ def image_guided_driving(path, G_thd):
 if __name__ == "__main__":
     try:
         # G_thd = float(input('ゴール閾値'))
+        motor.setup()
         G_thd = 80  # 調整するところ
         goalflug = 1
         startTime = time.time()

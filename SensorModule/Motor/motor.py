@@ -8,7 +8,7 @@ import time
 import acc
 
 
-def setup_motor():
+def setup():
     global motor_r, motor_l
     Rpin1, Rpin2 = 6, 5
     Lpin1, Lpin2 = 9, 10
@@ -151,7 +151,7 @@ def move(strength_l, strength_r, t_moving, x=0.1):
 
 
 if __name__ == '__main__':
-    setup_motor()
+    setup()
     while 1:
         command = input('操作\t')
         if command == 'a':
