@@ -172,8 +172,8 @@ if __name__ == '__main__':
     while 1:
         motor_r = Motor(5,6)
         motor_l = Motor(10,9)
-        motor_r.is_active()
-        motor_l.is_active()
+        print(motor_r.is_active)
+        print(motor_l.is_active)
         command = input('操作\t')
         if command == 'a':
             move(40, 80, 2)
