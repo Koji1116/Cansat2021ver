@@ -160,13 +160,6 @@ if __name__ == '__main__':
                 Xbee.str_trans(f"loop_land\t{i}")
                 press_count_release, press_judge_release = land.pressdetect_land(thd_press_land)
                 Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
-                if press_judge_release == 1:
-                    Xbee.str_trans('Landed')
-                    break
-                else:
-                    Xbee.str_trans('Not Landed')
-                Other.saveLog(landingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(),
-                              BME280.bme280_read())
                 i += 1
             else:
                 Xbee.str_trans('Landed Timeout')
@@ -181,10 +174,11 @@ if __name__ == '__main__':
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 5:
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Start")
+            #安全対策(2021では他の階の手すりにパラシュートが引っかかってそこから落下しました)
             while 1:
                 Xbee.str_trans('continue? y/n \t')
                 if Xbee.str_receive() == 'y':
-                    melt.down()
+                    escape.escape()
                     break
                 elif Xbee.str_receive() == 'n':
                     Xbee.str_trans('Interrupted for safety')
