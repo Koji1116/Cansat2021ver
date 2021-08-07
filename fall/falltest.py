@@ -43,7 +43,7 @@ t_out_land = 100
 thd_press_release = 0.3
 press_count_release = 0
 press_judge_release = 0
-t_delta_release = 1.2  # エレベータ:3    パラシュート落下:0.9 ?
+t_delta_release = 0.9  # エレベータ:3    パラシュート落下:0.9 ?
 
 # variable for landjudgment
 thd_press_land = 0.15
@@ -181,6 +181,7 @@ if __name__ == '__main__':
         if phaseChk == 5:
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Start")
             melt.down()
+            time.sleep(3)
             Other.saveLog(meltingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Finished")
         Xbee.str_trans('########-----Melted-----#######\n \n')
         # ------------------- ParaAvoidance Phase ------------------- #
