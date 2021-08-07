@@ -109,6 +109,7 @@ try:
     for _ in range(5):
         mag_data = mag.mag_dataRead()
         print(mag_data)
+        time.sleep(0.2)
 except:
     print('error : mag')
  
@@ -118,6 +119,7 @@ try:
     for _ in range(5):
         acc_data = acc_dataRead()
         print(acc_data)
+        time.sleep(0.2)
 except:
     print('error : acc')
 
