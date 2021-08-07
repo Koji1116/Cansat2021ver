@@ -9,10 +9,10 @@ import acc
 
 def motor_stop(x=1):
     '''motor_move()とセットで使用'''
-    Rpin1 = 5
-    Rpin2 = 6
-    Lpin1 = 10
-    Lpin2 = 9
+    Rpin1 = 6
+    Rpin2 = 5
+    Lpin1 = 9
+    Lpin2 = 10
     motor_r = Motor(Rpin1, Rpin2)
     motor_l = Motor(Lpin1, Lpin2)
     motor_r.stop()
