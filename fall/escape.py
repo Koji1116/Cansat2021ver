@@ -1,21 +1,19 @@
 import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Detection')
 import melt
 import motor
+import stuck
 
-def escape(t_melt):
+def escape(t_melt=3):
     melt.down(t_melt)
-    motor.move(20, 20, 0.1)
-    # for i in range(5):
-    #     strength_l = i * 10
-    #     strength_r = i * 10
-    #     motor.move(strength_l, strength_r, 0.1)
-    # for i in range(5):
-    #     strength_l = 50 - i * 10
-    #     strength_l = 50 - i * 10
-    #     motor.move(strength_l, strength_r, 0.1)
+
+    if stuck.ue_jug():
+            pass
+    else:
+        motor.move(12,12,0.2)
 
 if __name__ == '__main__':
     motor.setup()
-    escape(t_melt=3)
+    escape()
