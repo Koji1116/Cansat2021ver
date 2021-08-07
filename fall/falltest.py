@@ -37,7 +37,8 @@ pi = pigpio.pi()
 t_setup = 60
 t_out_release = 60
 t_out_release_safe = 1000
-t_out_land = 100
+t_out_land = 40
+t_out_land_safe = 30
 
 # variable for releasejudge
 thd_press_release = 0.3
@@ -168,6 +169,13 @@ if __name__ == '__main__':
                               BME280.bme280_read())
                 i += 1
             else:
+                while time.time() - t_release_start <= t_out_land_safe:
+                        Xbee.str_trans('continue? y/n \t')
+                        if Xbee.str_receive() == 'y':
+                            break
+                        elif Xbee.str_receive() == 'n':
+                            Xbee.str_trans('Interrupted for safety')
+                            exit()
                 Xbee.str_trans('Landed Timeout')
             Other.saveLog(landingLog, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(),
                           BME280.bme280_read(), 'Land judge finished')
