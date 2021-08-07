@@ -169,7 +169,7 @@ if __name__ == '__main__':
                               BME280.bme280_read())
                 i += 1
             else:
-                while time.time() - t_release_start <= t_out_land_safe:
+                while time.time() - t_land_start <= t_out_land_safe:
                         Xbee.str_trans('continue? y/n \t')
                         if Xbee.str_receive() == 'y':
                             break
