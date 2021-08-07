@@ -169,7 +169,7 @@ def image_guided_driving(path, G_thd):
                 else:
                     print('Go stright short')
                     # print('Gos straight short')
-                    motor.move(80, 80, 0.2)
+                    motor.move(40, 40, 0.2)
             elif goalarea >= G_thd:
                 print('goal')
                 print('goal')
