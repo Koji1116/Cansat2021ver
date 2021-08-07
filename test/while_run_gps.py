@@ -35,12 +35,25 @@ acc.bmc050_setup()
 n = float(input('何秒間走る？'))
 
 while 1:
-    print('----------------')
-    old = acc.acc_dataRead()
-    print(f'old {old}')
-    motor.motor_move(30, 30, n)
-    new = acc.acc_dataRead()
-    print(f'new {new}')
+    # print('----------------')
+    # old = acc.acc_dataRead()
+    # print(f'old {old}')
+    # motor.motor_move(30, 30, n)
+    # new = acc.acc_dataRead()
+    # print(f'new {new}')
+
+
+    ##calibration
+    r = float(input('右の出力は？'))
+    l = float(input('左の出力は？'))
+    t = float(input('何秒回転する？'))
+    n = int(input('データ数いくつ'))
+    if stuck.ue_jug() :
+                print('上だよ')
+                pass
+            else:
+                print('したーーーー')
+                motor.move(12, 12, 0.2)
 
     ##---  方向合わせ----
     direction = Calibration.calculate_direction(lon2, lat2)
