@@ -18,12 +18,6 @@ def setup_motor():
 
 def motor_stop(x=1):
     '''motor_move()とセットで使用'''
-    # Rpin1 = 6
-    # Rpin2 = 5
-    # Lpin1 = 9
-    # Lpin2 = 10
-    # motor_r = Motor(Rpin1, Rpin2)
-    # motor_l = Motor(Lpin1, Lpin2)
     motor_r.stop()
     motor_l.stop()
     time.sleep(x)
@@ -147,13 +141,6 @@ def move(strength_l, strength_r, t_moving, x=0.1):
     if abs(strength_l) == abs(strength_r) and strength_l * strength_r < 0:
         motor_stop(x)
     else:
-        #before
-        # while time.time() - t_stop <= 1:
-        #     coefficient_power = abs(1 - (time.time() - t_stop))
-        #     motor_move(strength_l*coefficient_power, strength_r*coefficient_power, 0.1)
-
-
-        #更新(2021-07-24)
         for i in range(10):
             coefficient_power = 10 - i
             coefficient_power /= 10
@@ -181,32 +168,5 @@ if __name__ == '__main__':
             t = float(input('移動時間は？'))
             time.sleep(0.8)
             move(l, r, t)
-        elif command == 'rl':
-            # motor_r = Motor(5,6)
-            # motor_l = Motor(10,9)
-            motor_r.forward(0.6)
-            motor_l.forward(0.6)
-            sleep(2)
-            
-            motor_l.stop()
-            motor_r.stop()
-        elif command == 'r':
-            # motor_r = Motor(5,6)
-            # motor_l = Motor(10,9)
-            motor_r.forward(0.6)
-            #motor_l.forward(0.6)
-            sleep(2)
-            
-            #motor_l.stop()
-            motor_r.stop()  
-        elif command == 'l':
-            #motor_r = Motor(5,6)
-            # motor_l = Motor(9,10)
-            #motor_r.forward(0.6)
-            motor_l.forward(0.6)
-            sleep(2)
-            
-            motor_l.stop()
-            #motor_r.stop()  
         else:
             print('もう一度入力してください')
