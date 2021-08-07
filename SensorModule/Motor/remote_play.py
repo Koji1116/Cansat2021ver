@@ -8,6 +8,7 @@ import time
 
 try:
     Xbee.on()
+    motor.setup()
     while 1:
         Xbee.str_trans('操作\t')
         command = Xbee.str_receive()

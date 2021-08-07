@@ -97,6 +97,7 @@ def adjust_direction(theta):
 
 if __name__ == "__main__":
     try:
+        motor.setup()
         mag.bmc050_setup()
         GPS.openGPS()
         Xbee.on()

@@ -92,6 +92,7 @@ def adjust_direction(theta):
 
 
 if __name__ == "__main__":
+    motor.setup()
     mag.bmc050_setup()
     GPS.openGPS()
     print('Run Phase Start!')
