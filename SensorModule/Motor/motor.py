@@ -186,9 +186,13 @@ if __name__ == '__main__':
             time.sleep(0.8)
             move(l, r, t)
         elif command == 'y':
-            motor = Motor(5,6)
-            motor.forward(0.6)
+            motor_r = Motor(5,6)
+            motor_l = Motor(10,9)
+            motor_r.forward(0.6)
+            motor_l.forward(0.6)
             sleep(2)
-            motor.stop()
+            
+            motor_l.stop()
+            motor_r.stop()
         else:
             print('もう一度入力してください')
