@@ -142,8 +142,6 @@ def move(strength_l, strength_r, t_moving, x=0.1):
     """
     急停止回避を組み込み 7/23 takayama
     """
-    strength_r /= 100
-    strength_l /= 100
     motor_move(strength_l, strength_r, t_moving)
     t_stop = time.time()
     if abs(strength_l) == abs(strength_r) and strength_l * strength_r < 0:
@@ -168,8 +166,6 @@ def move(strength_l, strength_r, t_moving, x=0.1):
 if __name__ == '__main__':
     setup_motor()
     while 1:
-        print(motor_r.is_active)
-        print(motor_l.is_active)
         command = input('操作\t')
         if command == 'a':
             move(40, 80, 2)
