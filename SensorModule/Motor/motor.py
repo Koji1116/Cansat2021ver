@@ -170,6 +170,10 @@ def move(strength_l, strength_r, t_moving, x=0.1):
 
 if __name__ == '__main__':
     while 1:
+        motor_r = Motor(5,6)
+        motor_l = Motor(10,9)
+        motor_r.is_active()
+        motor_l.is_active()
         command = input('操作\t')
         if command == 'a':
             move(40, 80, 2)
@@ -186,8 +190,8 @@ if __name__ == '__main__':
             time.sleep(0.8)
             move(l, r, t)
         elif command == 'rl':
-            motor_r = Motor(5,6)
-            motor_l = Motor(10,9)
+            # motor_r = Motor(5,6)
+            # motor_l = Motor(10,9)
             motor_r.forward(0.6)
             motor_l.forward(0.6)
             sleep(2)
@@ -195,7 +199,7 @@ if __name__ == '__main__':
             motor_l.stop()
             motor_r.stop()
         elif command == 'r':
-            motor_r = Motor(5,6)
+            # motor_r = Motor(5,6)
             # motor_l = Motor(10,9)
             motor_r.forward(0.6)
             #motor_l.forward(0.6)
@@ -205,7 +209,7 @@ if __name__ == '__main__':
             motor_r.stop()  
         elif command == 'l':
             #motor_r = Motor(5,6)
-            motor_l = Motor(9,10)
+            # motor_l = Motor(9,10)
             #motor_r.forward(0.6)
             motor_l.forward(0.6)
             sleep(2)
