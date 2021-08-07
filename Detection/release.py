@@ -36,7 +36,7 @@ def pressdetect_release(thd_press_release, t_delta_release):
             press_judge_release = 2
         elif deltP > thd_press_release:
             press_count_release += 1
-            if press_count_release > 2:
+            if press_count_release > 1:
                 press_judge_release = 1
                 print("pressreleasejudge")
         else:
