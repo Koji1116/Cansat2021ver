@@ -80,6 +80,8 @@ def motor_move(strength_l, strength_r, t_moving):
     strength_l、strength_rは-1~1で表す。負の値だったら後ろ走行。
     必ずmotor_stop()セットで用いる。めんどくさかったら下にあるmotor()を使用
     '''
+    strength_l = strength_l/100
+    strength_r = strength_r/100
     Rpin1 = 5
     Rpin2 = 6
     Lpin1 = 10
