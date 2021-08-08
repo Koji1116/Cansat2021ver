@@ -73,11 +73,16 @@ def acc_dataRead():
 
     return value
 
-print('i2cdetect')
+print('----i2cdetect----')
 os.system('i2cdetect -y 1')
 
-print('camera')
+print('\n----camera----')
 os.system('vcgencmd get_camera')
+try:
+    Capture.Capture(camerapath)
+except:
+    print('error : camera\n')
+
 print('---Environment---')
 try:
     BME280.bme280_setup()
@@ -97,11 +102,7 @@ except:
 	pi.write(meltPin, 0)
 
 
-print('---camera')
-try:
-    Capture.Capture(camerapath)
-except:
-    print('error : camera')
+
 
 print('---motor---')
 motor.move(20,20,2)
