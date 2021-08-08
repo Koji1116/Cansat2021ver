@@ -148,8 +148,8 @@ while 1:
         print(0)
         pass
     elif azimuth>15:
-        print(1)
-        run = 15
-    elif azimuth < 345:
-        run = -15
         print(-1)
+        run = -15
+    elif azimuth < 345:
+        run = 15
+        print(1)
