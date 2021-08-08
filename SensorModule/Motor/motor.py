@@ -15,6 +15,24 @@ def setup():
     motor_r = Motor(Rpin1, Rpin2)
     motor_l = Motor(Lpin1, Lpin2)
 
+def motor_continue(strength_l, strength_r):
+    if strength_r >= 0 and strength_l >= 0:
+        motor_r.forward(strength_r)
+        motor_l.forward(strength_l)
+    # 後進
+    elif strength_r < 0 and strength_l < 0:
+        motor_r.backward(abs(strength_r))
+        motor_l.backward(abs(strength_l))
+    # 右回転
+    elif strength_r >= 0 and strength_l < 0:
+        motor_r.forward(abs(strength_r))
+        motor_l.backward(abs(strength_l))
+    # 左回転
+    elif strength_r < 0 and strength_l >= 0:
+        motor_r.backward(abs(strength_r))
+        motor_l.forward(abs(strength_l))
+
+
 
 def motor_stop(x=1):
     '''motor_move()とセットで使用'''
