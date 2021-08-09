@@ -85,70 +85,75 @@ def adjust_direction(theta):
     print('theta = ' + str(theta) + '---回転終了!!!')
 
 
+
+##calibration
+def gps_run():
+    t_tyousei = float(input('何秒おきにキャリブレーションする？'))
+
+    while 1:
+        while stuck.ue_jug() == False:
+            print('したーーー')
+            motor.move(12, 12, 0.2)
+            time.sleep(1.5)
+        print('上だよ')
+        # ------------- Calibration -------------#
+        print('Calibration Start')
+        
+        magdata_Old = Calibration.magdata_matrix(20, -20, 0.2, 25)
+        _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
+
+
+        magdata = BMC050.mag_dataRead()
+        mag_x = magdata[0]
+        mag_y = magdata[1]
+        theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+        direction = Calibration.calculate_direction(lon2, lat2)
+        azimuth = direction["azimuth1"]
+        theta = azimuth - theta
+        if theta < 0:
+            theta = 360 + theta
+        elif 360 <= theta <= 450:
+            theta = theta - 360
+        adjust_direction(theta)
+        t_cal = time.time()
+
+
+        while time.time()-t_cal <= t_tyousei :
+            _, lat1, lon1, _, _ = GPS.GPSdata_read()
+            direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
+            azimuth = direction["azimuth1"]
+
+            for _ in range(10):
+                magdata = BMC050.mag_dataRead()
+                mag_x = magdata[0]
+                mag_y = magdata[1]
+                theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+                theta = azimuth - theta
+                if theta < 0:
+                    theta = 360 + theta
+                elif 360 <= theta <= 450:
+                    theta = theta - 360
+                if 0 <= theta <= 15 or 345 <= theta <= 360:
+                    print(f'0--- {theta}')
+                    pass
+                elif 15 < theta <180:
+                    print(f'-1--- {theta}')
+                    run = 6.5
+                elif 180 < theta < 345:
+                    run = -2.5
+                    print(f'1---{theta}')
+                motor.motor_continue(30 + run, 30 - run)
+                time.sleep(0.1)  
+        for i in range(10):
+            coefficient_power = 10 - i
+            coefficient_power /= 10
+            motor.motor_move(30 * coefficient_power, 30* coefficient_power, 0.1)
+            if i == 9:
+                motor.motor_stop(2)
+
+
 GPS.openGPS()
 acc.bmc050_setup()
 motor.setup()
 mag.bmc050_setup()
-##calibration
-t_tyousei = float(input('何秒おきにキャリブレーションする？'))
-
-while 1:
-    while stuck.ue_jug() == False:
-        print('したーーー')
-        motor.move(12, 12, 0.2)
-        time.sleep(1.5)
-    print('上だよ')
-    # ------------- Calibration -------------#
-    print('Calibration Start')
-    
-    magdata_Old = Calibration.magdata_matrix(20, -20, 0.2, 25)
-    _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
-
-
-    magdata = BMC050.mag_dataRead()
-    mag_x = magdata[0]
-    mag_y = magdata[1]
-    theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
-    direction = Calibration.calculate_direction(lon2, lat2)
-    azimuth = direction["azimuth1"]
-    theta = azimuth - theta
-    if theta < 0:
-        theta = 360 + theta
-    elif 360 <= theta <= 450:
-        theta = theta - 360
-    adjust_direction(theta)
-    t_cal = time.time()
-
-
-    while time.time()-t_cal <= t_tyousei :
-        _, lat1, lon1, _, _ = GPS.GPSdata_read()
-        direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
-        azimuth = direction["azimuth1"]
-
-        for _ in range(10):
-            magdata = BMC050.mag_dataRead()
-            mag_x = magdata[0]
-            mag_y = magdata[1]
-            theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
-            theta = azimuth - theta
-            if theta < 0:
-                theta = 360 + theta
-            elif 360 <= theta <= 450:
-                theta = theta - 360
-            if 0 <= theta <= 15 or 345 <= theta <= 360:
-                print(f'0--- {theta}')
-                pass
-            elif 15 < theta <180:
-                print(f'-1--- {theta}')
-                run = 6.5
-            elif 180 < theta < 345:
-                run = -2.5
-                print(f'1---{theta}')
-            motor.motor_continue(30 + run, 30 - run)
-            time.sleep(0.1)  
-    for i in range(10):
-        coefficient_power = 10 - i
-        coefficient_power /= 10
-        motor.motor_move(30 * coefficient_power, 30* coefficient_power, 0.1)
-        if i == 9:
-            motor.motor_stop(2)
+gps_run()
