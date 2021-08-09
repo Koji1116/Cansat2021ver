@@ -105,6 +105,7 @@ except:
 
 
 print('---motor---')
+motor.setup()
 motor.move(20,20,2)
 
 
