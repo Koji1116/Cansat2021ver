@@ -265,14 +265,17 @@ def GPSdata_read():
         closeGPS()
         print("\r\nKeyboard Intruppted, Serial Closed")
 
-def read():
-    utc, lat, lon, sHeight, gHeight = readGPS()
-    if utc == -1.0:
-        if lat == -1.0:
-            utc, lat, lon, sHeight, gHeight = 'e', 'r', 'r', 'o', 'r'
-        else:
-            utc, lat, lon, sHeight, gHeight = 's', 't', 'a', 't', 'u'
-    return utc, lat, lon, sHeight, gHeight
+def location():
+    try:
+        while True:
+            utc, lat, lon, sHeight, gHeight = readGPS()
+            if utc != -1.0 and lat != -1.0:
+                break
+            time.sleep(1)
+        return lat, lon
+    except KeyboardInterrupt:
+        closeGPS()
+        print("\r\nKeyboard Intruppted, Serial Closed")
 
 
 
