@@ -1,4 +1,3 @@
-from Detection.stuck import ue_jug
 import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
