@@ -133,6 +133,10 @@ while 1:
             mag_y = magdata[1]
             theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
             theta = azimuth - theta
+            if theta < 0:
+                theta = 360 + theta
+            elif 360 <= theta <= 450:
+                theta = theta - 360
             if 0 <= theta <= 15 or 345 <= theta <= 360:
                 print(0)
                 pass
