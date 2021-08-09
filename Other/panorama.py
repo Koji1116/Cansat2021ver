@@ -45,6 +45,8 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
         else:
             photos.append(cv2.imread(srcdir + str(i) + srcext))
 
+    print(len(photos))
+
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
     cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
