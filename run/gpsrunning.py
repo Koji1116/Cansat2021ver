@@ -105,7 +105,7 @@ def gps_run():
 
         magdata_Old = Calibration.magdata_matrix(20, -20, 0.2, 30)
         _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
-        print(mag_x, mag_y)
+        print(magx_off, magy_off)
         magdata = BMC050.mag_dataRead()
         mag_x = magdata[0]
         mag_y = magdata[1]
