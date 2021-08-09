@@ -31,18 +31,19 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
     srcext:ソースの拡張子
     dstext:できたものの拡張子
     """
-    srcfilecount = len(glob.glob1(srcdir, 'panoramaShooting' + '*' + srcext))
+    srcfilecount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/photostorage/src_panorama', 'panoramaShooting' + '*' + srcext))
     resultcount = len(glob.glob1(dstdir, srcdir + '*' + dstext))
     print(srcfilecount)
     print(resultcount)
+
 
     photos = []
 
     for i in range(0, srcfilecount):
         if len(str(i)) == 1:
-            photos.append(cv2.imread(srcdir + '/' + '0' + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + '0' + str(i) + srcext))
         else:
-            photos.append(cv2.imread(srcdir + '/' + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + str(i) + srcext))
 
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
