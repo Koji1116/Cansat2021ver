@@ -40,7 +40,7 @@ t_out_land = 40
 
 # variable for release
 thd_press_release = 0.3
-t_delta_release = 0.1
+t_delta_release = 1
 
 # variable for landing
 thd_press_land = 0.15
@@ -122,7 +122,7 @@ if __name__ == '__main__':
                 press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
                                                                                        t_delta_release)
                 print(f'count:{press_count_release}\tjudge{press_judge_release}')
-                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.readGPS,
+                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.readGPS(),
                               BME280.bme280_read(), press_count_release, press_judge_release)
                 if press_judge_release == 1:
                     print('Release\n \n')
