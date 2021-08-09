@@ -16,6 +16,8 @@ def setup():
     motor_l = Motor(Lpin1, Lpin2)
 
 def motor_continue(strength_l, strength_r):
+    strength_l = strength_l/100
+    strength_r = strength_r/100
     if strength_r >= 0 and strength_l >= 0:
         motor_r.forward(strength_r)
         motor_l.forward(strength_l)
