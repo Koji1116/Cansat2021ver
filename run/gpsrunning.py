@@ -95,16 +95,15 @@ def adjust_direction(theta):
 def gps_run():
     t_tyousei = float(input('何秒おきにキャリブレーションする？'))
 
-    while 1:
-        while stuck.ue_jug() == False:
-            print('したーーー')
-            motor.move(12, 12, 0.2)
-            time.sleep(1.5)
-        print('上だよ')
+    direction = Calibration.calculate_direction(lon2, lat2)
+    goal_distance = direction["distance"]
+    while goal_distance <= 15:
+        stuck.ue_jug()
+
         # ------------- Calibration -------------#
         print('Calibration Start')
 
-        magdata_Old = Calibration.magdata_matrix(20, -20, 0.2, 25)
+        magdata_Old = Calibration.magdata_matrix(20, -20, 0.2, 30)
         _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
 
         magdata = BMC050.mag_dataRead()
@@ -125,48 +124,50 @@ def gps_run():
             _, lat1, lon1, _, _ = GPS.GPSdata_read()
             direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
             azimuth = direction["azimuth1"]
+            goal_distance = direction["distance"]
+            if goal_distance <= 15:
+                break
+            else:
+                for _ in range(10):
+                    magdata = BMC050.mag_dataRead()
+                    mag_x = magdata[0]
+                    mag_y = magdata[1]
+                    theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+                    theta = azimuth - theta
+                    if theta < 0:
+                        theta = 360 + theta
+                    elif 360 <= theta <= 450:
+                        theta = theta - 360
+                    if 0 <= theta <= 15 or 345 <= theta <= 360:
+                        print(f'0--- {theta}')
+                        pass
+                    elif 15 < theta < 180:
+                        print(f'-1--- {theta}')
+                        run = 6.5
+                    elif 180 < theta < 345:
+                        run = -2.5
+                        print(f'1---{theta}')
+                    motor.motor_continue(30 + run, 30 - run)
+                    time.sleep(0.1)
+            for i in range(10):
+                coefficient_power = 10 - i
+                coefficient_power /= 10
+                motor.motor_move(30 * coefficient_power, 30 * coefficient_power, 0.1)
+                if i == 9:
+                    motor.motor_stop(2)
 
-            for _ in range(10):
-                magdata = BMC050.mag_dataRead()
-                mag_x = magdata[0]
-                mag_y = magdata[1]
-                theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
-                theta = azimuth - theta
-                if theta < 0:
-                    theta = 360 + theta
-                elif 360 <= theta <= 450:
-                    theta = theta - 360
-                if 0 <= theta <= 15 or 345 <= theta <= 360:
-                    print(f'0--- {theta}')
-                    pass
-                elif 15 < theta < 180:
-                    print(f'-1--- {theta}')
-                    run = 6.5
-                elif 180 < theta < 345:
-                    run = -2.5
-                    print(f'1---{theta}')
-                motor.motor_continue(30 + run, 30 - run)
-                time.sleep(0.1)
-        for i in range(10):
-            coefficient_power = 10 - i
-            coefficient_power /= 10
-            motor.motor_move(30 * coefficient_power, 30 * coefficient_power, 0.1)
-            if i == 9:
-                motor.motor_stop(2)
 
-
-def drive(t_adj_gps, logpath):
+def drive(th_distance, t_adj_gps, logpath):
     global t_start
-    while 1:
-        while stuck.ue_jug() == False:
-            Xbee.str_trans('Upside-down')
-            motor.move(12, 12, 0.2)
-            time.sleep(1.5)
-        Xbee.str_trans('Upward')
+
+    direction = Calibration.calculate_direction(lon2, lat2)
+    goal_distance = direction["distance"]
+    while goal_distance <= th_distance:
+        stuck.ue_jug()
         # ------------- Calibration -------------#
         Xbee.str_trans('Calibration Start')
 
-        magdata_Old = Calibration.magdata_matrix(20, -20, 0.2, 25)
+        magdata_Old = Calibration.magdata_matrix(20, -20, 0.2, 30)
         _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
 
         magdata = BMC050.mag_dataRead()
@@ -187,36 +188,40 @@ def drive(t_adj_gps, logpath):
             _, lat1, lon1, _, _ = GPS.GPSdata_read()
             direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
             azimuth = direction["azimuth1"]
-            Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\tazimuth: {azimuth}')
+            goal_distance = direction["distance"]
+            Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
             Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon2, direction['distance'], azimuth)
 
-            for _ in range(10):
-                magdata = BMC050.mag_dataRead()
-                mag_x = magdata[0]
-                mag_y = magdata[1]
-                theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
-                theta = azimuth - theta
-                if theta < 0:
-                    theta = 360 + theta
-                elif 360 <= theta <= 450:
-                    theta = theta - 360
-                if 0 <= theta <= 15 or 345 <= theta <= 360:
-                    Xbee.str_trans(f'0--- {theta}')
-                    pass
-                elif 15 < theta < 180:
-                    Xbee.str_trans(f'-1--- {theta}')
-                    run = 6.5
-                elif 180 < theta < 345:
-                    run = -2.5
-                    Xbee.str_trans(f'1---{theta}')
-                motor.motor_continue(30 + run, 30 - run)
-                time.sleep(0.1)
-        for i in range(10):
-            coefficient_power = 10 - i
-            coefficient_power /= 10
-            motor.motor_move(30 * coefficient_power, 30 * coefficient_power, 0.1)
-            if i == 9:
-                motor.motor_stop(2)
+            if goal_distance <= th_distance:
+                break
+            else:
+                for _ in range(10):
+                    magdata = BMC050.mag_dataRead()
+                    mag_x = magdata[0]
+                    mag_y = magdata[1]
+                    theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+                    theta = azimuth - theta
+                    if theta < 0:
+                        theta = 360 + theta
+                    elif 360 <= theta <= 450:
+                        theta = theta - 360
+                    if 0 <= theta <= 15 or 345 <= theta <= 360:
+                        Xbee.str_trans(f'0--- {theta}')
+                        pass
+                    elif 15 < theta < 180:
+                        Xbee.str_trans(f'-1--- {theta}')
+                        run = 6.5
+                    elif 180 < theta < 345:
+                        run = -2.5
+                        Xbee.str_trans(f'1---{theta}')
+                    motor.motor_continue(30 + run, 30 - run)
+                    time.sleep(0.1)
+            for i in range(10):
+                coefficient_power = 10 - i
+                coefficient_power /= 10
+                motor.motor_move(30 * coefficient_power, 30 * coefficient_power, 0.1)
+                if i == 9:
+                    motor.motor_stop(2)
 
 GPS.openGPS()
 acc.bmc050_setup()

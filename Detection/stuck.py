@@ -30,8 +30,11 @@ def ue_jug():
         accdata = acc.acc_dataRead()
         z = accdata[2]
         if z >= 0 :
+            Xbee.str_trans('Upward')
+            print('上だよ')
             break
         else:
+            Xbee.str_trans('Upside-down')
             if ue_count > 2:
                 motor.move(30, 30, 0.008)
             else:
@@ -130,7 +133,9 @@ if __name__ == '__main__':
     motor.setup()
     while 1:
         
-        a = int(input('出力入力しろ'))
-        b = float(input('時間入力しろ'))
-        motor.move(a,a,b)
+        # a = int(input('出力入力しろ'))
+        # b = float(input('時間入力しろ'))
+        # motor.move(a,a,b)
+        ue_jug()
+        time.sleep(3)
     
