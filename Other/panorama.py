@@ -56,7 +56,7 @@ def composition(srcdir, dstdir, srcext='.jpg',dstext='.jpg'):
         print('composition succeed')
 
     else:
-        print('failed')
+        print('composition failed')
 
 def shooting(l, r, t, magx_off, magy_off, path):
     """
@@ -74,8 +74,6 @@ def shooting(l, r, t, magx_off, magy_off, path):
 
     while sumθ <= 360:
         Capture.Capture(path)
-        # filename = Capture.Capture(path)
-        # photobox.append(filename)
         motor.move(l, r, t)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
@@ -108,18 +106,23 @@ def shooting(l, r, t, magx_off, magy_off, path):
             latestθ -= 360
         preθ2 = preθ
         preθ = latestθ
-        Xbee.str_trans('sumθ:', sumθ, ' preθ:', preθ, ' deltaθ:', deltaθ)
+        Xbee.str_trans(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
         print(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
 
 
 if __name__ == "__main__":
     try:
-        srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/nisho-ground12_640_asyuku'
+        srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/panorama/panoramaShooting00'
         dstdir = '/home/pi/Desktop/Cansat2021ver/photostorage'
-        startTime = time.time()  # プログラムの開始時刻
-        panorama(srcdir, dstdir, 'panoramaShootingtest00')
-        endTime = time.time() #プログラムの終了時間
-        runTime = endTime - startTime
+        magdata = Calibration.magdata_matrix()
+        _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata)
+        l = float(input('左の出力'))
+        r = float(input('右の出力'))
+        t = float(input('回転時間'))
+        shooting(l, r, t)
+        t_start = time.time()  # プログラムの開始時刻
+        panorama(srcdir, dstdir)
+        runTime = time.time() - t_start
         print(runTime)
     except KeyboardInterrupt:
         print('Interrupted')
