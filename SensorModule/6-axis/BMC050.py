@@ -130,7 +130,7 @@ def bmc050_read():
 
 if __name__ == '__main__':
     try:
-        bmc050_setup()
+        BMC050_setup()
         time.sleep(0.2)
         t_start = time.time()
         while 1:
