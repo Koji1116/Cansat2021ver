@@ -41,7 +41,7 @@ def ue_jug():
             else:
                 motor.move(12, 12, 0.2)
             time.sleep(2)
-            ue_count = +1
+            ue_count += 1
 
 
 def stuck_jug(lat1, lon1, lat2, lon2, thd = 1.0 ):
