@@ -6,6 +6,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 from time import sleep
+import time
 #from SensorModule.GPS.GPS_Navigate import vincenty_inverse
 from math import*
 from gpiozero import Motor
@@ -31,8 +32,12 @@ def ue_jug():
         if z >= 0 :
             break
         else:
-            motor.move(12, 12, 0.2)
-            ue_count =+1
+            if ue_count > 2:
+                motor.move(36, 36, 0.06)
+            else:
+                motor.move(12, 12, 0.2)
+            time.sleep(2)
+            ue_count = +1
 
 
 def stuck_jug(lat1, lon1, lat2, lon2, thd = 1.0 ):
@@ -122,7 +127,9 @@ def stuck_avoid():
 
 
 if __name__ == '__main__':
+    motor.setup()
     while 1:
+        
         a = int(input('出力入力しろ'))
         b = float(input('時間入力しろ'))
         motor.move(a,a,b)
