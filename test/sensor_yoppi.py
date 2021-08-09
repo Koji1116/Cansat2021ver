@@ -83,7 +83,7 @@ try:
 except:
     print('error : camera\n')
 
-print('---Environment---')
+print('\n---Environment---')
 try:
     BME280.bme280_setup()
     BME280.bme280_calib_param()
