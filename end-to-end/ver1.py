@@ -26,7 +26,6 @@ import land
 import paradetection
 import paraavoidance
 import escape
-import mag
 import panorama
 import gpsrunning
 import photorunning
