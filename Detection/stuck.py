@@ -33,7 +33,7 @@ def ue_jug():
             break
         else:
             if ue_count > 2:
-                motor.move(36, 36, 0.06)
+                motor.move(30, 30, 0.008)
             else:
                 motor.move(12, 12, 0.2)
             time.sleep(2)
