@@ -114,12 +114,16 @@ if __name__ == "__main__":
     try:
         srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/panorama/panoramaShooting00'
         dstdir = '/home/pi/Desktop/Cansat2021ver/photostorage'
-        magdata = Calibration.magdata_matrix()
+        l = float(input('左の出力'))
+        r = float(input('右の出力'))
+        t = float(input('回転時間'))
+        n = int(input('取得データ数は？'))
+        magdata = Calibration.magdata_matrix(l, r, t, n)
         _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata)
         l = float(input('左の出力'))
         r = float(input('右の出力'))
         t = float(input('回転時間'))
-        shooting(l, r, t)
+        shooting(l, r, t, magx_off, magy_off, srcdir)
         t_start = time.time()  # プログラムの開始時刻
         panorama(srcdir, dstdir)
         runTime = time.time() - t_start
