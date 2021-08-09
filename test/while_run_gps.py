@@ -123,7 +123,7 @@ while 1:
 
 
     while time.time()-t_cal <= t_tyousei :
-        _, lat1, lon1, _, _ = GPS.GPSdata_reatd()
+        _, lat1, lon1, _, _ = GPS.GPSdata_read()
         direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
         azimuth = direction["azimuth1"]
 
