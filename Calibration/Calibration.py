@@ -173,6 +173,12 @@ def calculate_offset(magdata):
     return magx_array, magy_array, magz_array, magx_off, magy_off, magz_off
 
 
+def cal(l, r, t, n, t_sleeptime=0):
+    magdata = magdata_matrix(l, r, t, n, t_sleeptime)
+    _, _, _, magx_off, magy_off, _ = calculate_offset(magdata)
+    return magx_off, magy_off
+
+
 def angle(magx, magy, magx_off=0, magy_off=0):
     if magy - magy_off == 0:
         magy += 0.000001
