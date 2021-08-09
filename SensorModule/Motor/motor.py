@@ -10,8 +10,8 @@ import acc
 
 def setup():
     global motor_r, motor_l
-    Rpin1, Rpin2 = 6, 5
-    Lpin1, Lpin2 = 9, 10
+    Rpin1, Rpin2 = 5, 6
+    Lpin1, Lpin2 = 10, 9
     motor_r = Motor(Rpin1, Rpin2)
     motor_l = Motor(Lpin1, Lpin2)
 
