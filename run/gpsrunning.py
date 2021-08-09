@@ -223,8 +223,9 @@ def drive(th_distance, t_adj_gps, logpath):
                 if i == 9:
                     motor.motor_stop(2)
 
-GPS.openGPS()
-acc.bmc050_setup()
-motor.setup()
-mag.bmc050_setup()
-gps_run()
+if __name__ == '__main__':
+    GPS.openGPS()
+    acc.bmc050_setup()
+    motor.setup()
+    mag.bmc050_setup()
+    gps_run()
