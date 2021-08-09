@@ -142,9 +142,9 @@ while 1:
                 pass
             elif theta>15:
                 print(-1)
-                run = -15
+                run = -5
             elif theta < 345:
-                run = 15
+                run = 5
                 print(1)
             motor.motor_continue(30 + run, 30 - run)
             time.sleep(5)       
