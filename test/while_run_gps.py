@@ -93,7 +93,6 @@ mag.bmc050_setup()
 t_tyousei = float(input('何秒おきにキャリブレーションする？'))
 
 while 1:
-    time.sleep(2)
     if stuck.ue_jug():
         print('上だよ')
         pass
@@ -142,9 +141,9 @@ while 1:
                 pass
             elif 15 < theta <180:
                 print(f'-1--- {theta}')
-                run = 5
+                run = 6.5
             elif 180 < theta < 345:
-                run = -5
+                run = -2.5
                 print(f'1---{theta}')
             motor.motor_continue(30 + run, 30 - run)
             time.sleep(1)  
@@ -153,4 +152,4 @@ while 1:
         coefficient_power /= 10
         motor.motor_move(30 * coefficient_power, 30* coefficient_power, 0.1)
         if i == 9:
-            motor_stop(x)
+            motor.motor_stop(2)
