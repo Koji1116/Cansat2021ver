@@ -238,7 +238,7 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 7:
-            gpsrunning.gps_run(th_distance, t_adj_gps, log_gpsrunning)
+            gpsrunning.drive(th_distance, t_adj_gps, log_gpsrunning)
     except:
         print('#####-----Error(gpsrunning)-----#####')
         print('#####-----Error(gpsrunning)-----#####')

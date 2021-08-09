@@ -189,7 +189,8 @@ def drive(th_distance, t_adj_gps, logpath):
             direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
             azimuth = direction["azimuth1"]
             goal_distance = direction["distance"]
-            Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
+            # Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
+            print(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
             Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon2, direction['distance'], azimuth)
 
             if goal_distance <= th_distance:
