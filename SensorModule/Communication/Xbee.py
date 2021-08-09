@@ -69,10 +69,12 @@ def on():
 def off():
     pi.write(12, 0)
 
-#str_trans('!')
-str_trans('HELLO!')
-# img1 = "/home/pi/Desktop/transfer-test/003.jpg"
-# img_string = convert_string(img1)
-# img_string = ImageToByte(img1)
 
-# img_trans(img_string)
+if __name__ == '__main__':
+    #str_trans('!')
+    str_trans('HELLO!')
+    # img1 = "/home/pi/Desktop/transfer-test/003.jpg"
+    # img_string = convert_string(img1)
+    # img_string = ImageToByte(img1)
+
+    # img_trans(img_string)
