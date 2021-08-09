@@ -211,7 +211,7 @@ if __name__ == '__main__':
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 6:
             t_start_panorama = time.time()  # プログラムの開始時刻
-            panorama(path_src_panorama, path_dst_panoraam, 'panoramaShootingtest00')
+            panorama.shooting(path_src_panorama, path_dst_panoraam, 'panoramaShootingtest00')
             Xbee.str_trans(f'runTime_panorama:\t{time.time()-t_start_panorama}')
         Xbee.str_trans('#####-----panorama ended-----##### \n \n')
     except:
