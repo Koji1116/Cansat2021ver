@@ -58,12 +58,13 @@ def composition(srcdir, dstdir, srcext='.jpg',dstext='.jpg'):
     else:
         print('composition failed')
 
-def shooting(l, r, t, magx_off, magy_off, path):
+def shooting(l, r, t, mag_mat, path):
     """
     パノラマ撮影用の関数
     引数は磁気のオフセット
     """
     # photobox = []
+    _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(mag_mat)
     magdata = BMC050.mag_dataRead()
     magx = magdata[0]
     magy = magdata[1]
@@ -106,11 +107,12 @@ def shooting(l, r, t, magx_off, magy_off, path):
             latestθ -= 360
         preθ2 = preθ
         preθ = latestθ
-        Xbee.str_trans(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
+        # Xbee.str_trans(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
         print(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
 
 
 if __name__ == "__main__":
+    BMC050.BMC050_setup()
     motor.setup()
     try:
         srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/src_panorama/panoramaShooting00'
@@ -120,11 +122,11 @@ if __name__ == "__main__":
         t = float(input('回転時間'))
         n = int(input('取得データ数は？'))
         magdata = Calibration.magdata_matrix(l, r, t, n)
-        _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata)
+
         l = float(input('左の出力'))
         r = float(input('右の出力'))
         t = float(input('回転時間'))
-        shooting(l, r, t, magx_off, magy_off, srcdir)
+        shooting(l, r, t, magdata, srcdir)
         t_start = time.time()  # プログラムの開始時刻
         panorama(srcdir, dstdir)
         runTime = time.time() - t_start
