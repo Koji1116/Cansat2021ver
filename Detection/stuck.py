@@ -35,12 +35,13 @@ def ue_jug():
             break
         else:
             Xbee.str_trans('Upside-down')
+            print(f'下だよ{ue_count}')
             if ue_count > 2:
                 motor.move(30, 30, 0.008)
             else:
                 motor.move(12, 12, 0.2)
             time.sleep(2)
-            ue_count = +1
+            ue_count += 1
 
 
 def stuck_jug(lat1, lon1, lat2, lon2, thd = 1.0 ):
@@ -137,5 +138,4 @@ if __name__ == '__main__':
         # b = float(input('時間入力しろ'))
         # motor.move(a,a,b)
         ue_jug()
-        time.sleep(3)
     
