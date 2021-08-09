@@ -115,7 +115,7 @@ if __name__ == "__main__":
     BMC050.BMC050_setup()
     motor.setup()
     try:
-        srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/src_panorama/panoramaShooting00'
+        srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/src_panorama/panoramaShooting'
         dstdir = '/home/pi/Desktop/Cansat2021ver/photostorage/dst_panorama'
         l = float(input('左の出力'))
         r = float(input('右の出力'))
@@ -128,7 +128,7 @@ if __name__ == "__main__":
         t = float(input('回転時間'))
         shooting(l, r, t, magdata, srcdir)
         t_start = time.time()  # プログラムの開始時刻
-        panorama(srcdir, dstdir)
+        composition(srcdir, dstdir)
         runTime = time.time() - t_start
         print(runTime)
     except KeyboardInterrupt:
