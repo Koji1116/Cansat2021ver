@@ -133,7 +133,9 @@ if __name__ == '__main__':
             else:
                 print('##--release timeout--##')
             print("######-----Released-----##### \n \n")
-        except:
+        except Exception as e:
+            tb = sys.exc_info()[2]
+            print("message:{0}".format(e.with_traceback(tb)))
             print('#####-----Error(Release)-----#####')
             print('#####-----Error(Release)-----#####')
             print('#####-----Error(Release)-----#####')
@@ -165,7 +167,9 @@ if __name__ == '__main__':
             Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.readGPS(),
                           BME280.bme280_read(), 'Land judge finished')
             print('######-----Landed-----######\n \n')
-    except:
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(Landing)-----#####')
         print('#####-----Error(Landing)-----#####')
         print('#####-----Error(Landing)-----#####')
@@ -182,7 +186,9 @@ if __name__ == '__main__':
             escape.escape()
             Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.readGPS(), "Melting Finished")
         print('########-----Melted-----#######\n \n')
-    except:
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(melting)-----#####')
         print('#####-----Error(melting)-----#####')
         print('#####-----Error(melting)-----#####')
