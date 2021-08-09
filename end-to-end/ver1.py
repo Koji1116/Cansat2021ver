@@ -71,7 +71,7 @@ log_phase = '/home/pi/Desktop/Cansat2021ver/log/phaseLog1.txt'
 log_release = '/home/pi/Desktop/Cansat2021ver/log/releaselog1.txt'
 log_landing = '/home/pi/Desktop/Cansat2021ver/log/landingLog1.txt'
 log_melting = '/home/pi/Desktop/Cansat2021ver/log/meltingLog1.txt'
-log_paraavoidance = 'home/pi/Desktop/Cansat2021ver/log/paraAvoidanceLog1.txt'
+log_paraavoidance = '/home/pi/Desktop/Cansat2021ver/log/paraAvoidanceLog1.txt'
 log_gpsrunning = '/home/pi/Desktop/Cansat2021ver/log/gpsrunningLog1.txt'
 log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning1.txt'
 
@@ -273,7 +273,7 @@ if __name__ == '__main__':
     #####------------------panorama composition--------------##########
     try:
         print('#####-----panorama composition-----#####')
-        Other.saveLog(log_phase, '8', 'Melting phase start', dateTime, time.time() - t_start)
+        Other.saveLog(log_phase, '9', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
