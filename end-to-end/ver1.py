@@ -78,7 +78,7 @@ log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning1.txt'
 # photo path
 path_src_panorama = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting00'
 path_dst_panoraam = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
-path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage'
+path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage/paradete'
 
 
 def setup():
