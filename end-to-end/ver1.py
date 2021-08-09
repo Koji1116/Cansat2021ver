@@ -88,11 +88,11 @@ def setup():
     BMC050.BMC050_setup()
     GPS.openGPS()
     Xbee.on()
-    motor.setup()
 
 
 if __name__ == '__main__':
     print('a')
+    motor.setup()
     #######-----------------------Setup--------------------------------#######
     try:
         t_start = time.time()
