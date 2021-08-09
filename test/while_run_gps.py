@@ -9,7 +9,6 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/Desktop/Casnat2021ver/Detection')
 import numpy as np
 import GPS_Navigate
-import Xbee
 import BMC050
 import GPS
 import motor
@@ -21,15 +20,11 @@ import traceback
 from threading import Thread
 import math
 import mag
-import datetime
-# import goaldetection
-import Capture
-import photorunning2
 import stuck
 import acc
 
-lon2 = 139.9114415
-lat2 = 35.9236391
+lon2 = 139.908905
+lat2 = 35.918543
 run_l = 0
 run_r = 0
 run = 0
@@ -93,63 +88,67 @@ def adjust_direction(theta):
 GPS.openGPS()
 acc.bmc050_setup()
 motor.setup()
-n = float(input('何秒間走る？'))
-
-##calibration
-r = float(input('右の出力は？'))
-l = float(input('左の出力は？'))
-t = float(input('何秒回転する？'))
-n = int(input('データ数いくつ'))
-if stuck.ue_jug():
-    print('上だよ')
-    pass
-else:
-    print('したーーーー')
-    motor.move(12, 12, 0.2)
-# ------------- Calibration -------------#
-print('Calibration Start')
 mag.bmc050_setup()
-magdata_Old = Calibration.magdata_matrix(l, r, t, n)
-_, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
-
-
-magdata = BMC050.mag_dataRead()
-mag_x = magdata[0]
-mag_y = magdata[1]
-theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
-direction = Calibration.calculate_direction(lon2, lat2)
-azimuth = direction["azimuth1"]
-theta = azimuth - theta
-if theta < 0:
-    theta = 360 + theta
-elif 360 <= theta <= 450:
-    theta = theta - 360
-adjust_direction(theta)
+##calibration
+t_tyousei = float(input('何秒おきにキャリブレーションする？'))
 
 while 1:
+    while stuck.ue_jug() == False:
+        print('したーーー')
+        motor.move(12, 12, 0.2)
+        time.sleep(1.5)
+    print('上だよ')
+    # ------------- Calibration -------------#
+    print('Calibration Start')
     
-    # print('----------------')
-    # old = acc.acc_dataRead()
-    # print(f'old {old}')
-    # motor.motor_move(30, 30, n)
-    # new = acc.acc_dataRead()
-    # print(f'new {new}')
+    magdata_Old = Calibration.magdata_matrix(20, -20, 0.2, 25)
+    _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
 
-    GPSdata_old = GPS.GPSdata_read()
-    motor.motor_move(30 + run, 30 - run, n)
-    GPSdata_new = GPS.GPSdata_read()
-    if stuck.stuck_jug(GPSdata_old[1], GPSdata_old[2], GPSdata_new[1], GPSdata_new[2], 1.0):
-        pass
-    else:
-        pass
+
+    magdata = BMC050.mag_dataRead()
+    mag_x = magdata[0]
+    mag_y = magdata[1]
+    theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
     direction = Calibration.calculate_direction(lon2, lat2)
-    azimuth = direction['azimuth1']
-    if 0 <= azimuth <= 15 or 345 <= azimuth <= 360:
-        print(0)
-        pass
-    elif azimuth>15:
-        print(-1)
-        run = -15
-    elif azimuth < 345:
-        run = 15
-        print(1)
+    azimuth = direction["azimuth1"]
+    theta = azimuth - theta
+    if theta < 0:
+        theta = 360 + theta
+    elif 360 <= theta <= 450:
+        theta = theta - 360
+    adjust_direction(theta)
+    t_cal = time.time()
+
+
+    while time.time()-t_cal <= t_tyousei :
+        _, lat1, lon1, _, _ = GPS.GPSdata_read()
+        direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
+        azimuth = direction["azimuth1"]
+
+        for _ in range(10):
+            magdata = BMC050.mag_dataRead()
+            mag_x = magdata[0]
+            mag_y = magdata[1]
+            theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+            theta = azimuth - theta
+            if theta < 0:
+                theta = 360 + theta
+            elif 360 <= theta <= 450:
+                theta = theta - 360
+            if 0 <= theta <= 15 or 345 <= theta <= 360:
+                print(f'0--- {theta}')
+                pass
+            elif 15 < theta <180:
+                print(f'-1--- {theta}')
+                run = 6.5
+            elif 180 < theta < 345:
+                run = -2.5
+                print(f'1---{theta}')
+            motor.motor_continue(30 + run, 30 - run)
+            time.sleep(0.1)  
+    for i in range(10):
+        coefficient_power = 10 - i
+        coefficient_power /= 10
+        motor.motor_move(30 * coefficient_power, 30* coefficient_power, 0.1)
+        if i == 9:
+            motor.motor_stop(2)

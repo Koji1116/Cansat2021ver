@@ -10,12 +10,14 @@ import acc
 
 def setup():
     global motor_r, motor_l
-    Rpin1, Rpin2 = 6, 5
-    Lpin1, Lpin2 = 9, 10
+    Rpin1, Rpin2 = 5, 6
+    Lpin1, Lpin2 = 10, 9
     motor_r = Motor(Rpin1, Rpin2)
     motor_l = Motor(Lpin1, Lpin2)
 
 def motor_continue(strength_l, strength_r):
+    strength_l = strength_l/100
+    strength_r = strength_r/100
     if strength_r >= 0 and strength_l >= 0:
         motor_r.forward(strength_r)
         motor_l.forward(strength_l)
