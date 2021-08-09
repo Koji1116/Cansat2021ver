@@ -1,3 +1,4 @@
+import datetime
 import sys
 
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Detection')
@@ -155,6 +156,7 @@ def gps_run():
 
 
 def drive(t_adj_gps, logpath):
+    global t_start
     while 1:
         while stuck.ue_jug() == False:
             Xbee.str_trans('Upside-down')
@@ -186,7 +188,8 @@ def drive(t_adj_gps, logpath):
             direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
             azimuth = direction["azimuth1"]
             Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\tazimuth: {azimuth}')
-            Other.saveLog()
+            Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon2, direction['distance'], azimuth)
+
             for _ in range(10):
                 magdata = BMC050.mag_dataRead()
                 mag_x = magdata[0]
