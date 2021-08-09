@@ -35,8 +35,8 @@ import Calibration
 dateTime = datetime.datetime.now()
 
 # variable for timeout
-t_out_release = 50
-t_out_land = 40
+t_out_release = 10
+t_out_land = 10
 
 # variable for release
 thd_press_release = 0.3
