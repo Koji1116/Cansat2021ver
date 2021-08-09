@@ -93,12 +93,11 @@ mag.bmc050_setup()
 t_tyousei = float(input('何秒おきにキャリブレーションする？'))
 
 while 1:
-    if stuck.ue_jug():
-        print('上だよ')
-        pass
-    else:
-        print('したーーーー')
+    while stuck.ue_jug() == False:
+        print('したーーー')
         motor.move(12, 12, 0.2)
+        time.sleep(1.5)
+    print('上だよ')
     # ------------- Calibration -------------#
     print('Calibration Start')
     
@@ -126,7 +125,7 @@ while 1:
         direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
         azimuth = direction["azimuth1"]
 
-        for _ in range(5):
+        for _ in range(10):
             magdata = BMC050.mag_dataRead()
             mag_x = magdata[0]
             mag_y = magdata[1]
@@ -146,7 +145,7 @@ while 1:
                 run = -2.5
                 print(f'1---{theta}')
             motor.motor_continue(30 + run, 30 - run)
-            time.sleep(0.2)  
+            time.sleep(0.1)  
     for i in range(10):
         coefficient_power = 10 - i
         coefficient_power /= 10
