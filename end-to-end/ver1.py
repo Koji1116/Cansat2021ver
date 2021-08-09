@@ -15,7 +15,6 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/run')
 import time
 import datetime
 
-
 import BME280
 import Xbee
 import GPS
@@ -32,33 +31,43 @@ import panorama
 import gpsrunning
 import photorunning
 import Other
-
+import Calibration
 
 dateTime = datetime.datetime.now()
 
-
-
-#variable for timeout
+# variable for timeout
 t_out_release = 50
 t_out_land = 40
 
-#variable for release
+# variable for release
 thd_press_release = 0.3
 t_delta_release = 0.1
 
-#variable for landing
+# variable for landing
 thd_press_land = 0.15
 
-#variable for GPSrun
+# variable for Calibration
+strength_l_cal = 20
+strength_r_cal = -20
+t_rotation_cal = 0.2
+number_data = 30
+
+# variable for panorama
+strength_l_pano = 20
+strength_r_pano = -20
+t_rotation_pano = 0.15
+
+# variable for GPSrun
 lon2 = 35.
 lat2 = 139.
+th_distance = 10
 t_adj_gps = 5
 
-#variable for photorun
+# variable for photorun
 G_thd = 80
 path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
 
-#log
+# log
 log_phase = '/home/pi/Desktop/Cansat2021ver/log/phaseLog1.txt'
 log_release = '/home/pi/Desktop/Cansat2021ver/log/releaselog1.txt'
 log_landing = '/home/pi/Desktop/Cansat2021ver/log/landingLog1.txt'
@@ -67,9 +76,9 @@ log_paraavoidance = 'home/pi/Desktop/Cansat2021ver/paraAvoidanceLog1.txt'
 log_gpsrunning = '/home/pi/Desktop/Cansat2021ver/gpsrunningLog1.txt'
 log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning1.txt'
 
-#photo path
-path_src_panorama = '/home/pi/Desktop/Cansat2021ver/panorama_src'
-path_dst_panoraam = '/home/pi/Desktop/Cansat2021ver/panorama_dst'
+# photo path
+path_src_panorama = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting00'
+path_dst_panoraam = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
 path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage'
 
 
@@ -205,14 +214,15 @@ if __name__ == '__main__':
 
     #######--------------------------panorama--------------------------#######
     try:
-        Xbee.str_trans('#####-----panorama start-----#####')
-        Other.saveLog(log_phase, '6', 'Melting phase start', dateTime, time.time() - t_start)
+        Xbee.str_trans('#####-----panorama shooting start-----#####')
+        Other.saveLog(log_phase, '6', 'panorama shooting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 6:
             t_start_panorama = time.time()  # プログラムの開始時刻
-            panorama.shooting(path_src_panorama, path_dst_panoraam, 'panoramaShootingtest00')
-            Xbee.str_trans(f'runTime_panorama:\t{time.time()-t_start_panorama}')
+            magdata = Calibration.magdata_matrix(strength_l_cal, strength_r_cal, t_rotation_cal, number_data)
+            panorama.shooting(strength_l_pano, strength_r_pano, t_rotation_pano)
+            Xbee.str_trans(f'runTime_panorama:\t{time.time() - t_start_panorama}')
         Xbee.str_trans('#####-----panorama ended-----##### \n \n')
     except:
         Xbee.str_trans('#####-----Error(panorama)-----#####')
@@ -227,8 +237,7 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 7:
-            gpsrunning.gps_run()
-
+            gpsrunning.gps_run(th_distance, t_adj_gps, log_gpsrunning)
     except:
         Xbee.str_trans('#####-----Error(gpsrunning)-----#####')
         Xbee.str_trans('#####-----Error(gpsrunning)-----#####')
@@ -237,9 +246,21 @@ if __name__ == '__main__':
     ######------------------photo running---------------------##########
     try:
         Xbee.str_trans('#####-----photo run start-----#####')
-        photorunning.image_guided_driving(path_photo_imagerun, G_thd)
-
+        Other.saveLog(log_phase, '8', 'Melting phase start', dateTime, time.time() - t_start)
+        phaseChk = Other.phaseCheck(log_phase)
+        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        if phaseChk == 8:
+            photorunning.image_guided_driving(path_photo_imagerun, G_thd)
     except:
         Xbee.str_trans('#####-----Error(Photo running)-----#####')
         Xbee.str_trans('#####-----Error(Photo running)-----#####')
         Xbee.str_trans('#####-----Error(Photo running)-----#####')
+
+    #####------------------panorama composition--------------##########
+    try:
+        Xbee.str_trans('#####-----panorama composition-----#####')
+        Other.saveLog(log_phase, '8', 'Melting phase start', dateTime, time.time() - t_start)
+        phaseChk = Other.phaseCheck(log_phase)
+        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        if phaseChk == 9:
+            panorama.composition(path_src_panorama, path_dst_panoraam)
