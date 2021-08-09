@@ -159,7 +159,6 @@ def gps_run():
 
 def drive(th_distance, t_adj_gps, logpath):
     global t_start
-
     direction = Calibration.calculate_direction(lon2, lat2)
     goal_distance = direction["distance"]
     while goal_distance <= th_distance:
