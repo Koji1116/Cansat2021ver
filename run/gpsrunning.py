@@ -97,7 +97,7 @@ def gps_run():
 
     direction = Calibration.calculate_direction(lon2, lat2)
     goal_distance = direction["distance"]
-    while goal_distance <= 15:
+    while goal_distance >= 15:
         stuck.ue_jug()
 
         # ------------- Calibration -------------#
