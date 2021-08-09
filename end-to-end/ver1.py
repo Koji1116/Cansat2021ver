@@ -212,7 +212,9 @@ if __name__ == '__main__':
                 if flug == -1 or flug == 0:
                     count_paraavo += 1
         print('#####-----ParaAvo Phase ended-----##### \n \n')
-    except:
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(paraavo)-----#####')
         print('#####-----Error(paraavo)-----#####')
         print('#####-----Error(paraavo)-----#####')
@@ -230,7 +232,9 @@ if __name__ == '__main__':
             panorama.shooting(strength_l_pano, strength_r_pano, t_rotation_pano)
             print(f'runTime_panorama:\t{time.time() - t_start_panorama}')
         print('#####-----panorama ended-----##### \n \n')
-    except:
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(panorama)-----#####')
         print('#####-----Error(panorama)-----#####')
         print('#####-----Error(panorama)-----#####')
@@ -244,7 +248,9 @@ if __name__ == '__main__':
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 7:
             gpsrunning.drive(th_distance, t_adj_gps, log_gpsrunning)
-    except:
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(gpsrunning)-----#####')
         print('#####-----Error(gpsrunning)-----#####')
         print('#####-----Error(gpsrunning)-----#####')
@@ -257,7 +263,9 @@ if __name__ == '__main__':
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 8:
             photorunning.image_guided_driving(path_photo_imagerun, G_thd)
-    except:
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(Photo running)-----#####')
         print('#####-----Error(Photo running)-----#####')
         print('#####-----Error(Photo running)-----#####')
@@ -270,7 +278,9 @@ if __name__ == '__main__':
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
             panorama.composition(path_src_panorama, path_dst_panoraam)
-    except:
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(panorama composition)-----#####')
         print('#####-----Error(panorama composition)-----#####')
         print('#####-----Error(panorama composition)-----#####')
