@@ -9,7 +9,6 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/Desktop/Casnat2021ver/Detection')
 import numpy as np
 import GPS_Navigate
-import Xbee
 import BMC050
 import GPS
 import motor
@@ -21,10 +20,6 @@ import traceback
 from threading import Thread
 import math
 import mag
-import datetime
-# import goaldetection
-import Capture
-import photorunning2
 import stuck
 import acc
 
