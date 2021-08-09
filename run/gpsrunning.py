@@ -226,7 +226,7 @@ def adjust_direction(theta):
 
     print('theta = ' + str(theta) + '---回転終了!!!')
 
-    
+
 if __name__ == '__main__':
     GPS.openGPS()
     acc.bmc050_setup()
