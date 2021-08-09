@@ -146,7 +146,7 @@ while 1:
                 run = -2.5
                 print(f'1---{theta}')
             motor.motor_continue(30 + run, 30 - run)
-            time.sleep(2)  
+            time.sleep(0.2)  
     for i in range(10):
         coefficient_power = 10 - i
         coefficient_power /= 10
