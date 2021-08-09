@@ -111,7 +111,7 @@ def shooting(l, r, t, magx_off, magy_off, path):
 
 
 if __name__ == "__main__":
-    motor.setup
+    motor.setup()
     try:
         srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/src_panorama/panoramaShooting00'
         dstdir = '/home/pi/Desktop/Cansat2021ver/photostorage/dst_panorama'
