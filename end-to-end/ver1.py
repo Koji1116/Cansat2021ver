@@ -111,6 +111,7 @@ if __name__ == '__main__':
     except:
         print('#####-----Error(setup)-----#####')
         print('#####-----Error(setup)-----#####')
+        print('#####-----Error(setup)-----#####\n \n')
     #######-----------------------------------------------------------########
 
     #######--------------------------Release--------------------------#######
@@ -143,7 +144,7 @@ if __name__ == '__main__':
             print("message:{0}".format(e.with_traceback(tb)))
             print('#####-----Error(Release)-----#####')
             print('#####-----Error(Release)-----#####')
-            print('#####-----Error(Release)-----#####')
+            print('#####-----Error(Release)-----#####\n \n')
 
     #######--------------------------Landing--------------------------#######
     try:
@@ -160,10 +161,10 @@ if __name__ == '__main__':
                 press_count_release, press_judge_release = land.pressdetect_land(thd_press_land)
                 print(f'count:{press_count_release}\tjudge{press_judge_release}')
                 if press_judge_release == 1:
-                    print('Landed')
+                    print('Landed\n \n')
                     break
                 else:
-                    print('Not Landed')
+                    print('Not Landed\n \n')
                 Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.readGPS(),
                               BME280.bme280_read())
                 i += 1
@@ -177,7 +178,7 @@ if __name__ == '__main__':
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(Landing)-----#####')
         print('#####-----Error(Landing)-----#####')
-        print('#####-----Error(Landing)-----#####')
+        print('#####-----Error(Landing)-----#####\n \n')
     #######-----------------------------------------------------------########
 
     #######--------------------------Escape--------------------------#######
@@ -196,7 +197,7 @@ if __name__ == '__main__':
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(melting)-----#####')
         print('#####-----Error(melting)-----#####')
-        print('#####-----Error(melting)-----#####')
+        print('#####-----Error(melting)-----#####\n \n')
     #######-----------------------------------------------------------########
 
     #######--------------------------Paraavo--------------------------#######
@@ -222,7 +223,7 @@ if __name__ == '__main__':
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(paraavo)-----#####')
         print('#####-----Error(paraavo)-----#####')
-        print('#####-----Error(paraavo)-----#####')
+        print('#####-----Error(paraavo)-----#####\n \n')
     #######-----------------------------------------------------------########
 
     #######--------------------------panorama--------------------------#######
@@ -242,7 +243,7 @@ if __name__ == '__main__':
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(panorama)-----#####')
         print('#####-----Error(panorama)-----#####')
-        print('#####-----Error(panorama)-----#####')
+        print('#####-----Error(panorama)-----#####\n \n')
     #######-----------------------------------------------------------########
 
     #######--------------------------GPS--------------------------#######
@@ -258,7 +259,7 @@ if __name__ == '__main__':
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(gpsrunning)-----#####')
         print('#####-----Error(gpsrunning)-----#####')
-        print('#####-----Error(gpsrunning)-----#####')
+        print('#####-----Error(gpsrunning)-----#####\n \n')
 
     ######------------------photo running---------------------##########
     try:
@@ -273,7 +274,7 @@ if __name__ == '__main__':
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(Photo running)-----#####')
         print('#####-----Error(Photo running)-----#####')
-        print('#####-----Error(Photo running)-----#####')
+        print('#####-----Error(Photo running)-----#####\n \n')
 
     #####------------------panorama composition--------------##########
     try:
@@ -288,4 +289,4 @@ if __name__ == '__main__':
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(panorama composition)-----#####')
         print('#####-----Error(panorama composition)-----#####')
-        print('#####-----Error(panorama composition)-----#####')
+        print('#####-----Error(panorama composition)-----#####\n \n')
