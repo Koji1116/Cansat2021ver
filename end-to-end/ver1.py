@@ -96,171 +96,176 @@ if __name__ == '__main__':
     #######-----------------------Setup--------------------------------#######
     try:
         t_start = time.time()
-        Xbee.str_trans('#####-----Setup Phase start-----#####')
+        print('#####-----Setup Phase start-----#####')
         Other.saveLog(log_phase, "1", "Setup phase", dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        print(f'Phase:\t{phaseChk}')
         if phaseChk == 2:
             setup()
-        Xbee.str_trans('#####-----Setup Phase ended-----##### \n \n')
+        print('#####-----Setup Phase ended-----##### \n \n')
     except:
-        Xbee.str_trans('#####-----Error(setup)-----#####')
-        Xbee.str_trans('#####-----Error(setup)-----#####')
+        print('#####-----Error(setup)-----#####')
+        print('#####-----Error(setup)-----#####')
     #######-----------------------------------------------------------########
 
     #######--------------------------Release--------------------------#######
-    Xbee.str_trans('#####-----Release Phase start-----#####')
+    print('#####-----Release Phase start-----#####')
     Other.saveLog(log_phase, "2", "Release Phase Started", dateTime, time.time() - t_start)
     phaseChk = Other.phaseCheck(log_phase)
-    Xbee.str_trans(f'Phase:\t{phaseChk}')
+    print(f'Phase:\t{phaseChk}')
     if phaseChk == 2:
         t_release_start = time.time()
         i = 1
         try:
             while time.time() - t_release_start <= t_out_release:
-                Xbee.str_trans(f'loop_release\t {i}')
+                print(f'loop_release\t {i}')
                 press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
                                                                                        t_delta_release)
-                Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
+                print(f'count:{press_count_release}\tjudge{press_judge_release}')
                 Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.readGPS,
                               BME280.bme280_read(), press_count_release, press_judge_release)
                 if press_judge_release == 1:
-                    Xbee.str_trans('Release\n \n')
+                    print('Release\n \n')
                     break
                 else:
-                    Xbee.str_trans('Not Release\n \n')
+                    print('Not Release\n \n')
                 i += 1
             else:
-                Xbee.str_trans('##--release timeout--##')
-            Xbee.str_trans("######-----Released-----##### \n \n")
+                print('##--release timeout--##')
+            print("######-----Released-----##### \n \n")
         except:
-            Xbee.str_trans('#####-----Error(Release)-----#####')
-            Xbee.str_trans('#####-----Error(Release)-----#####')
-            Xbee.str_trans('#####-----Error(Release)-----#####')
+            print('#####-----Error(Release)-----#####')
+            print('#####-----Error(Release)-----#####')
+            print('#####-----Error(Release)-----#####')
 
     #######--------------------------Landing--------------------------#######
     try:
-        Xbee.str_trans('#####-----Landing phase start-----#####')
+        print('#####-----Landing phase start-----#####')
         Other.saveLog(log_phase, '3', 'Landing phase', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        print(f'Phase:\t{phaseChk}')
         if phaseChk == 3:
-            Xbee.str_trans(f'Landing Judgement Program Start\t{time.time() - t_start}')
+            print(f'Landing Judgement Program Start\t{time.time() - t_start}')
             t_land_start = time.time()
             i = 1
             while time.time() - t_land_start <= t_out_land:
-                Xbee.str_trans(f"loop_land\t{i}")
+                print(f"loop_land\t{i}")
                 press_count_release, press_judge_release = land.pressdetect_land(thd_press_land)
-                Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
+                print(f'count:{press_count_release}\tjudge{press_judge_release}')
                 if press_judge_release == 1:
-                    Xbee.str_trans('Landed')
+                    print('Landed')
                     break
                 else:
-                    Xbee.str_trans('Not Landed')
+                    print('Not Landed')
                 Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.readGPS(),
                               BME280.bme280_read())
                 i += 1
             else:
-                Xbee.str_trans('Landed Timeout')
+                print('Landed Timeout')
             Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.readGPS(),
                           BME280.bme280_read(), 'Land judge finished')
-            Xbee.str_trans('######-----Landed-----######\n \n')
+            print('######-----Landed-----######\n \n')
     except:
-        Xbee.str_trans('#####-----Error(Landing)-----#####')
-        Xbee.str_trans('#####-----Error(Landing)-----#####')
-        Xbee.str_trans('#####-----Error(Landing)-----#####')
+        print('#####-----Error(Landing)-----#####')
+        print('#####-----Error(Landing)-----#####')
+        print('#####-----Error(Landing)-----#####')
     #######-----------------------------------------------------------########
 
     #######--------------------------Escape--------------------------#######
     try:
-        Xbee.str_trans('#####-----Melting phase start#####')
+        print('#####-----Melting phase start#####')
         Other.saveLog(log_phase, '4', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        print(f'Phase:\t{phaseChk}')
         if phaseChk == 4:
             Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.readGPS(), "Melting Start")
             escape.escape()
             Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.readGPS(), "Melting Finished")
-        Xbee.str_trans('########-----Melted-----#######\n \n')
+        print('########-----Melted-----#######\n \n')
     except:
-        Xbee.str_trans('#####-----Error(melting)-----#####')
-        Xbee.str_trans('#####-----Error(melting)-----#####')
-        Xbee.str_trans('#####-----Error(melting)-----#####')
+        print('#####-----Error(melting)-----#####')
+        print('#####-----Error(melting)-----#####')
+        print('#####-----Error(melting)-----#####')
     #######-----------------------------------------------------------########
 
+    exit()
     #######--------------------------Paraavo--------------------------#######
     try:
-        Xbee.str_trans('#####-----Para avoid start-----#####')
+        print('#####-----Para avoid start-----#####')
         Other.saveLog(log_phase, '5', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        print(f'Phase:\t{phaseChk}')
         count_paraavo = 0
         if phaseChk == 5:
             while count_paraavo < 3:
                 flug, area, gap, photoname = paradetection.ParaDetection(
                     path_paradete, 320, 240, 200, 10, 120, 1)
-                Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
+                print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
                 Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.readGPS, flug, area,
                               gap, photoname)
                 paraavoidance.Parachute_Avoidance(flug, gap)
                 if flug == -1 or flug == 0:
                     count_paraavo += 1
-        Xbee.str_trans('#####-----ParaAvo Phase ended-----##### \n \n')
+        print('#####-----ParaAvo Phase ended-----##### \n \n')
     except:
-        Xbee.str_trans('#####-----Error(paraavo)-----#####')
-        Xbee.str_trans('#####-----Error(paraavo)-----#####')
-        Xbee.str_trans('#####-----Error(paraavo)-----#####')
+        print('#####-----Error(paraavo)-----#####')
+        print('#####-----Error(paraavo)-----#####')
+        print('#####-----Error(paraavo)-----#####')
     #######-----------------------------------------------------------########
 
     #######--------------------------panorama--------------------------#######
     try:
-        Xbee.str_trans('#####-----panorama shooting start-----#####')
+        print('#####-----panorama shooting start-----#####')
         Other.saveLog(log_phase, '6', 'panorama shooting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        print(f'Phase:\t{phaseChk}')
         if phaseChk == 6:
             t_start_panorama = time.time()  # プログラムの開始時刻
             magdata = Calibration.magdata_matrix(strength_l_cal, strength_r_cal, t_rotation_cal, number_data)
             panorama.shooting(strength_l_pano, strength_r_pano, t_rotation_pano)
-            Xbee.str_trans(f'runTime_panorama:\t{time.time() - t_start_panorama}')
-        Xbee.str_trans('#####-----panorama ended-----##### \n \n')
+            print(f'runTime_panorama:\t{time.time() - t_start_panorama}')
+        print('#####-----panorama ended-----##### \n \n')
     except:
-        Xbee.str_trans('#####-----Error(panorama)-----#####')
-        Xbee.str_trans('#####-----Error(panorama)-----#####')
-        Xbee.str_trans('#####-----Error(panorama)-----#####')
+        print('#####-----Error(panorama)-----#####')
+        print('#####-----Error(panorama)-----#####')
+        print('#####-----Error(panorama)-----#####')
     #######-----------------------------------------------------------########
 
     #######--------------------------GPS--------------------------#######
     try:
-        Xbee.str_trans('#####-----gps run start-----#####')
+        print('#####-----gps run start-----#####')
         Other.saveLog(log_phase, '7', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        print(f'Phase:\t{phaseChk}')
         if phaseChk == 7:
             gpsrunning.gps_run(th_distance, t_adj_gps, log_gpsrunning)
     except:
-        Xbee.str_trans('#####-----Error(gpsrunning)-----#####')
-        Xbee.str_trans('#####-----Error(gpsrunning)-----#####')
-        Xbee.str_trans('#####-----Error(gpsrunning)-----#####')
+        print('#####-----Error(gpsrunning)-----#####')
+        print('#####-----Error(gpsrunning)-----#####')
+        print('#####-----Error(gpsrunning)-----#####')
 
     ######------------------photo running---------------------##########
     try:
-        Xbee.str_trans('#####-----photo run start-----#####')
+        print('#####-----photo run start-----#####')
         Other.saveLog(log_phase, '8', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        print(f'Phase:\t{phaseChk}')
         if phaseChk == 8:
             photorunning.image_guided_driving(path_photo_imagerun, G_thd)
     except:
-        Xbee.str_trans('#####-----Error(Photo running)-----#####')
-        Xbee.str_trans('#####-----Error(Photo running)-----#####')
-        Xbee.str_trans('#####-----Error(Photo running)-----#####')
+        print('#####-----Error(Photo running)-----#####')
+        print('#####-----Error(Photo running)-----#####')
+        print('#####-----Error(Photo running)-----#####')
 
     #####------------------panorama composition--------------##########
     try:
-        Xbee.str_trans('#####-----panorama composition-----#####')
+        print('#####-----panorama composition-----#####')
         Other.saveLog(log_phase, '8', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
-        Xbee.str_trans(f'Phase:\t{phaseChk}')
+        print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
             panorama.composition(path_src_panorama, path_dst_panoraam)
+    except:
+        print('#####-----Error(panorama composition)-----#####')
+        print('#####-----Error(panorama composition)-----#####')
+        print('#####-----Error(panorama composition)-----#####')
