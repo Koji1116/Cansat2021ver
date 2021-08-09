@@ -3,7 +3,7 @@ import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/fall')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/detection')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
-sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environment')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Environmental')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
