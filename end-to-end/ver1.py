@@ -26,7 +26,6 @@ import land
 import paradetection
 import paraavoidance
 import escape
-import mag
 import panorama
 import gpsrunning
 import photorunning
@@ -72,8 +71,8 @@ log_phase = '/home/pi/Desktop/Cansat2021ver/log/phaseLog1.txt'
 log_release = '/home/pi/Desktop/Cansat2021ver/log/releaselog1.txt'
 log_landing = '/home/pi/Desktop/Cansat2021ver/log/landingLog1.txt'
 log_melting = '/home/pi/Desktop/Cansat2021ver/log/meltingLog1.txt'
-log_paraavoidance = 'home/pi/Desktop/Cansat2021ver/paraAvoidanceLog1.txt'
-log_gpsrunning = '/home/pi/Desktop/Cansat2021ver/gpsrunningLog1.txt'
+log_paraavoidance = 'home/pi/Desktop/Cansat2021ver/log/paraAvoidanceLog1.txt'
+log_gpsrunning = '/home/pi/Desktop/Cansat2021ver/log/gpsrunningLog1.txt'
 log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning1.txt'
 
 # photo path
@@ -189,7 +188,6 @@ if __name__ == '__main__':
         print('#####-----Error(melting)-----#####')
     #######-----------------------------------------------------------########
 
-    exit()
     #######--------------------------Paraavo--------------------------#######
     try:
         print('#####-----Para avoid start-----#####')
