@@ -126,7 +126,7 @@ while 1:
         direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
         azimuth = direction["azimuth1"]
 
-        for _ in range(1):
+        for _ in range(5):
             magdata = BMC050.mag_dataRead()
             mag_x = magdata[0]
             mag_y = magdata[1]
@@ -146,7 +146,7 @@ while 1:
                 run = -2.5
                 print(f'1---{theta}')
             motor.motor_continue(30 + run, 30 - run)
-            time.sleep(1)  
+            time.sleep(2)  
     for i in range(10):
         coefficient_power = 10 - i
         coefficient_power /= 10
