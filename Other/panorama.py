@@ -112,8 +112,8 @@ def shooting(l, r, t, magx_off, magy_off, path):
 
 if __name__ == "__main__":
     try:
-        srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/panorama/panoramaShooting00'
-        dstdir = '/home/pi/Desktop/Cansat2021ver/photostorage'
+        srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/src_panorama/panoramaShooting00'
+        dstdir = '/home/pi/Desktop/Cansat2021ver/photostorage/dst_panorama'
         l = float(input('左の出力'))
         r = float(input('右の出力'))
         t = float(input('回転時間'))
