@@ -1,9 +1,26 @@
+import sys
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
+
+
+
 import cv2
 import os
 import glob
 import time
+import panorama
+import motor
+import Capture
+import BMC050
+import Calibration
+import Xbee
 
-def composition(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext='.jpg'):
+
+def composition(srcdir, dstdir, srcext='.jpg',dstext='.jpg'):
     """
     パノラマを合成するための関数
     ソースディレクトリ内に合成用の写真を番号をつけて入れておく。（例：IMG0.jpg,IMG1.jpg）
@@ -24,21 +41,22 @@ def composition(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext=
 
     for i in range(0, srcfilecount):
         if len(str(i)) == 1:
-            photos.append(cv2.imread(srcdir +'/' + srcprefix + '0' +  str(i) + srcext))
+            photos.append(cv2.imread(srcdir +'/' + '0' +  str(i) + srcext))
         else:
-            photos.append(cv2.imread(srcdir + '/' + srcprefix + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + '/' + str(i) + srcext))
 
 
 
 
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
-    cv2.imwrite(dstdir + '/' + dstprefix + str(resultcount) + srcext, result)
+    cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
 
     if status == 0:
-        print("success")
+        print('composition succeed')
+
     else:
-        print('failed')
+        print('composition failed')
 
 def shooting(l, r, t, magx_off, magy_off, path):
     """
@@ -56,8 +74,6 @@ def shooting(l, r, t, magx_off, magy_off, path):
 
     while sumθ <= 360:
         Capture.Capture(path)
-        # filename = Capture.Capture(path)
-        # photobox.append(filename)
         motor.move(l, r, t)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
@@ -90,18 +106,23 @@ def shooting(l, r, t, magx_off, magy_off, path):
             latestθ -= 360
         preθ2 = preθ
         preθ = latestθ
-        # Xbee.str_trans('sumθ:', sumθ, ' preθ:', preθ, ' deltaθ:', deltaθ)
+        Xbee.str_trans(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
         print(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
 
 
 if __name__ == "__main__":
     try:
-        srcdir = '/home/pi/Desktop/Cansat2021ver/test/nisho-ground12_640_asyuku'
-        dstdir = '/home/pi/Desktop/Cansat2021ver/test/photostorage'
-        startTime = time.time()  # プログラムの開始時刻
-        panorama(srcdir, dstdir, 'panoramaShootingtest00')
-        endTime = time.time() #プログラムの終了時間
-        runTime = endTime - startTime
+        srcdir = '/home/pi/Desktop/Cansat2021ver/photostorage/panorama/panoramaShooting00'
+        dstdir = '/home/pi/Desktop/Cansat2021ver/photostorage'
+        magdata = Calibration.magdata_matrix()
+        _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata)
+        l = float(input('左の出力'))
+        r = float(input('右の出力'))
+        t = float(input('回転時間'))
+        shooting(l, r, t)
+        t_start = time.time()  # プログラムの開始時刻
+        panorama(srcdir, dstdir)
+        runTime = time.time() - t_start
         print(runTime)
     except KeyboardInterrupt:
         print('Interrupted')
