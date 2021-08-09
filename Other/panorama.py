@@ -31,7 +31,7 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
     srcext:ソースの拡張子
     dstext:できたものの拡張子
     """
-    srcfilecount = len(glob.glob1(srcdir + '/', '*' + srcext))
+    srcfilecount = len(glob.glob1(srcdir, 'panoramaShooting' + '*' + srcext))
     resultcount = len(glob.glob1(dstdir, srcdir + '*' + dstext))
     print(srcfilecount)
     print(resultcount)
@@ -46,7 +46,7 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
 
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
-    cv2.imwrite(dstdir + str(resultcount) + srcext, result)
+    cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
 
     if status == 0:
         print('composition succeed')
