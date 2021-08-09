@@ -35,6 +35,7 @@ def ue_jug():
             break
         else:
             Xbee.str_trans('Upside-down')
+            print(f'下だよ{ue_count}')
             if ue_count > 2:
                 motor.move(30, 30, 0.008)
             else:
@@ -137,5 +138,4 @@ if __name__ == '__main__':
         # b = float(input('時間入力しろ'))
         # motor.move(a,a,b)
         ue_jug()
-        time.sleep(3)
     
