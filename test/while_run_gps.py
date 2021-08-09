@@ -147,4 +147,4 @@ while 1:
                 run = 15
                 print(1)
             motor.motor_continue(30 + run, 30 - run)
-            time.sleep(0.1)       
+            time.sleep(5)       
