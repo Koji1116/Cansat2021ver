@@ -89,8 +89,13 @@ def setup():
     GPS.openGPS()
     Xbee.on()
 
+def close():
+    GPS.closeGPS()
+    Xbee.off()
+
 
 if __name__ == '__main__':
+    close()
     print('a')
     motor.setup()
     #######-----------------------Setup--------------------------------#######
