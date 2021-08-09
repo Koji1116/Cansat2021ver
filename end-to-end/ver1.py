@@ -35,8 +35,8 @@ import Calibration
 dateTime = datetime.datetime.now()
 
 # variable for timeout
-t_out_release = 50
-t_out_land = 40
+t_out_release = 5
+t_out_land = 5
 
 # variable for release
 thd_press_release = 0.3
@@ -78,7 +78,7 @@ log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning1.txt'
 # photo path
 path_src_panorama = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting00'
 path_dst_panoraam = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
-path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage'
+path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage/paradete'
 
 
 def setup():
