@@ -93,7 +93,7 @@ mag.bmc050_setup()
 t_tyousei = float(input('何秒おきにキャリブレーションする？'))
 
 while 1:
-
+    time.sleep(2)
     if stuck.ue_jug():
         print('上だよ')
         pass
