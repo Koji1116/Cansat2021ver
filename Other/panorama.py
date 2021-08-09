@@ -1,12 +1,11 @@
 import sys
+
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Camera')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
-
-
 
 import cv2
 import os
@@ -20,7 +19,7 @@ import Calibration
 import Xbee
 
 
-def composition(srcdir, dstdir, srcext='.jpg',dstext='.jpg'):
+def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
     """
     パノラマを合成するための関数
     ソースディレクトリ内に合成用の写真を番号をつけて入れておく。（例：IMG0.jpg,IMG1.jpg）
@@ -32,8 +31,8 @@ def composition(srcdir, dstdir, srcext='.jpg',dstext='.jpg'):
     srcext:ソースの拡張子
     dstext:できたものの拡張子
     """
-    srcfilecount = len(glob.glob1(srcdir + '/', '*'+srcext))
-    resultcount = len(glob.glob1(dstdir, srcdir + '*'+dstext))
+    srcfilecount = len(glob.glob1(srcdir + '/', '*' + srcext))
+    resultcount = len(glob.glob1(dstdir, srcdir + '*' + dstext))
     print(srcfilecount)
     print(resultcount)
 
@@ -41,22 +40,20 @@ def composition(srcdir, dstdir, srcext='.jpg',dstext='.jpg'):
 
     for i in range(0, srcfilecount):
         if len(str(i)) == 1:
-            photos.append(cv2.imread(srcdir +'/' + '0' +  str(i) + srcext))
+            photos.append(cv2.imread(srcdir + '/' + '0' + str(i) + srcext))
         else:
             photos.append(cv2.imread(srcdir + '/' + str(i) + srcext))
 
-
-
-
     stitcher = cv2.Stitcher.create(0)
     status, result = stitcher.stitch(photos)
-    cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
+    cv2.imwrite(dstdir + str(resultcount) + srcext, result)
 
     if status == 0:
         print('composition succeed')
 
     else:
         print('composition failed')
+
 
 def shooting(l, r, t, mag_mat, path):
     """
