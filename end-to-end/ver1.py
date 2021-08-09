@@ -24,7 +24,6 @@ import BMC050
 
 import release
 import land
-import Calibration
 import paradetection
 import paraavoidance
 import escape
@@ -33,6 +32,10 @@ import panorama
 import gpsrunning
 import photorunning
 import Other
+
+
+dateTime = datetime.datetime.now()
+
 
 
 #variable for timeout
@@ -53,6 +56,7 @@ t_adj_gps = 5
 
 #variable for photorun
 G_thd = 80
+path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
 
 #log
 log_phase = '/home/pi/Desktop/Cansat2021ver/log/phaseLog1.txt'
@@ -84,7 +88,7 @@ if __name__ == '__main__':
     try:
         t_start = time.time()
         Xbee.str_trans('#####-----Setup Phase start-----#####')
-        Other.saveLog(log_phase, "1", "Setup phase", time.time() - t_start, datetime.datetime.now())
+        Other.saveLog(log_phase, "1", "Setup phase", dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 2:
@@ -97,7 +101,7 @@ if __name__ == '__main__':
 
     #######--------------------------Release--------------------------#######
     Xbee.str_trans('#####-----Release Phase start-----#####')
-    Other.saveLog(log_phase, "2", "Release Phase Started", time.time() - t_start, datetime.datetime.now())
+    Other.saveLog(log_phase, "2", "Release Phase Started", dateTime, time.time() - t_start)
     phaseChk = Other.phaseCheck(log_phase)
     Xbee.str_trans(f'Phase:\t{phaseChk}')
     if phaseChk == 2:
@@ -109,7 +113,7 @@ if __name__ == '__main__':
                 press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
                                                                                        t_delta_release)
                 Xbee.str_trans(f'count:{press_count_release}\tjudge{press_judge_release}')
-                Other.saveLog(log_release, datetime.datetime.now(), time.time() - t_start, GPS.readGPS,
+                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.readGPS,
                               BME280.bme280_read(), press_count_release, press_judge_release)
                 if press_judge_release == 1:
                     Xbee.str_trans('Release\n \n')
@@ -119,15 +123,16 @@ if __name__ == '__main__':
                 i += 1
             else:
                 Xbee.str_trans('##--release timeout--##')
-        except KeyboardInterrupt:
-            print('interrupted')
-        Xbee.str_trans("######-----Released-----##### \n \n")
-
+            Xbee.str_trans("######-----Released-----##### \n \n")
+        except:
+            Xbee.str_trans('#####-----Error(Release)-----#####')
+            Xbee.str_trans('#####-----Error(Release)-----#####')
+            Xbee.str_trans('#####-----Error(Release)-----#####')
 
     #######--------------------------Landing--------------------------#######
     try:
         Xbee.str_trans('#####-----Landing phase start-----#####')
-        Other.saveLog(log_phase, '3', 'Landing phase', time.time() - t_start, datetime.datetime.now())
+        Other.saveLog(log_phase, '3', 'Landing phase', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 3:
@@ -143,12 +148,12 @@ if __name__ == '__main__':
                     break
                 else:
                     Xbee.str_trans('Not Landed')
-                Other.saveLog(log_landing, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(),
+                Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.readGPS(),
                               BME280.bme280_read())
                 i += 1
             else:
                 Xbee.str_trans('Landed Timeout')
-            Other.saveLog(log_landing, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(),
+            Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.readGPS(),
                           BME280.bme280_read(), 'Land judge finished')
             Xbee.str_trans('######-----Landed-----######\n \n')
     except:
@@ -160,13 +165,13 @@ if __name__ == '__main__':
     #######--------------------------Escape--------------------------#######
     try:
         Xbee.str_trans('#####-----Melting phase start#####')
-        Other.saveLog(log_phase, '4', 'Melting phase start', time.time() - t_start, datetime.datetime.now())
+        Other.saveLog(log_phase, '4', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 4:
-            Other.saveLog(log_melting, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Start")
+            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.readGPS(), "Melting Start")
             escape.escape()
-            Other.saveLog(log_melting, datetime.datetime.now(), time.time() - t_start, GPS.readGPS(), "Melting Finished")
+            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.readGPS(), "Melting Finished")
         Xbee.str_trans('########-----Melted-----#######\n \n')
     except:
         Xbee.str_trans('#####-----Error(melting)-----#####')
@@ -177,7 +182,7 @@ if __name__ == '__main__':
     #######--------------------------Paraavo--------------------------#######
     try:
         Xbee.str_trans('#####-----Para avoid start-----#####')
-        Other.saveLog(log_phase, '5', 'Melting phase start', time.time() - t_start, datetime.datetime.now())
+        Other.saveLog(log_phase, '5', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         count_paraavo = 0
@@ -186,7 +191,7 @@ if __name__ == '__main__':
                 flug, area, gap, photoname = paradetection.ParaDetection(
                     path_paradete, 320, 240, 200, 10, 120, 1)
                 Xbee.str_trans(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-                Other.saveLog(log_paraavoidance, datetime.datetime.now(), time.time() - t_start, GPS.readGPS, flug, area,
+                Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.readGPS, flug, area,
                               gap, photoname)
                 paraavoidance.Parachute_Avoidance(flug, gap)
                 if flug == -1 or flug == 0:
@@ -201,13 +206,13 @@ if __name__ == '__main__':
     #######--------------------------panorama--------------------------#######
     try:
         Xbee.str_trans('#####-----panorama start-----#####')
-        Other.saveLog(log_phase, '6', 'Melting phase start', time.time() - t_start, datetime.datetime.now())
+        Other.saveLog(log_phase, '6', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 6:
             t_start_panorama = time.time()  # プログラムの開始時刻
             panorama(path_src_panorama, path_dst_panoraam, 'panoramaShootingtest00')
-            Xbee.str_trans(f'runTime:\t{time.time()-t_start_panorama}')
+            Xbee.str_trans(f'runTime_panorama:\t{time.time()-t_start_panorama}')
         Xbee.str_trans('#####-----panorama ended-----##### \n \n')
     except:
         Xbee.str_trans('#####-----Error(panorama)-----#####')
@@ -217,8 +222,8 @@ if __name__ == '__main__':
 
     #######--------------------------GPS--------------------------#######
     try:
-        Xbee.str_trans('#####-----panorama start-----#####')
-        Other.saveLog(log_phase, '7', 'Melting phase start', time.time() - t_start, datetime.datetime.now())
+        Xbee.str_trans('#####-----gps run start-----#####')
+        Other.saveLog(log_phase, '7', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         Xbee.str_trans(f'Phase:\t{phaseChk}')
         if phaseChk == 7:
@@ -230,7 +235,11 @@ if __name__ == '__main__':
         Xbee.str_trans('#####-----Error(gpsrunning)-----#####')
 
     ######------------------photo running---------------------##########
-    startTime = time.time()
-    dateTime = datetime.datetime.now()
-    path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}:{dateTime.minute}'
-    photorunning.image_guided_driving(path_photo_imagerun, 50)
+    try:
+        Xbee.str_trans('#####-----photo run start-----#####')
+        photorunning.image_guided_driving(path_photo_imagerun, G_thd)
+
+    except:
+        Xbee.str_trans('#####-----Error(Photo running)-----#####')
+        Xbee.str_trans('#####-----Error(Photo running)-----#####')
+        Xbee.str_trans('#####-----Error(Photo running)-----#####')
