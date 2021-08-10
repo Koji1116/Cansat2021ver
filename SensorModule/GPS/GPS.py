@@ -257,6 +257,7 @@ def GPSdata_read():
     try:
         while True:
             utc, lat, lon, sHeight, gHeight = readGPS()
+            print('gps reading')
             if utc != -1.0 and lat != -1.0:
                 break
             time.sleep(1)
