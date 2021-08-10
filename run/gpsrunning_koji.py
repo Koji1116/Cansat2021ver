@@ -58,7 +58,7 @@ def adjust_direction(theta, magx_off, magy_off):
         if stuck_count % 7 == 0:
             print('Increase output')
             force += 10
-        if 15 <= theta <= 60:
+        if 30 <= theta <= 60:
             print(f'theta = {theta}\t---rotation_ver1 (stuck:{stuck_count})')
             motor.move(force, -force, t_small)
 
@@ -66,7 +66,7 @@ def adjust_direction(theta, magx_off, magy_off):
             print(f'theta = {theta}\t---rotation_ver2 (stuck:{stuck_count})')
             motor.move(force, -force, t_big)
 
-        elif -60 <= theta <= -15:
+        elif -60 <= theta <= -30:
             print(f'theta = {theta}\t---rotation_ver3 (stuck:{stuck_count})')
             motor.move(-force, force, t_small)
         elif -180 < theta < -60:
@@ -117,7 +117,6 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                     mag_x = magdata[0]
                     mag_y = magdata[1]
                     theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
-                    azimuth = direction["azimuth1"]
                     angle_relative = azimuth - theta
                     if angle_relative >= 0:
                         angle_relative = angle_relative if angle_relative <= 180 else angle_relative - 360
