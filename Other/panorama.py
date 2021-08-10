@@ -31,11 +31,10 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
     srcext:ソースの拡張子
     dstext:できたものの拡張子
     """
-    srcfilecount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/photostorage/src_panorama', 'panoramaShooting' + '*' + srcext))
+    srcfilecount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/src_panorama', 'panoramaShooting' + '*' + srcext))
     resultcount = len(glob.glob1(dstdir, srcdir + '*' + dstext))
     print(srcfilecount)
     print(resultcount)
-
 
     photos = []
 
