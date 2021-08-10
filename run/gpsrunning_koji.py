@@ -72,6 +72,8 @@ def adjust_direction(theta, magx_off, magy_off):
         elif -180 < theta < -60:
             print(f'theta = {theta}\t---rotation_ver4 (stuck:{stuck_count})')
             motor.move(-force, force, t_big)
+        else:
+            print(f'theta = {theta}')
 
         stuck_count += 1
         theta = angle_goal(magx_off, magy_off)
