@@ -249,7 +249,7 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 7:
-            gpsrunning_koji.drive(th_distance, t_adj_gps, log_gpsrunning)
+            gpsrunning_koji.drive(lon2, lat2, th_distance, t_adj_gps, log_gpsrunning)
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
