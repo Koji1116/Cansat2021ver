@@ -11,7 +11,6 @@ import cv2
 import os
 import glob
 import time
-import panorama
 import motor
 import Capture
 import BMC050
