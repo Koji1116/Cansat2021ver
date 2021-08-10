@@ -95,7 +95,7 @@ def close():
 
 
 if __name__ == '__main__':
-    close()
+    # close()
     print('a')
     motor.setup()
     #######-----------------------Setup--------------------------------#######
