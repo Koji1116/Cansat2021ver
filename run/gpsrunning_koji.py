@@ -58,7 +58,7 @@ def adjust_direction(theta, magx_off, magy_off):
         if stuck_count % 7 == 0:
             print('Increase output')
             force += 10
-        if 30 <= theta <= 60:
+        if 15 <= theta <= 60:
             print(f'theta = {theta}\t---rotation_ver1 (stuck:{stuck_count})')
             motor.move(force, -force, t_small)
 
@@ -66,7 +66,7 @@ def adjust_direction(theta, magx_off, magy_off):
             print(f'theta = {theta}\t---rotation_ver2 (stuck:{stuck_count})')
             motor.move(force, -force, t_big)
 
-        elif -60 <= theta <= -30:
+        elif -60 <= theta <= -15:
             print(f'theta = {theta}\t---rotation_ver3 (stuck:{stuck_count})')
             motor.move(-force, force, t_small)
         elif -180 < theta < -60:
