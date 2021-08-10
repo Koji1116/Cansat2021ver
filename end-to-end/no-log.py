@@ -210,6 +210,7 @@ if __name__ == '__main__':
                 print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
                 #Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area,gap, photoname)
                 paraavoidance.Parachute_Avoidance(flug, gap)
+                time.sleep(1)
                 if flug == -1 or flug == 0:
                     count_paraavo += 1
         print('#####-----ParaAvo Phase ended-----##### \n \n')
