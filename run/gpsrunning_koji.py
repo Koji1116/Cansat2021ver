@@ -112,7 +112,18 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                 break
             else:
                 for _ in range(10):
-                    theta = angle_goal(magx_off, magy_off)
+                    #theta = angle_goal(magx_off, magy_off)
+                    magdata = BMC050.mag_dataRead()
+                    mag_x = magdata[0]
+                    mag_y = magdata[1]
+                    theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+                    azimuth = direction["azimuth1"]
+                    angle_relative = azimuth - theta
+                    if angle_relative >= 0:
+                        angle_relative = angle_relative if angle_relative <= 180 else angle_relative - 360
+                    else:
+                        angle_relative = angle_relative if angle_relative >= -180 else angle_relative + 360
+                    theta = angle_relative
                     if theta >= 0:
                         adj = 0 if theta <= 15 else 18
                     else:
