@@ -1,5 +1,4 @@
 import sys
-
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
@@ -31,7 +30,7 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
     dstext:できたものの拡張子
     """
     srcfilecount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/src_panorama', 'panoramaShooting' + '*' + srcext))
-    resultcount = len(glob.glob1(dstdir, srcdir + '*' + dstext))
+    resultcount = len(glob.glob1(dstdir, '*' + dstext))
     print(srcfilecount)
     print(resultcount)
 
