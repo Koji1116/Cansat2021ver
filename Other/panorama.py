@@ -73,7 +73,7 @@ def shooting(l, r, t, mag_mat, path):
     print(f'whileスタート　preθ:{preθ}')
 
     while sumθ <= 360:
-        Capture.Capture(path)
+        Capture.Capture(path, 640, 360)
         motor.move(l, r, t)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
