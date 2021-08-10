@@ -117,6 +117,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                         adj = 0 if theta <= 15 else 6.5
                     else:
                         adj = 0 if theta >= -15 else -2.5
+                    print(f'angle ----- {theta}')
                     strength_l, strength_r = 30 + adj, 30 - adj
                     motor.motor_continue(strength_l, strength_r)
                     time.sleep(0.1)
