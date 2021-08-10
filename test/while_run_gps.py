@@ -41,7 +41,7 @@ def adjust_direction(theta, magx_off, magy_off):
     t_big = 0.2
     force = 20 
     while 15 < theta < 345:
-        if stuck_count >= 7:
+        if stuck_count % 7 == 0:
             print('出力強くするよ')
             force +=10
         # if count > 8:
