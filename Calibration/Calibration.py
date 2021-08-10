@@ -32,9 +32,9 @@ from gpiozero import Motor
 
 import motor
 
-
-
 path_log = '/home/pi/Desktop/Cansat2021ver/log/Calibration.txt'
+
+
 # filecount = len(glob.glob1(path_log, '*' + '.txt'))
 
 # Calibration_rotate_controlLog = '/home/pi/log/Calibration_rotate_controlLog.txt'
@@ -76,26 +76,25 @@ def get_data_offset(magx_off, magy_off, magz_off):
     return magx, magy, magz
 
 
-def magdata_matrix(l, r, t, n, t_sleeptime = 0):
+def magdata_matrix(l, r, t, n, t_sleeptime=0):
     """
 	キャリブレーション用の磁気値を得るための関数
-	forループ内(run)を変える必要がある2021/07/04
 	"""
     try:
-        #t_strat = time.time()
-        #magx, magy, magz = get_data()
-        #magdata = np.array([[magx, magy, magz]])
-        #motor.motor_move_continuous(l, r)
-        #time.sleep(4)
-        #while time.time() -t_strat <= t:
+        # t_strat = time.time()
+        # magx, magy, magz = get_data()
+        # magdata = np.array([[magx, magy, magz]])
+        # motor.motor_move_continuous(l, r)
+        # time.sleep(4)
+        # while time.time() -t_strat <= t:
         #    magx, magy, magz = get_data()
         #    # --- multi dimention matrix ---#
         #    magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
         #    time.sleep(0.1)
-        #motor.motor_stop()
-            
+        # motor.motor_stop()
+
         magx, magy, magz = get_data()
-        magdata = np.array([[magx, magy, magz]])  
+        magdata = np.array([[magx, magy, magz]])
         for _ in range(n):
             motor.move(l, r, t)
             magx, magy, magz = get_data()
@@ -174,8 +173,14 @@ def calculate_offset(magdata):
     return magx_array, magy_array, magz_array, magx_off, magy_off, magz_off
 
 
+def cal(l, r, t, n, t_sleeptime=0):
+    magdata = magdata_matrix(l, r, t, n, t_sleeptime)
+    _, _, _, magx_off, magy_off, _ = calculate_offset(magdata)
+    return magx_off, magy_off
+
+
 def angle(magx, magy, magx_off=0, magy_off=0):
-    if magy-magy_off ==0 :
+    if magy - magy_off == 0:
         magy += 0.000001
     θ = math.degrees(math.atan((magy - magy_off) / (magx - magx_off)))
 
@@ -234,8 +239,8 @@ def calculate_angle_3D(accx, accy, accz, magx, magy, magz, magx_off, magy_off, m
     # -- North = 0 , θ = (direction of sensor) ---#
     global θ
     θ = math.degrees(math.atan((magz - magz_off) * math.sin(Φ) - (magy - magy_off) * math.cos(Φ)) / (
-                (magx - magx_off) * math.cos(ψ) + (magy - magy_off) * math.sin(ψ) * math.sin(Φ) + (
-                    magz - magz_off) * math.sin(ψ) * math.cos(Φ)))
+            (magx - magx_off) * math.cos(ψ) + (magy - magy_off) * math.sin(ψ) * math.sin(Φ) + (
+            magz - magz_off) * math.sin(ψ) * math.cos(Φ)))
     if θ >= 0:
         if magx - magx_off < 0 and magy - magy_off < 0:  # Third quadrant
             θ = θ + 180  # 180 <= θ <= 270
@@ -255,16 +260,16 @@ def calculate_direction(lon2, lat2):
     # --- read GPS data ---#
     try:
         GPS.openGPS()
-        utc, lat, lon, sHeight, gHeight =GPS.GPSdata_read()
-        #print(utc, lat, lon, sHeight, gHeight)
+        utc, lat, lon, sHeight, gHeight = GPS.GPSdata_read()
+        # print(utc, lat, lon, sHeight, gHeight)
         lat1 = lat
         lon1 = lon
-        
-        #while True:
-                    #GPS_data = GPS.readGPS()
-                    #lat1 = GPS_data[1]
-                    #lon1 = GPS_data[2]
-        #while True:
+
+        # while True:
+        # GPS_data = GPS.readGPS()
+        # lat1 = GPS_data[1]
+        # lon1 = GPS_data[2]
+        # while True:
         #    utc, lat, lon, sHeight, gHeight = GPS.readGPS()
         #    print(utc, lat, lon, sHeight, gHeight)#
 
@@ -281,14 +286,14 @@ def calculate_direction(lon2, lat2):
         #        lat1 = lat
         #        lon1 = lon
         #        break
-        #while True:
-          #  GPS_data = GPS.readGPS()
-           # lat1 = GPS_data[1]
-           # lon1 = GPS_data[2]
-           # print(lat1)
-           # print(lon2)
-           # if lat1 != -1.0 and lat1 != 0.0:
-            #    break
+        # while True:
+        #  GPS_data = GPS.readGPS()
+        # lat1 = GPS_data[1]
+        # lon1 = GPS_data[2]
+        # print(lat1)
+        # print(lon2)
+        # if lat1 != -1.0 and lat1 != 0.0:
+        #    break
     except KeyboardInterrupt:
         GPS.closeGPS()
         print("\r\nKeyboard Intruppted, Serial Closed")
@@ -298,6 +303,7 @@ def calculate_direction(lon2, lat2):
     # --- calculate angle to goal ---#
     direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
     return direction
+
 
 def angle(magx, magy, magx_off=0, magy_off=0):
     θ = math.degrees(math.atan((magy - magy_off) / (magx - magx_off)))
@@ -317,6 +323,7 @@ def angle(magx, magy, magx_off=0, magy_off=0):
         θ -= 360
 
     return θ
+
 
 def timer(t):
     global cond
