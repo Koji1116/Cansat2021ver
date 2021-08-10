@@ -121,8 +121,8 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                     strength_l, strength_r = 50 + adj, 50 - adj
                     motor.motor_continue(strength_l, strength_r)
                     time.sleep(0.1)
-            motor.deceleration(strength_l, strength_r)
-            time.sleep(2)
+        motor.deceleration(strength_l, strength_r)
+        time.sleep(2)
 
 
 if __name__ == '__main__':
