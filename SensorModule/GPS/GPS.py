@@ -300,7 +300,7 @@ if __name__ == '__main__':
                 # pass
                 print(utc, lat, lon, sHeight, gHeight)
                 Other.saveLog('GPStest', datetime.datetime.now(), time.time() - t_start, utc, lat, lon, sHeight, gHeight)
-            time.sleep(0.5)
+            time.sleep(1)
     except KeyboardInterrupt:
         closeGPS()
         print("\r\nKeyboard Intruppted, Serial Closed")
