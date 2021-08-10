@@ -1,5 +1,6 @@
 import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 import math
@@ -7,6 +8,7 @@ import math
 import time
 import Calibration
 import mag
+import motor
 
 
 def angle(magx, magy, magx_off=0, magy_off=0):
@@ -29,6 +31,7 @@ def angle(magx, magy, magx_off=0, magy_off=0):
 
 
 if __name__ == '__main__':
+    motor.setup()
     mag.bmc050_setup()
     try:
         r = float(input('右の出力は？\t'))
