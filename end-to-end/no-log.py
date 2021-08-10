@@ -46,8 +46,8 @@ t_delta_release = 1
 thd_press_land = 0.15
 
 # variable for Calibration
-strength_l_cal = 20
-strength_r_cal = -20
+strength_l_cal = 40
+strength_r_cal = -40
 t_rotation_cal = 0.2
 number_data = 30
 
