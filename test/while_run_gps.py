@@ -24,8 +24,8 @@ import mag
 import stuck
 import acc
 
-lon2 = 35.9235878
-lat2 = 139.9119445
+lon2 = 35.9237763
+lat2 = 139.9122214
 run_l = 0
 run_r = 0
 run = 0
