@@ -30,9 +30,7 @@ run_l = 0
 run_r = 0
 run = 0
 
-def adjust_direction(theta):
-    global magx_off
-    global magy_off
+def adjust_direction(theta, magx_off, magy_off):
     """
     方向調整
     """
@@ -64,7 +62,6 @@ def adjust_direction(theta):
             motor.move(-force, force, t_small)
         elif 180 < theta < 360:
 
-            print('theta = ' + str(theta) + '---回転開始ver4('+str(stuck_count)+'回目)')
             motor.move(-force, force, t_big)
     
         stuck_count += 1
@@ -117,7 +114,7 @@ while 1:
         theta = 360 + theta
     elif 360 <= theta <= 450:
         theta = theta - 360
-    adjust_direction(theta)
+    adjust_direction(theta, magx_off, magy_off)
     t_cal = time.time()
 
 
