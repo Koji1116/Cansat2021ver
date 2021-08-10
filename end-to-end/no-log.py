@@ -106,7 +106,9 @@ if __name__ == '__main__':
         # print(f'Phase:\t{phaseChk}')
         setup()
         print('#####-----Setup Phase ended-----##### \n \n')
-    except:
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(setup)-----#####')
         print('#####-----Error(setup)-----#####')
         print('#####-----Error(setup)-----#####\n \n')
