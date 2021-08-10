@@ -91,11 +91,7 @@ mag.bmc050_setup()
 t_tyousei = float(input('何秒おきにキャリブレーションする？'))
 
 while 1:
-    while stuck.ue_jug() == False:
-        print('したーーー')
-        motor.move(12, 12, 0.2)
-        time.sleep(1.5)
-    print('上だよ')
+    stuck.ue_jug()
     # ------------- Calibration -------------#
     print('Calibration Start')
     
