@@ -149,7 +149,7 @@ if __name__ == '__main__':
         print('#####-----Landing phase start-----#####')
         #Other.saveLog(log_phase, '3', 'Landing phase', dateTime, time.time() - t_start)
         # phaseChk = Other.phaseCheck(log_phase)
-        print(f'Phase:\t{phaseChk}')
+        # print(f'Phase:\t{phaseChk}')
         if 1:
             print(f'Landing Judgement Program Start\t{time.time() - t_start}')
             t_land_start = time.time()
