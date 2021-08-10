@@ -275,6 +275,9 @@ if __name__ == '__main__':
 
     #####------------------panorama composition--------------##########
     try:
+        con = input('continue?y/n')
+        if con == 'n':
+            exit()
         print('#####-----panorama composition-----#####')
         #Other.saveLog(log_phase, '9', 'Melting phase start', dateTime, time.time() - t_start)
         # phaseChk = Other.phaseCheck(log_phase)
