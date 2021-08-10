@@ -95,6 +95,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         # Xbee.str_trans('Calibration Start')
         print('##--Calibration Start--##')
         magx_off, magy_off = Calibration.cal(40, -40, 0.2, 30)
+        print(f'magx_off: {magx_off}\tmagy_off: {magy_off}')
         theta = angle_goal(magx_off, magy_off)
         adjust_direction(theta, magx_off, magy_off)
 
@@ -107,7 +108,6 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
             # Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
             # Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],
             #               azimuth)
-
             if goal_distance <= thd_distance:
                 break
             else:
