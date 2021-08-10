@@ -128,7 +128,7 @@ if __name__ == '__main__':
                 press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
                                                                                        t_delta_release)
                 print(f'count:{press_count_release}\tjudge{press_judge_release}')
-                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.readGPS(),
+                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(),
                               BME280.bme280_read(), press_count_release, press_judge_release)
                 if press_judge_release == 1:
                     print('Release\n \n')
@@ -165,12 +165,12 @@ if __name__ == '__main__':
                     break
                 else:
                     print('Not Landed\n \n')
-                Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.readGPS(),
+                Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),
                               BME280.bme280_read())
                 i += 1
             else:
                 print('Landed Timeout')
-            Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.readGPS(),
+            Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),
                           BME280.bme280_read(), 'Land judge finished')
             print('######-----Landed-----######\n \n')
     except Exception as e:
@@ -188,9 +188,9 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 4:
-            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.readGPS(), "Melting Start")
+            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Start")
             escape.escape()
-            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.readGPS(), "Melting Finished")
+            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Finished")
         print('########-----Melted-----#######\n \n')
     except Exception as e:
         tb = sys.exc_info()[2]
@@ -212,7 +212,7 @@ if __name__ == '__main__':
                 flug, area, gap, photoname = paradetection.ParaDetection(
                     path_paradete, 320, 240, 200, 10, 120, 1)
                 print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-                Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.readGPS, flug, area,
+                Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area,
                               gap, photoname)
                 paraavoidance.Parachute_Avoidance(flug, gap)
                 if flug == -1 or flug == 0:
@@ -234,8 +234,9 @@ if __name__ == '__main__':
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 6:
             t_start_panorama = time.time()  # プログラムの開始時刻
+            time.sleep(3)
             magdata = Calibration.magdata_matrix(strength_l_cal, strength_r_cal, t_rotation_cal, number_data)
-            panorama.shooting(strength_l_pano, strength_r_pano, t_rotation_pano)
+            panorama.shooting(strength_l_pano, strength_r_pano, t_rotation_pano, magdata, path_src_panorama)
             print(f'runTime_panorama:\t{time.time() - t_start_panorama}')
         print('#####-----panorama ended-----##### \n \n')
     except Exception as e:
