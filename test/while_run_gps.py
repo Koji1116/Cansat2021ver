@@ -25,7 +25,7 @@ import stuck
 import acc
 
 lon2 = 35.9237763
-lat2 = 139.9122214
+lat2 = 139.9121216
 run_l = 0
 run_r = 0
 run = 0
@@ -91,11 +91,7 @@ mag.bmc050_setup()
 t_tyousei = float(input('何秒おきにキャリブレーションする？'))
 
 while 1:
-    while stuck.ue_jug() == False:
-        print('したーーー')
-        motor.move(12, 12, 0.2)
-        time.sleep(1.5)
-    print('上だよ')
+    stuck.ue_jug()
     # ------------- Calibration -------------#
     print('Calibration Start')
     
