@@ -94,7 +94,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         # ------------- Calibration -------------#
         # Xbee.str_trans('Calibration Start')
         print('##--Calibration Start--##')
-        magx_off, magy_off = Calibration.cal(20, -20, 0.2, 30)
+        magx_off, magy_off = Calibration.cal(40, -40, 0.2, 30)
         theta = angle_goal(magx_off, magy_off)
         adjust_direction(theta, magx_off, magy_off)
 
@@ -118,7 +118,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                     else:
                         adj = 0 if theta >= -15 else -2.5
                     print(f'angle ----- {theta}')
-                    strength_l, strength_r = 30 + adj, 30 - adj
+                    strength_l, strength_r = 50 + adj, 50 - adj
                     motor.motor_continue(strength_l, strength_r)
                     time.sleep(0.1)
             motor.deceleration(strength_l, strength_r)
