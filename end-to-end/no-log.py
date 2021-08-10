@@ -110,7 +110,6 @@ if __name__ == '__main__':
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(setup)-----#####')
-        print('#####-----Error(setup)-----#####')
         print('#####-----Error(setup)-----#####\n \n')
     #######-----------------------------------------------------------########
 
@@ -140,7 +139,6 @@ if __name__ == '__main__':
         except Exception as e:
             tb = sys.exc_info()[2]
             print("message:{0}".format(e.with_traceback(tb)))
-            print('#####-----Error(Release)-----#####')
             print('#####-----Error(Release)-----#####')
             print('#####-----Error(Release)-----#####\n \n')
 
@@ -173,7 +171,6 @@ if __name__ == '__main__':
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(Landing)-----#####')
-        print('#####-----Error(Landing)-----#####')
         print('#####-----Error(Landing)-----#####\n \n')
     #######-----------------------------------------------------------########
 
@@ -191,7 +188,6 @@ if __name__ == '__main__':
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
-        print('#####-----Error(melting)-----#####')
         print('#####-----Error(melting)-----#####')
         print('#####-----Error(melting)-----#####\n \n')
     #######-----------------------------------------------------------########
@@ -218,7 +214,6 @@ if __name__ == '__main__':
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(paraavo)-----#####')
-        print('#####-----Error(paraavo)-----#####')
         print('#####-----Error(paraavo)-----#####\n \n')
     #######-----------------------------------------------------------########
 
@@ -239,7 +234,6 @@ if __name__ == '__main__':
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(panorama)-----#####')
-        print('#####-----Error(panorama)-----#####')
         print('#####-----Error(panorama)-----#####\n \n')
     #######-----------------------------------------------------------########
 
@@ -255,7 +249,6 @@ if __name__ == '__main__':
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(gpsrunning)-----#####')
-        print('#####-----Error(gpsrunning)-----#####')
         print('#####-----Error(gpsrunning)-----#####\n \n')
 
     ######------------------photo running---------------------##########
@@ -269,7 +262,6 @@ if __name__ == '__main__':
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
-        print('#####-----Error(Photo running)-----#####')
         print('#####-----Error(Photo running)-----#####')
         print('#####-----Error(Photo running)-----#####\n \n')
 
@@ -287,6 +279,5 @@ if __name__ == '__main__':
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
-        print('#####-----Error(panorama composition)-----#####')
         print('#####-----Error(panorama composition)-----#####')
         print('#####-----Error(panorama composition)-----#####\n \n')
