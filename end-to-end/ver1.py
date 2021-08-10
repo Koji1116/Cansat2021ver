@@ -102,7 +102,7 @@ if __name__ == '__main__':
     try:
         t_start = time.time()
         print('#####-----Setup Phase start-----#####')
-        Other.saveLog(log_phase, "1", "Setup phase", dateTime, time.time() - t_start)
+        #Other.saveLog(log_phase, "1", "Setup phase", dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 2:
@@ -116,7 +116,7 @@ if __name__ == '__main__':
 
     #######--------------------------Release--------------------------#######
     print('#####-----Release Phase start-----#####')
-    Other.saveLog(log_phase, "2", "Release Phase Started", dateTime, time.time() - t_start)
+    #Other.saveLog(log_phase, "2", "Release Phase Started", dateTime, time.time() - t_start)
     phaseChk = Other.phaseCheck(log_phase)
     print(f'Phase:\t{phaseChk}')
     if phaseChk == 2:
@@ -125,11 +125,9 @@ if __name__ == '__main__':
         try:
             while time.time() - t_release_start <= t_out_release:
                 print(f'loop_release\t {i}')
-                press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
-                                                                                       t_delta_release)
+                press_count_release, press_judge_release = release.pressdetect_release(thd_press_release, t_delta_release)
                 print(f'count:{press_count_release}\tjudge{press_judge_release}')
-                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(),
-                              BME280.bme280_read(), press_count_release, press_judge_release)
+                #Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), press_count_release, press_judge_release)
                 if press_judge_release == 1:
                     print('Release\n \n')
                     break
@@ -149,7 +147,7 @@ if __name__ == '__main__':
     #######--------------------------Landing--------------------------#######
     try:
         print('#####-----Landing phase start-----#####')
-        Other.saveLog(log_phase, '3', 'Landing phase', dateTime, time.time() - t_start)
+        #Other.saveLog(log_phase, '3', 'Landing phase', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 3:
@@ -165,13 +163,11 @@ if __name__ == '__main__':
                     break
                 else:
                     print('Not Landed\n \n')
-                Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),
-                              BME280.bme280_read())
+                #Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read())
                 i += 1
             else:
                 print('Landed Timeout')
-            Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),
-                          BME280.bme280_read(), 'Land judge finished')
+            #Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), 'Land judge finished')
             print('######-----Landed-----######\n \n')
     except Exception as e:
         tb = sys.exc_info()[2]
@@ -184,13 +180,13 @@ if __name__ == '__main__':
     #######--------------------------Escape--------------------------#######
     try:
         print('#####-----Melting phase start#####')
-        Other.saveLog(log_phase, '4', 'Melting phase start', dateTime, time.time() - t_start)
+        #Other.saveLog(log_phase, '4', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 4:
-            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Start")
+            #Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Start")
             escape.escape()
-            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Finished")
+            #Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Finished")
         print('########-----Melted-----#######\n \n')
     except Exception as e:
         tb = sys.exc_info()[2]
@@ -203,7 +199,7 @@ if __name__ == '__main__':
     #######--------------------------Paraavo--------------------------#######
     try:
         print('#####-----Para avoid start-----#####')
-        Other.saveLog(log_phase, '5', 'Melting phase start', dateTime, time.time() - t_start)
+        #Other.saveLog(log_phase, '5', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         count_paraavo = 0
@@ -212,8 +208,7 @@ if __name__ == '__main__':
                 flug, area, gap, photoname = paradetection.ParaDetection(
                     path_paradete, 320, 240, 200, 10, 120, 1)
                 print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-                Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area,
-                              gap, photoname)
+                #Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area,gap, photoname)
                 paraavoidance.Parachute_Avoidance(flug, gap)
                 if flug == -1 or flug == 0:
                     count_paraavo += 1
@@ -229,7 +224,7 @@ if __name__ == '__main__':
     #######--------------------------panorama--------------------------#######
     try:
         print('#####-----panorama shooting start-----#####')
-        Other.saveLog(log_phase, '6', 'panorama shooting phase start', dateTime, time.time() - t_start)
+        #Other.saveLog(log_phase, '6', 'panorama shooting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 6:
@@ -250,7 +245,7 @@ if __name__ == '__main__':
     #######--------------------------GPS--------------------------#######
     try:
         print('#####-----gps run start-----#####')
-        Other.saveLog(log_phase, '7', 'Melting phase start', dateTime, time.time() - t_start)
+        #Other.saveLog(log_phase, '7', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 7:
@@ -265,7 +260,7 @@ if __name__ == '__main__':
     ######------------------photo running---------------------##########
     try:
         print('#####-----photo run start-----#####')
-        Other.saveLog(log_phase, '8', 'Melting phase start', dateTime, time.time() - t_start)
+        #Other.saveLog(log_phase, '8', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 8:
@@ -280,7 +275,7 @@ if __name__ == '__main__':
     #####------------------panorama composition--------------##########
     try:
         print('#####-----panorama composition-----#####')
-        Other.saveLog(log_phase, '9', 'Melting phase start', dateTime, time.time() - t_start)
+        #Other.saveLog(log_phase, '9', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
