@@ -22,8 +22,8 @@ import acc
 import Xbee
 import Other
 
-lat2 = 35.9235696
-lon2 = 139.9119089
+lat2 = 35.9235927
+lon2 = 139.9119897
 
 def angle_goal(magx_off, magy_off):
     """
@@ -53,7 +53,7 @@ def adjust_direction(theta, magx_off, magy_off):
     stuck_count = 1
     t_small = 0.1
     t_big = 0.2
-    force = 25
+    force = 35
     while 30 < theta <= 180 or -180 < theta < -30:
         if stuck_count % 7 == 0:
             print('Increase output')
