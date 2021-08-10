@@ -54,7 +54,7 @@ def adjust_direction(theta, magx_off, magy_off):
     t_small = 0.1
     t_big = 0.2
     force = 20
-    while 15 < theta <= 180 and -15 < theta < -180:
+    while 15 < theta <= 180 or -15 < theta < -180:
         if stuck_count >= 7:
             print('Increase output')
             force += 10
