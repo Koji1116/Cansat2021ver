@@ -93,9 +93,9 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         stuck.ue_jug()
         # ------------- Calibration -------------#
         # Xbee.str_trans('Calibration Start')
-        print('##--Calibration Start--##')
+        print('##--Calibration Start--##\n')
         magx_off, magy_off = Calibration.cal(40, -40, 0.2, 30)
-        print(f'magx_off: {magx_off}\tmagy_off: {magy_off}')
+        print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
         theta = angle_goal(magx_off, magy_off)
         adjust_direction(theta, magx_off, magy_off)
 
@@ -104,7 +104,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
             lat1, lon1 = GPS.location()
             direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
             azimuth, goal_distance = direction["azimuth1"], direction["distance"]
-            print(f'lat: {lat1}\tlon: {lon1}\tdistance: {goal_distance}\tazimuth: {azimuth}')
+            print(f'lat: {lat1}\tlon: {lon1}\tdistance: {goal_distance}\tazimuth: {azimuth}\n')
             # Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
             # Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],
             #               azimuth)
