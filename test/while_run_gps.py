@@ -99,7 +99,7 @@ while 1:
     # ------------- Calibration -------------#
     print('Calibration Start')
     
-    magdata_Old = Calibration.magdata_matrix(20, -20, 0.2, 25)
+    magdata_Old = Calibration.magdata_matrix(40, -40, 0.2, 30)
     _, _, _, magx_off, magy_off, _ = Calibration.calculate_offset(magdata_Old)
 
 
