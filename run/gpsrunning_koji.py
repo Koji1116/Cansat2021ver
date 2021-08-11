@@ -22,8 +22,8 @@ import acc
 import Xbee
 import Other
 
-lat2 = 35.918548
-lon2 = 139.908893
+lat2 = 35.9235542
+lon2 = 139.9119424
 
 def angle_goal(magx_off, magy_off):
     """
@@ -100,14 +100,15 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         adjust_direction(theta, magx_off, magy_off)
 
         t_cal = time.time()
+        lat_old, lon_old = GPS.location()
         while time.time() - t_cal <= t_adj_gps:
             lat1, lon1 = GPS.location()
+            lat_new, lon_new = lat1, lon1
             direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
             azimuth, goal_distance = direction["azimuth1"], direction["distance"]
             print(f'lat: {lat1}\tlon: {lon1}\tdistance: {goal_distance}\tazimuth: {azimuth}\n')
             # Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
-            # Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],
-            #               azimuth)
+            Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],  azimuth)
             if goal_distance <= thd_distance:
                 break
             else:
@@ -133,6 +134,12 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                     time.sleep(0.1)
         motor.deceleration(strength_l, strength_r)
         time.sleep(2)
+        lat_new, lon_new = GPS.location()
+        if stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new,10):
+            pass
+        else:
+            pass
+
 
         direction = Calibration.calculate_direction(lon2, lat2)
         goal_distance = direction['distance']

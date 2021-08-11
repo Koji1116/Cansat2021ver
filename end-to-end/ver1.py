@@ -52,13 +52,13 @@ t_rotation_cal = 0.2
 number_data = 30
 
 # variable for panorama
-strength_l_pano = 20
-strength_r_pano = -20
+strength_l_pano = 40
+strength_r_pano = -40
 t_rotation_pano = 0.15
 
 # variable for GPSrun
-lon2 = 35.9235878
-lat2 = 139.9119445
+lat2 = 35.9235542
+lon2 = 139.9119424
 th_distance = 5
 t_adj_gps = 30
 
