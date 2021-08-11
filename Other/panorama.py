@@ -28,33 +28,57 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
     srcext:ソースの拡張子
     dstext:できたものの拡張子
     """
-    try:
-        srcfilecount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/src_panorama', 'panoramaShooting' + '*' + srcext))
-        resultcount = len(glob.glob1(dstdir, '*' + dstext))
-        print(srcfilecount)
-        print(resultcount)
+    # try:
+    #     srcfilecount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/src_panorama', 'panoramaShooting' + '*' + srcext))
+    #     resultcount = len(glob.glob1(dstdir, '*' + dstext))
+    #     print(srcfilecount)
+    #     print(resultcount)
 
-        photos = []
+    #     photos = []
 
-        for i in range(0, srcfilecount):
-            if len(str(i)) == 1:
-                photos.append(cv2.imread(srcdir + '0' + str(i) + srcext))
-            else:
-                photos.append(cv2.imread(srcdir + str(i) + srcext))
+    #     for i in range(0, srcfilecount):
+    #         if len(str(i)) == 1:
+    #             photos.append(cv2.imread(srcdir + '0' + str(i) + srcext))
+    #         else:
+    #             photos.append(cv2.imread(srcdir + str(i) + srcext))
 
-        print(len(photos))
+    #     print(len(photos))
 
-        stitcher = cv2.Stitcher.create(0)
-        status, result = stitcher.stitch(photos)
-        if status == 0:
-            print('composition succeed')
+    #     stitcher = cv2.Stitcher.create(0)
+    #     status, result = stitcher.stitch(photos)
+    #     if status == 0:
+    #         print('composition succeed')
 
+    #     else:
+    #         print('composition failed')
+    #     cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
+    # except Exception as e:
+    #     print()
+    srcfilecount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/src_panorama', 'panoramaShooting' + '*' + srcext))
+    resultcount = len(glob.glob1(dstdir, '*' + dstext))
+    print(srcfilecount)
+    print(resultcount)
+
+    photos = []
+
+    for i in range(0, srcfilecount):
+        if len(str(i)) == 1:
+            photos.append(cv2.imread(srcdir + '0' + str(i) + srcext))
         else:
-            print('composition failed')
-        cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
-    except Exception as e:
-        print()
-        
+            photos.append(cv2.imread(srcdir + str(i) + srcext))
+
+    print(len(photos))
+
+    stitcher = cv2.Stitcher.create(0)
+    status, result = stitcher.stitch(photos)
+    if status == 0:
+        print('composition succeed')
+
+    else:
+        print('composition failed')
+    cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
+
+    
 def shooting(l, r, t, mag_mat, path):
     """
     パノラマ撮影用の関数
