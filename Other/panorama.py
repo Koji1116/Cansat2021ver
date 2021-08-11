@@ -134,8 +134,10 @@ def shooting(l, r, t, mag_mat, path):
 
 
 if __name__ == "__main__":
-    BMC050.BMC050_setup()
-    motor.setup()
+    # BMC050.BMC050_setup()
+    # motor.setup()
+
+
     # try:
     #     srcdir = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting'
     #     dstdir = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
@@ -152,15 +154,17 @@ if __name__ == "__main__":
     #     print(runTime)
     # except KeyboardInterrupt:
     #     print('Interrupted')
+
+
     srcdir = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting'
     dstdir = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
     
-    magdata = Calibration.magdata_matrix(40, -40, 0.2, 30)
+    # magdata = Calibration.magdata_matrix(40, -40, 0.2, 30)
 
     l = float(input('左の出力'))
     #r = float(input('右の出力'))
     t = float(input('回転時間'))
-    shooting(l, -l, t, magdata, srcdir)
+    # shooting(l, -l, t, magdata, srcdir)
     t_start = time.time()  # プログラムの開始時刻
     composition(srcdir, dstdir)
     runTime = time.time() - t_start
