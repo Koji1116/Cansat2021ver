@@ -53,12 +53,12 @@ def adjust_direction(theta, magx_off, magy_off):
     stuck_count = 1
     t_small = 0.1
     t_big = 0.2
-    force = 25
+    force = 35
     while 30 < theta <= 180 or -180 < theta < -30:
         if stuck_count % 7 == 0:
             print('Increase output')
             force += 10
-        if 15 <= theta <= 60:
+        if 30 <= theta <= 60:
             print(f'theta = {theta}\t---rotation_ver1 (stuck:{stuck_count})')
             motor.move(force, -force, t_small)
 
@@ -66,7 +66,7 @@ def adjust_direction(theta, magx_off, magy_off):
             print(f'theta = {theta}\t---rotation_ver2 (stuck:{stuck_count})')
             motor.move(force, -force, t_big)
 
-        elif -60 <= theta <= -15:
+        elif -60 <= theta <= -30:
             print(f'theta = {theta}\t---rotation_ver3 (stuck:{stuck_count})')
             motor.move(-force, force, t_small)
         elif -180 < theta < -60:
@@ -93,8 +93,9 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         stuck.ue_jug()
         # ------------- Calibration -------------#
         # Xbee.str_trans('Calibration Start')
-        print('##--Calibration Start--##')
+        print('##--Calibration Start--##\n')
         magx_off, magy_off = Calibration.cal(40, -40, 0.2, 30)
+        print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
         theta = angle_goal(magx_off, magy_off)
         adjust_direction(theta, magx_off, magy_off)
 
@@ -103,16 +104,25 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
             lat1, lon1 = GPS.location()
             direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
             azimuth, goal_distance = direction["azimuth1"], direction["distance"]
-            print(f'lat: {lat1}\tlon: {lon1}\tdistance: {goal_distance}\tazimuth: {azimuth}')
+            print(f'lat: {lat1}\tlon: {lon1}\tdistance: {goal_distance}\tazimuth: {azimuth}\n')
             # Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
             # Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],
             #               azimuth)
-
             if goal_distance <= thd_distance:
                 break
             else:
                 for _ in range(10):
-                    theta = angle_goal(magx_off, magy_off)
+                    #theta = angle_goal(magx_off, magy_off)
+                    magdata = BMC050.mag_dataRead()
+                    mag_x = magdata[0]
+                    mag_y = magdata[1]
+                    theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
+                    angle_relative = azimuth - theta
+                    if angle_relative >= 0:
+                        angle_relative = angle_relative if angle_relative <= 180 else angle_relative - 360
+                    else:
+                        angle_relative = angle_relative if angle_relative >= -180 else angle_relative + 360
+                    theta = angle_relative
                     if theta >= 0:
                         adj = 0 if theta <= 15 else 18
                     else:
@@ -123,6 +133,10 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                     time.sleep(0.1)
         motor.deceleration(strength_l, strength_r)
         time.sleep(2)
+
+        direction = Calibration.calculate_direction(lon2, lat2)
+        goal_distance = direction['distance']
+        print(f'-----distance: {goal_distance}-----')
 
 
 if __name__ == '__main__':
