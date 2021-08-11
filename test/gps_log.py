@@ -89,10 +89,10 @@ if __name__ == '__main__':
     motor.setup()
     #######-----------------------Setup--------------------------------#######
     try:
-        print(GPS.GPS_dataread())
+        print(GPS.GPSdata_read())
         t_start = time.time()
         print('#####-----Setup Phase start-----#####')
-        Other.saveLog(log_phase, GPS.GPS_dataread())
+        Other.saveLog(log_phase, GPS.GPSdata_read())
         
     except Exception as e:
         tb = sys.exc_info()[2]
