@@ -31,6 +31,7 @@ import gpsrunning_koji
 import photorunning
 import Other
 import Calibration
+import os
 
 dateTime = datetime.datetime.now()
 
@@ -100,6 +101,7 @@ def close():
 if __name__ == '__main__':
     # close()
     motor.setup()
+    
     #######-----------------------Setup--------------------------------#######
     try:
         t_start = time.time()
@@ -280,6 +282,10 @@ if __name__ == '__main__':
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
             panorama.composition(path_src_panorama, path_dst_panoraam)
+            img1 = "/home/pi/Desktop/dst_panorama/0.jpg"
+            img_string = Xbee.convert_string(img1)
+            img_string = Xbee.ImageToByte(img1)
+            Xbee.img_trans(img_string)
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
