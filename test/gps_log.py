@@ -76,13 +76,6 @@ path_dst_panoraam = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
 path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage/paradete'
 
 
-def setup():
-    global phaseChk
-    BME280.bme280_setup()
-    BME280.bme280_calib_param()
-    BMC050.BMC050_setup()
-    GPS.openGPS()
-    Xbee.on()
 
 def close():
     GPS.closeGPS()
@@ -91,6 +84,8 @@ def close():
 
 if __name__ == '__main__':
     # close()
+    
+    GPS.openGPS()
     motor.setup()
     #######-----------------------Setup--------------------------------#######
     try:
