@@ -28,13 +28,13 @@ def panorama(srcdir, dstdir, srcprefix='', dstprefix='',srcext='.jpg',dstext='.j
    
     for i in range(0, srcfilecount):
         if len(str(i)) == 1:
-            photos.append(cv2.imread(srcdir +'/' + srcprefix + '0' +  str(i) + srcext))
+            photos.append(cv2.imread(srcdir +'/' + srcprefix + '000' +  str(i) + srcext))
         else:
-            photos.append(cv2.imread(srcdir + '/' + srcprefix + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + '/' + srcprefix +'00' + str(i) + srcext))
 
     print(len(photos))
 
-    stitcher = cv2.Stitcher.create(0)
+    stitcher = cv2.Stitcher.create()
     status, result = stitcher.stitch(photos)
     cv2.imwrite(dstdir + '/' + dstprefix + str(resultcount) + srcext, result)
 
