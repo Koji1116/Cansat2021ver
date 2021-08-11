@@ -76,8 +76,8 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
 
     else:
         print('composition failed')
-    cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
-
+    #cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
+    cv2.imwrite("/home/pi/Desktop/dst_panorama/0.jpg", result)
     
 def shooting(l, r, t, mag_mat, path):
     """
