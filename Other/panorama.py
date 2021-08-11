@@ -69,7 +69,7 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
     print(photos)
     print(len(photos))
 
-    stitcher = cv2.Stitcher.create(0)
+    stitcher = cv2.Stitcher.create()
     status, result = stitcher.stitch(photos)
     if status == 0:
         print('composition succeed')
