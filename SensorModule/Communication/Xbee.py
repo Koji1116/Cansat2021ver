@@ -73,7 +73,7 @@ def off():
 if __name__ == '__main__':
     #str_trans('!')
     # str_trans('HELLO!')
-    img1 = "/home/pi/Desktop/photostorage/paradete0003.jpg"
+    img1 = "/home/pi/Desktop/Cansat2021/photostorage/paradete0003.jpg"
     #img_string = convert_string(img1)
     img_string = ImageToByte(img1)
 
