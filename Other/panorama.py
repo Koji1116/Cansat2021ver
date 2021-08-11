@@ -115,7 +115,7 @@ if __name__ == "__main__":
         srcdir = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting'
         dstdir = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
         
-        magdata = Calibration.magdata_matrix(20, -20, 0.2, 30)
+        magdata = Calibration.magdata_matrix(40, -40, 0.2, 30)
 
         l = float(input('左の出力'))
         r = float(input('右の出力'))
