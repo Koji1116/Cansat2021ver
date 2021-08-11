@@ -21,8 +21,8 @@ import stuck
 import acc
 import Xbee
 import Other
-lat2 = 35.921265
-lon2 = 139.910956
+lat2 = 35.9215189
+lon2 = 139.9111596
 
 
 def angle_goal(magx_off, magy_off):
@@ -147,8 +147,8 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
 
 
 if __name__ == '__main__':
-    lat2 = 35.921265
-    lon2 = 139.910956
+    lat2 = 35.9215189
+    lon2 = 139.9111596
     GPS.openGPS()
     acc.bmc050_setup()
     mag.bmc050_setup()
