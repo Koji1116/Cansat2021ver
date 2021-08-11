@@ -63,9 +63,9 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
 
     for i in range(0, srcfilecount):
         if len(str(i)) == 1:
-            photos.append(cv2.imread(srcdir + '0' + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + '000' + str(i) + srcext))
         else:
-            photos.append(cv2.imread(srcdir + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + '00' +str(i) + srcext))
     print(photos)
     print(len(photos))
 
