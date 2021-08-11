@@ -46,8 +46,8 @@ t_delta_release = 1
 thd_press_land = 0.15
 
 # variable for Calibration
-strength_l_cal = 20
-strength_r_cal = -20
+strength_l_cal = 40
+strength_r_cal = -40
 t_rotation_cal = 0.2
 number_data = 30
 
@@ -57,10 +57,10 @@ strength_r_pano = -20
 t_rotation_pano = 0.15
 
 # variable for GPSrun
-lon2 = 35.9185374
-lat2 = 139.9089099
-th_distance = 10
-t_adj_gps = 5
+lon2 = 35.9235878
+lat2 = 139.9119445
+th_distance = 5
+t_adj_gps = 30
 
 # variable for photorun
 G_thd = 80
@@ -72,8 +72,10 @@ log_release = '/home/pi/Desktop/Cansat2021ver/log/releaselog1.txt'
 log_landing = '/home/pi/Desktop/Cansat2021ver/log/landingLog1.txt'
 log_melting = '/home/pi/Desktop/Cansat2021ver/log/meltingLog1.txt'
 log_paraavoidance = '/home/pi/Desktop/Cansat2021ver/log/paraAvoidanceLog1.txt'
+log_panoramashooting = '/home/pi/Desktop/Cansat2021ver/log/panoramaLog1.txt'
 log_gpsrunning = '/home/pi/Desktop/Cansat2021ver/log/gpsrunningLog1.txt'
 log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning1.txt'
+log_panoramacom = '/home/pi/Desktop/Cansat2021ver/log/panoramacomLog1.txt'
 
 # photo path
 path_src_panorama = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting00'
@@ -96,27 +98,27 @@ def close():
 
 if __name__ == '__main__':
     # close()
-    print('a')
     motor.setup()
     #######-----------------------Setup--------------------------------#######
     try:
         t_start = time.time()
         print('#####-----Setup Phase start-----#####')
-        #Other.saveLog(log_phase, "1", "Setup phase", dateTime, time.time() - t_start)
+        Other.saveLog(log_phase, "1", "Setup phase", dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
-        print(f'Phase:\t{phaseChk}')
-        if phaseChk == 2:
+        if phaseChk == 1:
+            print(f'Phase:\t{phaseChk}')
             setup()
-        print('#####-----Setup Phase ended-----##### \n \n')
-    except:
-        print('#####-----Error(setup)-----#####')
+            print('#####-----Setup Phase ended-----##### \n \n')
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(setup)-----#####')
         print('#####-----Error(setup)-----#####\n \n')
     #######-----------------------------------------------------------########
 
     #######--------------------------Release--------------------------#######
     print('#####-----Release Phase start-----#####')
-    #Other.saveLog(log_phase, "2", "Release Phase Started", dateTime, time.time() - t_start)
+    Other.saveLog(log_phase, "2", "Release Phase Started", dateTime, time.time() - t_start)
     phaseChk = Other.phaseCheck(log_phase)
     print(f'Phase:\t{phaseChk}')
     if phaseChk == 2:
@@ -127,7 +129,7 @@ if __name__ == '__main__':
                 print(f'loop_release\t {i}')
                 press_count_release, press_judge_release = release.pressdetect_release(thd_press_release, t_delta_release)
                 print(f'count:{press_count_release}\tjudge{press_judge_release}')
-                #Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), press_count_release, press_judge_release)
+                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), press_count_release, press_judge_release)
                 if press_judge_release == 1:
                     print('Release\n \n')
                     break
@@ -141,13 +143,12 @@ if __name__ == '__main__':
             tb = sys.exc_info()[2]
             print("message:{0}".format(e.with_traceback(tb)))
             print('#####-----Error(Release)-----#####')
-            print('#####-----Error(Release)-----#####')
             print('#####-----Error(Release)-----#####\n \n')
 
     #######--------------------------Landing--------------------------#######
     try:
         print('#####-----Landing phase start-----#####')
-        #Other.saveLog(log_phase, '3', 'Landing phase', dateTime, time.time() - t_start)
+        Other.saveLog(log_phase, '3', 'Landing phase', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 3:
@@ -163,16 +164,15 @@ if __name__ == '__main__':
                     break
                 else:
                     print('Not Landed\n \n')
-                #Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read())
+                Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read())
                 i += 1
             else:
                 print('Landed Timeout')
-            #Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), 'Land judge finished')
+            Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), 'Land judge finished')
             print('######-----Landed-----######\n \n')
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
-        print('#####-----Error(Landing)-----#####')
         print('#####-----Error(Landing)-----#####')
         print('#####-----Error(Landing)-----#####\n \n')
     #######-----------------------------------------------------------########
@@ -180,18 +180,17 @@ if __name__ == '__main__':
     #######--------------------------Escape--------------------------#######
     try:
         print('#####-----Melting phase start#####')
-        #Other.saveLog(log_phase, '4', 'Melting phase start', dateTime, time.time() - t_start)
+        Other.saveLog(log_phase, '4', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 4:
-            #Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Start")
+            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Start")
             escape.escape()
-            #Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Finished")
+            Other.saveLog(log_melting, dateTime, time.time() - t_start, GPS.GPSdata_read(), "Melting Finished")
         print('########-----Melted-----#######\n \n')
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
-        print('#####-----Error(melting)-----#####')
         print('#####-----Error(melting)-----#####')
         print('#####-----Error(melting)-----#####\n \n')
     #######-----------------------------------------------------------########
@@ -199,7 +198,7 @@ if __name__ == '__main__':
     #######--------------------------Paraavo--------------------------#######
     try:
         print('#####-----Para avoid start-----#####')
-        #Other.saveLog(log_phase, '5', 'Melting phase start', dateTime, time.time() - t_start)
+        Other.saveLog(log_phase, '5', 'Melting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         count_paraavo = 0
@@ -208,8 +207,9 @@ if __name__ == '__main__':
                 flug, area, gap, photoname = paradetection.ParaDetection(
                     path_paradete, 320, 240, 200, 10, 120, 1)
                 print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-                #Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area,gap, photoname)
+                Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area,gap, photoname)
                 paraavoidance.Parachute_Avoidance(flug, gap)
+                time.sleep(1)
                 if flug == -1 or flug == 0:
                     count_paraavo += 1
         print('#####-----ParaAvo Phase ended-----##### \n \n')
@@ -217,14 +217,13 @@ if __name__ == '__main__':
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(paraavo)-----#####')
-        print('#####-----Error(paraavo)-----#####')
         print('#####-----Error(paraavo)-----#####\n \n')
     #######-----------------------------------------------------------########
 
     #######--------------------------panorama--------------------------#######
     try:
         print('#####-----panorama shooting start-----#####')
-        #Other.saveLog(log_phase, '6', 'panorama shooting phase start', dateTime, time.time() - t_start)
+        Other.saveLog(log_phase, '6', 'panorama shooting phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 6:
@@ -238,14 +237,13 @@ if __name__ == '__main__':
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(panorama)-----#####')
-        print('#####-----Error(panorama)-----#####')
         print('#####-----Error(panorama)-----#####\n \n')
     #######-----------------------------------------------------------########
 
     #######--------------------------GPS--------------------------#######
     try:
         print('#####-----gps run start-----#####')
-        #Other.saveLog(log_phase, '7', 'Melting phase start', dateTime, time.time() - t_start)
+        Other.saveLog(log_phase, '7', 'GPSrun phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 7:
@@ -254,13 +252,12 @@ if __name__ == '__main__':
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(gpsrunning)-----#####')
-        print('#####-----Error(gpsrunning)-----#####')
         print('#####-----Error(gpsrunning)-----#####\n \n')
 
     ######------------------photo running---------------------##########
     try:
         print('#####-----photo run start-----#####')
-        #Other.saveLog(log_phase, '8', 'Melting phase start', dateTime, time.time() - t_start)
+        Other.saveLog(log_phase, '8', 'image run phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 8:
@@ -269,13 +266,15 @@ if __name__ == '__main__':
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
         print('#####-----Error(Photo running)-----#####')
-        print('#####-----Error(Photo running)-----#####')
         print('#####-----Error(Photo running)-----#####\n \n')
 
     #####------------------panorama composition--------------##########
     try:
+        con = input('continue?y/n')
+        if con == 'n':
+            exit()
         print('#####-----panorama composition-----#####')
-        #Other.saveLog(log_phase, '9', 'Melting phase start', dateTime, time.time() - t_start)
+        Other.saveLog(log_phase, '9', 'panorama composition phase start', dateTime, time.time() - t_start)
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
@@ -283,6 +282,5 @@ if __name__ == '__main__':
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
-        print('#####-----Error(panorama composition)-----#####')
         print('#####-----Error(panorama composition)-----#####')
         print('#####-----Error(panorama composition)-----#####\n \n')
