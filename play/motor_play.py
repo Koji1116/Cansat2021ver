@@ -3,8 +3,8 @@ import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 from gpiozero import Motor
 import time
-Rpin1, Rpin2 = 6, 5
-Lpin1, Lpin2 = 9, 10
+Rpin1, Rpin2 = 5, 6
+Lpin1, Lpin2 = 10, 9
 #---↓右側motorを動かすための設定
 motor_r = Motor(Rpin1, Rpin2)
 #---↓左側motorを動かすための設定
@@ -14,9 +14,9 @@ motor_l = Motor(Lpin1, Lpin2)
 
 
 
-#例えば、ローバーを１秒間、出力(0~1で指定)0.6で前進させたいときは次のようにコードを書く。
-# motor_r.forward(0.6)  #右のモータ動かす指令
-# motor_l.forward(0.6)  #左のモータ動かす指令
+#例えば、ローバーを１秒間、出力(0~1で指定)0.2で前進させたいときは次のようにコードを書く。
+# motor_r.forward(0.2)  #右のモータ動かす指令
+# motor_l.forward(0.2)  #左のモータ動かす指令
 # time.sleep(1)         #1秒間待つ
 # motor_r.stop()        #右のモータ止める指令
 # motor_l.stop()        #左のモータ止める指令
@@ -32,8 +32,8 @@ while 1:
     print("文字を入力")
     n=input()
     if n=="w":
-        motor_r.forward(0.6)  #右のモータ動かす指令
-        motor_l.forward(0.6)  #左のモータ動かす指令
+        motor_r.forward(0.2)  #右のモータ動かす指令
+        motor_l.forward(0.2)  #左のモータ動かす指令
         time.sleep(1)         #1秒間待つ
         motor_r.stop()        #右のモータ止める指令
         motor_l.stop()        #左のモータ止める指令
@@ -43,8 +43,8 @@ while 1:
         time.sleep(0.5)         #1秒間待つ
         motor_r.stop()        #右のモータ止める指令
         motor_l.stop()        #左のモータ止める指令
-        motor_r.forward(0.6)  #右のモータ動かす指令
-        motor_l.forward(0.6)  #左のモータ動かす指令
+        motor_r.forward(0.2)  #右のモータ動かす指令
+        motor_l.forward(0.2)  #左のモータ動かす指令
         time.sleep(1)         #1秒間待つ
         motor_r.stop()        #右のモータ止める指令
         motor_l.stop()        #左のモータ止める指令
@@ -54,8 +54,8 @@ while 1:
         time.sleep(0.5)         #1秒間待つ
         motor_r.stop()        #右のモータ止める指令
         motor_l.stop()        #左のモータ止める指令
-        motor_r.forward(0.6)  #右のモータ動かす指令
-        motor_l.forward(0.6)  #左のモータ動かす指令
+        motor_r.forward(0.2)  #右のモータ動かす指令
+        motor_l.forward(0.2)  #左のモータ動かす指令
         time.sleep(1)         #1秒間待つ
         motor_r.stop()        #右のモータ止める指令
         motor_l.stop()        #左のモータ止める指令
