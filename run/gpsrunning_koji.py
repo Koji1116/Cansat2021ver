@@ -134,6 +134,10 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         motor.deceleration(strength_l, strength_r)
         time.sleep(2)
 
+        direction = Calibration.calculate_direction(lon2, lat2)
+        goal_distance = direction['distance']
+        print(f'-----distance: {goal_distance}-----')
+
 
 if __name__ == '__main__':
     GPS.openGPS()
