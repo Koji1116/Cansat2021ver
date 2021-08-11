@@ -15,11 +15,11 @@ motor_l = Motor(Lpin1, Lpin2)
 
 
 #例えば、ローバーを１秒間、出力(0~1で指定)0.6で前進させたいときは次のようにコードを書く。
-motor_r.forward(0.6)  #右のモータ動かす指令
-motor_l.forward(0.6)  #左のモータ動かす指令
-time.sleep(1)         #1秒間待つ
-motor_r.stop()        #右のモータ止める指令
-motor_l.stop()        #左のモータ止める指令
+# motor_r.forward(0.6)  #右のモータ動かす指令
+# motor_l.forward(0.6)  #左のモータ動かす指令
+# time.sleep(1)         #1秒間待つ
+# motor_r.stop()        #右のモータ止める指令
+# motor_l.stop()        #左のモータ止める指令
 
 
 #--------課題----------#
@@ -27,3 +27,38 @@ motor_l.stop()        #左のモータ止める指令
 #      というコードを下に書いてください。
 #ヒント1：入力に関してはinput関数を使う(参考url:https://qiita.com/naoya_ok/items/f33a6ab2ff77154a7121)
 #ヒント2：場合分けはif文使う(参考url:https://note.nkmk.me/python-if-elif-else/) 
+while 1:
+
+    print("文字を入力")
+    n=input()
+    if n==w:
+        motor_r.forward(0.6)  #右のモータ動かす指令
+        motor_l.forward(0.6)  #左のモータ動かす指令
+        time.sleep(1)         #1秒間待つ
+        motor_r.stop()        #右のモータ止める指令
+        motor_l.stop()        #左のモータ止める指令
+    elif n==a:
+        motor_r.forward(0.1)  #右のモータ動かす指令
+        motor_l.backward(0.1)  #左のモータ動かす指令
+        time.sleep(0.5)         #1秒間待つ
+        motor_r.stop()        #右のモータ止める指令
+        motor_l.stop()        #左のモータ止める指令
+        motor_r.forward(0.6)  #右のモータ動かす指令
+        motor_l.forward(0.6)  #左のモータ動かす指令
+        time.sleep(1)         #1秒間待つ
+        motor_r.stop()        #右のモータ止める指令
+        motor_l.stop()        #左のモータ止める指令
+    elif n==d:
+        motor_r.backward(0.1)  #右のモータ動かす指令
+        motor_l.forward(0.1)  #左のモータ動かす指令
+        time.sleep(0.5)         #1秒間待つ
+        motor_r.stop()        #右のモータ止める指令
+        motor_l.stop()        #左のモータ止める指令
+        motor_r.forward(0.6)  #右のモータ動かす指令
+        motor_l.forward(0.6)  #左のモータ動かす指令
+        time.sleep(1)         #1秒間待つ
+        motor_r.stop()        #右のモータ止める指令
+        motor_l.stop()        #左のモータ止める指令
+    else:
+        motor_r.stop()        #右のモータ止める指令
+        motor_l.stop()        #左のモータ止める指令
