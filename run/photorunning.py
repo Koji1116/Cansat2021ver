@@ -124,7 +124,7 @@ def image_guided_driving(path, G_thd):
             # else:
             #     motor.move(12, 12, 0.2)
             photoName = Capture.Capture(path)  # 解像度調整するところ？
-            goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 128, 50)
+            goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
             imgname2 = DrawContours(imgname, 200, 20, 80)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}\timagename2:{imgname2}')
             # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
