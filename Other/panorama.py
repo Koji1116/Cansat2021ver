@@ -53,8 +53,8 @@ def composition(srcdir, dstdir, srcext='.jpg', dstext='.jpg'):
             print('composition failed')
         cv2.imwrite(dstdir + '/' + str(resultcount) + srcext, result)
     except Exception as e:
-
-
+        print()
+        
 def shooting(l, r, t, mag_mat, path):
     """
     パノラマ撮影用の関数
