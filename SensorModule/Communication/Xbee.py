@@ -71,6 +71,7 @@ def off():
 
 
 if __name__ == '__main__':
+    on()
     #str_trans('!')
     # str_trans('HELLO!')
     img1 = "/home/pi/Desktop/Cansat2021ver/photostorage/paradete0003.jpg"
