@@ -31,7 +31,7 @@ import gpsrunning_koji
 import photorunning
 import Other
 import Calibration
-import gpsrunning2
+
 
 dateTime = datetime.datetime.now()
 
@@ -240,6 +240,25 @@ if __name__ == '__main__':
         print('#####-----Error(panorama)-----#####')
         print('#####-----Error(panorama)-----#####\n \n')
     #######-----------------------------------------------------------########
+   
+    # ----- goal - para - rover - という位置関係の場合GPS走行スタート時にパラシュート回避を行う ----- #
+    magx_off, magy_off = Calibration.cal(40, -40, 0.2, 30)
+    theta = gpsrunning_koji.angle_goal(magx_off, magy_off)
+    gpsrunning_koji.adjust_direction(theta, magx_off, magy_off)
+    c_paraavo = 0
+    while c_paraavo < 2:
+        f, a, g, n = paradetection.ParaDetection("photostorage/photostorage_paradete/para", 320,240, 200, 10, 120, 1)
+        print(f'flug:{f}\tarea:{a}\tgap:{g}\tphotoname:{n}')
+        paraavoidance.Parachute_Avoidance(f, g)
+        print(f)
+        if f == -1 or f == 0:
+         c_paraavo += 1
+        print(c_paraavo)
+        
+
+
+
+
 
     #######--------------------------GPS--------------------------#######
     try:
@@ -248,7 +267,7 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 7:
-            gpsrunning2.drive(lon2, lat2, th_distance, t_adj_gps, log_gpsrunning)
+            gpsrunning_koji.drive(lon2, lat2, th_distance, t_adj_gps, log_gpsrunning)
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
