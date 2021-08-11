@@ -96,7 +96,7 @@ def Parachute_Avoidance(flug, goalGAP):
                 # motor.move(70, 70, 1)
                 # print('motor.move(-50, 50, 0.1)motor.move(70, 70, 1)')
             if goalGAP >= 50 and goalGAP <= 100:
-                motor.move(-80, 80, 1)
+                motor.move(-50, 50, 0.1)
                 #motor.move(50, 50, 1)
                 # print(' # motor.move(-80, 80, 1)# motor.move(70, 70, 1)')
 
