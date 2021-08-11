@@ -106,6 +106,7 @@ def shooting(l, r, t, mag_mat, path):
         preθ = latestθ
         # Xbee.str_trans(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
         print(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
+        time.sleep(1)
 
 
 if __name__ == "__main__":
@@ -133,9 +134,9 @@ if __name__ == "__main__":
     magdata = Calibration.magdata_matrix(40, -40, 0.2, 30)
 
     l = float(input('左の出力'))
-    r = float(input('右の出力'))
+    #r = float(input('右の出力'))
     t = float(input('回転時間'))
-    shooting(l, r, t, magdata, srcdir)
+    shooting(l, -l, t, magdata, srcdir)
     t_start = time.time()  # プログラムの開始時刻
     composition(srcdir, dstdir)
     runTime = time.time() - t_start
