@@ -90,8 +90,7 @@ if __name__ == '__main__':
     #######-----------------------Setup--------------------------------#######
     try:
         print(GPS.GPSdata_read())
-        t_start = time.time()
-        print('#####-----Setup Phase start-----#####')
+        print('a')
         Other.saveLog(log_phase, GPS.GPSdata_read())
         
     except Exception as e:
