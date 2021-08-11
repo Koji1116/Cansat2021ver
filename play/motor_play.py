@@ -31,13 +31,13 @@ while 1:
 
     print("文字を入力")
     n=input()
-    if n==w:
+    if n=="w":
         motor_r.forward(0.6)  #右のモータ動かす指令
         motor_l.forward(0.6)  #左のモータ動かす指令
         time.sleep(1)         #1秒間待つ
         motor_r.stop()        #右のモータ止める指令
         motor_l.stop()        #左のモータ止める指令
-    elif n==a:
+    elif n=="a":
         motor_r.forward(0.1)  #右のモータ動かす指令
         motor_l.backward(0.1)  #左のモータ動かす指令
         time.sleep(0.5)         #1秒間待つ
@@ -48,7 +48,7 @@ while 1:
         time.sleep(1)         #1秒間待つ
         motor_r.stop()        #右のモータ止める指令
         motor_l.stop()        #左のモータ止める指令
-    elif n==d:
+    elif n=="d":
         motor_r.backward(0.1)  #右のモータ動かす指令
         motor_l.forward(0.1)  #左のモータ動かす指令
         time.sleep(0.5)         #1秒間待つ
