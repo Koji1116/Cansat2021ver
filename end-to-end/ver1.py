@@ -61,7 +61,7 @@ t_rotation_pano = 0.15
 lat2 = 35.8688780
 lon2 = 139.9246085
 
-th_distance = 5
+th_distance = 10
 t_adj_gps = 30
 
 # variable for photorun
