@@ -21,8 +21,8 @@ import stuck
 import acc
 import Xbee
 import Other
-lat2 = 35.868885
-lon2 = 139.924738
+lat2 = 35.8688780
+lon2 = 139.9246085
 
 
 def angle_goal(magx_off, magy_off):
