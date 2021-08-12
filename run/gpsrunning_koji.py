@@ -28,6 +28,7 @@ lon2 = 139.924442
 def angle_goal(magx_off, magy_off):
     """
     ゴールとの相対角度を算出する関数
+
     -180~180度
     """
     magdata = BMC050.mag_dataRead()
@@ -112,7 +113,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
             if goal_distance <= thd_distance:
                 break
             else:
-                for _ in range(10):
+                for _ in range(4):
                     #theta = angle_goal(magx_off, magy_off)
                     magdata = BMC050.mag_dataRead()
                     mag_x = magdata[0]
@@ -131,7 +132,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                     print(f'angle ----- {theta}')
                     strength_l, strength_r = 70 + adj, 70 - adj
                     motor.motor_continue(strength_l, strength_r)
-                    time.sleep(0.1)
+                    time.sleep(0.5)
         motor.deceleration(strength_l, strength_r)
         time.sleep(2)
         lat_new, lon_new = GPS.location()
