@@ -113,19 +113,20 @@ if __name__ == '__main__':
     
     #######-----------------------Setup--------------------------------#######
 
-    t_start = time.time()
-    print('#####-----Setup Phase start-----#####')
-    Other.saveLog(log_phase, "1", "Setup phase", dateTime, time.time() - t_start)
-    phaseChk = Other.phaseCheck(log_phase)
-    if phaseChk == 1:
-        print(f'Phase:\t{phaseChk}')
-        setup()
-        print('#####-----Setup Phase ended-----##### \n \n')
-    # #except Exception as e:
-    #     tb = sys.exc_info()[2]
-    #     print("message:{0}".format(e.with_traceback(tb)))
-    #     print('#####-----Error(setup)-----#####')
-    #     print('#####-----Error(setup)-----#####\n \n')
+    try:
+        t_start = time.time()
+        print('#####-----Setup Phase start-----#####')
+        Other.saveLog(log_phase, "1", "Setup phase", dateTime, time.time() - t_start)
+        phaseChk = Other.phaseCheck(log_phase)
+        if phaseChk == 1:
+            print(f'Phase:\t{phaseChk}')
+            setup()
+            print('#####-----Setup Phase ended-----##### \n \n')
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
+        print('#####-----Error(setup)-----#####')
+        print('#####-----Error(setup)-----#####\n \n')
     #######-----------------------------------------------------------########
 
     #######--------------------------Release--------------------------#######
@@ -136,57 +137,57 @@ if __name__ == '__main__':
     if phaseChk == 2:
         t_release_start = time.time()
         i = 1
-        
-        while time.time() - t_release_start <= t_out_release:
-            print(f'loop_release\t {i}')
-            press_count_release, press_judge_release = release.pressdetect_release(thd_press_release, t_delta_release)
-            print(f'count:{press_count_release}\tjudge{press_judge_release}')
-            Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), press_count_release, press_judge_release)
-            if press_judge_release == 1:
-                print('Release\n \n')
-                break
+        try:
+            while time.time() - t_release_start <= t_out_release:
+                print(f'loop_release\t {i}')
+                press_count_release, press_judge_release = release.pressdetect_release(thd_press_release, t_delta_release)
+                print(f'count:{press_count_release}\tjudge{press_judge_release}')
+                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), press_count_release, press_judge_release)
+                if press_judge_release == 1:
+                    print('Release\n \n')
+                    break
+                else:
+                    print('Not Release\n \n')
+                i += 1
             else:
-                print('Not Release\n \n')
-            i += 1
-        else:
-            print('##--release timeout--##')
-        print("######-----Released-----##### \n \n")
-        # except Exception as e:
-        #     tb = sys.exc_info()[2]
-        #     print("message:{0}".format(e.with_traceback(tb)))
-        #     print('#####-----Error(Release)-----#####')
-        #     print('#####-----Error(Release)-----#####\n \n')
+                print('##--release timeout--##')
+            print("######-----Released-----##### \n \n")
+        except Exception as e:
+            tb = sys.exc_info()[2]
+            print("message:{0}".format(e.with_traceback(tb)))
+            print('#####-----Error(Release)-----#####')
+            print('#####-----Error(Release)-----#####\n \n')
 
     #######--------------------------Landing--------------------------#######
-
-    print('#####-----Landing phase start-----#####')
-    Other.saveLog(log_phase, '3', 'Landing phase', dateTime, time.time() - t_start)
-    phaseChk = Other.phaseCheck(log_phase)
-    print(f'Phase:\t{phaseChk}')
-    if phaseChk == 3:
-        print(f'Landing Judgement Program Start\t{time.time() - t_start}')
-        t_land_start = time.time()
-        i = 1
-        while time.time() - t_land_start <= t_out_land:
-            print(f"loop_land\t{i}")
-            press_count_release, press_judge_release = land.pressdetect_land(thd_press_land)
-            print(f'count:{press_count_release}\tjudge{press_judge_release}')
-            if press_judge_release == 1:
-                print('Landed\n \n')
-                break
+    try:
+        print('#####-----Landing phase start-----#####')
+        Other.saveLog(log_phase, '3', 'Landing phase', dateTime, time.time() - t_start)
+        phaseChk = Other.phaseCheck(log_phase)
+        print(f'Phase:\t{phaseChk}')
+        if phaseChk == 3:
+            print(f'Landing Judgement Program Start\t{time.time() - t_start}')
+            t_land_start = time.time()
+            i = 1
+            while time.time() - t_land_start <= t_out_land:
+                print(f"loop_land\t{i}")
+                press_count_release, press_judge_release = land.pressdetect_land(thd_press_land)
+                print(f'count:{press_count_release}\tjudge{press_judge_release}')
+                if press_judge_release == 1:
+                    print('Landed\n \n')
+                    break
+                else:
+                    print('Not Landed\n \n')
+                Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read())
+                i += 1
             else:
-                print('Not Landed\n \n')
-            Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read())
-            i += 1
-        else:
-            print('Landed Timeout')
-        Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), 'Land judge finished')
-        print('######-----Landed-----######\n \n')
-    # except Exception as e:
-    #     tb = sys.exc_info()[2]
-    #     print("message:{0}".format(e.with_traceback(tb)))
-    #     print('#####-----Error(Landing)-----#####')
-    #     print('#####-----Error(Landing)-----#####\n \n')
+                print('Landed Timeout')
+            Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), 'Land judge finished')
+            print('######-----Landed-----######\n \n')
+    except Exception as e:
+        tb = sys.exc_info()[2]
+        print("message:{0}".format(e.with_traceback(tb)))
+        print('#####-----Error(Landing)-----#####')
+        print('#####-----Error(Landing)-----#####\n \n')
     # #######-----------------------------------------------------------########
 
     #######--------------------------Escape--------------------------#######
