@@ -102,12 +102,12 @@ if __name__ == '__main__':
 
     #remove file
     iino = input('本当に写真ファイル削除していい？git pullした？[y/n]')
-    if iino == "y":
-        os.remove('/home/pi/Desktop/Cansat2021ver/src_panorama/*')
-        os.remove('/home/pi/Desktop/Cansat2021ver/dst_panorama/*')
-        print('removed')
-    else:
-        pass
+    # if iino == "y":
+    #     os.remove('/home/pi/Desktop/Cansat2021ver/src_panorama/*')
+    #     os.remove('/home/pi/Desktop/Cansat2021ver/dst_panorama/*')
+    #     print('removed')
+    # else:
+    #     pass
     # close()
     motor.setup()
     
