@@ -87,12 +87,13 @@ path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage/paradete'
 
 def setup():
     global phaseChk
-    BME280.bme280_setup()
-    GPS.openGPS()
-    BME280.bme280_calib_param()
-    BMC050.BMC050_setup()
-    
     Xbee.on()
+    GPS.openGPS()
+    BMC050.BMC050_setup()
+    BME280.bme280_setup()
+    BME280.bme280_calib_param()
+    
+    
 
 def close():
     GPS.closeGPS()
