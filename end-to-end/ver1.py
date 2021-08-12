@@ -292,7 +292,6 @@ if __name__ == '__main__':
         if phaseChk == 9:
             panorama.composition(path_src_panorama, path_dst_panoraam)
             img1 = "/home/pi/Desktop/Cansat2021ver/dst_panorama/0.jpg"
-            img_string = Xbee.convert_string(img1)
             img_string = Xbee.ImageToByte(img1)
             Xbee.img_trans(img_string)
     except Exception as e:
