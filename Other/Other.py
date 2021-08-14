@@ -19,7 +19,7 @@ def saveLog(path, *data):
 
     # for log outside of git management
     rfd = path.rfind('/')
-    path_backup = '/home/pi/Desktop/log' + path[rfd::]
+    path_backup = '/home/pi/Desktop/log' + path[rfd:]
     with open(path_backup, "a") as f:
         for i in range(len(data)):
             if isinstance(data[i], list):
