@@ -5,10 +5,8 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Detection')
 
 from gpiozero import Motor
-from time import sleep
 import time
 import acc
-import stuck
 import stuck
 
 
