@@ -91,6 +91,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
     goal_distance = direction['distance']
 
     while goal_distance >= thd_distance:
+        t_stuck_count = 1
         stuck.ue_jug()
         # ------------- Calibration -------------#
         # Xbee.str_trans('Calibration Start')
@@ -111,6 +112,14 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
             print(f'lat: {lat1}\tlon: {lon1}\tdistance: {goal_distance}\tazimuth: {azimuth}\n')
             # Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
             Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],  azimuth)
+            if t_stuck_count % 5 == 0:
+                if stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new, 2):
+                    pass
+                else:
+                    stuck.stuck_avoid()
+                    pass
+                lat_old, lon_old = GPS.location()
+
             if goal_distance <= thd_distance:
                 break
             else:                
@@ -150,6 +159,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                     time.sleep(0.1)
                     mag_x_old = mag_x
                     mag_y_old = mag_y
+            t_stuck_count += 1
         motor.deceleration(strength_l, strength_r)
         time.sleep(2)
         lat_new, lon_new = GPS.location()

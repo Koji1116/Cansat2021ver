@@ -99,32 +99,32 @@ def stuck_avoid():
     while 1:
         # 0~6
         for i in range(7):
-            utc1, lat1, lon1, sHeight1, gHeight1 = GPS.GPSdeta_read()
+            lat_old, lon_old = GPS.location()
             stuck.stuck_avoid_move(i)
-            utc2, lat2, lon2, sHeight2, gHeight2 = GPS.GPSdeta_read()
-            bool_stuck = stuck.stuck_jud(lat1, lon1, lat2, lon2, 1)
+            lat_new, lon_new = GPS.location()
+            bool_stuck = stuck.stuck_jud(lat_old, lon_old, lat_new, lon_new, 1)
             if bool_stuck == True:
-                if i == 1 or i == 4 or i == 5:
-                    print('スタックもう一度引っかからないように避ける')
-                    motor.move(-60, -60, 2)
-                    motor.move(-60, 60, 0.5)
-                    motor.move(80, 80, 3)
+                # if i == 1 or i == 4 or i == 5:
+                #     print('スタックもう一度引っかからないように避ける')
+                #     motor.move(-60, -60, 2)
+                #     motor.move(-60, 60, 0.5)
+                #     motor.move(80, 80, 3)
                 flag = True
                 break
         if flag:
             break
         # 3,2,1,0
         for i in range(7):
-            utc1, lat1, lon1, sHeight1, gHeight1 = GPS.GPSdeta_read()
+            lat_old, lon_old = GPS.location()
             stuck.stuck_avoid_move(7-i)
-            utc2, lat2, lon2, sHeight2, gHeight2 = GPS.GPSdeta_read()
-            bool_stuck = stuck.stuck_jud(lat1, lon1 ,lat2 , lon2,1)
+            lat_new, lon_new = GPS.location()
+            bool_stuck = stuck.stuck_jud(lat_old, lon_old, lat_new, lon_new,1)
             if bool_stuck == False:
-                if i == 1 or i == 4 or i == 5:
-                    print('スタックもう一度引っかからないように避ける')
-                    motor.move(-60, -60, 2)
-                    motor.move(-60, 60, 0.5)
-                    motor.move(80, 80, 3)
+                # if i == 1 or i == 4 or i == 5:
+                #     print('スタックもう一度引っかからないように避ける')
+                #     motor.move(-60, -60, 2)
+                #     motor.move(-60, 60, 0.5)
+                #     motor.move(80, 80, 3)
                 flag = True
                 break
         if flag:
