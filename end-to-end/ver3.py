@@ -15,6 +15,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/run')
 
 import time
 import datetime
+import random
 
 import BME280
 import Xbee
