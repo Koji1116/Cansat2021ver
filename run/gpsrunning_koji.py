@@ -113,11 +113,16 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
             if goal_distance <= thd_distance:
                 break
             else:
-                for _ in range(4):
+                mag_x_old, mag_y_old = 0, 0
+                for _ in range(10):
                     #theta = angle_goal(magx_off, magy_off)
                     magdata = BMC050.mag_dataRead()
                     mag_x = magdata[0]
                     mag_y = magdata[1]
+                    if mag_x == mag_x_old:
+                        print('////////magx error///////')
+                    if mag_y == mag_y_old:
+                        print('////////magy error///////')
                     theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
                     angle_relative = azimuth - theta
                     if angle_relative >= 0:
@@ -126,13 +131,23 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                         angle_relative = angle_relative if angle_relative >= -180 else angle_relative + 360
                     theta = angle_relative
                     if theta >= 0:
-                        adj = 0 if theta <= 15 else 20
+                        if theta <= 15:
+                            adj = 0
+                        elif theta <= 90:
+                            abj = 20
+                        else:
+                            abj = 30
                     else:
-                        adj = 0 if theta >= -15 else -20
+                        if theta >= -15:
+                            adj = 0
+                        elif theta >= -90:
+                            abj = 20
+                        else:
+                            abj = 30
                     print(f'angle ----- {theta}')
                     strength_l, strength_r = 70 + adj, 70 - adj
                     motor.motor_continue(strength_l, strength_r)
-                    time.sleep(0.5)
+                    time.sleep(0.1)
         motor.deceleration(strength_l, strength_r)
         time.sleep(2)
         lat_new, lon_new = GPS.location()
