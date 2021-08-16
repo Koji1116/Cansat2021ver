@@ -113,8 +113,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
             Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],  azimuth)
             if goal_distance <= thd_distance:
                 break
-            else:
-                
+            else:                
                 for _ in range(10):
                     #theta = angle_goal(magx_off, magy_off)
                     magdata = BMC050.mag_dataRead()
@@ -149,6 +148,8 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                     strength_l, strength_r = 70 + adj, 70 - adj
                     motor.motor_continue(strength_l, strength_r)
                     time.sleep(0.1)
+                    mag_x_old = mag_x
+                    mag_y_old = mag_y
         motor.deceleration(strength_l, strength_r)
         time.sleep(2)
         lat_new, lon_new = GPS.location()
