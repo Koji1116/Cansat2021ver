@@ -7,6 +7,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/GPS')
 from time import sleep
 import time
+import random
 #from SensorModule.GPS.GPS_Navigate import vincenty_inverse
 from math import*
 from gpiozero import Motor
@@ -55,7 +56,13 @@ def stuck_jug(lat1, lon1, lat2, lon2, thd = 1.0 ):
         print(str(data_stuck['distance']) + '----スタックしてないよ')
         return True
 
-
+def random(a, b, k):
+    ns = []
+    while len(ns) < k:
+        n = random.randint(a, b)
+        if not n in ns:
+            ns.append(n)
+    return ns
 
 def stuck_avoid_move(x):
     if x == 0:
@@ -117,6 +124,22 @@ def stuck_avoid():
         for i in range(7):
             lat_old, lon_old = GPS.location()
             stuck.stuck_avoid_move(7-i)
+            lat_new, lon_new = GPS.location()
+            bool_stuck = stuck.stuck_jud(lat_old, lon_old, lat_new, lon_new,1)
+            if bool_stuck == False:
+                # if i == 1 or i == 4 or i == 5:
+                #     print('スタックもう一度引っかからないように避ける')
+                #     motor.move(-60, -60, 2)
+                #     motor.move(-60, 60, 0.5)
+                #     motor.move(80, 80, 3)
+                flag = True
+                break
+        if flag:
+            break
+        random = random(0, 6, 7)
+        for i in range(7):
+            lat_old, lon_old = GPS.location()
+            stuck.stuck_avoid_move(random[i])
             lat_new, lon_new = GPS.location()
             bool_stuck = stuck.stuck_jud(lat_old, lon_old, lat_new, lon_new,1)
             if bool_stuck == False:

@@ -10,6 +10,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 
 import datetime
 import time
+import random
 
 import GPS_Navigate
 import BMC050
