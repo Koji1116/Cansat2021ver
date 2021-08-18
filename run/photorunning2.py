@@ -161,11 +161,11 @@ def image_guided_driving(path, G_thd):
                 if -100 <= gap and gap <= -65:
                     print('Turn left')
                     # print('Turn left')
-                    motor.move(-20, 20, 0.1)
+                    motor.move(-15, 15, 0.1)
                 elif 65 <= gap and gap <= 100:
                     print('Turn right')
                     # print('Turn right')
-                    motor.move(20, -20, 0.1)
+                    motor.move(15, -15, 0.1)
                 else:
                     print('Go stright short')
                     # print('Gos straight short')
