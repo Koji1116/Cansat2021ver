@@ -18,6 +18,8 @@ import datetime
 from gpiozero import Motor
 import time
 
+
+
 # 写真内の赤色面積で進時間を決める用　調整必要
 area_short = 59.9
 area_middle = 6
@@ -69,15 +71,15 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         centers = get_center(contours[max_area_contour])
 
         if max_area_contour == -1:
-            return [1, 0, 1000, imgname]
+            return [-1, 0, 1000, imgname]
         elif max_area <= 0.2:
-            return [1, max_area, 1000000, imgname]
+            return [-1, max_area, 1000000, imgname]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [0, max_area, GAP, imgname]
+            return [1, max_area, GAP, imgname]
         else:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [1, max_area, GAP, imgname]
+            return [0, max_area, GAP, imgname]
     except:
         return [1000, 1000, 1000, imgname]
 
@@ -115,67 +117,90 @@ def DrawContours(imgpath, H_min, H_max, S_thd):
         print("end drawcircle")
 
 
-def image_guided_driving(path, G_thd):
-    goalflug = 1
+def rotation(path_photo, G_thd):
+    while 1:
+        photoName = Capture.Capture(path_photo)
+        goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, G_thd)
+        imgname2 = DrawContours(imgname, 200, 20, 80)
+        print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}\timagename2:{imgname2}')
+        Other.saveLog(log_photorunning, datetime.datetime.now, goalflug, goalarea, gap, imgname, imgname2)
+        if goalarea <= area_long:
+            if -100 <= gap and gap <= -65:
+                print('Turn left')
+                motor.move(-40, 40, 0.1)
+            elif 65 <= gap and gap <= 100:
+                print('Turn right')
+                motor.move(40, -40, 0.1)
+            else:
+                print('##--long--##')
+                return True
+        elif goalarea <= area_middle:
+            if -100 <= gap and gap <= -65:
+                print('Turn left')
+                motor.move(-25, 25, 0.1)
+            elif 65 <= gap and gap <= 100:
+                print('Turn right')
+                motor.move(25, -25, 0.1)
+            else:
+                print('##--middle--##')
+                return True
+        elif goalarea <= area_short:
+            if -100 <= gap and gap <= -65:
+                print('Turn left')
+                motor.move(-20, 20, 0.1)
+            elif 65 <= gap and gap <= 100:
+                print('Turn right')
+                motor.move(20, -20, 0.1)
+            else:
+                print('##--short--##')
+                return True
+
+
+def image_guided_driving(path_photo, log_photorunning, G_thd):
     try:
-        while goalflug != 0:
-            # if stuck.ue_jug() :
-            #     pass
-            # else:
-            #     motor.move(12, 12, 0.2)
-            photoName = Capture.Capture(path)  # 解像度調整するところ？
-            goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
+        Other.saveLog(log_photorunning, datetime.datetime.now, 'image guide start')
+        photoName = Capture.Capture(path_photo)
+        goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, G_thd)
+
+        imgname2 = DrawContours(imgname, 200, 20, 80)
+        print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}\timagename2:{imgname2}')
+        Other.saveLog(log_photorunning, datetime.datetime.now, goalflug, goalarea, gap, imgname, imgname2)
+        if rotation(path_photo, G_thd):
+            print('###---goal is detected by rotation ---###')
+
+        while 1:
+            photoName = Capture.Capture(path_photo)
+            goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, G_thd)
             imgname2 = DrawContours(imgname, 200, 20, 80)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}\timagename2:{imgname2}')
-            # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
-            if gap == 1000 or gap == 1000000:
-                print('Nogoal detected')
-                motor.move(40, -40, 0.1)
-            elif goalarea <= area_long:
-                if -100 <= gap and gap <= -65:
-                    print('Turn left')
-                    # print('Turn left')
-                    motor.move(-40, 40, 0.1)
-                elif 65 <= gap and gap <= 100:
-                    print('Turn right')
-                    # print('Turn right')
-                    motor.move(40, -40, 0.1)
-                else:
-                    print('Go straight long')
-                    print('GO straight long')
-                    motor.move(80, 80, 3)
-            elif goalarea <= area_middle:
-                if -100 <= gap and gap <= -65:
-                    print('Turn left')
-                    # print('Turn left')
-                    motor.move(-25, 25, 0.1)
-                elif 65 <= gap and gap <= 100:
-                    print('Turn right')
-                    # print('Turn right')
-                    motor.move(25, -25, 0.1)
-                else:
-                    print('Go straight middle')
-                    # print('Go straight middle')
-                    motor.move(80, 80, 1)
-            elif goalarea <= area_short:
-                if -100 <= gap and gap <= -65:
-                    print('Turn left')
-                    # print('Turn left')
-                    motor.move(-15, 15, 0.1)
-                elif 65 <= gap and gap <= 100:
-                    print('Turn right')
-                    # print('Turn right')
-                    motor.move(15, -15, 0.1)
-                else:
-                    print('Go stright short')
-                    # print('Gos straight short')
-                    motor.move(40, 40, 0.2)
-            elif goalarea >= G_thd:
-                print('goal')
-                print('goal')
+            Other.saveLog(log_photorunning, datetime.datetime.now, goalflug, goalarea, gap, imgname, imgname2)
+            if goalflug == 1:
+                print('##--goal--##')
                 break
-        print('finish')
-        print('finish')
+            if goalflug != 0 or goalflug == 1000:
+                if rotation(path_photo, G_thd):
+                    print('###---goal is detected by rotation ---###')
+            if gap >= 0:
+                if gap <= 15:
+                    adj = 0
+                elif gap <= 40:
+                    abj = 10
+                else:
+                    abj = 20
+            else:
+                if gap >= -15:
+                    adj = 0
+                elif gap >= -40:
+                    abj = 10
+                else:
+                    abj = 20
+            strength_l, strength_r = 20 + adj, 20 - adj
+            motor.motor_continue(strength_l, strength_r)
+        motor.deceleration(strength_l, strength_r)
+
+
+
+
 
 
     except KeyboardInterrupt:
@@ -187,6 +212,7 @@ def image_guided_driving(path, G_thd):
 
 if __name__ == "__main__":
     try:
+        log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning1.txt'
         # G_thd = float(input('ゴール閾値'))
         motor.setup()
         G_thd = 80  # 調整するところ
