@@ -69,15 +69,15 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         centers = get_center(contours[max_area_contour])
 
         if max_area_contour == -1:
-            return [1, 0, 1000, imgname]
+            return [-1, 0, 1000, imgname]
         elif max_area <= 0.2:
-            return [1, max_area, 1000000, imgname]
+            return [-1, max_area, 1000000, imgname]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [0, max_area, GAP, imgname]
+            return [1, max_area, GAP, imgname]
         else:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [1, max_area, GAP, imgname]
+            return [0, max_area, GAP, imgname]
     except:
         return [1000, 1000, 1000, imgname]
 
@@ -116,7 +116,7 @@ def DrawContours(imgpath, H_min, H_max, S_thd):
 
 
 def image_guided_driving(path, G_thd):
-    goalflug = 1
+    goalflug = 0
     try:
         while goalflug != 0:
             # if stuck.ue_jug() :
