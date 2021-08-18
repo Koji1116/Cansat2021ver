@@ -73,13 +73,13 @@ def off():
 if __name__ == '__main__':
     on()
     #str_trans('!')
-    # str_trans('HELLO!')
-    img1 = "/home/pi/Desktop/Cansat2021ver/dst_panorama/0.jpg"
-    #img_string = convert_string(img1)
-    # img_string = ImageToByte(img1)
+    str_trans('HELLO!')
+    # img1 = "/home/pi/Desktop/Cansat2021ver/dst_panorama/0.jpg"
+    # #img_string = convert_string(img1)
+    # # img_string = ImageToByte(img1)
 
+    # # img_trans(img_string)
+    # img1 = "/home/pi/Desktop/Cansat2021ver/dst_panorama/0.jpg"
+    #         # img_string = Xbee.convert_string(img1)
+    # img_string =ImageToByte(img1)
     # img_trans(img_string)
-    img1 = "/home/pi/Desktop/Cansat2021ver/dst_panorama/0.jpg"
-            # img_string = Xbee.convert_string(img1)
-    img_string =ImageToByte(img1)
-    img_trans(img_string)
