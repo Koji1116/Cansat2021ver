@@ -70,15 +70,25 @@ G_thd = 80
 path_photo_imagerun = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
 
 # log
-log_phase = '/home/pi/Desktop/Cansat2021ver/log/phaseLog1.txt'
-log_release = '/home/pi/Desktop/Cansat2021ver/log/releaselog1.txt'
-log_landing = '/home/pi/Desktop/Cansat2021ver/log/landingLog1.txt'
-log_melting = '/home/pi/Desktop/Cansat2021ver/log/meltingLog1.txt'
-log_paraavoidance = '/home/pi/Desktop/Cansat2021ver/log/paraAvoidanceLog1.txt'
-log_panoramashooting = '/home/pi/Desktop/Cansat2021ver/log/panoramaLog1.txt'
-log_gpsrunning = '/home/pi/Desktop/Cansat2021ver/log/gpsrunningLog1.txt'
-log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning1.txt'
-log_panoramacom = '/home/pi/Desktop/Cansat2021ver/log/panoramacomLog1.txt'
+# log_phase = '/home/pi/Desktop/Cansat2021ver/log/phaseLog1.txt'
+# log_release = '/home/pi/Desktop/Cansat2021ver/log/releaselog1.txt'
+# log_landing = '/home/pi/Desktop/Cansat2021ver/log/landingLog1.txt'
+# log_melting = '/home/pi/Desktop/Cansat2021ver/log/meltingLog1.txt'
+# log_paraavoidance = '/home/pi/Desktop/Cansat2021ver/log/paraAvoidanceLog1.txt'
+# log_panoramashooting = '/home/pi/Desktop/Cansat2021ver/log/panoramaLog1.txt'
+# log_gpsrunning = '/home/pi/Desktop/Cansat2021ver/log/gpsrunningLog1.txt'
+# log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning1.txt'
+# log_panoramacom = '/home/pi/Desktop/Cansat2021ver/log/panoramacomLog1.txt'
+
+log_phase = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/phaseLog', 'txt')
+log_release = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/releaselog', 'txt')
+log_landing = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/landingLog', 'txt')
+log_melting = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/meltingLog', 'txt')
+log_paraavoidance = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/paraAvoidanceLog', 'txt')
+log_panoramashooting = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/panoramaLog', 'txt')
+log_gpsrunning = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/gpsrunningLog', 'txt')
+log_photorunning = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/photorunning', 'txt')
+log_panoramacom = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/panoramacomLog', 'txt')
 
 # photo path
 path_src_panorama = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting'
