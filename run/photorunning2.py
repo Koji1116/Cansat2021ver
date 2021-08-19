@@ -222,42 +222,6 @@ if __name__ == "__main__":
         path = f'photostorage/ImageGuidance2_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
         image_guided_driving(path, G_thd)
 
-        # photoName = 'photostorage/practice13.png'
-        # while goalflug != 0:
-        #     photoName = Capture.Capture(path, 320, 320)                                               #解像度調整するところ？
-        #     goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
-        #     print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}')
-        #     # print('goalflug', goalflug, ' goalarea', goalarea, ' goalGAP', goalGAP)
-        #     # Other.saveLog(path,startTime - time.time(), goalflug, goalarea, goalGAP)
-        #     if -100 <= gap and gap <= -65:                                                                                  #調整するところ
-        #         print('Turn left')
-        #         # print('Turn left')
-        #         motor.move(-40, 40, 0.1)                                                       #調整するところ
-        #         # print('motor.motor(-0.2, 0.2, 0.3)')
-        #     elif 65 <= gap and gap <= 100:
-        #         print('Turn right')
-        #         # print('Turn right')
-        #         motor.move(40, -40, 0.1)                                                       #調整するところ
-        #         # print('motor.motor(0.2, -0.2, 0.3)')
-        #     elif gap == 1000 or gap==1000000:
-        #         print('Nogoal detected')
-        #         motor.move(40, -40, 0.1)                                                       #調整するところ
-        #         # print('motor.motor(0.2, -0.2, 0.5)')
-        #     else:
-        #         print('Go straight')
-        #         if goalarea <= area_long:
-        #             motor.move(80, 80, 3)                                                        #調整するところ
-        #             # print('motor.motor(1, 1, 10)')
-        #             print('long')
-        #         elif goalarea <= area_middle:
-        #             motor.move(80, 80, 1)                                                        #調整するところ
-        #             # print('motor.motor(1, 1, 5)')
-        #             print('middle')
-        #         elif goalarea <= area_short:
-        #             motor.move(80, 80, 0.2)                                                      #調整するところ
-        #             # print('motor.motor(1, 1, 2)')
-        #             print('short')
-
 
     except KeyboardInterrupt:
         print('stop')
