@@ -184,16 +184,16 @@ def image_guided_driving(path_photo, log_photorunning, G_thd):
                 if gap <= 15:
                     adj = 0
                 elif gap <= 40:
-                    abj = 10
+                    abj = 5
                 else:
-                    abj = 20
+                    abj = 10
             else:
                 if gap >= -15:
                     adj = 0
                 elif gap >= -40:
-                    abj = 10
+                    abj = 5
                 else:
-                    abj = 20
+                    abj = 10
             strength_l, strength_r = 20 + adj, 20 - adj
             motor.motor_continue(strength_l, strength_r)
         motor.deceleration(strength_l, strength_r)
