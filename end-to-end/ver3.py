@@ -219,7 +219,7 @@ if __name__ == '__main__':
     print(f'Phase:\t{phaseChk}')
     count_paraavo = 0
     if phaseChk == 5:
-        while count_paraavo < 3:
+        while count_paraavo < 2:
             flug, area, gap, photoname = paradetection.ParaDetection(
                 path_paradete, 320, 240, 200, 10, 120, 1)
             print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
@@ -260,7 +260,7 @@ if __name__ == '__main__':
     magx_off, magy_off = Calibration.cal(40, -40, 0.2, 30)
     gpsrunning_koji.adjust_direction(gpsrunning_koji.angle_goal(magx_off, magy_off), magx_off, magy_off)
     count_paraavo2 = 0
-    while count_paraavo2 < 2:
+    while count_paraavo2 < 3:
             flug, area, gap, photoname = paradetection.ParaDetection(
                 path_paradete, 320, 240, 200, 10, 120, 1)
             print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
