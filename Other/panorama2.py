@@ -59,7 +59,7 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
 
     else:
         print('composition failed')
-    cv2.imwrite('/home/pi/Desktop/Cansat2021ver/dst_panorama/' + result + '.jpg', result)
+    cv2.imwrite('/home/pi/Desktop/Cansat2021ver/dst_panorama/' + resultcount + '.jpg', result)
 
 
 def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama, path_paradete, log_panoramashooting):
@@ -145,10 +145,9 @@ if __name__ == "__main__":
     BMC050.BMC050_setup()
     motor.setup()
     srcdir = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting'
-
-    power = float(input('左の出力'))
-    t = float(input('回転時間'))
     magdata = Calibration.magdata_matrix(40, -40, 0.2, 30)
+    power = float(input('モータ出力は？'))
+    t = float(input('回転時間は？'))
     shooting(power, -power, t, magdata, srcdir)
     t_start = time.time()  # プログラムの開始時刻
     composition(srcdir)
