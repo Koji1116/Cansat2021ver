@@ -58,7 +58,7 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
 
     else:
         print('composition failed')
-    cv2.imwrite('/home/pi/Desktop/Cansat2021ver/dst_panorama/' + resultcount + '.jpg', result)
+    cv2.imwrite('/home/pi/Desktop/Cansat2021ver/dst_panorama/' + str(resultcount) + '.jpg', result)
 
 
 def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama, path_paradete, log_panoramashooting):
