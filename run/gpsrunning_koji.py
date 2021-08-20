@@ -171,7 +171,6 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
 
 
 if __name__ == '__main__':
-    #
     lat2 = 35.868631
     lon2 = 139.924717
     GPS.openGPS()
