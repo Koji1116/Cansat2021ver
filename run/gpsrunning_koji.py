@@ -25,7 +25,7 @@ import Other
 
 
 
-def angle_goal(magx_off, magy_off):
+def angle_goal(magx_off, magy_off, lon2, lat2):
     """
     ゴールとの相対角度を算出する関数
 
@@ -77,7 +77,7 @@ def adjust_direction(theta, magx_off, magy_off):
             print(f'theta = {theta}')
 
         stuck_count += 1
-        theta = angle_goal(magx_off, magy_off)
+        theta = angle_goal(magx_off, magy_off, lon2, lat2)
         print('Calculated angle_relative: {theta}')
         time.sleep(1)
     print(f'theta = {theta} \t rotation finished!!!')
@@ -97,7 +97,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         print('##--Calibration Start--##\n')
         magx_off, magy_off = Calibration.cal(40, -40, 30)
         print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
-        theta = angle_goal(magx_off, magy_off)
+        theta = angle_goal(magx_off, magy_off, lon2, lat2)
         adjust_direction(theta, magx_off, magy_off)
 
         t_cal = time.time()
