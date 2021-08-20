@@ -31,7 +31,7 @@ def ue_jug():
     while 1:
         accdata = acc.acc_dataRead()
         z = accdata[2]
-        if z >= 0 :
+        if z >= 8.5 :
             Xbee.str_trans('Upward')
             print('上だよ')
             break
