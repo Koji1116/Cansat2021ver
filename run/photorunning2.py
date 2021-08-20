@@ -220,7 +220,7 @@ if __name__ == "__main__":
         startTime = time.time()
         dateTime = datetime.datetime.now()
         path = f'photostorage/ImageGuidance2_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
-        image_guided_driving(path, G_thd)
+        image_guided_driving(path, log_photorunning, G_thd)
 
 
     except KeyboardInterrupt:
