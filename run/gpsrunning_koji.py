@@ -90,7 +90,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
     """
     direction = Calibration.calculate_direction(lon2, lat2)
     goal_distance = direction['distance']
-
+    print(goal_distance)
     while goal_distance >= thd_distance:
         t_stuck_count = 1
         stuck.ue_jug()
