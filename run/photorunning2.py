@@ -169,7 +169,7 @@ def image_guided_driving(path_photo, log_photorunning, G_thd):
             print('###---goal is detected by rotation ---###')
 
         while 1:
-            t_loop_start = 0
+            t_loop_start = time.time()
             adj = 0
             photoName = Capture.Capture(path_photo)
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, G_thd)
@@ -187,20 +187,20 @@ def image_guided_driving(path_photo, log_photorunning, G_thd):
                     adj = 0
                     print('straight')
                 elif gap <= 40:
-                    adj = 3
+                    adj = 2
                     print('right s')
                 else:
-                    adj = 7
+                    adj = 5
                     print('right l')
             else:
                 if gap >= -15:
                     adj = 0
                     print('straight')
                 elif gap >= -40:
-                    adj = -3
+                    adj = -2
                     print('left s')
                 else:
-                    adj = -7
+                    adj = -5
                     print('left l')
             strength_l, strength_r = 20 + adj, 20 - adj
             print(strength_l, strength_r)
