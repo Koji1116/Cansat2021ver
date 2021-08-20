@@ -110,7 +110,7 @@ def stuck_avoid():
             lat_old, lon_old = GPS.location()
             stuck.stuck_avoid_move(i)
             lat_new, lon_new = GPS.location()
-            bool_stuck = stuck.stuck_jud(lat_old, lon_old, lat_new, lon_new, 1)
+            bool_stuck = stuck_jug(lat_old, lon_old, lat_new, lon_new, 1)
             if bool_stuck == True:
                 # if i == 1 or i == 4 or i == 5:
                 #     print('スタックもう一度引っかからないように避ける')
@@ -126,7 +126,7 @@ def stuck_avoid():
             lat_old, lon_old = GPS.location()
             stuck.stuck_avoid_move(7-i)
             lat_new, lon_new = GPS.location()
-            bool_stuck = stuck.stuck_jud(lat_old, lon_old, lat_new, lon_new,1)
+            bool_stuck = stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new,1)
             if bool_stuck == False:
                 # if i == 1 or i == 4 or i == 5:
                 #     print('スタックもう一度引っかからないように避ける')
@@ -142,7 +142,7 @@ def stuck_avoid():
             lat_old, lon_old = GPS.location()
             stuck.stuck_avoid_move(random[i])
             lat_new, lon_new = GPS.location()
-            bool_stuck = stuck.stuck_jud(lat_old, lon_old, lat_new, lon_new,1)
+            bool_stuck = stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new,1)
             if bool_stuck == False:
                 # if i == 1 or i == 4 or i == 5:
                 #     print('スタックもう一度引っかからないように避ける')
