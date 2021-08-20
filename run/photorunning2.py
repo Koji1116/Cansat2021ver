@@ -186,20 +186,20 @@ def image_guided_driving(path_photo, log_photorunning, G_thd):
                     adj = 0
                     print('straight')
                 elif gap <= 40:
-                    adj = 5
+                    adj = 3
                     print('right s')
                 else:
-                    adj = 10
+                    adj = 7
                     print('right l')
             else:
                 if gap >= -15:
                     adj = 0
                     print('straight')
                 elif gap >= -40:
-                    adj = -5
+                    adj = -3
                     print('left s')
                 else:
-                    adj = -10
+                    adj = -7
                     print('left l')
             strength_l, strength_r = 20 + adj, 20 - adj
             print(strength_l, strength_r)
