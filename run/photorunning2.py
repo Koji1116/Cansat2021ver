@@ -216,7 +216,7 @@ if __name__ == "__main__":
         # G_thd = float(input('ゴール閾値'))
         motor.setup()
         G_thd = 80  # 調整するところ
-        goalflug = 1
+        goalflug = 0
         startTime = time.time()
         dateTime = datetime.datetime.now()
         path = f'photostorage/ImageGuidance2_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
