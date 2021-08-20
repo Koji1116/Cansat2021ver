@@ -226,7 +226,7 @@ if __name__ == "__main__":
         startTime = time.time()
         dateTime = datetime.datetime.now()
         log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning_practice.txt'
-        path_photo = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
+        path_photo = f'/home/pi/Desktop/Cansat2021ver/photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
         image_guided_driving(path_photo, log_photorunning, G_thd, magx_off, magy_off)
 
     except KeyboardInterrupt:
