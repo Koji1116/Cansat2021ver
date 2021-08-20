@@ -111,7 +111,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
             print(f'lat: {lat1}\tlon: {lon1}\tdistance: {goal_distance}\tazimuth: {azimuth}\n')
             # Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
             # Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],  azimuth)
-            if t_stuck_count % 5 == 0:
+            if t_stuck_count % 8 == 0:
                 if stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new, 1):
                     pass
                 else:
@@ -162,7 +162,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         motor.deceleration(strength_l, strength_r)
         time.sleep(2)
         lat_new, lon_new = GPS.location()
-        if stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new,10):
+        if stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new,0.8):
             pass
         else:
             pass
