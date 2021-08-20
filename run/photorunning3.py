@@ -21,6 +21,7 @@ import datetime
 import time
 import mag
 import Calibration
+import stuck
 
 # 写真内の赤色面積で進時間を決める用　調整必要
 area_short = 59.9
@@ -162,6 +163,7 @@ def image_guided_driving(path_photo, log_photorunning, G_thd, magx_off, magy_off
     try:
         t_start = time.time()
         while 1:
+            stuck.ue_jug()
             photoName = Capture.Capture(path_photo)  # 解像度調整するところ？
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
             imgname2 = DrawContours(imgname, 200, 20, 80)
