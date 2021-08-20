@@ -219,7 +219,7 @@ if __name__ == "__main__":
     try:
         motor.setup()
         print('##--Calibration Start--##\n')
-        magx_off, magy_off = Calibration.cal(40, -40, 0.2, 30)
+        magx_off, magy_off = Calibration.cal(40, -40, 30)
         print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
         G_thd = 80
         goalflug = 1
