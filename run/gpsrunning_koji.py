@@ -162,10 +162,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         motor.deceleration(strength_l, strength_r)
         time.sleep(2)
         lat_new, lon_new = GPS.location()
-        if stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new,0.8):
-            pass
-        else:
-            pass
+
 
 
         direction = Calibration.calculate_direction(lon2, lat2)
