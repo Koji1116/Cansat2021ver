@@ -76,31 +76,22 @@ def get_data_offset(magx_off, magy_off, magz_off):
     return magx, magy, magz
 
 
-def magdata_matrix(l, r, t, n, t_sleeptime=0):
+def magdata_matrix(l, r, n):
     """
-	キャリブレーション用の磁気値を得るための関数
+	モータ連続的に動かして磁気データ取るよう
+	できるかな？08/19
 	"""
     try:
-        # t_strat = time.time()
-        # magx, magy, magz = get_data()
-        # magdata = np.array([[magx, magy, magz]])
-        # motor.motor_move_continuous(l, r)
-        # time.sleep(4)
-        # while time.time() -t_strat <= t:
-        #    magx, magy, magz = get_data()
-        #    # --- multi dimention matrix ---#
-        #    magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
-        #    time.sleep(0.1)
-        # motor.motor_stop()
-
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
-        for _ in range(n):
-            motor.move(l, r, t)
+        for _ in range(n-1):
+            motor.motor_continue(l, r)
             magx, magy, magz = get_data()
+            print(magx, magy)
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
-            time.sleep(t_sleeptime)
+            time.sleep(0.02)
+        motor.deceleration(l, r)
     except KeyboardInterrupt:
         print('Interrupt')
     except Exception as e:
@@ -177,8 +168,8 @@ def calculate_offset(magdata):
     return magx_array, magy_array, magz_array, magx_off, magy_off, magz_off
 
 
-def cal(l, r, t, n, t_sleeptime=0):
-    magdata = magdata_matrix(l, r, t, n, t_sleeptime)
+def cal(l, r, n):
+    magdata = magdata_matrix(l, r, n)
     _, _, _, magx_off, magy_off, _ = calculate_offset(magdata)
     return magx_off, magy_off
 
