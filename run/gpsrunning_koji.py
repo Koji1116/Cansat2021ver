@@ -22,8 +22,7 @@ import stuck
 import acc
 import Xbee
 import Other
-lat2 = 35.8688780
-lon2 = 139.9246085
+
 
 
 def angle_goal(magx_off, magy_off):
@@ -90,7 +89,6 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
     """
     direction = Calibration.calculate_direction(lon2, lat2)
     goal_distance = direction['distance']
-    print(goal_distance)
     while goal_distance >= thd_distance:
         t_stuck_count = 1
         stuck.ue_jug()
@@ -177,15 +175,11 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
 
 if __name__ == '__main__':
     #
-    lat2 = 35.8689285
-    lon2 = 139.9244583
-    print('a')
+    lat2 = 35.868631
+    lon2 = 139.924717
     GPS.openGPS()
-    print('b')
     acc.bmc050_setup()
-    print('c')
     mag.bmc050_setup()
-    print('d')
     motor.setup()
 
     drive(lon2, lat2, thd_distance=10, t_adj_gps=30, logpath='')
