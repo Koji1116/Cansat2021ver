@@ -91,29 +91,7 @@ def get_data_offset(magx_off, magy_off, magz_off):
     magz = magData[2] - magz_off
     return magx, magy, magz
 
-
-def magdata_matrix(l, r, t, n, t_sleeptime=0.1):
-    """
-	キャリブレーション用の磁気値を得るための関数
-	forループ内(run)を変える必要がある2021/07/04
-	"""
-    try:
-        magx, magy, magz = get_data()
-        magdata = np.array([[magx, magy, magz]])
-        for _ in range(n):
-            motor.motor(l, r, t)
-            magx, magy, magz = get_data()
-            # --- multi dimention matrix ---#
-            magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
-            time.sleep(t_sleeptime)
-    except KeyboardInterrupt:
-        print('Interrupt')
-    except Exception as e:
-        print(e.message())
-    return magdata
-
-
-def magdata_matrix(l, r, n, t_sleeptime=0):
+def magdata_matrix(l, r, n):
     """
 	モータ連続的に動かして磁気データ取るよう
 	できるかな？08/19
@@ -126,7 +104,7 @@ def magdata_matrix(l, r, n, t_sleeptime=0):
             magx, magy, magz = get_data()
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
-            time.sleep(t_sleeptime)
+            time.sleep(0.05)
         motor.deceleration(l, r)
     except KeyboardInterrupt:
         print('Interrupt')
@@ -341,19 +319,20 @@ def timer(t):
 
 if __name__ == "__main__":
     try:
-        srcdir = 'src_panorama'
-        dstdir = 'dst_panorama'
-        src_path = srcdir + '/src'
-        r = float(input('右の出力は？'))
-        l = float(input('左の出力は？'))
-        t = float(input('一回の回転時間は？'))
         n = int(input("取得するデータ数は？"))
         # --- setup ---#
         mag.bmc050_setup()
-        t_start = time.time()
         # --- calibration ---#
-        magdata_Old = magdata_matrix_with_shooting(l, r, t, src_path)
-        panorama.panorama(srcdir, dstdir, 'src', 'panorama')
+        magdata = magdata_matrix(40, -40, n)
+        _, _, _, magx_off, magy_off, _ = calculate_offset(magdata)
+        print(magx_off, magy_off)
+        while True:
+            magdata = mag.mag_dataRead()
+            mag_x = magdata[0]
+            mag_y = magdata[1]
+            θ = angle(mag_x, mag_y, magx_off, magy_off)
+            print(θ)
+            time.sleep(0.5)
 
         # # --- calculate offset ---#
         # magx_array_Old, magy_array_Old, magz_array_Old, magx_off, magy_off, magz_off = calculate_offset(magdata_Old)
