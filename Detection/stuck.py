@@ -105,9 +105,9 @@ def stuck_avoid():
     print('スタック回避開始')
     flag = False
     while 1:
+        lat_old, lon_old = GPS.location()
         # 0~6
         for i in range(7):
-            lat_old, lon_old = GPS.location()
             stuck.stuck_avoid_move(i)
             lat_new, lon_new = GPS.location()
             bool_stuck = stuck_jug(lat_old, lon_old, lat_new, lon_new, 1)
@@ -123,7 +123,6 @@ def stuck_avoid():
             break
         # 3,2,1,0
         for i in range(7):
-            lat_old, lon_old = GPS.location()
             stuck.stuck_avoid_move(7-i)
             lat_new, lon_new = GPS.location()
             bool_stuck = stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new,1)
@@ -139,7 +138,6 @@ def stuck_avoid():
             break
         random = random(0, 6, 7)
         for i in range(7):
-            lat_old, lon_old = GPS.location()
             stuck.stuck_avoid_move(random[i])
             lat_new, lon_new = GPS.location()
             bool_stuck = stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new,1)
