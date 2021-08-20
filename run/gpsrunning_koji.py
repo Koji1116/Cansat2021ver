@@ -179,9 +179,13 @@ if __name__ == '__main__':
     #
     lat2 = 35.8689285
     lon2 = 139.9244583
+    print('a')
     GPS.openGPS()
+    print('b')
     acc.bmc050_setup()
+    print('c')
     mag.bmc050_setup()
+    print('d')
     motor.setup()
 
     drive(lon2, lat2, thd_distance=10, t_adj_gps=30, logpath='')
