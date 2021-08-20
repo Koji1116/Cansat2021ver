@@ -95,7 +95,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         # ------------- Calibration -------------#
         # Xbee.str_trans('Calibration Start')
         print('##--Calibration Start--##\n')
-        magx_off, magy_off = Calibration.cal(40, -40, 0.2, 30)
+        magx_off, magy_off = Calibration.cal(40, -40, 30)
         print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
         theta = angle_goal(magx_off, magy_off)
         adjust_direction(theta, magx_off, magy_off)
