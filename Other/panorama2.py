@@ -87,7 +87,7 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
     print(f'whileスタート　preθ:{preθ}')
 
     while sumθ <= 720:
-        Capture.Capture(path_src_panorama, 960, 540)
+        Capture.Capture(path_src_panorama, 320, 240)
         motor.move(strength_l_pano, strength_r_pano, t_rotation_pano)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
