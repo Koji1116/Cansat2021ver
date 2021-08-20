@@ -171,7 +171,7 @@ def image_guided_driving(path_photo, log_photorunning, G_thd, magx_off, magy_off
             Other.saveLog(log_photorunning, t_start - time.time(), goalflug, goalarea, gap, imgname, imgname2)
             if goalflug == 1:
                 break
-            if goalflug == -1:
+            if goalflug == -1 or goalflug == 1000:
                 print('Nogoal detected')
                 motor.move(40, -40, 0.1)
             elif goalarea <= area_long:
