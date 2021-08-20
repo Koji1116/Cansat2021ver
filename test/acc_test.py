@@ -16,7 +16,7 @@ if __name__ == '__main__':
         if s =='a':
             accdata = acc.acc_dataRead()
             z = accdata[2]
-            if z <0:
+            if z <8:
                 print('逆になってる')
             else:
                 print('通常')
