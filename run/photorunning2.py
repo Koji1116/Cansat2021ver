@@ -169,6 +169,7 @@ def image_guided_driving(path_photo, log_photorunning, G_thd):
             print('###---goal is detected by rotation ---###')
 
         while 1:
+            adj = 0
             photoName = Capture.Capture(path_photo)
             goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, G_thd)
             imgname2 = DrawContours(imgname, 200, 20, 80)
@@ -197,11 +198,6 @@ def image_guided_driving(path_photo, log_photorunning, G_thd):
             strength_l, strength_r = 20 + adj, 20 - adj
             motor.motor_continue(strength_l, strength_r)
         motor.deceleration(strength_l, strength_r)
-
-
-
-
-
 
     except KeyboardInterrupt:
         print('stop')
