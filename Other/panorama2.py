@@ -145,7 +145,7 @@ if __name__ == "__main__":
     BMC050.BMC050_setup()
     motor.setup()
     srcdir = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting'
-    magdata = Calibration.magdata_matrix(40, -40, 0.2, 30)
+    magdata = Calibration.magdata_matrix(40, -40, 30)
     power = float(input('モータ出力は？'))
     t = float(input('回転時間は？'))
     shooting(power, -power, t, magdata, srcdir)
