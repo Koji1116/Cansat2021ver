@@ -314,6 +314,7 @@ def timer(t):
 
 if __name__ == "__main__":
     try:
+        motor.setup()
         n = int(input("取得するデータ数は？"))
         # --- setup ---#
         mag.bmc050_setup()
