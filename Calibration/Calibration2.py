@@ -97,6 +97,7 @@ def magdata_matrix(l, r, n):
         for _ in range(n-1):
             motor.motor_continue(l, r)
             magx, magy, magz = get_data()
+            print(magx, magy)
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
             time.sleep(0.05)
