@@ -23,6 +23,7 @@ import Xbee
 import paraavoidance
 import paradetection
 import stuck
+import Other
 
 def composition(srcdir, srcext='.jpg', dstext='.jpg'):
     """
