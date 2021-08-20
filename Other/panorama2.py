@@ -143,10 +143,12 @@ if __name__ == "__main__":
     BMC050.BMC050_setup()
     motor.setup()
     srcdir = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting'
+    path_paradete = '/home/pi/Desktop/Cansat2021ver/Detection/photostorage/photostorage_paradete/para'
+    log_panoramashooting = '/home/pi/Desktop/Cansat2021ver/log/panoramaLog.txt'
     magdata = Calibration.magdata_matrix(40, -40, 30)
     power = float(input('モータ出力は？'))
     t = float(input('回転時間は？'))
-    shooting(power, -power, t, magdata, srcdir)
+    shooting(power, -power, t, magdata, srcdir, path_paradete, log_panoramashooting)
     t_start = time.time()  # プログラムの開始時刻
     composition(srcdir)
     runTime = time.time() - t_start
