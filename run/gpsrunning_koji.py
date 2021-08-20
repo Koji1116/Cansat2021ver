@@ -149,9 +149,9 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
                         if theta >= -15:
                             adj = 0
                         elif theta >= -90:
-                            adj = 20
+                            adj = -20
                         else:
-                            adj = 30
+                            adj = -30
                     print(f'angle ----- {theta}')
                     strength_l, strength_r = 70 + adj, 70 - adj
                     motor.motor_continue(strength_l, strength_r)
