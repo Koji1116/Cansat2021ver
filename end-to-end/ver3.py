@@ -268,7 +268,7 @@ if __name__ == '__main__':
 
     #####-----goal-parachute-roverの位置関係の場合のためのパラ回避-----#####
     magx_off, magy_off = Calibration.cal(40, -40, 30)
-    gpsrunning_koji.adjust_direction(gpsrunning_koji.angle_goal(magx_off, magy_off), magx_off, magy_off)
+    gpsrunning_koji.adjust_direction(gpsrunning_koji.angle_goal(magx_off, magy_off), magx_off, magy_off, lon2, lat2)
     count_paraavo2 = 0
     while count_paraavo2 < 3:
             flug, area, gap, photoname = paradetection.ParaDetection(
