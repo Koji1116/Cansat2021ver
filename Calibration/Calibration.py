@@ -31,6 +31,7 @@ import glob
 from gpiozero import Motor
 
 import motor
+import stuck
 
 path_log = '/home/pi/Desktop/Cansat2021ver/log/Calibration.txt'
 
@@ -82,6 +83,7 @@ def magdata_matrix(l, r, n):
 	できるかな？08/19
 	"""
     try:
+        sutck.ue_jug()
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
         for _ in range(n-1):
