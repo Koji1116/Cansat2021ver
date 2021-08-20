@@ -33,12 +33,12 @@ Vincenty法(逆解法)
 def vincenty_inverse(lat1, lon1, lat2, lon2, ellipsoid=None):
     #0.0表示防ぐためになくした　by大島　08/07
     # 差異が無ければ0.0を返す
-    # if isclose(lat1, lat2) and isclose(lon1, lon2):
-    #     return {
-    #         'distance': 0.0,
-    #         'azimuth1': 0.0,
-    #         'azimuth2': 0.0,
-    #     }
+    if isclose(lat1, lat2) and isclose(lon1, lon2):
+        return {
+            'distance': 0.0,
+            'azimuth1': 0.0,
+            'azimuth2': 0.0,
+        }
 
     # 計算時に必要な長軸半径(a)と扁平率(ƒ)を定数から取得し、短軸半径(b)を算出する
     # 楕円体が未指定の場合はGRS80の値を用いる
