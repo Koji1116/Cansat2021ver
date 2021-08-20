@@ -24,7 +24,6 @@ if __name__ == '__main__':
             accdata = acc.acc_dataRead()
             # x = accdata[0]
             # y = accdata[1]
-            # z = accdata[2]
-            print(accdata)
-
+            z = accdata[2]
+            print(z)
         time.sleep(1)
