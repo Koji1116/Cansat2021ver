@@ -1,8 +1,6 @@
 import datetime
 import sys
 
-import Other.Other
-
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
