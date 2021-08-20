@@ -33,11 +33,6 @@ from gpiozero import Motor
 
 import motor
 
-#import for panorama
-import Capture
-import panorama
-import panoramaShooting
-
 
 
 
