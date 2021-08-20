@@ -63,7 +63,7 @@ lat2 = 35.868982
 lon2 = 139.924663
 
 th_distance = 5
-t_adj_gps = 30
+t_adj_gps = 60
 
 # variable for photorun
 G_thd = 80
