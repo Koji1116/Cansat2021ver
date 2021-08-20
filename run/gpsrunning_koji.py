@@ -178,4 +178,4 @@ if __name__ == '__main__':
     mag.bmc050_setup()
     motor.setup()
 
-    drive(lon2, lat2, thd_distance=10, t_adj_gps=30, logpath='')
+    drive(lon2, lat2, thd_distance=10, t_adj_gps=60, logpath='')
