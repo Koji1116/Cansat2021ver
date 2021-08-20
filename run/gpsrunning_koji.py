@@ -45,7 +45,7 @@ def angle_goal(magx_off, magy_off, lon2, lat2):
     return angle_relative
 
 
-def adjust_direction(theta, magx_off, magy_off):
+def adjust_direction(theta, magx_off, magy_off, lon2, lat2):
     """
     方向調整
     """
@@ -98,7 +98,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
         magx_off, magy_off = Calibration.cal(40, -40, 30)
         print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
         theta = angle_goal(magx_off, magy_off, lon2, lat2)
-        adjust_direction(theta, magx_off, magy_off)
+        adjust_direction(theta, magx_off, magy_off, lon2, lat2)
 
         t_cal = time.time()
         lat_old, lon_old = GPS.location()
