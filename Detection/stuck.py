@@ -19,6 +19,7 @@ import GPS_Navigate
 import GPS
 import acc
 
+
 def ue_jug():
     ue_count = 0
     """
