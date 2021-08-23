@@ -195,9 +195,9 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
         preθ = latestθ
         # Xbee.str_trans(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
         print(f'sumθ:\t{sumθ}\tlatestθ\t{latestθ}\tpreθ\t{preθ2}\tdeltaθ\t{deltaθ}\n')
-        print(dict_angle1)
-        print(dict_angle2)
-        print(dict_angle3)
+        print(dict_angle1 + '\n')
+        print(dict_angle2 + '\n')
+        print(dict_angle3 + '\n')
         Other.saveLog(log_panoramashooting, datetime.datetime.now(), sumθ, latestθ, preθ2, deltaθ)
 
     return srcdir
