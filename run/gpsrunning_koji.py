@@ -82,7 +82,7 @@ def adjust_direction(theta, magx_off, magy_off, lon2, lat2):
         time.sleep(1)
     print(f'theta = {theta} \t rotation finished!!!')
 
-def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
+def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansat2021ver/log/gpsrunningLog', t_start=0):
     """
     GPS走行の関数
     統合する場合はprintをXbee.str_transに変更，Other.saveLogのコメントアウトを外す
@@ -110,7 +110,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath, t_start=0):
             azimuth, goal_distance = direction["azimuth1"], direction["distance"]
             print(f'lat: {lat1}\tlon: {lon1}\tdistance: {goal_distance}\tazimuth: {azimuth}\n')
             # Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
-            # Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],  azimuth)
+            Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],  azimuth)
             if t_stuck_count % 8 == 0:
                 if stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new, 1):
                     pass
