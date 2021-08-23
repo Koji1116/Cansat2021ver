@@ -61,7 +61,7 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
     cv2.imwrite('/home/pi/Desktop/Cansat2021ver/dst_panorama/' + str(resultcount) + '.jpg', result)
 
 
-def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama, path_paradete, log_panoramashooting):
+def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama, path_paradete, log_panoramashooting, wid=320, hig=240):
     """
     パノラマ撮影用の関数
     引数は回転時のモータパワー，1回の回転時間，磁気データ，写真保存用のパス，パラシュート検知のパス，ログ保存用のパス
@@ -87,7 +87,7 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
     print(f'whileスタート　preθ:{preθ}')
 
     while sumθ <= 720:
-        Capture.Capture(path_src_panorama, 320, 240)
+        Capture.Capture(path_src_panorama, wid, hig)
         motor.move(strength_l_pano, strength_r_pano, t_rotation_pano)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
