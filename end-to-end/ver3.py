@@ -255,8 +255,8 @@ if __name__ == '__main__':
     if phaseChk == 6:
         t_start_panorama = time.time()  # プログラムの開始時刻
         time.sleep(3)
-        magdata = Calibration.magdata_matrix(strength_l_cal, strength_r_cal, number_data)
-        panorama.shooting(strength_l_pano, strength_r_pano, t_rotation_pano, magdata, path_src_panorama)
+        mag_mat = Calibration.magdata_matrix(strength_l_cal, strength_r_cal, number_data)
+        panorama.shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama, path_paradete, log_panoramashooting)
         print(f'runTime_panorama:\t{time.time() - t_start_panorama}')
     print('#####-----panorama ended-----##### \n \n')
     # except Exception as e:
