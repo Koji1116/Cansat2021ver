@@ -171,12 +171,13 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
                 # Xbee.str_trans('Stuck')
                 print('Stuck')
                 motor.move(60, 60, 0.5)
-                flug, area, gap, photoname = paradetection.ParaDetection(
-                    path_paradete, 320, 240, 200, 10, 120, 1)
+                flug, area, gap, photoname = paradetection.ParaDetection(path_paradete, 320, 240, 200, 10, 120, 1)
                 print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
                 paraavoidance.Parachute_Avoidance(flug, gap)
                 # ----Initialize-----#
-                count_panorama, count_stuck, dict_angle1, dict_angle2, dict_angle3 = initialize()
+                count_panorama, count_stuck, dict_angle1, dict_angle2, dict_angle3 = initialize(path_src_panorama1,
+                                                                                                path_src_panorama2,
+                                                                                                path_src_panorama3)
                 magdata = BMC050.mag_dataRead()
                 magx = magdata[0]
                 magy = magdata[1]
