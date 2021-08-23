@@ -148,7 +148,8 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
         dict_angle1, dict_angle2, dict_angle3 = shooting_angle(path_src_panorama1, path_src_panorama2,
                                                                path_src_panorama3, dict_angle1, dict_angle2,
                                                                dict_angle3, wid, hig)
-        if check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2, path_src_panorama3):
+        if srcdir := check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
+                           path_src_panorama3):
             break
         motor.move(strength_l_pano, strength_r_pano, t_rotation_pano)
         magdata = BMC050.mag_dataRead()
@@ -199,7 +200,7 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
         print(dict_angle3)
         Other.saveLog(log_panoramashooting, datetime.datetime.now(), sumθ, latestθ, preθ2, deltaθ)
 
-    return
+    return srcdir
 
 
 def composition(srcdir, srcext='.jpg', dstext='.jpg'):
@@ -252,8 +253,8 @@ if __name__ == "__main__":
     strength_l_pano = power
     strength_r_pano = power * -1
     t_rotation_pano = 0.1
-    shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2,
-             path_src_panorama3, path_paradete, log_panoramashooting)
+    srcdir = shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama1,
+                      path_src_panorama2, path_src_panorama3, path_paradete, log_panoramashooting)
 
     if input('Composition y/n \t') == y:
         t_start = time.time()  # プログラムの開始時刻
