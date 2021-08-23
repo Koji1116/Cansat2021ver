@@ -246,7 +246,7 @@ if __name__ == "__main__":
     path_src_panorama3 = '/home/pi/Desktop/Cansat2021ver/src_panorama3/panoramaShooting'
     path_dst_panoraam = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
     path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage/paradete'
-    log_panoramashooting = '/home/pi/Desktop/Cansat2021ver/log/panoramaLog.txt'
+    log_panoramashooting = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/panoramaLog', 'txt')
 
     mag_mat = Calibration.magdata_matrix(40, -40, 100)
     power = random.randint(20, 60)
