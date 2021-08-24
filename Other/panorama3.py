@@ -79,6 +79,9 @@ def check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_pa
     srcdir = path_src_panorama2 if number_photos2 == 12 else srcdir
     srcdir = path_src_panorama3 if number_photos3 == 12 else srcdir
 
+    rfd = srcdir.rfind('/')
+    srcdir = srcdir[:rfd]
+
     return srcdir
 
 
@@ -145,6 +148,7 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
         srcdir = check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
                            path_src_panorama3)
         if srcdir:
+            print(f'directory:\t{srcdir}')
             break
         motor.move(strength_l_pano, strength_r_pano, t_rotation_pano)
         magdata = BMC050.mag_dataRead()
@@ -212,7 +216,7 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
     srcext:ソースの拡張子
     dstext:パノラマ写真の拡張子
     """
-    srcfilecount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/src_panorama', 'panoramaShooting' + '*' + srcext))
+    srcfilecount = len(glob.glob1(srcdir, 'panoramaShooting' + '*' + srcext))
     resultcount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/dst_panorama', '*' + dstext))
     print(srcfilecount)
     print(resultcount)
@@ -221,9 +225,9 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
 
     for i in range(0, srcfilecount):
         if len(str(i)) == 1:
-            photos.append(cv2.imread(srcdir + '000' + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + 'panoramaShooting000' + str(i) + srcext))
         else:
-            photos.append(cv2.imread(srcdir + '00' + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + 'panoramaShooting00' + str(i) + srcext))
     print(photos)
     print(len(photos))
 
