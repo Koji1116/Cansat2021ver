@@ -155,7 +155,9 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
         if preθ >= 300 and latestθ <= 100:
             latestθ += 360
 
-        if latestθ - preθ <= 10:
+        deltaθ = latestθ - preθ
+
+        if deltaθ:
             count_stuck += 1
             # ------Stuck------#
             if count_stuck >= 4:
@@ -164,7 +166,7 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
                     break
                 count_stuck = 0
                 # Xbee.str_trans('Stuck')
-                print('Stuck')
+                print(f'Stuck: {deltaθ}')
                 motor.move(60, 60, 0.5)
                 flug, area, gap, photoname = paradetection.ParaDetection(path_paradete, 320, 240, 200, 10, 120, 1)
                 print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
