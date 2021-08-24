@@ -150,7 +150,7 @@ def adjustment_mag(strength, t, magx_off, magy_off):
             else:
                 adj = strength * -0.4
         print(f'angle ----- {angle_relative}')
-        strength_l, strength_r = strength + adj, strength - adj + 5
+        strength_l, strength_r = strength + adj, strength - adj + 10
         motor.motor_continue(strength_l, strength_r)
         time.sleep(0.1)
         mag_x_old = mag_x
