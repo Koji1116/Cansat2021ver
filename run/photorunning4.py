@@ -158,7 +158,6 @@ def adjustment_mag(strength, t, magx_off, magy_off):
 def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance, t_adj_gps):
     try:
         t_start = time.time()
-        goal_distance = direction['distance']
         while 1:
             stuck.ue_jug()
             path_photo = Other.fileName('/home/pi/Desktop/Cansat2021ver/photo_imageguide/ImageGuide-', 'jpg')
