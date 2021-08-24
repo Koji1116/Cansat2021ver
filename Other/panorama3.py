@@ -99,12 +99,12 @@ def initialize(path_src_panorama1, path_src_panorama2, path_src_panorama3):
     os.mkdir(dir_src_panorama1)
     # Initialize the directory 2
     rfd2 = path_src_panorama2.rfind('/')
-    dir_src_panorama2 = path_src_panorama1[:rfd2]
+    dir_src_panorama2 = path_src_panorama2[:rfd2]
     shutil.rmtree(dir_src_panorama2)
     os.mkdir(dir_src_panorama2)
     # Initialize the directory 3
     rfd3 = path_src_panorama3.rfind('/')
-    dir_src_panorama3 = path_src_panorama1[:rfd3]
+    dir_src_panorama3 = path_src_panorama3[:rfd3]
     shutil.rmtree(dir_src_panorama3)
     os.mkdir(dir_src_panorama3)
     # Initializing variables
