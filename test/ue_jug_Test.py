@@ -16,7 +16,7 @@ import stuck
 
 
 
-BMC.BMC050_setup()
+BMC050.BMC050_setup()
 while 1:
     za = []
     for i in range(3):
