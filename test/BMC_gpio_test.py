@@ -141,15 +141,21 @@ def bmc050_read():
 if __name__ == '__main__':
     
 
-    
-    while 1:
-        a = input('入力して　　ON:1  OFF:0')
-        if a == "1":
-            BMC050_setup()
-            bmcData = bmc050_read()
-            print(bmcData)
-            time.sleep(0.1)
-        else:
-            BMC050_off()
+    a = input('入力して　　ON:1  OFF:0')
+    if a == "1":
+        BMC050_on()
+    else:
+        BMC050_off()
+
+        
+    # while 1:
+    #     a = input('入力して　　ON:1  OFF:0')
+    #     if a == "1":
+    #         BMC050_setup()
+    #         bmcData = bmc050_read()
+    #         print(bmcData)
+    #         time.sleep(0.1)
+    #     else:
+    #         BMC050_off()
             
 
