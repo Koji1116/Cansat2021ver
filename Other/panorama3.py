@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Detection')
@@ -26,7 +27,8 @@ import stuck
 import Other
 
 
-def shooting_angle(theta, path_src_panorama1, path_src_panorama2, path_src_panorama3, dict_angle1, dict_angle2, dict_angle3,
+def shooting_angle(theta, path_src_panorama1, path_src_panorama2, path_src_panorama3, dict_angle1, dict_angle2,
+                   dict_angle3,
                    wid, hig):
     """
     パノラマ合成用の写真を適切な枚数，適切なディレクトリに保存するための関数
@@ -119,8 +121,8 @@ def initialize(path_src_panorama1, path_src_panorama2, path_src_panorama3):
     return count_panorama, count_stuck, dict_angle1, dict_angle2, dict_angle3
 
 
-def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2,
-             path_src_panorama3, path_paradete, log_panoramashooting, wid=320, hig=240):
+def shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, path_src_panorama3, path_paradete,
+             log_panoramashooting, wid=320, hig=240):
     """
     パノラマ撮影用の関数
     引数は回転時のモータパワー，1回の回転時間，磁気データ，写真保存用のパス，パラシュート検知のパス，ログ保存用のパス
@@ -146,7 +148,7 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
                                                                path_src_panorama3, dict_angle1, dict_angle2,
                                                                dict_angle3, wid, hig)
         srcdir = check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
-                           path_src_panorama3)
+                       path_src_panorama3)
         if srcdir:
             print(f'directory:\t{srcdir}')
             break
@@ -256,13 +258,9 @@ if __name__ == "__main__":
     log_panoramashooting = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/panoramaLog', 'txt')
 
     mag_mat = Calibration.magdata_matrix(40, -40, 60)
-    power = random.randint(20, 60)
-    strength_l_pano = power
-    strength_r_pano = power * -1
     t_rotation_pano = 0.1
     t_start = time.time()
-    srcdir = shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama1,
-                      path_src_panorama2, path_src_panorama3, path_paradete, log_panoramashooting)
+    srcdir = shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, path_src_panorama3, path_paradete, log_panoramashooting)
     print(time.time - time.time())
     if input('Composition y/n \t') == 'y':
         t_start = time.time()  # プログラムの開始時刻
