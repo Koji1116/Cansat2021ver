@@ -56,7 +56,7 @@ number_data = 30
 # variable for panorama
 strength_l_pano = 33
 strength_r_pano = -33
-t_rotation_pano = 0.15
+t_rotation_pano = 0.1
 
 # variable for GPSrun
 lat2 = 35.868982
@@ -91,7 +91,9 @@ log_photorunning = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/photorunni
 log_panoramacom = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/panoramacomLog', 'txt')
 
 # photo path
-path_src_panorama = '/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting'
+path_src_panorama1 = '/home/pi/Desktop/Cansat2021ver/src_panorama1/panoramaShooting'
+path_src_panorama2 = '/home/pi/Desktop/Cansat2021ver/src_panorama2/panoramaShooting'
+path_src_panorama3 = '/home/pi/Desktop/Cansat2021ver/src_panorama3/panoramaShooting'
 path_dst_panoraam = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
 path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage/paradete'
 
@@ -256,7 +258,7 @@ if __name__ == '__main__':
         t_start_panorama = time.time()  # プログラムの開始時刻
         time.sleep(3)
         mag_mat = Calibration.magdata_matrix(strength_l_cal, strength_r_cal, number_data)
-        panorama.shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama, path_paradete, log_panoramashooting)
+        path_src_panorama = panorama.shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, path_src_panorama3, path_paradete, log_panoramashooting)
         print(f'runTime_panorama:\t{time.time() - t_start_panorama}')
     print('#####-----panorama ended-----##### \n \n')
     # except Exception as e:

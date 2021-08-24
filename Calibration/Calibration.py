@@ -83,7 +83,7 @@ def magdata_matrix(l, r, n):
 	できるかな？08/19
 	"""
     try:
-        sutck.ue_jug()
+        stuck.ue_jug()
         magx, magy, magz = get_data()
         magdata = np.array([[magx, magy, magz]])
         for _ in range(n-1):
@@ -92,7 +92,7 @@ def magdata_matrix(l, r, n):
             print(magx, magy)
             # --- multi dimention matrix ---#
             magdata = np.append(magdata, np.array([[magx, magy, magz]]), axis=0)
-            time.sleep(0.02)
+            time.sleep(0.03)
         motor.deceleration(l, r)
     except KeyboardInterrupt:
         print('Interrupt')

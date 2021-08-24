@@ -1,4 +1,5 @@
 import sys
+
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Other')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/Detection')
@@ -26,23 +27,20 @@ import stuck
 import Other
 
 
-def shooting_angle(path_src_panorama1, path_src_panorama2, path_src_panorama3, dict_angle1, dict_angle2, dict_angle3,
+def shooting_angle(theta, path_src_panorama1, path_src_panorama2, path_src_panorama3, dict_angle1, dict_angle2,
+                   dict_angle3,
                    wid, hig):
     """
     パノラマ合成用の写真を適切な枚数，適切なディレクトリに保存するための関数
     関数shooting内で使用
     """
-    magx = magdata[0]
-    magy = magdata[1]
-    theta = Calibration.angle(magx, magy, magx_off, magy_off)
-
     switch = True
 
     if switch:
         for i in range(12):
             if 30 * i <= theta and theta <= 10 + 30 * i and not dict_angle1[i + 1]:
                 Capture.Capture(path_src_panorama1, wid, hig)
-                dict_angle[i + 1] = True
+                dict_angle1[i + 1] = True
                 print(dict_angle1)
                 switch = False
                 break
@@ -51,7 +49,7 @@ def shooting_angle(path_src_panorama1, path_src_panorama2, path_src_panorama3, d
         for i in range(12):
             if 10 + 30 * i <= theta and theta <= 20 + 30 * i and not dict_angle2[i + 1]:
                 Capture.Capture(path_src_panorama2, wid, hig)
-                dict_angle[i + 1] = True
+                dict_angle2[i + 1] = True
                 print(dict_angle2)
                 switch = False
                 break
@@ -60,7 +58,7 @@ def shooting_angle(path_src_panorama1, path_src_panorama2, path_src_panorama3, d
         for i in range(12):
             if 20 + 30 * i <= theta and theta <= 30 + 30 * i and not dict_angle3[i + 1]:
                 Capture.Capture(path_src_panorama3, wid, hig)
-                dict_angle[i + 1] = True
+                dict_angle3[i + 1] = True
                 print(dict_angle3)
                 break
     return dict_angle1, dict_angle2, dict_angle3
@@ -83,6 +81,9 @@ def check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_pa
     srcdir = path_src_panorama2 if number_photos2 == 12 else srcdir
     srcdir = path_src_panorama3 if number_photos3 == 12 else srcdir
 
+    rfd = srcdir.rfind('/')
+    srcdir = srcdir[:rfd]
+
     return srcdir
 
 
@@ -100,12 +101,12 @@ def initialize(path_src_panorama1, path_src_panorama2, path_src_panorama3):
     os.mkdir(dir_src_panorama1)
     # Initialize the directory 2
     rfd2 = path_src_panorama2.rfind('/')
-    dir_src_panorama2 = path_src_panorama1[:rfd2]
+    dir_src_panorama2 = path_src_panorama2[:rfd2]
     shutil.rmtree(dir_src_panorama2)
     os.mkdir(dir_src_panorama2)
     # Initialize the directory 3
     rfd3 = path_src_panorama3.rfind('/')
-    dir_src_panorama3 = path_src_panorama1[:rfd3]
+    dir_src_panorama3 = path_src_panorama3[:rfd3]
     shutil.rmtree(dir_src_panorama3)
     os.mkdir(dir_src_panorama3)
     # Initializing variables
@@ -120,8 +121,8 @@ def initialize(path_src_panorama1, path_src_panorama2, path_src_panorama3):
     return count_panorama, count_stuck, dict_angle1, dict_angle2, dict_angle3
 
 
-def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2,
-             path_src_panorama3, path_paradete, log_panoramashooting, wid=320, hig=240):
+def shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, path_src_panorama3, path_paradete,
+             log_panoramashooting, wid=320, hig=240):
     """
     パノラマ撮影用の関数
     引数は回転時のモータパワー，1回の回転時間，磁気データ，写真保存用のパス，パラシュート検知のパス，ログ保存用のパス
@@ -143,13 +144,18 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
     print(f'whileスタート　preθ:{preθ}')
 
     while 1:
-        dict_angle1, dict_angle2, dict_angle3 = shooting_angle(path_src_panorama1, path_src_panorama2,
+        dict_angle1, dict_angle2, dict_angle3 = shooting_angle(preθ, path_src_panorama1, path_src_panorama2,
                                                                path_src_panorama3, dict_angle1, dict_angle2,
                                                                dict_angle3, wid, hig)
-        if srcdir := check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
-                           path_src_panorama3):
+        srcdir = check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
+                       path_src_panorama3)
+        if srcdir:
+            print(f'directory:\t{srcdir}')
             break
-        motor.move(strength_l_pano, strength_r_pano, t_rotation_pano)
+        power = random.randint(30, 70)
+        strength_l_pano = power
+        strength_r_pano = power * -1
+        motor.move(strength_l_pano, strength_r_pano, t_rotation_pano, ue=True)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
         magy = magdata[1]
@@ -158,7 +164,9 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
         if preθ >= 300 and latestθ <= 100:
             latestθ += 360
 
-        if latestθ - preθ <= 10:
+        deltaθ = latestθ - preθ
+
+        if 0 <= deltaθ <= 10:
             count_stuck += 1
             # ------Stuck------#
             if count_stuck >= 4:
@@ -167,8 +175,8 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
                     break
                 count_stuck = 0
                 # Xbee.str_trans('Stuck')
-                print('Stuck')
-                motor.move(60, 60, 0.5)
+                print(f'Stuck: {deltaθ}')
+                motor.move(60, 60, 0.5, ue=True)
                 flug, area, gap, photoname = paradetection.ParaDetection(path_paradete, 320, 240, 200, 10, 120, 1)
                 print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
                 paraavoidance.Parachute_Avoidance(flug, gap)
@@ -194,9 +202,11 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
         preθ = latestθ
         # Xbee.str_trans(f'sumθ: {sumθ}  latestθ: {latestθ}  preθ: {preθ2}  deltaθ: {deltaθ}')
         print(f'sumθ:\t{sumθ}\tlatestθ\t{latestθ}\tpreθ\t{preθ2}\tdeltaθ\t{deltaθ}\n')
-        print(dict_angle1 + '\n')
-        print(dict_angle2 + '\n')
-        print(dict_angle3 + '\n')
+        print(dict_angle1)
+        print('\n')
+        print(dict_angle2)
+        print('\n')
+        print(dict_angle3)
         Other.saveLog(log_panoramashooting, datetime.datetime.now(), sumθ, latestθ, preθ2, deltaθ)
 
     return srcdir
@@ -211,7 +221,7 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
     srcext:ソースの拡張子
     dstext:パノラマ写真の拡張子
     """
-    srcfilecount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/src_panorama', 'panoramaShooting' + '*' + srcext))
+    srcfilecount = len(glob.glob1(srcdir, 'panoramaShooting' + '*' + srcext))
     resultcount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/dst_panorama', '*' + dstext))
     print(srcfilecount)
     print(resultcount)
@@ -220,9 +230,9 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
 
     for i in range(0, srcfilecount):
         if len(str(i)) == 1:
-            photos.append(cv2.imread(srcdir + '000' + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + '/panoramaShooting000' + str(i) + srcext))
         else:
-            photos.append(cv2.imread(srcdir + '00' + str(i) + srcext))
+            photos.append(cv2.imread(srcdir + '/panoramaShooting00' + str(i) + srcext))
     print(photos)
     print(len(photos))
 
@@ -247,15 +257,12 @@ if __name__ == "__main__":
     path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage/paradete'
     log_panoramashooting = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/panoramaLog', 'txt')
 
-    mag_mat = Calibration.magdata_matrix(40, -40, 100)
-    power = random.randint(20, 60)
-    strength_l_pano = power
-    strength_r_pano = power * -1
+    mag_mat = Calibration.magdata_matrix(40, -40, 60)
     t_rotation_pano = 0.1
-    srcdir = shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama1,
-                      path_src_panorama2, path_src_panorama3, path_paradete, log_panoramashooting)
-
-    if input('Composition y/n \t') == y:
+    t_start = time.time()
+    srcdir = shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, path_src_panorama3, path_paradete, log_panoramashooting)
+    print(time.time - time.time())
+    if input('Composition y/n \t') == 'y':
         t_start = time.time()  # プログラムの開始時刻
         composition(srcdir)
         runTime = time.time() - t_start
