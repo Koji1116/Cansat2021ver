@@ -80,7 +80,6 @@ def get_data_offset(magx_off, magy_off, magz_off):
 def magdata_matrix(l, r, n):
     """
 	モータ連続的に動かして磁気データ取るよう
-	できるかな？08/19
 	"""
     try:
         stuck.ue_jug()
