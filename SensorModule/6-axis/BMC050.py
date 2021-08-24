@@ -4,6 +4,9 @@ from smbus import SMBus
 import time
 import Other
 import datetime
+import pigpio
+pi = pigpio.pi()
+
 
 ACC_ADDRESS = 0x19
 ACC_REGISTER_ADDRESS = 0x02
@@ -13,9 +16,17 @@ MAG_REGISTER_ADDRESS = 0x42
 i2c = SMBus(1)
 
 
+def BMC050_on():
+    pi.write(27, 1)
+
+def BMC050_off():
+    pi.write(27, 0)
+
 def BMC050_setup():
     # --- BMC050Setup --- #
     # Initialize ACC
+    BMC050_on()
+    time.sleep(0.1)
     try:
         i2c.write_byte_data(ACC_ADDRESS, 0x0F, 0x03)
         time.sleep(0.1)
