@@ -174,7 +174,7 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
                 count_stuck = 0
                 # Xbee.str_trans('Stuck')
                 print(f'Stuck: {deltaθ}')
-                motor.move(60, 60, 0.5)
+                motor.move(60, 60, 0.5, True)
                 flug, area, gap, photoname = paradetection.ParaDetection(path_paradete, 320, 240, 200, 10, 120, 1)
                 print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
                 paraavoidance.Parachute_Avoidance(flug, gap)
