@@ -126,6 +126,7 @@ def adjustment_mag(strength, t, magx_off, magy_off):
     mag_y_old = magdata[1]
     theta_old = Calibration.angle(mag_x_old, mag_y_old, magx_off, magy_off)
     while time.time()-t_start <= t:
+        strength_adj = strength
         magdata = mag.mag_dataRead()
         mag_x = magdata[0]
         mag_y = magdata[1]
@@ -139,18 +140,18 @@ def adjustment_mag(strength, t, magx_off, magy_off):
             if angle_relative <= 15:
                 adj = 0
             elif angle_relative <= 90:
-                adj = strength * 0.25
+                adj = strength_adj * 0.25
             else:
-                adj = strength * 0.4
+                adj = strength_adj * 0.4
         else:
             if angle_relative >= -15:
                 adj = 0
             elif angle_relative >= -90:
                 adj = strength * -0.25
             else:
-                adj = strength * -0.4
+                adj = strength_adj * -0.4
         print(f'angle ----- {angle_relative}')
-        strength_l, strength_r = strength + adj, strength - adj + 10
+        strength_l, strength_r = strength_adj + adj, strength_adj - adj + 10
         motor.motor_continue(strength_l, strength_r)
         time.sleep(0.1)
         mag_x_old = mag_x
