@@ -141,6 +141,8 @@ def adjustment_mag(strength, t, magx_off, magy_off):
                 mag_x = magdata[0]
                 mag_y = magdata[1]
                 count_bmc050_erro = 0
+        else:
+            count_bmc050_erro = 0
         theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
         angle_relative = theta_old - theta
         if angle_relative >= 0:

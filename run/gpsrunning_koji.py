@@ -137,6 +137,8 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
                             mag_x = magdata[0]
                             mag_y = magdata[1]
                             count_bmc050_erro = 0
+                    else:
+                        count_bmc050_erro = 0
                     theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
                     angle_relative = azimuth - theta
                     if angle_relative >= 0:
