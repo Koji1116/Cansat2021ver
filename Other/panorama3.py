@@ -157,7 +157,7 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
 
         deltaθ = latestθ - preθ
 
-        if deltaθ:
+        if deltaθ <= 10:
             count_stuck += 1
             # ------Stuck------#
             if count_stuck >= 4:
