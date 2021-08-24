@@ -127,10 +127,12 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
                     magdata = BMC050.mag_dataRead()
                     mag_x = magdata[0]
                     mag_y = magdata[1]
-                    if mag_x == mag_x_old:
-                        print('////////magx error///////')
-                    if mag_y == mag_y_old:
-                        print('////////magy error///////')
+                    if mag_x == mag_x_old and mag_y == mag_y_old:
+                        print('-------mag_x mag_y error-----')
+                        BMC050.BMC050_error()
+                        magdata = BMC050.mag_dataRead()
+                        mag_x = magdata[0]
+                        mag_y = magdata[1]
                     theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
                     angle_relative = azimuth - theta
                     if angle_relative >= 0:
