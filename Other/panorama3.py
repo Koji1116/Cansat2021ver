@@ -62,7 +62,6 @@ def shooting_angle(path_src_panorama1, path_src_panorama2, path_src_panorama3, d
                 Capture.Capture(path_src_panorama3, wid, hig)
                 dict_angle[i + 1] = True
                 print(dict_angle3)
-                switch = False
                 break
     return dict_angle1, dict_angle2, dict_angle3
 
