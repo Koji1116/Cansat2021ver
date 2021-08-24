@@ -38,6 +38,7 @@ def ue_jug():
         else:
             Xbee.str_trans('Upside-down')
             print(f'下だよ{ue_count}')
+            print(f'acc: {z}')
             if ue_count > 2:
                 motor.move(30, 30, 0.008, False)
             elif ue_count >8:
