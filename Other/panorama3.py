@@ -26,16 +26,12 @@ import stuck
 import Other
 
 
-def shooting_angle(path_src_panorama1, path_src_panorama2, path_src_panorama3, dict_angle1, dict_angle2, dict_angle3,
+def shooting_angle(theta, path_src_panorama1, path_src_panorama2, path_src_panorama3, dict_angle1, dict_angle2, dict_angle3,
                    wid, hig):
     """
     パノラマ合成用の写真を適切な枚数，適切なディレクトリに保存するための関数
     関数shooting内で使用
     """
-    magx = magdata[0]
-    magy = magdata[1]
-    theta = Calibration.angle(magx, magy, magx_off, magy_off)
-
     switch = True
 
     if switch:
@@ -143,7 +139,7 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
     print(f'whileスタート　preθ:{preθ}')
 
     while 1:
-        dict_angle1, dict_angle2, dict_angle3 = shooting_angle(path_src_panorama1, path_src_panorama2,
+        dict_angle1, dict_angle2, dict_angle3 = shooting_angle(preθ, path_src_panorama1, path_src_panorama2,
                                                                path_src_panorama3, dict_angle1, dict_angle2,
                                                                dict_angle3, wid, hig)
         srcdir = check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
