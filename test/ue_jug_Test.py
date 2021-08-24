@@ -8,7 +8,7 @@ sys.path.append('/home/pi/Desktop/Cansat2021ver/Calibration')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/Desktop/Casnat2021ver/Detection')
 import numpy as np
-import BMC
+import BMC050
 import acc
 import time
 from threading import Thread
