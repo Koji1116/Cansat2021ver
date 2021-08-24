@@ -153,7 +153,7 @@ if __name__ == '__main__':
         a = input('入力して　　ON:1  OFF:0')
 
         if a == "1":
-            t = int(input('何秒待つ？'))
+            t = float(input('何秒待つ？'))
             BMC050_setup(t)
             bmcData = bmc050_read()
             print(bmcData)
