@@ -2,10 +2,12 @@ import sys
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/6-axis')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Motor')
 sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Communication')
+sys.path.append('/home/pi/Desktop/Cansat2021ver/SensorModule/Detection')
 from gpiozero import Motor
 from time import sleep
 import time
 import acc
+import stuck
 
 
 def setup():
@@ -160,10 +162,12 @@ def deceleration(strength_l, strength_r):
         if i == 9:
             motor_stop(0.1)
 
-def move(strength_l, strength_r, t_moving):
+def move(strength_l, strength_r, t_moving, ue = True):
     """
     急停止回避を組み込み 7/23 takayama
     """
+    if ue:
+        stuck.ue_jug()
     motor_move(strength_l, strength_r, t_moving)
     t_stop = time.time()
     if abs(strength_l) == abs(strength_r) and strength_l * strength_r < 0:
