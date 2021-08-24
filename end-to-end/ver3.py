@@ -29,7 +29,7 @@ import paraavoidance
 import escape
 import panorama3
 import gpsrunning_koji
-import photorunning
+import photorunning3
 import Other
 import Calibration
 import os
@@ -303,7 +303,7 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 8:
-            photorunning.image_guided_driving(path_photo_imagerun, G_thd)
+            photorunning3.image_guided_driving(path_photo_imagerun, G_thd)
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
@@ -320,7 +320,7 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
-            panorama.composition(path_src_panorama, path_dst_panoraam)
+            panorama3.composition(path_src_panorama, path_dst_panoraam)
             img1 = "/home/pi/Desktop/Cansat2021ver/dst_panorama/0.jpg"
             img_string = Xbee.ImageToByte(img1)
             Xbee.img_trans(img_string)
