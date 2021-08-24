@@ -88,15 +88,15 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         centers = get_center(contours[max_area_contour])
 
         if max_area_contour == -1:
-            return [-1, 0, 1000, imgname]
+            return [-1, 0, 1000, imgname, path_detection]
         elif max_area <= 0.2:
-            return [-1, max_area, 1000000, imgname]
+            return [-1, max_area, 1000000, imgname, path_detection]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [1, max_area, GAP, imgname]
+            return [1, max_area, GAP, imgname, path_detection]
         else:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [0, max_area, GAP, imgname]
+            return [0, max_area, GAP, imgname, path_detection]
     except:
         return [1000, 1000, 1000, imgname]
 
@@ -162,8 +162,7 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
             stuck.ue_jug()
             path_photo = Other.fileName('/home/pi/Desktop/Cansat2021ver/photo_imageguide/ImageGuide-', 'jpg')
             photoName = Capture.Capture(path_photo)
-            goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
-            imgname2 = DrawContours(imgname, 200, 20, 80)
+            goalflug, goalarea, gap, imgname, imgname2 = GoalDetection(photoName, 200, 20, 80, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}\timagename2:{imgname2}')
             Other.saveLog(log_photorunning, t_start - time.time(), goalflug, goalarea, gap, imgname, imgname2)
             if goalflug == 1:
