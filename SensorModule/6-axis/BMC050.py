@@ -140,7 +140,7 @@ def bmc050_read():
     return value
 
 
-def BMC_error():
+def BMC050_error():
     """
     6軸センサエラー起きたらこの関数使ってね。
     """
