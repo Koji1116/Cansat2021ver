@@ -162,11 +162,11 @@ def deceleration(strength_l, strength_r):
         if i == 9:
             motor_stop(0.1)
 
-def move(strength_l, strength_r, t_moving, ue = True):
+def move(strength_l, strength_r, t_moving, ue = False):
     """
     急停止回避を組み込み 7/23 takayama
     """
-    if ue:
+    if not ue:
         stuck.ue_jug()
     motor_move(strength_l, strength_r, t_moving)
     t_stop = time.time()
