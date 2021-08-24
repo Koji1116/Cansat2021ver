@@ -67,7 +67,7 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         max_area_contour = -1
 
         if len(contours) > 0:
-            for (i, cnt) in zip(range(0, len(contours) - 1, contours)):
+            for (i, cnt) in zip(range(0, len(contours)), contours):
                 # 赤色検知した部分に最小外接円を書く
                 (x, y), radius = cv2.minEnclosingCircle(cnt)
                 center = (int(x), int(y))
