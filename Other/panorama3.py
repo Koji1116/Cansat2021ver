@@ -38,7 +38,7 @@ def shooting_angle(theta, path_src_panorama1, path_src_panorama2, path_src_panor
         for i in range(12):
             if 30 * i <= theta and theta <= 10 + 30 * i and not dict_angle1[i + 1]:
                 Capture.Capture(path_src_panorama1, wid, hig)
-                dict_angle[i + 1] = True
+                dict_angle1[i + 1] = True
                 print(dict_angle1)
                 switch = False
                 break
@@ -47,7 +47,7 @@ def shooting_angle(theta, path_src_panorama1, path_src_panorama2, path_src_panor
         for i in range(12):
             if 10 + 30 * i <= theta and theta <= 20 + 30 * i and not dict_angle2[i + 1]:
                 Capture.Capture(path_src_panorama2, wid, hig)
-                dict_angle[i + 1] = True
+                dict_angle2[i + 1] = True
                 print(dict_angle2)
                 switch = False
                 break
@@ -56,7 +56,7 @@ def shooting_angle(theta, path_src_panorama1, path_src_panorama2, path_src_panor
         for i in range(12):
             if 20 + 30 * i <= theta and theta <= 30 + 30 * i and not dict_angle3[i + 1]:
                 Capture.Capture(path_src_panorama3, wid, hig)
-                dict_angle[i + 1] = True
+                dict_angle3[i + 1] = True
                 print(dict_angle3)
                 break
     return dict_angle1, dict_angle2, dict_angle3
