@@ -79,6 +79,7 @@ def BMC050_setup():
         time.sleep(0.1)
 
 
+
 def acc_dataRead():
     # --- Read Acc Data --- #
     accData = [0, 0, 0, 0, 0, 0]
@@ -138,6 +139,14 @@ def bmc050_read():
 
     return value
 
+
+def BMC_error():
+    """
+    6軸センサエラー起きたらこの関数使ってね。
+    """
+    BMC050_off()
+    time.sleep(0.1)
+    BMC050_setup()
 
 if __name__ == '__main__':
     try:
