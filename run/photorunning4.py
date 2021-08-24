@@ -225,16 +225,21 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
 
 if __name__ == "__main__":
     try:
+        # Initialize
+        lat2 = 35.9236093
+        lon2 = 139.9118821
+        G_thd = 80
+        log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning_practice.txt'
         motor.setup()
+
+        # Calibration
         print('##--Calibration Start--##\n')
         magx_off, magy_off = Calibration.cal(40, -40, 30)
         print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
-        G_thd = 80
-        goalflug = 1
-        startTime = time.time()
-        dateTime = datetime.datetime.now()
-        log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning_practice.txt'
-        image_guided_driving(log_photorunning, G_thd, magx_off, magy_off)
+        print('##--Calibration end--##')
+
+        # Image Guide
+        image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance=5, t_adj_gps=60)
 
     except KeyboardInterrupt:
         print('stop')
