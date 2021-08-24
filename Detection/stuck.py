@@ -29,14 +29,13 @@ def ue_jug():
     加速度センサZ軸の正負で判定するよ
     """
     while 1:
-        # za = []
-        # for i in range(3):
-        #     accdata = acc.acc_dataRead()
-        #     za[i] = accdata[2]
-        #     time.sleep(0.2)
-        # z = max(za)
-        accdata = acc.acc_dataRead()
-        z = accdata[2]
+        za = []
+        for i in range(3):
+            accdata = acc.acc_dataRead()
+            za.append(accdata[2])
+            time.sleep(0.2)
+        z = max(za)
+        
         if z >= 7.5 :
             Xbee.str_trans('Upward')
             print('上だよ')
