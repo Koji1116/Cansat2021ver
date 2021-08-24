@@ -16,10 +16,10 @@ MAG_REGISTER_ADDRESS = 0x42
 i2c = SMBus(1)
 
 def BMC050_on():
-    pi.write(22, 1)
+    pi.write(27, 1)
 
 def BMC050_off():
-    pi.write(22, 0)
+    pi.write(27, 0)
 
 def BMC050_setup():
     # --- BMC050Setup --- #
@@ -147,7 +147,7 @@ if __name__ == '__main__':
     else:
         BMC050_off()
 
-        
+
     # while 1:
     #     a = input('入力して　　ON:1  OFF:0')
     #     if a == "1":
