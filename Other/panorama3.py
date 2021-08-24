@@ -155,7 +155,7 @@ def shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, p
         power = random.randint(30, 70)
         strength_l_pano = power
         strength_r_pano = power * -1
-        motor.move(strength_l_pano, strength_r_pano, t_rotation_pano, ue=True)
+        motor.move(strength_l_pano, strength_r_pano, t_rotation_pano, ue=False)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
         magy = magdata[1]
