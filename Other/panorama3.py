@@ -150,6 +150,9 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
         if srcdir:
             print(f'directory:\t{srcdir}')
             break
+        power = random.randint(20, 60)
+        strength_l_pano = power
+        strength_r_pano = power * -1
         motor.move(strength_l_pano, strength_r_pano, t_rotation_pano)
         magdata = BMC050.mag_dataRead()
         magx = magdata[0]
