@@ -21,11 +21,11 @@ def BMC050_on():
 def BMC050_off():
     pi.write(27, 0)
 
-def BMC050_setup():
+def BMC050_setup(t):
     # --- BMC050Setup --- #
     # Initialize ACC
     BMC050_on()
-    time.sleep(5)
+    time.sleep(t)
     try:
         i2c.write_byte_data(ACC_ADDRESS, 0x0F, 0x03)
         time.sleep(0.1)
@@ -151,8 +151,10 @@ if __name__ == '__main__':
 
     while 1:
         a = input('入力して　　ON:1  OFF:0')
+
         if a == "1":
-            BMC050_setup()
+            t = int(input('何秒待つ？'))
+            BMC050_setup(t)
             bmcData = bmc050_read()
             print(bmcData)
             time.sleep(0.1)
