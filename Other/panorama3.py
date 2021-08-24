@@ -256,7 +256,7 @@ if __name__ == "__main__":
     srcdir = shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_src_panorama1,
                       path_src_panorama2, path_src_panorama3, path_paradete, log_panoramashooting)
 
-    if input('Composition y/n \t') == y:
+    if input('Composition y/n \t') == 'y':
         t_start = time.time()  # プログラムの開始時刻
         composition(srcdir)
         runTime = time.time() - t_start
