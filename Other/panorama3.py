@@ -146,8 +146,9 @@ def shooting(strength_l_pano, strength_r_pano, t_rotation_pano, mag_mat, path_sr
         dict_angle1, dict_angle2, dict_angle3 = shooting_angle(path_src_panorama1, path_src_panorama2,
                                                                path_src_panorama3, dict_angle1, dict_angle2,
                                                                dict_angle3, wid, hig)
-        if srcdir := check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
-                           path_src_panorama3):
+        srcdir = check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
+                           path_src_panorama3)
+        if srcdir:
             break
         motor.move(strength_l_pano, strength_r_pano, t_rotation_pano)
         magdata = BMC050.mag_dataRead()
