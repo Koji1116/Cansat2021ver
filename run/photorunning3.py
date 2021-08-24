@@ -22,6 +22,7 @@ import time
 import mag
 import Calibration
 import stuck
+import BMC050
 
 # 写真内の赤色面積で進時間を決める用　調整必要
 area_short = 59.9
@@ -120,6 +121,7 @@ def DrawContours(imgpath, H_min, H_max, S_thd):
         print("end drawcircle")
 
 def adjustment_mag(strength, t, magx_off, magy_off):
+    count_bmc050_erro = 0
     t_start = time.time()
     magdata = mag.mag_dataRead()
     mag_x_old = magdata[0]
@@ -130,6 +132,15 @@ def adjustment_mag(strength, t, magx_off, magy_off):
         magdata = mag.mag_dataRead()
         mag_x = magdata[0]
         mag_y = magdata[1]
+        if mag_x == mag_x_old and mag_y == mag_y_old:
+            count_bmc050_erro += 1
+            if count_bmc050_erro >= 3:
+                print('-------mag_x mag_y error-----修復開始')
+                BMC050.BMC050_error()
+                magdata = BMC050.mag_dataRead()
+                mag_x = magdata[0]
+                mag_y = magdata[1]
+                count_bmc050_erro = 0
         theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
         angle_relative = theta_old - theta
         if angle_relative >= 0:

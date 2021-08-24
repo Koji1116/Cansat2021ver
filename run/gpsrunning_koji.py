@@ -89,6 +89,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
     """
     direction = Calibration.calculate_direction(lon2, lat2)
     goal_distance = direction['distance']
+    count_bmc050_erro = 0
     while goal_distance >= thd_distance:
         t_stuck_count = 1
         stuck.ue_jug()
@@ -128,11 +129,14 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
                     mag_x = magdata[0]
                     mag_y = magdata[1]
                     if mag_x == mag_x_old and mag_y == mag_y_old:
-                        print('-------mag_x mag_y error-----')
-                        BMC050.BMC050_error()
-                        magdata = BMC050.mag_dataRead()
-                        mag_x = magdata[0]
-                        mag_y = magdata[1]
+                        count_bmc050_erro += 1
+                        if count_bmc050_erro >= 3:
+                            print('-------mag_x mag_y error-----修復開始')
+                            BMC050.BMC050_error()
+                            magdata = BMC050.mag_dataRead()
+                            mag_x = magdata[0]
+                            mag_y = magdata[1]
+                            count_bmc050_erro = 0
                     theta = Calibration.angle(mag_x, mag_y, magx_off, magy_off)
                     angle_relative = azimuth - theta
                     if angle_relative >= 0:
