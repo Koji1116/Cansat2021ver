@@ -302,24 +302,6 @@ def calculate_direction(lon2, lat2):
     return direction
 
 
-def angle(magx, magy, magx_off=0, magy_off=0):
-    θ = math.degrees(math.atan((magy - magy_off) / (magx - magx_off)))
-
-    if magx - magx_off > 0 and magy - magy_off > 0:  # First quadrant
-        pass  # 0 <= θ <= 90
-    elif magx - magx_off < 0 and magy - magy_off > 0:  # Second quadrant
-        θ = 180 + θ  # 90 <= θ <= 180
-    elif magx - magx_off < 0 and magy - magy_off < 0:  # Third quadrant
-        θ = θ + 180  # 180 <= θ <= 270
-    elif magx - magx_off > 0 and magy - magy_off < 0:  # Fourth quadrant
-        θ = 360 + θ  # 270 <= θ <= 360
-
-    θ += 90
-
-    if 360 <= θ <= 450:
-        θ -= 360
-
-    return θ
 
 
 def timer(t):
