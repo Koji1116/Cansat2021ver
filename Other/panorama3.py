@@ -146,8 +146,9 @@ def shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, p
         dict_angle1, dict_angle2, dict_angle3 = shooting_angle(preθ, path_src_panorama1, path_src_panorama2,
                                                                path_src_panorama3, dict_angle1, dict_angle2,
                                                                dict_angle3, wid, hig)
-        if (srcdir := check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
-                            path_src_panorama3)):
+        srcdir = check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
+                            path_src_panorama3)
+        if srcdir:
             print(f'directory:\t{srcdir}')
             break
         power = random.randint(30, 70)
