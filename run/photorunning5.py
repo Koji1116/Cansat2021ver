@@ -115,7 +115,7 @@ def GoalDetection(imgpath, G_thd):
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
             return [0, max_area, GAP, imgpath, path_detection]
     except:
-        return [1000, 1000, 1000, imgpath]
+        return [1000, 1000, 1000, imgpath, path_detection]
 
 
 def adjustment_mag(strength, t, magx_off, magy_off):
