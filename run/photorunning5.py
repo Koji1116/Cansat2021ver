@@ -23,6 +23,7 @@ import mag
 import Calibration
 import stuck
 import BMC050
+import gpsrunning_koji
 
 # 写真内の赤色面積で進時間を決める用　調整必要
 area_short = 59.9
@@ -237,11 +238,11 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                 break
 
             # ゴールから離れた場合GPS誘導に移行
-            direction = Calibration.calculate_direction(lon2, lat2)
-            goal_distance = direction['distance']
-            if goal_distance >= thd_distance + 2:
-                gpsrunning_koji.drive(lon2, lat2, thd_distance, t_adj_gps,
-                                      logpath='/home/pi/Desktop/Cansat2021ver/log/gpsrunning(image)Log', t_start=0)
+            # direction = Calibration.calculate_direction(lon2, lat2)
+            # goal_distance = direction['distance']
+            # if goal_distance >= thd_distance + 2:
+            #     gpsrunning_koji.drive(lon2, lat2, thd_distance, t_adj_gps,
+            #                           logpath='/home/pi/Desktop/Cansat2021ver/log/gpsrunning(image)Log', t_start=0)
 
         print('finish')
 
