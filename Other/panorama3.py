@@ -228,8 +228,10 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
     for i in range(0, 12):
         if len(str(i)) == 1:
             photos.append(cv2.imread(srcdir + '/panoramaShooting000' + str(i) + srcext))
+            print(srcdir + '/panoramaShooting000' + str(i) + srcext)
         else:
             photos.append(cv2.imread(srcdir + '/panoramaShooting00' + str(i) + srcext))
+            print(srcdir + '/panoramaShooting00' + str(i) + srcext)
     print(photos)
     print(len(photos))
 
