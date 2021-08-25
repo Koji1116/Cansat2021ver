@@ -74,12 +74,12 @@ def random(a, b, k):
 def stuck_avoid_move(x):
     if x == 0:
         print('sutck_avoid_move():0')
-        motor.moev(40, -40, 1)
+        motor.move(40, -40, 1)
         motor.move(100, 100, 5)
         motor.move(60, 60, 3)
     elif x == 1:
         print('sutck_avoid_move():1')
-        motor.moev(40, -40, 1)
+        motor.move(40, -40, 1)
         motor.move(-100, -100, 5)
         motor.move(-60, -60, 3)
     elif x == 2:
@@ -94,13 +94,13 @@ def stuck_avoid_move(x):
 
     elif x == 4:
         print('sutck_avoid_move():4')
-        motor.moev(40, -40, 1)
+        motor.move(40, -40, 1)
         motor.move(-80, -100, 5)
         motor.move(-60, -60, 3)
 
     elif x == 5:
         print('sutck_avoid_move():5')
-        motor.moev(40, -40, 1)
+        motor.move(40, -40, 1)
         motor.move(-100, -80, 5)
         motor.move(-60, -60, 3)
 
