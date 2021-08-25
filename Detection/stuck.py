@@ -82,13 +82,13 @@ def stuck_avoid_move(x):
         motor.move(-60, -60, 3)
     elif x == 2:
         print('sutck_avoid_move():2')
-        motor.move(80, 100, 5)
-        motor.move(60, 60, 3)
+        motor.move(-100, 100, 2)
+        motor.move(100, 100, 5)
 
     elif x == 3:
         print('sutck_avoid_move():3')
-        motor.move(100, 80, 5)
-        motor.move(60, 60, 3)
+        motor.move(100, -100, 2)
+        motor.move(100, 100, 5)
 
     elif x == 4:
         print('sutck_avoid_move():4')
