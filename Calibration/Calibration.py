@@ -200,39 +200,8 @@ def calculate_direction(lon2, lat2):
     try:
         GPS.openGPS()
         utc, lat, lon, sHeight, gHeight = GPS.GPSdata_read()
-        # print(utc, lat, lon, sHeight, gHeight)
         lat1 = lat
         lon1 = lon
-
-        # while True:
-        # GPS_data = GPS.readGPS()
-        # lat1 = GPS_data[1]
-        # lon1 = GPS_data[2]
-        # while True:
-        #    utc, lat, lon, sHeight, gHeight = GPS.readGPS()
-        #    print(utc, lat, lon, sHeight, gHeight)#
-
-        #    if utc == -1.0:
-        #        if lat == -1.0:
-        #            print("Reading GPS Error")
-        #           # pass
-        #        else:
-        #          # pass
-        #            print("Status V")
-        #    else:
-        #        # pass
-        #        print(utc, lat, lon, sHeight, gHeight)
-        #        lat1 = lat
-        #        lon1 = lon
-        #        break
-        # while True:
-        #  GPS_data = GPS.readGPS()
-        # lat1 = GPS_data[1]
-        # lon1 = GPS_data[2]
-        # print(lat1)
-        # print(lon2)
-        # if lat1 != -1.0 and lat1 != 0.0:
-        #    break
     except KeyboardInterrupt:
         GPS.closeGPS()
         print("\r\nKeyboard Intruppted, Serial Closed")
