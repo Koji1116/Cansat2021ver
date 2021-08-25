@@ -243,11 +243,6 @@ def calculate_direction(lon2, lat2):
     direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
     return direction
 
-def timer(t):
-    global cond
-    time.sleep(t)
-    cond = False
-
 
 if __name__ == "__main__":
     try:
