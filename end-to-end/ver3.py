@@ -105,8 +105,7 @@ def setup():
     BMC050.BMC050_setup()
     BME280.bme280_setup()
     BME280.bme280_calib_param()
-    
-    
+
 
 def close():
     GPS.closeGPS()
@@ -115,7 +114,7 @@ def close():
 
 if __name__ == '__main__':
 
-    #remove file
+    # remove file
     # iino = input('本当に写真ファイル削除していい？git pullした？[y/n]')
     # if iino == "y":
     #     os.remove('/home/pi/Desktop/Cansat2021ver/src_panorama/panoramaShooting*jpg')
@@ -125,7 +124,7 @@ if __name__ == '__main__':
     #     pass
     # close()
     motor.setup()
-    
+
     #######-----------------------Setup--------------------------------#######
 
     try:
@@ -155,9 +154,11 @@ if __name__ == '__main__':
         try:
             while time.time() - t_release_start <= t_out_release:
                 print(f'loop_release\t {i}')
-                press_count_release, press_judge_release = release.pressdetect_release(thd_press_release, t_delta_release)
+                press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
+                                                                                       t_delta_release)
                 print(f'count:{press_count_release}\tjudge{press_judge_release}')
-                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), press_count_release, press_judge_release)
+                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(), BME280.bme280_read(),
+                              press_count_release, press_judge_release)
                 if press_judge_release == 1:
                     print('Release\n \n')
                     break
@@ -192,11 +193,12 @@ if __name__ == '__main__':
                     break
                 else:
                     print('Not Landed\n \n')
-                Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read())
+                Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(), BME280.bme280_read())
                 i += 1
             else:
                 print('Landed Timeout')
-            Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(),BME280.bme280_read(), 'Land judge finished')
+            Other.saveLog(log_landing, dateTime, time.time() - t_start, GPS.GPSdata_read(), BME280.bme280_read(),
+                          'Land judge finished')
             print('######-----Landed-----######\n \n')
     except Exception as e:
         tb = sys.exc_info()[2]
@@ -235,7 +237,8 @@ if __name__ == '__main__':
             flug, area, gap, photoname = paradetection.ParaDetection(
                 path_paradete, 320, 240, 200, 10, 120, 1)
             print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-            Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area,gap, photoname)
+            Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area, gap,
+                          photoname)
             paraavoidance.Parachute_Avoidance(flug, gap)
             time.sleep(1)
             if flug == -1 or flug == 0:
@@ -249,7 +252,7 @@ if __name__ == '__main__':
     #######-----------------------------------------------------------########
 
     #######--------------------------panorama--------------------------#######
-    
+
     print('#####-----panorama shooting start-----#####')
     Other.saveLog(log_phase, '6', 'panorama shooting phase start', dateTime, time.time() - t_start)
     phaseChk = Other.phaseCheck(log_phase)
@@ -258,7 +261,8 @@ if __name__ == '__main__':
         t_start_panorama = time.time()  # プログラムの開始時刻
         time.sleep(3)
         mag_mat = Calibration.magdata_matrix(strength_l_cal, strength_r_cal, number_data)
-        path_src_panorama = panorama3.shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, path_src_panorama3, path_paradete, log_panoramashooting)
+        path_src_panorama = panorama3.shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2,
+                                               path_src_panorama3, path_paradete, log_panoramashooting)
         print(f'runTime_panorama:\t{time.time() - t_start_panorama}')
     print('#####-----panorama ended-----##### \n \n')
     # except Exception as e:
@@ -270,17 +274,19 @@ if __name__ == '__main__':
 
     ####-----goal-parachute-roverの位置関係の場合のためのパラ回避-----#####
     magx_off, magy_off = Calibration.cal(40, -40, 30)
-    gpsrunning_koji.adjust_direction(gpsrunning_koji.angle_goal(magx_off, magy_off, lon2, lat2), magx_off, magy_off, lon2, lat2)
+    gpsrunning_koji.adjust_direction(gpsrunning_koji.angle_goal(magx_off, magy_off, lon2, lat2), magx_off, magy_off,
+                                     lon2, lat2)
     count_paraavo2 = 0
     while count_paraavo2 < 3:
-            flug, area, gap, photoname = paradetection.ParaDetection(
-                path_paradete, 320, 240, 200, 10, 120, 1)
-            print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-            Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area,gap, photoname)
-            paraavoidance.Parachute_Avoidance(flug, gap)
-            time.sleep(1)
-            if flug == -1 or flug == 0:
-                count_paraavo2 += 1
+        flug, area, gap, photoname = paradetection.ParaDetection(
+            path_paradete, 320, 240, 200, 10, 120, 1)
+        print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
+        Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area, gap,
+                      photoname)
+        paraavoidance.Parachute_Avoidance(flug, gap)
+        time.sleep(1)
+        if flug == -1 or flug == 0:
+            count_paraavo2 += 1
 
     #######--------------------------GPS--------------------------#######
 
@@ -304,7 +310,8 @@ if __name__ == '__main__':
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 8:
             magx_off, magy_off = Calibration.cal(40, -40, 60)
-            photorunning5.image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, th_distance, t_adj_gps)
+            photorunning5.image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, th_distance,
+                                               t_adj_gps)
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
@@ -321,7 +328,9 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
+            t_composition_start = time.time()
             img1 = panorama3.composition(path_src_panorama)
+            print(time.time() - t_composition_start)
             img_string = Xbee.ImageToByte(img1)
             Xbee.img_trans(img_string)
     except Exception as e:
