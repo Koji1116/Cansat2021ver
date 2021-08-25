@@ -154,11 +154,10 @@ if __name__ == '__main__':
         try:
             while time.time() - t_release_start <= t_out_release:
                 print(f'loop_release\t {i}')
-                press_count_release, press_judge_release = release.pressdetect_release(thd_press_release,
-                                                                                       t_delta_release)
+                press_count_release, press_judge_release = release.pressdetect_release(thd_press_release, t_delta_release)
                 print(f'count:{press_count_release}\tjudge{press_judge_release}')
-                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(), BME280.bme280_read(),
-                              press_count_release, press_judge_release)
+                Other.saveLog(log_release, dateTime, time.time() - t_start, GPS.GPSdata_read(),
+                              BME280.bme280_read(), press_count_release, press_judge_release)
                 if press_judge_release == 1:
                     print('Release\n \n')
                     break
@@ -237,8 +236,7 @@ if __name__ == '__main__':
             flug, area, gap, photoname = paradetection.ParaDetection(
                 path_paradete, 320, 240, 200, 10, 120, 1)
             print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-            Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area, gap,
-                          photoname)
+            Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area, gap, photoname)
             paraavoidance.Parachute_Avoidance(flug, gap)
             time.sleep(1)
             if flug == -1 or flug == 0:
@@ -274,15 +272,13 @@ if __name__ == '__main__':
 
     ####-----goal-parachute-roverの位置関係の場合のためのパラ回避-----#####
     magx_off, magy_off = Calibration.cal(40, -40, 30)
-    gpsrunning_koji.adjust_direction(gpsrunning_koji.angle_goal(magx_off, magy_off, lon2, lat2), magx_off, magy_off,
-                                     lon2, lat2)
+    gpsrunning_koji.adjust_direction(gpsrunning_koji.angle_goal(magx_off, magy_off, lon2, lat2), magx_off, magy_off, lon2, lat2)
     count_paraavo2 = 0
     while count_paraavo2 < 3:
         flug, area, gap, photoname = paradetection.ParaDetection(
             path_paradete, 320, 240, 200, 10, 120, 1)
         print(f'flug:{flug}\tarea:{area}\tgap:{gap}\tphotoname:{photoname}\n \n')
-        Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area, gap,
-                      photoname)
+        Other.saveLog(log_paraavoidance, dateTime, time.time() - t_start, GPS.GPSdata_read(), flug, area, gap, photoname)
         paraavoidance.Parachute_Avoidance(flug, gap)
         time.sleep(1)
         if flug == -1 or flug == 0:
@@ -310,8 +306,7 @@ if __name__ == '__main__':
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 8:
             magx_off, magy_off = Calibration.cal(40, -40, 60)
-            photorunning5.image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, th_distance,
-                                               t_adj_gps)
+            photorunning5.image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, th_distance, t_adj_gps)
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
