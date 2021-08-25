@@ -321,6 +321,7 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
+            len(glob.glob1(path_src_panorama, '*' + srcext))
             print(path_src_panorama)
             img1 = panorama3.composition(path_src_panorama, path_dst_panoraam)
             img_string = Xbee.ImageToByte(img1)
