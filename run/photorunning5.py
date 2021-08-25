@@ -173,7 +173,7 @@ def adjustment_mag(strength, t, magx_off, magy_off):
     motor.deceleration(strength_l, strength_r)
 
 
-def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance, t_adj_gps):
+def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance, t_adj_gps, gpsrun=False):
     try:
 
         t_start = time.time()
@@ -219,12 +219,14 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                     adj_short = 0
                     if count_short_r % 4 == 0:
                         adj_short += 3
+                        print('#-Power up-#')
                     motor.move(-20-adj_short, 20+adj_short, 0.1)
                 elif 65 <= gap and gap <= 100:
                     print('Turn right')
                     count_short_r += 1
                     if count_short_r % 4 == 0:
                         adj_short += 3
+                        print('#-Power up-#')
                     motor.move(20+adj_short, -20-adj_short, 0.1)
                 else:
                     print('Go stright short')
@@ -233,20 +235,17 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                     count_short_r = 0
                     adj_short = 0
             elif goalarea >= G_thd:
-                print('goal')
-                print('goal')
+                print('###---Goal---###')
+                print('###---Goal---###')
                 break
 
-            # ゴールから離れた場合GPS誘導に移行
-            # direction = Calibration.calculate_direction(lon2, lat2)
-            # goal_distance = direction['distance']
-            # if goal_distance >= thd_distance + 2:
-            #     gpsrunning_koji.drive(lon2, lat2, thd_distance, t_adj_gps,
-            #                           logpath='/home/pi/Desktop/Cansat2021ver/log/gpsrunning(image)Log', t_start=0)
-
-        print('finish')
-
-
+            #ゴールから離れた場合GPS誘導に移行
+            if gpsrun:
+                direction = Calibration.calculate_direction(lon2, lat2)
+                goal_distance = direction['distance']
+                if goal_distance >= thd_distance + 2:
+                    gpsrunning_koji.drive(lon2, lat2, thd_distance, t_adj_gps,
+                                          logpath='/home/pi/Desktop/Cansat2021ver/log/gpsrunning(image)Log', t_start=0)
     except KeyboardInterrupt:
         print('stop')
     except Exception as e:
