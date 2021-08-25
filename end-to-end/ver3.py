@@ -95,7 +95,6 @@ log_panoramacom = Other.fileName('/home/pi/Desktop/Cansat2021ver/log/panoramacom
 path_src_panorama1 = '/home/pi/Desktop/Cansat2021ver/src_panorama1/panoramaShooting'
 path_src_panorama2 = '/home/pi/Desktop/Cansat2021ver/src_panorama2/panoramaShooting'
 path_src_panorama3 = '/home/pi/Desktop/Cansat2021ver/src_panorama3/panoramaShooting'
-path_dst_panoraam = '/home/pi/Desktop/Cansat2021ver/dst_panorama'
 path_paradete = '/home/pi/Desktop/Cansat2021ver/photostorage/paradete'
 
 
@@ -322,9 +321,7 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
-            srcfilecount = len(glob.glob1(path_src_panorama, '*' + '.jpg'))
-            print(f'srcfilecount:\t{srcfilecount}')
-            img1 = panorama3.composition(path_src_panorama, path_dst_panoraam)
+            img1 = panorama3.composition(path_src_panorama)
             img_string = Xbee.ImageToByte(img1)
             Xbee.img_trans(img_string)
     except Exception as e:
