@@ -83,7 +83,6 @@ def check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_pa
 
     rfd = srcdir.rfind('/')
     srcdir = srcdir[:rfd]
-
     return srcdir
 
 
@@ -147,9 +146,8 @@ def shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, p
         dict_angle1, dict_angle2, dict_angle3 = shooting_angle(preθ, path_src_panorama1, path_src_panorama2,
                                                                path_src_panorama3, dict_angle1, dict_angle2,
                                                                dict_angle3, wid, hig)
-        srcdir = check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
-                       path_src_panorama3)
-        if srcdir:
+        if (srcdir := check(dict_angle1, dict_angle2, dict_angle3, path_src_panorama1, path_src_panorama2,
+                            path_src_panorama3)):
             print(f'directory:\t{srcdir}')
             break
         power = random.randint(30, 70)
@@ -260,7 +258,8 @@ if __name__ == "__main__":
     mag_mat = Calibration.magdata_matrix(40, -40, 60)
     t_rotation_pano = 0.1
     t_start = time.time()
-    srcdir = shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, path_src_panorama3, path_paradete, log_panoramashooting)
+    srcdir = shooting(t_rotation_pano, mag_mat, path_src_panorama1, path_src_panorama2, path_src_panorama3,
+                      path_paradete, log_panoramashooting)
     print(t_start - time.time())
     if input('Composition y/n \t') == 'y':
         t_start = time.time()  # プログラムの開始時刻

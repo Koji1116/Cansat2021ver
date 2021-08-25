@@ -46,28 +46,58 @@ def get_center(contour):
 
     return cx, cy
 
+def mosaic(src, ratio):
+    small = cv2.resize(src, None, fx=ratio, fy=ratio, interpolation=cv2.INTER_NEAREST)
+    return cv2.resize(small, src.shape[:2][::-1], interpolation=cv2.INTER_NEAREST)
 
-def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
+def detect_red():
+    img_original = cv2.imread('元画像のパス')
+    img_mosaic = mosaic(img_original, ratio=0.3)
+    img_hsv = cv2.cvtColor(img_mosaic, cv2.COLOR_BGR2HSV)
+
+    red_min = np.array([100, 100, 100], np.uint8)
+    red_max = np.array([255, 255, 255], np.uint8)
+    red_img = cv2.inRange(img_hsv, red_min, red_max)
+    red_img_gry = cv2.cvtColor(red_img, cv2.COLOR_GRAY2RGB)
+
+    cv2.imwrite(path_detection, red_img_gry)
+
+def GoalDetection(imgpath, G_thd):
     try:
-        imgname = imgpath
-        img = cv2.imread(imgname)
+        img = cv2.imread(imgpath)
         hig, wid, _ = img.shape
+        img_mosaic = mosaic(img, ratio=0.3)
+        img_hsv = cv2.cvtColor(img_mosaic, cv2.COLOR_BGR2HSV)
 
-        img_HSV = cv2.cvtColor(cv2.GaussianBlur(img, (15, 15), 0), cv2.COLOR_BGR2HSV_FULL)
-        h = img_HSV[:, :, 0]
-        s = img_HSV[:, :, 1]
-        mask = np.zeros(h.shape, dtype=np.uint8)
-        mask[((h < H_max) | (h > H_min)) & (s > S_thd)] = 255
+        # 最小外接円を描いた写真の保存先
+        path_detection = Other.fileName('/home/pi/Desktop/Cansat2021ver/detected/Detected-', 'jpg')
+
+        red_min = np.array([100, 100, 100], np.uint8)
+        red_max = np.array([255, 255, 255], np.uint8)
+        mask = cv2.inRange(img_hsv, red_min, red_max)
         contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
 
         max_area = 0
         max_area_contour = -1
 
-        for j in range(0, len(contours)):
-            area = cv2.contourArea(contours[j])
-            if max_area < area:
-                max_area = area
-                max_area_contour = j
+        if len(contours) > 0:
+            radius_frame = ()
+            for (i, cnt) in zip(range(0, len(contours)), contours):
+                print(f'i:{i}')
+                # 赤色検知した部分に最小外接円を書く
+                (x, y), radius = cv2.minEnclosingCircle(cnt)
+                center = (int(x), int(y))
+                radius = int(radius)
+                radius_frame = cv2.circle(img, center, radius, (0, 0, 255), 2)
+                print(radius_frame)
+                # 検知した赤色の面積の中で最大のものを探す
+                area = cv2.contourArea(contours[i])
+                if max_area < area:
+                    max_area = area
+                    max_area_contour = i
+            cv2.imwrite(path_detection, radius_frame)
+        else:
+            cv2.imwrite(path_detection, img)
 
         max_area /= hig * wid
         max_area *= 100
@@ -75,50 +105,18 @@ def GoalDetection(imgpath, H_min, H_max, S_thd, G_thd):
         centers = get_center(contours[max_area_contour])
 
         if max_area_contour == -1:
-            return [-1, 0, 1000, imgname]
+            return [-1, 0, 1000, imgname, path_detection]
         elif max_area <= 0.2:
-            return [-1, max_area, 1000000, imgname]
+            return [-1, max_area, 1000000, imgname, path_detection]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [1, max_area, GAP, imgname]
+            return [1, max_area, GAP, imgname, path_detection]
         else:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [0, max_area, GAP, imgname]
+            return [0, max_area, GAP, imgname, path_detection]
     except:
         return [1000, 1000, 1000, imgname]
 
-
-def DrawContours(imgpath, H_min, H_max, S_thd):
-    try:
-        img = cv2.imread(imgpath)
-        hig, wid, _ = img.shape
-
-        img_HSV = cv2.cvtColor(cv2.GaussianBlur(img, (15, 15), 0), cv2.COLOR_BGR2HSV_FULL)
-        h = img_HSV[:, :, 0]
-        s = img_HSV[:, :, 1]
-        mask = np.zeros(h.shape, dtype=np.uint8)
-        mask[((h < H_max) | (h > H_min)) & (s > S_thd)] = 255
-
-        contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
-
-        if len(contours) > 0:
-            for cnt in contours:
-                # 最小外接円を描く
-                (x, y), radius = cv2.minEnclosingCircle(cnt)
-                center = (int(x), int(y))
-                radius = int(radius)
-                radius_frame = cv2.circle(img, center, radius, (0, 0, 255), 2)
-
-            path = Other.fileName('photostorage/photorunning2-', 'jpg')
-            cv2.imwrite(path, radius_frame)
-                
-            return path
-        else:
-            path = Other.fileName('photostorage/photorunning2-', 'jpg')
-            cv2.imwrite(path, img)
-            return path
-    except KeyboardInterrupt:
-        print("end drawcircle")
 
 def adjustment_mag(strength, t, magx_off, magy_off):
     count_bmc050_erro = 0
@@ -127,7 +125,7 @@ def adjustment_mag(strength, t, magx_off, magy_off):
     mag_x_old = magdata[0]
     mag_y_old = magdata[1]
     theta_old = Calibration.angle(mag_x_old, mag_y_old, magx_off, magy_off)
-    while time.time()-t_start <= t:
+    while time.time() - t_start <= t:
         strength_adj = strength
         magdata = mag.mag_dataRead()
         mag_x = magdata[0]
@@ -165,6 +163,7 @@ def adjustment_mag(strength, t, magx_off, magy_off):
                 adj = strength_adj * -0.4
         print(f'angle ----- {angle_relative}')
         strength_l, strength_r = strength_adj + adj, strength_adj - adj + 10
+        print(f'motor power:\t{strength_l}\t{strength_r}')
         motor.motor_continue(strength_l, strength_r)
         time.sleep(0.1)
         mag_x_old = mag_x
@@ -173,14 +172,14 @@ def adjustment_mag(strength, t, magx_off, magy_off):
     motor.deceleration(strength_l, strength_r)
 
 
-def image_guided_driving(path_photo, log_photorunning, G_thd, magx_off, magy_off):
+def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance, t_adj_gps):
     try:
         t_start = time.time()
         while 1:
             stuck.ue_jug()
-            photoName = Capture.Capture(path_photo)  # 解像度調整するところ？
-            goalflug, goalarea, gap, imgname = GoalDetection(photoName, 200, 20, 80, 50)
-            imgname2 = DrawContours(imgname, 200, 20, 80)
+            path_photo = Other.fileName('/home/pi/Desktop/Cansat2021ver/photo_imageguide/ImageGuide-', 'jpg')
+            photoName = Capture.Capture(path_photo)
+            goalflug, goalarea, gap, imgname, imgname2 = GoalDetection(photoName, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}\timagename2:{imgname2}')
             Other.saveLog(log_photorunning, t_start - time.time(), goalflug, goalarea, gap, imgname, imgname2)
             if goalflug == 1:
@@ -222,6 +221,14 @@ def image_guided_driving(path_photo, log_photorunning, G_thd, magx_off, magy_off
                 print('goal')
                 print('goal')
                 break
+
+            # ゴールから離れた場合GPS誘導に移行
+            direction = Calibration.calculate_direction(lon2, lat2)
+            goal_distance = direction['distance']
+            if goal_distance >= thd_distance + 2:
+                gpsrunning_koji.drive(lon2, lat2, thd_distance, t_adj_gps,
+                                      logpath='/home/pi/Desktop/Cansat2021ver/log/gpsrunning(image)Log', t_start=0)
+
         print('finish')
 
 
@@ -231,19 +238,27 @@ def image_guided_driving(path_photo, log_photorunning, G_thd, magx_off, magy_off
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
 
+
+
+
+
 if __name__ == "__main__":
     try:
+        # Initialize
+        lat2 = 35.9236093
+        lon2 = 139.9118821
+        G_thd = 80
+        log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning_practice.txt'
         motor.setup()
+
+        # Calibration
         print('##--Calibration Start--##\n')
         magx_off, magy_off = Calibration.cal(40, -40, 30)
         print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
-        G_thd = 80
-        goalflug = 1
-        startTime = time.time()
-        dateTime = datetime.datetime.now()
-        log_photorunning = '/home/pi/Desktop/Cansat2021ver/log/photorunning_practice.txt'
-        path_photo = f'photostorage/ImageGuidance_{dateTime.month}-{dateTime.day}-{dateTime.hour}-{dateTime.minute}'
-        image_guided_driving(path_photo, log_photorunning, G_thd, magx_off, magy_off)
+        print('##--Calibration end--##')
+
+        # Image Guide
+        image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance=5, t_adj_gps=60)
 
     except KeyboardInterrupt:
         print('stop')

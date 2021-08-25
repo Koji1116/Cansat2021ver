@@ -169,7 +169,6 @@ def move(strength_l, strength_r, t_moving, ue = False):
     if ue:
         stuck.ue_jug()
     motor_move(strength_l, strength_r, t_moving)
-    t_stop = time.time()
     if abs(strength_l) == abs(strength_r) and strength_l * strength_r < 0:
         motor_stop(0.1)
     else:
