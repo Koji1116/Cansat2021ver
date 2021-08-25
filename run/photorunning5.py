@@ -174,6 +174,7 @@ def adjustment_mag(strength, t, magx_off, magy_off):
 
 def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance, t_adj_gps):
     try:
+        BMC050.BMC050_error()
         t_start = time.time()
         count_short_l = 0
         count_short_r = 0
