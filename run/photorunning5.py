@@ -182,7 +182,7 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
         adj_short = 0
         while 1:
             stuck.ue_jug()
-            path_photo = Other.fileName('/home/pi/Desktop/Cansat2021ver/photo_imageguide/ImageGuide-', 'jpg')
+            path_photo = '/home/pi/Desktop/Cansat2021ver/photo_imageguide/ImageGuide-'
             photoName = Capture.Capture(path_photo)
             goalflug, goalarea, gap, imgname, imgname2 = GoalDetection(photoName, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}\timagename2:{imgname2}')
