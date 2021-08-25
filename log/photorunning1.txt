@@ -1,0 +1,6 @@
+<built-in method now of type object at 0x420738>	image guide start	
+<built-in method now of type object at 0x420738>	0	3.2584635416666665	58.12500000000001	photostorage/ImageGuidance2_8-20-17-150000.jpg	photostorage/photorunning2-0010.jpg	
+<built-in method now of type object at 0x420738>	0	3.365234375	58.12500000000001	photostorage/ImageGuidance2_8-20-17-150001.jpg	photostorage/photorunning2-0011.jpg	
+<built-in method now of type object at 0x420738>	0	3.34375	58.12500000000001	photostorage/ImageGuidance2_8-20-17-150002.jpg	photostorage/photorunning2-0012.jpg	
+<built-in method now of type object at 0x420738>	0	11.041666666666666	46.25	photostorage/ImageGuidance2_8-20-17-150003.jpg	photostorage/photorunning2-0013.jpg	
+<built-in method now of type object at 0x420738>	0	0.7376302083333334	81.25	photostorage/ImageGuidance2_8-20-17-150004.jpg	photostorage/photorunning2-0014.jpg	

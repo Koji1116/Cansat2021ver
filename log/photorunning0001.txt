@@ -1,0 +1,2 @@
+-2.651244640350342	-1	0.1015625	1000000	photostorage/ImageGuidance_8-24-16-380000.jpg	photostorage/photorunning2-0629.jpg	
+-4.293105602264404	0	0.7916666666666667	-19.375	photostorage/ImageGuidance_8-24-16-380001.jpg	photostorage/photorunning2-0630.jpg	
