@@ -220,15 +220,12 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
     srcext:ソースの拡張子
     dstext:パノラマ写真の拡張子
     """
-    print(f'src_composition:\t{srcdir}')
-    srcfilecount = len(glob.glob1(srcdir, '*' + srcext))
     resultcount = len(glob.glob1('/home/pi/Desktop/Cansat2021ver/dst_panorama', '*' + dstext))
-    print(srcfilecount)
     print(resultcount)
 
     photos = []
 
-    for i in range(0, srcfilecount):
+    for i in range(0, 12):
         if len(str(i)) == 1:
             photos.append(cv2.imread(srcdir + '/panoramaShooting000' + str(i) + srcext))
         else:
