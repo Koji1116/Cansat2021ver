@@ -105,17 +105,17 @@ def GoalDetection(imgpath, G_thd):
         centers = get_center(contours[max_area_contour])
 
         if max_area_contour == -1:
-            return [-1, 0, 1000, imgname, path_detection]
+            return [-1, 0, 1000, imgpath, path_detection]
         elif max_area <= 0.2:
-            return [-1, max_area, 1000000, imgname, path_detection]
+            return [-1, max_area, 1000000, imgpath, path_detection]
         elif max_area >= G_thd:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [1, max_area, GAP, imgname, path_detection]
+            return [1, max_area, GAP, imgpath, path_detection]
         else:
             GAP = (centers[0] - wid / 2) / (wid / 2) * 100
-            return [0, max_area, GAP, imgname, path_detection]
+            return [0, max_area, GAP, imgpath, path_detection]
     except:
-        return [1000, 1000, 1000, imgname]
+        return [1000, 1000, 1000, imgpath]
 
 
 def adjustment_mag(strength, t, magx_off, magy_off):
