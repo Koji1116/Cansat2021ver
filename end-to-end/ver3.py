@@ -321,7 +321,7 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
-            magx_off, magy_off = Calibration.cal(40, -40, 30)
+            print(path_src_panorama)
             panorama3.composition(path_src_panorama, path_dst_panoraam)
             img1 = "/home/pi/Desktop/Cansat2021ver/dst_panorama/0.jpg"
             img_string = Xbee.ImageToByte(img1)
