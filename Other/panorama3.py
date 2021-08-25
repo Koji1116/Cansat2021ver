@@ -32,7 +32,6 @@ def shooting_angle(theta, path_src_panorama1, path_src_panorama2, path_src_panor
                    wid, hig):
     """
     パノラマ合成用の写真を適切な枚数，適切なディレクトリに保存するための関数
-    関数shooting内で使用
     """
     switch = True
 
