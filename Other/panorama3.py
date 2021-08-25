@@ -30,9 +30,6 @@ import Other
 def shooting_angle(theta, path_src_panorama1, path_src_panorama2, path_src_panorama3, dict_angle1, dict_angle2,
                    dict_angle3,
                    wid, hig):
-    """
-    パノラマ合成用の写真を適切な枚数，適切なディレクトリに保存するための関数
-    """
     switch = True
 
     if switch:
