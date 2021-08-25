@@ -113,7 +113,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
             # Xbee.str_trans(f'lat: {lat1}\tlon: {lon1}\tdistance: {direction["distance"]}\ttheta: {theta}')
             Other.saveLog(logpath, datetime.datetime.now(), time.time() - t_start, lat1, lon1, direction['distance'],  azimuth)
             if t_stuck_count % 8 == 0:
-                if stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new, 1):
+                if stuck.stuck_jug(lat_old, lon_old, lat_new, lon_new, 2):
                     pass
                 else:
                     stuck.stuck_avoid()
