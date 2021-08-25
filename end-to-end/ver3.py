@@ -306,7 +306,7 @@ if __name__ == '__main__':
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 8:
             magx_off, magy_off = Calibration.cal(40, -40, 60)
-            photorunning5.image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, th_distance, t_adj_gps)
+            photorunning5.image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, th_distance, t_adj_gps, gpsrun=True)
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
