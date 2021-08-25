@@ -323,9 +323,11 @@ if __name__ == '__main__':
         phaseChk = Other.phaseCheck(log_phase)
         print(f'Phase:\t{phaseChk}')
         if phaseChk == 9:
+            # Create a panoramic photo
             t_composition_start = time.time()
             img1 = panorama3.composition(path_src_panorama)
             print(time.time() - t_composition_start)
+            # Sending a panoramic photo
             img_string = Xbee.ImageToByte(img1)
             Xbee.img_trans(img_string)
     except Exception as e:
