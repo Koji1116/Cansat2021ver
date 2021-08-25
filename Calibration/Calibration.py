@@ -195,63 +195,6 @@ def angle(magx, magy, magx_off=0, magy_off=0):
     return θ
 
 
-def calculate_angle_2D(magx, magy, magx_off, magy_off):
-    """
-    2021は使わない？
-    """
-    # --- recognize rover's direction ---#
-    # --- North = 0 , θ = (direction of sensor) ---#
-    # --- -90 <= θ <= 90 ---#
-    global θ
-    θ = math.degrees(math.atan((magy - magy_off) / (magx - magx_off)))
-    if θ >= 0:
-        if magx - magx_off < 0 and magy - magy_off < 0:  # Third quadrant
-            θ = θ + 180  # 180 <= θ <= 270
-        if magx - magx_off > 0 and magy - magy_off > 0:  # First quadrant
-            pass  # 0 <= θ <= 90
-    else:
-        if magx - magx_off < 0 and magy - magy_off > 0:  # Second quadrant
-            θ = 180 + θ  # 90 <= θ <= 180
-        if magx - magx_off > 0 and magy - magy_off < 0:  # Fourth quadrant
-            θ = 360 + θ  # 270 <= θ <= 360
-
-    # --- Half turn  ---#
-    θ += 180
-    if θ >= 360:
-        θ -= 360
-    # print('magx-magx_off = '+str(magx-magx_off))
-    # print('magy-magy_off = '+str(magy-magy_off))
-    print('calculate:θ ============ ' + str(θ))
-    # --- 0 <= θ <= 360 ---#
-    return θ
-
-
-def calculate_angle_3D(accx, accy, accz, magx, magy, magz, magx_off, magy_off, magz_off):
-    # --- recognize rover's direction ---#
-    # --- calculate roll angle ---#
-    Φ = math.degrees(math.atan(accy / accx))
-    # --- calculate pitch angle ---#
-    ψ = math.degrees(math.atan((-accx) / (accy * math.sin(Φ) + accz * math.cos(Φ))))
-    # -- North = 0 , θ = (direction of sensor) ---#
-    global θ
-    θ = math.degrees(math.atan((magz - magz_off) * math.sin(Φ) - (magy - magy_off) * math.cos(Φ)) / (
-            (magx - magx_off) * math.cos(ψ) + (magy - magy_off) * math.sin(ψ) * math.sin(Φ) + (
-            magz - magz_off) * math.sin(ψ) * math.cos(Φ)))
-    if θ >= 0:
-        if magx - magx_off < 0 and magy - magy_off < 0:  # Third quadrant
-            θ = θ + 180  # 180 <= θ <= 270
-    else:
-        if magx - magx_off < 0 and magy - magy_off > 0:  # Second quadrant
-            θ = 180 + θ  # 90 <= θ <= 180
-        if magx - magx_off > 0 and magy - magy_off < 0:  # Fourth quadrant
-            θ = 360 + θ  # 270 <= θ <= 360
-
-    print('magx-magx_off = ' + str(magx - magx_off))
-    print('magy-magy_off = ' + str(magy - magy_off))
-    print('magz-magz_off = ' + str(magz - magz_off))
-    return θ
-
-
 def calculate_direction(lon2, lat2):
     # --- read GPS data ---#
     try:
@@ -299,9 +242,6 @@ def calculate_direction(lon2, lat2):
     # --- calculate angle to goal ---#
     direction = GPS_Navigate.vincenty_inverse(lat1, lon1, lat2, lon2)
     return direction
-
-
-
 
 def timer(t):
     global cond
