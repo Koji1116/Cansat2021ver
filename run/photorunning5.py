@@ -56,7 +56,7 @@ def detect_red():
     img_mosaic = mosaic(img_original, ratio=0.3)
     img_hsv = cv2.cvtColor(img_mosaic, cv2.COLOR_BGR2HSV)
 
-    red_min = np.array([100, 100, 100], np.uint8)
+    red_min = np.array([120, 120, 100], np.uint8)
     red_max = np.array([255, 255, 255], np.uint8)
     red_img = cv2.inRange(img_hsv, red_min, red_max)
     red_img_gry = cv2.cvtColor(red_img, cv2.COLOR_GRAY2RGB)
