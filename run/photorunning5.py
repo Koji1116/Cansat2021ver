@@ -47,9 +47,11 @@ def get_center(contour):
 
     return cx, cy
 
+
 def mosaic(src, ratio):
     small = cv2.resize(src, None, fx=ratio, fy=ratio, interpolation=cv2.INTER_NEAREST)
     return cv2.resize(small, src.shape[:2][::-1], interpolation=cv2.INTER_NEAREST)
+
 
 def detect_red():
     img_original = cv2.imread('元画像のパス')
@@ -62,6 +64,7 @@ def detect_red():
     red_img_gry = cv2.cvtColor(red_img, cv2.COLOR_GRAY2RGB)
 
     cv2.imwrite(path_detection, red_img_gry)
+
 
 def GoalDetection(imgpath, G_thd):
     try:
@@ -239,7 +242,7 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                 print('###---Goal---###')
                 break
 
-            #ゴールから離れた場合GPS誘導に移行
+            # ゴールから離れた場合GPS誘導に移行
             if gpsrun:
                 direction = Calibration.calculate_direction(lon2, lat2)
                 goal_distance = direction['distance']
@@ -251,8 +254,6 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
-
-
 
 
 if __name__ == "__main__":
