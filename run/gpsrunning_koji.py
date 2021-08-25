@@ -77,6 +77,7 @@ def adjust_direction(theta, magx_off, magy_off, lon2, lat2):
             print(f'theta = {theta}')
 
         stuck_count += 1
+        stuck.ue_jud()
         theta = angle_goal(magx_off, magy_off, lon2, lat2)
         print('Calculated angle_relative: {theta}')
         time.sleep(1)
