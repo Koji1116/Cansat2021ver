@@ -243,6 +243,8 @@ def composition(srcdir, srcext='.jpg', dstext='.jpg'):
     else:
         print('composition failed')
     cv2.imwrite('/home/pi/Desktop/Cansat2021ver/dst_panorama/' + str(resultcount) + '.jpg', result)
+    img_name = '/home/pi/Desktop/Cansat2021ver/dst_panorama/' + str(resultcount) + '.jpg'
+    return img_name
 
 
 if __name__ == "__main__":
