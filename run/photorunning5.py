@@ -72,7 +72,7 @@ def GoalDetection(imgpath, G_thd):
         # 最小外接円を描いた写真の保存先
         path_detection = Other.fileName('/home/pi/Desktop/Cansat2021ver/detected/Detected-', 'jpg')
 
-        red_min = np.array([100, 100, 100], np.uint8)
+        red_min = np.array([120, 120, 120], np.uint8)
         red_max = np.array([255, 255, 255], np.uint8)
         mask = cv2.inRange(img_hsv, red_min, red_max)
         contours, hierarchy = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
