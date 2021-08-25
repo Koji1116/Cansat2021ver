@@ -163,7 +163,7 @@ def adjustment_mag(strength, t, magx_off, magy_off):
             else:
                 adj = strength_adj * -0.4
         print(f'angle ----- {angle_relative}')
-        strength_l, strength_r = strength_adj + adj, strength_adj - adj + 10
+        strength_l, strength_r = strength_adj + adj, strength_adj - adj + 5
         print(f'motor power:\t{strength_l}\t{strength_r}')
         motor.motor_continue(strength_l, strength_r)
         time.sleep(0.1)
@@ -201,7 +201,7 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                     motor.move(40, -40, 0.1)
                 else:
                     print('Go straight long')
-                    adjustment_mag(40, 5, magx_off, magy_off)
+                    adjustment_mag(40, 3, magx_off, magy_off)
             elif goalarea <= area_middle:
                 if -100 <= gap and gap <= -65:
                     print('Turn left')
@@ -211,7 +211,7 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                     motor.move(25, -25, 0.1)
                 else:
                     print('Go straight middle')
-                    adjustment_mag(40, 3, magx_off, magy_off)
+                    adjustment_mag(40, 2, magx_off, magy_off)
             elif goalarea <= area_short:
                 if -100 <= gap and gap <= -65:
                     print('Turn left')
@@ -228,7 +228,7 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                     motor.move(20+adj_short, -20-adj_short, 0.1)
                 else:
                     print('Go stright short')
-                    adjustment_mag(40, 2, magx_off, magy_off)
+                    adjustment_mag(40, 1, magx_off, magy_off)
                     count_short_l = 0
                     count_short_r = 0
                     adj_short = 0
