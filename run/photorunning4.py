@@ -158,11 +158,14 @@ def adjustment_mag(strength, t, magx_off, magy_off):
 def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance, t_adj_gps):
     try:
         t_start = time.time()
+        count_short_l = 0
+        count_short_r = 0
+        adj_short = 0
         while 1:
             stuck.ue_jug()
             path_photo = Other.fileName('/home/pi/Desktop/Cansat2021ver/photo_imageguide/ImageGuide-', 'jpg')
             photoName = Capture.Capture(path_photo)
-            goalflug, goalarea, gap, imgname, imgname2 = GoalDetection(photoName, 200, 20, 80, 50)
+            goalflug, goalarea, gap, imgname, imgname2 = GoalDetection(photoName, 50)
             print(f'goalflug:{goalflug}\tgoalarea:{goalarea}%\tgap:{gap}\timagename:{imgname}\timagename2:{imgname2}')
             Other.saveLog(log_photorunning, t_start - time.time(), goalflug, goalarea, gap, imgname, imgname2)
             if goalflug == 1:
@@ -193,13 +196,23 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
             elif goalarea <= area_short:
                 if -100 <= gap and gap <= -65:
                     print('Turn left')
-                    motor.move(-20, 20, 0.1)
+                    count_short_l += 1
+                    adj_short = 0
+                    if count_short_r % 4 == 0:
+                        adj_short += 3
+                    motor.move(-20-adj_short, 20+adj_short, 0.1)
                 elif 65 <= gap and gap <= 100:
                     print('Turn right')
-                    motor.move(20, -20, 0.1)
+                    count_short_r += 1
+                    if count_short_r % 4 == 0:
+                        adj_short += 3
+                    motor.move(20+adj_short, -20-adj_short, 0.1)
                 else:
                     print('Go stright short')
                     adjustment_mag(40, 2, magx_off, magy_off)
+                    count_short_l = 0
+                    count_short_r = 0
+                    adj_short = 0
             elif goalarea >= G_thd:
                 print('goal')
                 print('goal')
@@ -220,6 +233,7 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
+
 
 
 if __name__ == "__main__":
