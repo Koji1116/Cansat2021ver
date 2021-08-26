@@ -217,8 +217,8 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
 
 
 if __name__ == '__main__':
-    lat2 = 35.868631
-    lon2 = 139.924717
+    lat2 = 35.9185205
+    lon2 = 139.9085615
     GPS.openGPS()
     acc.bmc050_setup()
     mag.bmc050_setup()
