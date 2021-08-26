@@ -151,7 +151,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
                         if theta <= 15:
                             adj = 0
                         elif theta <= 90:
-                            adj = 20
+                            adj = 30
                         else:
                             adj = 30
                     else:
