@@ -163,8 +163,10 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
                     theta = angle_relative
                     adj_r = 0
                     if theta >= 0:
-                        if theta <= 15:
+                        if theta <= 8:
                             adj = 0
+                        elif theta <= 15:
+                            adj = 5
                         elif theta <= 90:
                             adj = 20
                             adj_r = 5
@@ -172,12 +174,30 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
                             adj = 30
                             adj_r = 5
                     else:
-                        if theta >= -15:
+                        if theta <= 8:
                             adj = 0
+                        elif theta >= -15:
+                            adj = -5
                         elif theta >= -90:
                             adj = -20
                         else:
                             adj = -30
+                    # if theta >= 0:
+                    #     if theta <= 15:
+                    #         adj = 0
+                    #     elif theta <= 90:
+                    #         adj = 20
+                    #         adj_r = 5
+                    #     else:
+                    #         adj = 30
+                    #         adj_r = 5
+                    # else:
+                    #     if theta >= -15:
+                    #         adj = 0
+                    #     elif theta >= -90:
+                    #         adj = -20
+                    #     else:
+                    #         adj = -30
                     print(f'angle ----- {theta}')
                     strength_l, strength_r = 70 + adj, 70 - adj - adj_r
                     motor.motor_continue(strength_l, strength_r)
