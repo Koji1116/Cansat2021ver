@@ -106,7 +106,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
         #     anan =1
 
         # ------------- Calibration -------------#
-            # Xbee.str_trans('Calibration Start')
+        # Xbee.str_trans('Calibration Start')
         print('##--Calibration Start--##\n')
         magx_off, magy_off = Calibration.cal(40, -40, 30)
         print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
