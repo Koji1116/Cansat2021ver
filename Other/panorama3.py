@@ -88,6 +88,10 @@ def check(dict_angle, path_src_panorama):
     number_photos1 = list(dict_angle1.values()).count(True)
     number_photos2 = list(dict_angle2.values()).count(True)
     number_photos3 = list(dict_angle3.values()).count(True)
+    # Print number_photos
+    print(f'number_photo1:\t{number_photos1}')
+    print(f'number_photo2:\t{number_photos2}')
+    print(f'number_photo3:\t{number_photos3}')
     # Find a directory/file_name with 12 photos
     srcdir = path_src_panorama1 if number_photos1 == 12 else srcdir
     srcdir = path_src_panorama2 if number_photos2 == 12 else srcdir
