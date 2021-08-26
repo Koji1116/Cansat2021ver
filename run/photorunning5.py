@@ -47,9 +47,11 @@ def get_center(contour):
 
     return cx, cy
 
+
 def mosaic(src, ratio):
     small = cv2.resize(src, None, fx=ratio, fy=ratio, interpolation=cv2.INTER_NEAREST)
     return cv2.resize(small, src.shape[:2][::-1], interpolation=cv2.INTER_NEAREST)
+
 
 def detect_red():
     img_original = cv2.imread('元画像のパス')
@@ -62,6 +64,7 @@ def detect_red():
     red_img_gry = cv2.cvtColor(red_img, cv2.COLOR_GRAY2RGB)
 
     cv2.imwrite(path_detection, red_img_gry)
+
 
 def GoalDetection(imgpath, G_thd):
     try:
@@ -173,7 +176,7 @@ def adjustment_mag(strength, t, magx_off, magy_off):
     motor.deceleration(strength_l, strength_r)
 
 
-def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance, t_adj_gps):
+def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2, thd_distance, t_adj_gps, gpsrun=False):
     try:
 
         t_start = time.time()
@@ -219,13 +222,15 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                     adj_short = 0
                     if count_short_r % 4 == 0:
                         adj_short += 3
-                    motor.move(-20-adj_short, 20+adj_short, 0.1)
+                        print('#-Power up-#')
+                    motor.move(-20 - adj_short, 20 + adj_short, 0.1)
                 elif 65 <= gap and gap <= 100:
                     print('Turn right')
                     count_short_r += 1
                     if count_short_r % 4 == 0:
                         adj_short += 3
-                    motor.move(20+adj_short, -20-adj_short, 0.1)
+                        print('#-Power up-#')
+                    motor.move(20 + adj_short, -20 - adj_short, 0.1)
                 else:
                     print('Go stright short')
                     adjustment_mag(40, 0.7, magx_off, magy_off)
@@ -233,27 +238,22 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                     count_short_r = 0
                     adj_short = 0
             elif goalarea >= G_thd:
-                print('goal')
-                print('goal')
+                print('###---Goal---###')
+                print('###---Goal---###')
                 break
 
             # ゴールから離れた場合GPS誘導に移行
-            # direction = Calibration.calculate_direction(lon2, lat2)
-            # goal_distance = direction['distance']
-            # if goal_distance >= thd_distance + 2:
-            #     gpsrunning_koji.drive(lon2, lat2, thd_distance, t_adj_gps,
-            #                           logpath='/home/pi/Desktop/Cansat2021ver/log/gpsrunning(image)Log', t_start=0)
-
-        print('finish')
-
-
+            if gpsrun:
+                direction = Calibration.calculate_direction(lon2, lat2)
+                goal_distance = direction['distance']
+                if goal_distance >= thd_distance + 2:
+                    gpsrunning_koji.drive(lon2, lat2, thd_distance, t_adj_gps,
+                                          logpath='/home/pi/Desktop/Cansat2021ver/log/gpsrunning(image)Log', t_start=0)
     except KeyboardInterrupt:
         print('stop')
     except Exception as e:
         tb = sys.exc_info()[2]
         print("message:{0}".format(e.with_traceback(tb)))
-
-
 
 
 if __name__ == "__main__":
