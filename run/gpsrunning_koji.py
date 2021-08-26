@@ -136,7 +136,7 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
             if goal_distance <= thd_distance:
                 break
             else:                
-                for _ in range(10):
+                for _ in range(50):
                     #theta = angle_goal(magx_off, magy_off)
                     magdata = BMC050.mag_dataRead()
                     mag_x = magdata[0]
@@ -144,8 +144,10 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
                     if mag_x == mag_x_old and mag_y == mag_y_old:
                         count_bmc050_erro += 1
                         if count_bmc050_erro >= 3:
-                            print('-------mag_x mag_y error-----修復開始')
+                            print('-------mag_x mag_y error-----switch start  ')
+                            motor.motor_stop(0.5)
                             BMC050.BMC050_error()
+                            stuck.ue_jug()
                             magdata = BMC050.mag_dataRead()
                             mag_x = magdata[0]
                             mag_y = magdata[1]
@@ -161,8 +163,10 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
                     theta = angle_relative
                     adj_r = 0
                     if theta >= 0:
-                        if theta <= 15:
+                        if theta <= 8:
                             adj = 0
+                        elif theta <= 15:
+                            adj = 5
                         elif theta <= 90:
                             adj = 20
                             adj_r = 5
@@ -170,16 +174,34 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
                             adj = 30
                             adj_r = 5
                     else:
-                        if theta >= -15:
+                        if theta <= 8:
                             adj = 0
+                        elif theta >= -15:
+                            adj = -5
                         elif theta >= -90:
                             adj = -20
                         else:
                             adj = -30
+                    # if theta >= 0:
+                    #     if theta <= 15:
+                    #         adj = 0
+                    #     elif theta <= 90:
+                    #         adj = 20
+                    #         adj_r = 5
+                    #     else:
+                    #         adj = 30
+                    #         adj_r = 5
+                    # else:
+                    #     if theta >= -15:
+                    #         adj = 0
+                    #     elif theta >= -90:
+                    #         adj = -20
+                    #     else:
+                    #         adj = -30
                     print(f'angle ----- {theta}')
                     strength_l, strength_r = 70 + adj, 70 - adj - adj_r
                     motor.motor_continue(strength_l, strength_r)
-                    time.sleep(0.1)
+                    time.sleep(0.02)
                     mag_x_old = mag_x
                     mag_y_old = mag_y
             t_stuck_count += 1
@@ -195,8 +217,8 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
 
 
 if __name__ == '__main__':
-    lat2 = 35.868631
-    lon2 = 139.924717
+    lat2 = 35.9185205
+    lon2 = 139.9085615
     GPS.openGPS()
     acc.bmc050_setup()
     mag.bmc050_setup()

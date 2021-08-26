@@ -137,8 +137,10 @@ def adjustment_mag(strength, t, magx_off, magy_off):
         if mag_x == mag_x_old and mag_y == mag_y_old:
             count_bmc050_erro += 1
             if count_bmc050_erro >= 3:
-                print('-------mag_x mag_y error-----修復開始')
+                print('-------mag_x mag_y error----switch start')
+                motor.motor_stop(0.5)
                 BMC050.BMC050_error()
+                stuck.ue_jug()
                 magdata = BMC050.mag_dataRead()
                 mag_x = magdata[0]
                 mag_y = magdata[1]
@@ -204,7 +206,7 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                     motor.move(40, -40, 0.1)
                 else:
                     print('Go straight long')
-                    adjustment_mag(40, 1.8, magx_off, magy_off)
+                    adjustment_mag(40, 1.4, magx_off, magy_off)
             elif goalarea <= area_middle:
                 if -100 <= gap and gap <= -65:
                     print('Turn left')
@@ -214,7 +216,7 @@ def image_guided_driving(log_photorunning, G_thd, magx_off, magy_off, lon2, lat2
                     motor.move(25, -25, 0.1)
                 else:
                     print('Go straight middle')
-                    adjustment_mag(40, 1.3, magx_off, magy_off)
+                    adjustment_mag(40, 1.1, magx_off, magy_off)
             elif goalarea <= area_short:
                 if -100 <= gap and gap <= -65:
                     print('Turn left')
