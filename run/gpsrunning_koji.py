@@ -91,14 +91,19 @@ def drive(lon2, lat2, thd_distance, t_adj_gps, logpath = '/home/pi/Desktop/Cansa
     direction = Calibration.calculate_direction(lon2, lat2)
     goal_distance = direction['distance']
     count_bmc050_erro = 0
+    anan = 0
     while goal_distance >= thd_distance:
         t_stuck_count = 1
         stuck.ue_jug()
-        # ------------- Calibration -------------#
-        # Xbee.str_trans('Calibration Start')
-        print('##--Calibration Start--##\n')
-        magx_off, magy_off = Calibration.cal(40, -40, 30)
-        print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
+        if anan == 0:
+            pass
+        else:
+            # ------------- Calibration -------------#
+            # Xbee.str_trans('Calibration Start')
+            print('##--Calibration Start--##\n')
+            magx_off, magy_off = Calibration.cal(40, -40, 30)
+            print(f'magx_off: {magx_off}\tmagy_off: {magy_off}\n')
+            anan =1
         theta = angle_goal(magx_off, magy_off, lon2, lat2)
         adjust_direction(theta, magx_off, magy_off, lon2, lat2)
 
