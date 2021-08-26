@@ -137,8 +137,10 @@ def adjustment_mag(strength, t, magx_off, magy_off):
         if mag_x == mag_x_old and mag_y == mag_y_old:
             count_bmc050_erro += 1
             if count_bmc050_erro >= 3:
-                print('-------mag_x mag_y error-----修復開始')
+                print('-------mag_x mag_y error----switch start')
+                motor.motor_stop(0.5)
                 BMC050.BMC050_error()
+                stuck.ue_jug()
                 magdata = BMC050.mag_dataRead()
                 mag_x = magdata[0]
                 mag_y = magdata[1]
